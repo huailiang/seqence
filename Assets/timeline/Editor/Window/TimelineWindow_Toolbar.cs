@@ -15,7 +15,7 @@ namespace UnityEditor.Timeline
         void TransportToolbarGUI()
         {
             GUILayout.BeginHorizontal();
-            GUILayout.BeginHorizontal(GUILayout.Width(80));
+            GUILayout.BeginHorizontal(GUILayout.Width(WindowConstants.sliderWidth));
             {
                 GotoBeginingSequenceGUI();
                 PreviousEventButtonGUI();
@@ -29,7 +29,7 @@ namespace UnityEditor.Timeline
             GUILayout.FlexibleSpace();
             GUILayout.Label(state.Name);
             GUILayout.FlexibleSpace();
-            GUILayout.BeginHorizontal(GUILayout.Width(80));
+            GUILayout.BeginHorizontal(GUILayout.Width(WindowConstants.sliderWidth));
             {
                 NewButtonGUI();
                 OpenButtonGUI();

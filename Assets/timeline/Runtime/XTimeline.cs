@@ -10,9 +10,20 @@ namespace UnityEngine.Timeline
 
         private static uint id = 0;
 
-        public static uint IncID { get { return id++; } }
-        
-        public float Time { get { return prev; } }
+        public static uint IncID
+        {
+            get { return id++; }
+        }
+
+        public float Time
+        {
+            get { return prev; }
+        }
+
+        public XMarkerTrack markerTrack
+        {
+            get { return trackTrees[0] as XMarkerTrack; }
+        }
 
         public XTimeline(string path)
         {
@@ -62,12 +73,12 @@ namespace UnityEngine.Timeline
             float dur = 0;
             if (trackTrees != null)
             {
-                for(int i=0;i<trackTrees.Length;i++)
+                for (int i = 0; i < trackTrees.Length; i++)
                 {
                     var track = trackTrees[i];
-                    track.ForeachHierachyTrack((trac)=>trac.ForeachClip((clip) =>
+                    track.ForeachHierachyTrack((trac) => trac.ForeachClip((clip) =>
                     {
-                        if (clip.end >dur)
+                        if (clip.end > dur)
                         {
                             dur = clip.end;
                         }
@@ -81,7 +92,5 @@ namespace UnityEngine.Timeline
         {
             return timeline != null;
         }
-
     }
-
 }

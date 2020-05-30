@@ -3,11 +3,13 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
+    [Flags]
     public enum TrackMode
     {
         Normal = 1,
         Mute = 1 << 1,
-        Record = 1 << 2
+        Record = 1 << 2,
+        Lock = 1 << 3,
     }
 
 
@@ -45,43 +47,51 @@ namespace UnityEngine.Timeline
             get { return (mode & TrackMode.Mute) > 0; }
         }
 
+        public bool record
+        {
+            get { return (mode & TrackMode.Record) > 0; }
+        }
+        
 
-        public XTrack(TrackData data)
+        protected XTrack(TrackData data)
         {
             ID = XTimeline.IncID;
             mode = TrackMode.Normal;
-            if (data.clips != null)
+            if (data != null)
             {
-                int len = data.clips.Length;
-                clips = new IClip[len];
-                for (int i = 0; i < len; i++)
+                if (data.clips != null)
                 {
-                    clips[i] = BuildClip(data.clips[i]);
+                    int len = data.clips.Length;
+                    clips = new IClip[len];
+                    for (int i = 0; i < len; i++)
+                    {
+                        clips[i] = BuildClip(data.clips[i]);
+                    }
                 }
-            }
 
-            if (data.marks != null)
-            {
-                int len = data.marks.Length;
-                marks = new XMarker[len];
-                for (int i = 0; i < len; i++)
+                if (data.marks != null)
                 {
-                    marks[i] = BuildMark(data.marks[i]);
+                    int len = data.marks.Length;
+                    marks = new XMarker[len];
+                    for (int i = 0; i < len; i++)
+                    {
+                        marks[i] = BuildMark(data.marks[i]);
+                    }
                 }
-            }
 
-            if (data.childs != null)
-            {
-                int len = data.childs.Length;
-                childs = new XTrack[len];
-                for (int i = 0; i < len; i++)
+                if (data.childs != null)
                 {
-                    childs[i] = NewTrack(data.childs[i], timeline);
-                    childs[i].parent = this;
+                    int len = data.childs.Length;
+                    childs = new XTrack[len];
+                    for (int i = 0; i < len; i++)
+                    {
+                        childs[i] = NewTrack(data.childs[i], timeline);
+                        childs[i].parent = this;
+                    }
                 }
             }
         }
-        
+
 
         protected XTrack(XTrack parent, XTrack[] childs, IClip[] clips)
         {
@@ -95,6 +105,9 @@ namespace UnityEngine.Timeline
             XTrack xTrack = null;
             switch (data.type)
             {
+                case TrackType.Marker:
+                    xTrack = new XMarkerTrack(data);
+                    break;
                 case TrackType.Animation:
                     xTrack = new XAnimationTrack(data as BindTrackData);
                     break;
@@ -112,7 +125,13 @@ namespace UnityEngine.Timeline
             return xTrack;
         }
 
-        // editor api
+#if UNITY_EDITOR
+
+        public bool locked
+        {
+            get { return (mode & TrackMode.Lock) > 0; }
+        }
+
         public void AddSub(XTrack track)
         {
             var tmp = new XTrack[childs.Length + 1];
@@ -124,7 +143,6 @@ namespace UnityEngine.Timeline
             childs = tmp;
         }
 
-        // editor api
         private void Remv()
         {
             if (parent)
@@ -151,7 +169,8 @@ namespace UnityEngine.Timeline
                 }
             }
         }
-        
+#endif
+
 
         protected void Foreach(Action<XTrack> track, Action<IClip> clip)
         {
@@ -245,7 +264,7 @@ namespace UnityEngine.Timeline
             parent = null;
             ID = 0;
         }
-        
+
 
         public override bool Equals(object obj)
         {
@@ -254,8 +273,7 @@ namespace UnityEngine.Timeline
 
         public bool Equals(XTrack other)
         {
-            return other != null &&
-                   ID == other.ID;
+            return other != null && ID == other.ID;
         }
 
         public override int GetHashCode()
@@ -284,7 +302,5 @@ namespace UnityEngine.Timeline
         {
             return "track " + ID;
         }
-
     }
-
 }

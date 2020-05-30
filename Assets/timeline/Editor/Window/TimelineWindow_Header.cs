@@ -1,19 +1,29 @@
 ﻿using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline
 {
-
     partial class TimelineWindow
     {
 
+        TimelineMarkerHeaderGUI m_MarkerHeaderGUI;
+        
         void TimelineHeaderGUI()
         {
-            GUILayout.BeginHorizontal(GUILayout.Width(80));
+            GUILayout.BeginVertical();
+            GUILayout.Space(4);
+            GUILayout.BeginHorizontal(GUILayout.Width(WindowConstants.sliderWidth));
             AddButtonGUI();
+            GUILayout.Space(8);
             ShowMarkersButton();
             GUILayout.EndHorizontal();
+            if (state.showMarkerHeader)
+            {
+                GUILayout.Label(TimelineStyles.timelineMarkerTrackHeader);
+            }
+            GUILayout.EndVertical();
         }
 
 
@@ -21,8 +31,10 @@ namespace UnityEditor.Timeline
         {
             if (EditorGUILayout.DropdownButton(TimelineStyles.addContent, FocusType.Passive, "Dropdown"))
             {
-                // if there is 1 and only 1 track selected, AND it's a group, add to that group
-                //TrackAsset parent = null;
+                XTrack parent = null;
+                if (parent)
+                {
+                }
                 //var groupTracks = SelectionManager.SelectedTracks().ToList();
                 //if (groupTracks.Count == 1)
                 //{

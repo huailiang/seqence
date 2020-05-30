@@ -6,14 +6,13 @@ namespace UnityEngine.Timeline
     public class XMarkerTrack : XTrack
     {
         
-        
         public XMarkerTrack(TrackData data) : base(data)
         {
         }
 
         protected override IClip BuildClip(ClipData data)
         {
-            throw new System.NotImplementedException();
+            throw new System.Exception("marker no clip");
         }
 
        

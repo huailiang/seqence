@@ -147,6 +147,7 @@ namespace UnityEngine.Timeline.Data
 
     public enum TrackType
     {
+        Marker,
         BoneFx,
         SceneFx,
         Animation
@@ -161,19 +162,22 @@ namespace UnityEngine.Timeline.Data
 
         public virtual void Write(BinaryWriter writer)
         {
-            writer.Write(clips.Length);
-            writer.Write(childs.Length);
-            writer.Write(marks.Length);
+            int len = clips?.Length ?? 0;
+            int len2 = childs?.Length ?? 0;
+            int len3 = marks?.Length ?? 0;
+            writer.Write(len);
+            writer.Write(len2);
+            writer.Write(len3);
             writer.Write((int) type);
-            for (int j = 0; j < clips.Length; j++)
+            for (int j = 0; j < len; j++)
             {
                 clips[j].Write(writer);
             }
-            for (int j = 0; j < childs.Length; j++)
+            for (int j = 0; j < len2; j++)
             {
                 childs[j].Write(writer);
             }
-            for (int i = 0; i < marks.Length; i++)
+            for (int i = 0; i < len3; i++)
             {
                 marks[i].Write(writer);
             }
@@ -182,23 +186,26 @@ namespace UnityEngine.Timeline.Data
         public virtual void Read(BinaryReader reader)
         {
             int len = reader.ReadInt32();
-            clips = new ClipData[len];
+            if (len > 0) clips = new ClipData[len];
             int len2 = reader.ReadInt32();
-            childs = new TrackData[len2];
+            if (len2 > 0) childs = new TrackData[len2];
+            int len3 = reader.ReadInt32();
+            if (len3 > 0) marks = new MarkData[len3];
             type = (TrackType) reader.ReadInt32();
             for (int j = 0; j < len; j++)
             {
                 clips[j].Read(reader);
             }
-            for (int j = 0; j < childs.Length; j++)
+            for (int j = 0; j < len2; j++)
             {
                 childs[j].Read(reader);
             }
-            for (int i = 0; i < marks.Length; i++)
+            for (int i = 0; i < len3; i++)
             {
                 marks[i].Read(reader);
             }
         }
+        
     }
 
     public class BindTrackData : TrackData

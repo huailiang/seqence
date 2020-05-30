@@ -50,18 +50,6 @@ namespace UnityEditor.Timeline
         public static readonly GUIContent
             mixOn = EditorGUIUtility.IconContent("TimelineEditModeMixON", "|Mix Mode (1)");
 
-        public static readonly GUIContent rippleOff =
-            EditorGUIUtility.IconContent("TimelineEditModeRippleOFF", "|Ripple Mode (2)");
-
-        public static readonly GUIContent rippleOn =
-            EditorGUIUtility.IconContent("TimelineEditModeRippleON", "|Ripple Mode (2)");
-
-        public static readonly GUIContent replaceOff =
-            EditorGUIUtility.IconContent("TimelineEditModeReplaceOFF", "|Replace Mode (3)");
-
-        public static readonly GUIContent replaceOn =
-            EditorGUIUtility.IconContent("TimelineEditModeReplaceON", "|Replace Mode (3)");
-
         public static readonly GUIContent showMarkersOn = EditorGUIUtility.TrTextContentWithIcon(string.Empty,
             "Show / Hide Timeline Markers", "TimelineMarkerAreaButtonEnabled");
 
@@ -78,6 +66,8 @@ namespace UnityEditor.Timeline
 
 
         private static readonly string _edit_img = @"Assets/timeline/Editor/StyleSheets/Images/";
+        
+        
         private static Texture2D _new_ico, _save_ico, _open_ico;
 
         public static Texture2D new_ico
@@ -126,12 +116,13 @@ namespace UnityEditor.Timeline
 
         // matches dark skin warning color.
         public static readonly Color kClipErrorColor = new Color(0.957f, 0.737f, 0.008f, 1f);
-
+        
         // TODO: Make skinnable? If we do, we should probably also make the associated cursors skinnable...
         public static readonly Color kMixToolColor = Color.white;
         public static readonly Color kRippleToolColor = new Color(255f / 255f, 210f / 255f, 51f / 255f);
         public static readonly Color kReplaceToolColor = new Color(165f / 255f, 30f / 255f, 30f / 255f);
 
         public const string markerDefaultStyle = "MarkerItem";
+        
     }
 }

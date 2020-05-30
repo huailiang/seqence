@@ -32,20 +32,17 @@ namespace UnityEditor.Timeline
 
         public string Name
         {
-            get
-            {
-                return string.IsNullOrEmpty(name) ? "tmp" : name;
-            }
-            set
-            {
-                name = value;
-            }
+            get { return string.IsNullOrEmpty(name) ? "tmp" : name; }
+            set { name = value; }
         }
 
         public void CreateTimeline()
         {
             TimelineConfig config = new TimelineConfig();
-            config.tracks = new TrackData[0];
+            config.tracks = new TrackData[1];
+            TrackData data = new TrackData();
+            data.type = TrackType.Marker;
+            config.tracks[0] = data;
             timeline = new XTimeline(config);
         }
 
@@ -54,9 +51,9 @@ namespace UnityEditor.Timeline
             timeline = new XTimeline(path);
             Name = path.Replace(".bytes", "");
             int index = Name.IndexOf("Assets", StringComparison.Ordinal);
-            if (index>=0)
+            if (index >= 0)
             {
-                Name = Name.Substring(index+7);
+                Name = Name.Substring(index + 7);
             }
         }
 

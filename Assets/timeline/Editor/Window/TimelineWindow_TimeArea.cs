@@ -6,7 +6,11 @@ namespace UnityEditor.Timeline
     partial class TimelineWindow
     {
         [NonSerialized] TimelineTimeArea m_TimeArea;
-        public TimeArea timeArea { get { return m_TimeArea; } }
+
+        public TimeArea timeArea
+        {
+            get  { return m_TimeArea; }
+        }
 
         internal static class Styles
         {
@@ -20,7 +24,7 @@ namespace UnityEditor.Timeline
         {
             if (m_TimeArea == null)
             {
-                rect = new UnityEngine.Rect(10, 10, winArea.width, 18);
+                rect = new UnityEngine.Rect(10, 10, winArea.width, WindowConstants.timeAreaHeight);
                 m_TimeArea = new TimelineTimeArea(false)
                 {
                     hRangeLocked = false,
@@ -39,6 +43,7 @@ namespace UnityEditor.Timeline
         public void TimelineTimeAreaGUI()
         {
             rect.width = winArea.width;
+            rect.x = winArea.x + WindowConstants.rightAreaMargn;
             rect.y = m_TimeArea.topmargin + 12;
             m_TimeArea.TimeRuler(rect, 3, true, false, 1.0f, TimeArea.TimeFormat.Frame);
         }
@@ -46,10 +51,8 @@ namespace UnityEditor.Timeline
 
         class TimelineTimeArea : TimeArea
         {
-
             public TimelineTimeArea(bool minimalGUI) : base(minimalGUI)
             {
-
             }
         }
     }
