@@ -13,6 +13,7 @@ namespace UnityEditor.Timeline
         {
             InitializeTimeArea();
             InitialToolbar();
+            InitializeMarkerHeader();
         }
 
         void OnGUI()
@@ -20,6 +21,7 @@ namespace UnityEditor.Timeline
             TimelineTimeAreaGUI();
             TransportToolbarGUI();
             TimelineHeaderGUI();
+            DrawMarkerDrawer();
             winArea = position;
         }
 

@@ -63,6 +63,34 @@ namespace UnityEditor.Timeline
 
         public static readonly GUIContent markerCollapseButton =
             EditorGUIUtility.TrTextContent(string.Empty, "Expand / Collapse Track Markers");
+        
+        public readonly static Color colorDuration = new Color(0.66f, 0.66f, 0.66f, 1.0f);
+        
+        public  readonly static Color colorRecordingClipOutline = new Color(1, 0, 0, 0.9f);
+        
+        public  readonly static Color colorAnimEditorBinding = new Color(54.0f / 255.0f, 54.0f / 255.0f, 54.0f / 255.0f);
+        
+        public  readonly static Color colorTimelineBackground = new Color(0.2f, 0.2f, 0.2f, 1.0f);
+        
+        public  readonly static Color colorLockTextBG = Color.red;
+        
+        public  readonly static Color colorInlineCurveVerticalLines = new Color(1.0f, 1.0f, 1.0f, 0.2f);
+        
+        public  readonly static Color colorInlineCurveOutOfRangeOverlay = new Color(0.0f, 0.0f, 0.0f, 0.5f);
+
+        public  readonly static Color markerHeaderDrawerBackgroundColor = new Color(0.5f, 0.5f, 0.5f , 1.0f);
+        
+        public  readonly static Color colorControl = new Color(0.2313f, 0.6353f, 0.5843f, 1.0f);
+        
+        public  readonly static Color colorSubSequenceBackground = new Color(0.1294118f, 0.1764706f, 0.1764706f, 1.0f);
+        
+        public  readonly static Color colorTrackSubSequenceBackground = new Color(0.1607843f, 0.2156863f, 0.2156863f, 1.0f);
+        
+        public  readonly static Color colorTrackSubSequenceBackgroundSelected = new Color(0.0726923f, 0.252f, 0.252f, 1.0f);
+
+        public  readonly static Color colorSubSequenceOverlay = new Color(0.02f, 0.025f, 0.025f, 0.30f);
+
+        public readonly static Color colorSubSequenceDurationLine = new Color(0.0f, 1.0f, 0.88f, 0.46f);
 
 
         private static readonly string _edit_img = @"Assets/timeline/Editor/StyleSheets/Images/";

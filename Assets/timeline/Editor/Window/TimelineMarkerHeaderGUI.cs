@@ -2,15 +2,37 @@
 
 namespace UnityEditor.Timeline
 {
-    public class TimelineMarkerHeaderGUI
+    partial class TimelineWindow
     {
-        static Rect bgRect = new Rect(0,0,100,40);
         
-        static void DrawMarkerDrawerHeaderBackground()
+        private Rect markderRect;
+
+        void InitializeMarkerHeader()
         {
-            var backgroundColor = DirectorNamedColor.markerHeaderDrawerBackgroundColor;
-            var bgRect = new Rect();
-            EditorGUI.DrawRect(bgRect, backgroundColor);
+            markderRect.width = winArea.width;
+            markderRect.height = WindowConstants.markerRowHeight;
         }
+
+        void DrawMarkerDrawer()
+        {
+            if (state.showMarkerHeader)
+            {
+                DrawMarkerDrawerHeaderBackground();
+                DrawMarkerDrawerHeader();
+            }
+        }
+
+        void DrawMarkerDrawerHeaderBackground()
+        {
+            var backgroundColor = TimelineStyles.markerHeaderDrawerBackgroundColor;
+            markderRect.x = winArea.x + WindowConstants.rightAreaMargn;
+            markderRect.y = m_TimeArea.topmargin + WindowConstants.timeAreaHeight + 12;
+            EditorGUI.DrawRect(markderRect, backgroundColor);
+        }
+
+        void DrawMarkerDrawerHeader()
+        {
+        }
+        
     }
 }

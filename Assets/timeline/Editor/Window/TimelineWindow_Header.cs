@@ -8,8 +8,6 @@ namespace UnityEditor.Timeline
     partial class TimelineWindow
     {
 
-        TimelineMarkerHeaderGUI m_MarkerHeaderGUI;
-        
         void TimelineHeaderGUI()
         {
             GUILayout.BeginVertical();

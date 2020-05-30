@@ -18,13 +18,13 @@ namespace UnityEditor.Timeline
         }
 
         float m_LastFrameRate;
-        Rect rect;
+        Rect timeAreaRect;
 
         void InitializeTimeArea()
         {
             if (m_TimeArea == null)
             {
-                rect = new UnityEngine.Rect(10, 10, winArea.width, WindowConstants.timeAreaHeight);
+                timeAreaRect = new UnityEngine.Rect(0, 0, winArea.width, WindowConstants.timeAreaHeight);
                 m_TimeArea = new TimelineTimeArea(false)
                 {
                     hRangeLocked = false,
@@ -35,17 +35,16 @@ namespace UnityEditor.Timeline
                     vSlider = false,
                     hBaseRangeMin = 0.0f,
                     hRangeMin = 0.0f,
-                    rect = rect,
+                    rect = timeAreaRect,
                 };
             }
         }
 
         public void TimelineTimeAreaGUI()
         {
-            rect.width = winArea.width;
-            rect.x = winArea.x + WindowConstants.rightAreaMargn;
-            rect.y = m_TimeArea.topmargin + 12;
-            m_TimeArea.TimeRuler(rect, 3, true, false, 1.0f, TimeArea.TimeFormat.Frame);
+            timeAreaRect.x = winArea.x + WindowConstants.rightAreaMargn;
+            timeAreaRect.y = m_TimeArea.topmargin + 12;
+            m_TimeArea.TimeRuler(timeAreaRect, 3, true, false, 1.0f, TimeArea.TimeFormat.Frame);
         }
 
 
