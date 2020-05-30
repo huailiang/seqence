@@ -18,6 +18,7 @@ namespace UnityEngine.Timeline
         public float Time
         {
             get { return prev; }
+            set { Process(value); }
         }
 
         public XMarkerTrack markerTrack

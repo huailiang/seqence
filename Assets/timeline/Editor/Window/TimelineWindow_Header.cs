@@ -7,7 +7,6 @@ namespace UnityEditor.Timeline
 {
     partial class TimelineWindow
     {
-
         void TimelineHeaderGUI()
         {
             GUILayout.BeginVertical();

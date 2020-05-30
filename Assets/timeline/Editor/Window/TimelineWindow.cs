@@ -2,13 +2,10 @@ using UnityEngine;
 
 namespace UnityEditor.Timeline
 {
-
     partial class TimelineWindow : EditorWindow
     {
-        readonly PreviewResizer m_PreviewResizer = new PreviewResizer();
-        
         public Rect winArea { get; set; }
-    
+
         private void OnEnable()
         {
             InitializeTimeArea();
@@ -22,10 +19,11 @@ namespace UnityEditor.Timeline
             TransportToolbarGUI();
             TimelineHeaderGUI();
             DrawMarkerDrawer();
+            TimeCursorGUI();
             winArea = position;
         }
 
-        
+
         [MenuItem("Assets/Create/Timeline", false, 450)]
         public static void CreateNewTimeline()
         {

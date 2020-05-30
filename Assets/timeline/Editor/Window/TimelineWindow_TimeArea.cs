@@ -43,7 +43,7 @@ namespace UnityEditor.Timeline
         public void TimelineTimeAreaGUI()
         {
             timeAreaRect.x = winArea.x + WindowConstants.rightAreaMargn;
-            timeAreaRect.y = m_TimeArea.topmargin + 12;
+            timeAreaRect.y = m_TimeArea.topmargin + WindowConstants.timeAreaYPosition;
             m_TimeArea.TimeRuler(timeAreaRect, 3, true, false, 1.0f, TimeArea.TimeFormat.Frame);
         }
 
