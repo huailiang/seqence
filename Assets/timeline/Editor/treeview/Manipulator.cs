@@ -6,20 +6,20 @@ namespace UnityEditor.Timeline
     {
         int m_Id;
 
-        protected virtual bool MouseDown(Event evt, TimelineState state) { return false; }
-        protected virtual bool MouseDrag(Event evt, TimelineState state) { return false; }
-        protected virtual bool MouseWheel(Event evt, TimelineState state) { return false; }
-        protected virtual bool MouseUp(Event evt, TimelineState state) { return false; }
-        protected virtual bool DoubleClick(Event evt, TimelineState state) { return false; }
-        protected virtual bool KeyDown(Event evt, TimelineState state) { return false; }
-        protected virtual bool KeyUp(Event evt, TimelineState state) { return false; }
-        protected virtual bool ContextClick(Event evt, TimelineState state) { return false; }
-        protected virtual bool ValidateCommand(Event evt, TimelineState state) { return false; }
-        protected virtual bool ExecuteCommand(Event evt, TimelineState state) { return false; }
+        protected virtual bool MouseDown(Event evt, TimelineWindow state) { return false; }
+        protected virtual bool MouseDrag(Event evt, TimelineWindow state) { return false; }
+        protected virtual bool MouseWheel(Event evt, TimelineWindow state) { return false; }
+        protected virtual bool MouseUp(Event evt, TimelineWindow state) { return false; }
+        protected virtual bool DoubleClick(Event evt, TimelineWindow state) { return false; }
+        protected virtual bool KeyDown(Event evt, TimelineWindow state) { return false; }
+        protected virtual bool KeyUp(Event evt, TimelineWindow state) { return false; }
+        protected virtual bool ContextClick(Event evt, TimelineWindow state) { return false; }
+        protected virtual bool ValidateCommand(Event evt, TimelineWindow state) { return false; }
+        protected virtual bool ExecuteCommand(Event evt, TimelineWindow state) { return false; }
 
-        public virtual void Overlay(Event evt, TimelineState state) {}
+        public virtual void Overlay(Event evt, TimelineWindow state) {}
 
-        public bool HandleEvent(TimelineState state)
+        public bool HandleEvent(TimelineWindow state)
         {
             if (m_Id == 0)
                 m_Id =  GUIUtility.GetPermanentControlID();

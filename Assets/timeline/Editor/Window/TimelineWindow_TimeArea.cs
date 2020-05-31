@@ -8,8 +8,10 @@ namespace UnityEditor.Timeline
         [NonSerialized] TimeArea m_TimeArea;
 
         float m_LastFrameRate;
-        Rect timeAreaRect;
+        public Rect timeAreaRect;
 
+        public TimelineState state { get; private set; }
+        
         void InitializeTimeArea()
         {
             if (m_TimeArea == null)
@@ -38,6 +40,16 @@ namespace UnityEditor.Timeline
             
             DrawTimeOnSlider();
             DrawTimeCursor();
+        }
+
+        public float TimeToPixel(float time)
+        {
+            return m_TimeArea.TimeToPixel(time, timeAreaRect);
+        }
+
+        public float PiexlToTime(float pixel)
+        {
+            return m_TimeArea.PixelToTime(pixel, timeAreaRect);
         }
         
         void DrawTimeOnSlider()

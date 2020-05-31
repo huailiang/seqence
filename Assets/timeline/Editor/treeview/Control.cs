@@ -6,7 +6,7 @@ namespace UnityEditor.Timeline
     {
         readonly List<Manipulator> m_Manipulators = new List<Manipulator>();
 
-        public bool HandleManipulatorsEvents(TimelineState state)
+        public bool HandleManipulatorsEvents(TimelineWindow state)
         {
             var isHandled = false;
 

@@ -6,21 +6,15 @@ namespace UnityEditor.Timeline
 {
     class TimelineState
     {
-        static TimelineState _inst;
-
-        public static TimelineState inst
+        
+        public TimelineState(TimelineWindow win)
         {
-            get
-            {
-                if (_inst == null)
-                {
-                    _inst = new TimelineState();
-                    _inst.Initial();
-                }
-                return _inst;
-            }
+            window = win;
+            Initial();
         }
-
+        
+        public TimelineWindow window;
+        
         public bool playing { get; set; }
 
         public bool showMarkerHeader { get; set; }

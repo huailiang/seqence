@@ -91,16 +91,16 @@ namespace UnityEditor.Timeline
             GL.End();
         }
 
-        public static void DrawLineAtTime(TimelineStyles state, double time, Color color, bool dotted = false)
+        public static void DrawLineAtTime(TimelineWindow win, float time, Color color, bool dotted = false)
         {
-            // var t = state.TimeToPixel(time);
-            // var p0 = new Vector3(t, state.timeAreaRect.yMax);
-            // var p1 = new Vector3(t, state.timeAreaRect.yMax + state.windowHeight - WindowConstants.sliderWidth);
-            //
-            // if (dotted)
-            //     DrawDottedLine(p0, p1, 4.0f, color);
-            // else
-            //     DrawLine(p0, p1, color);
+            var t = win.TimeToPixel(time);
+            var p0 = new Vector3(t, win.timeAreaRect.yMax);
+            var p1 = new Vector3(t, win.timeAreaRect.yMax + win.winArea.height - WindowConstants.sliderWidth);
+
+            if (dotted)
+                DrawDottedLine(p0, p1, 4.0f, color);
+            else
+                DrawLine(p0, p1, color);
         }
 
         public static void DrawTextureRepeated(Rect area, Texture texture)

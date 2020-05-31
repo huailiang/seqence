@@ -4,7 +4,10 @@ namespace UnityEditor.Timeline
 {
     class TimelineStyles
     {
-       public static GUIStyle bottomShadow = "Icon.Shadow";
+       public readonly static GUIStyle bottomShadow = "Icon.Shadow";
+       public readonly static GUIStyle displayBackground = "sequenceClip";
+       // public readonly static GUIStyle fontClip = "Font.Clip";
+       public readonly static GUIStyle tinyFont = "tinyFont";
        
         public static readonly GUIContent referenceTrackLabel =
             EditorGUIUtility.TrTextContent("R", "This track references an external asset");
