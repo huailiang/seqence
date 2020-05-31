@@ -6,17 +6,16 @@ namespace UnityEditor.Timeline
 {
     class TimelineState
     {
-        
         public TimelineState(TimelineWindow win)
         {
             window = win;
             Initial();
         }
-        
-        public TimelineWindow window;
-        
-        public bool playing { get; set; }
 
+        public TimelineWindow window;
+
+        public bool playing { get; set; }
+        public bool recording { get; set; }
         public bool showMarkerHeader { get; set; }
 
         public XTimeline timeline;
@@ -36,7 +35,7 @@ namespace UnityEditor.Timeline
             playing = false;
             showMarkerHeader = true;
         }
-        
+
         public void CreateTimeline()
         {
             TimelineConfig config = new TimelineConfig();

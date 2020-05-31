@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityEditor.Timeline
@@ -7,6 +8,9 @@ namespace UnityEditor.Timeline
         public static TimelineWindow inst;
         
         public Rect winArea { get; set; }
+        
+        readonly List<Manipulator> m_CaptureSession = new List<Manipulator>();
+        
         
         public float sequencerHeaderWidth
         {
@@ -30,6 +34,16 @@ namespace UnityEditor.Timeline
             winArea = position;
         }
 
+        public void AddCaptured(Manipulator manipulator)
+        {
+            if (!m_CaptureSession.Contains(manipulator))
+                m_CaptureSession.Add(manipulator);
+        }
+
+        public void RemoveCaptured(Manipulator manipulator)
+        {
+            m_CaptureSession.Remove(manipulator);
+        }
 
         [MenuItem("Assets/Create/Timeline", false, 450)]
         public static void CreateNewTimeline()

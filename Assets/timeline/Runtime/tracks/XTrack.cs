@@ -13,9 +13,9 @@ namespace UnityEngine.Timeline
     }
 
 
-    public abstract class XTrack : IEquatable<XTrack>
+    public abstract class XTrack
     {
-        public uint ID;
+        public readonly uint ID;
 
         protected XTrack[] childs;
 
@@ -28,7 +28,7 @@ namespace UnityEngine.Timeline
         public XTimeline timeline;
 
         public XTrack parent { get; set; }
-        
+
         public abstract TrackType trackType { get; }
 
         public XTrack root
@@ -53,7 +53,7 @@ namespace UnityEngine.Timeline
         {
             get { return (mode & TrackMode.Record) > 0; }
         }
-        
+
 
         protected XTrack(TrackData data)
         {
@@ -87,7 +87,7 @@ namespace UnityEngine.Timeline
                     childs = new XTrack[len];
                     for (int i = 0; i < len; i++)
                     {
-                        childs[i] = NewTrack(data.childs[i], timeline);
+                        childs[i] = XTrackFactory.Get(data.childs[i], timeline);
                         childs[i].parent = this;
                     }
                 }
@@ -102,30 +102,6 @@ namespace UnityEngine.Timeline
             this.clips = clips;
         }
 
-        public static XTrack NewTrack(TrackData data, XTimeline tl)
-        {
-            XTrack xTrack = null;
-            switch (data.type)
-            {
-                case TrackType.Marker:
-                    xTrack = new XMarkerTrack(data);
-                    break;
-                case TrackType.Animation:
-                    xTrack = new XAnimationTrack(data as BindTrackData);
-                    break;
-                case TrackType.BoneFx:
-                    xTrack = new XBoneFxTrack(data);
-                    break;
-                case TrackType.SceneFx:
-                    xTrack = new XSceneFxTrack(data);
-                    break;
-                default:
-                    Debug.LogError("unknown track " + data.type);
-                    break;
-            }
-            if (xTrack) xTrack.timeline = tl;
-            return xTrack;
-        }
 
 #if UNITY_EDITOR
 
@@ -153,7 +129,7 @@ namespace UnityEngine.Timeline
                 int idx = -1;
                 for (int i = 0; i < chs.Length; i++)
                 {
-                    if (chs[i] == this)
+                    if (chs[i].Equals(this))
                     {
                         idx = i;
                         break;
@@ -264,7 +240,6 @@ namespace UnityEngine.Timeline
             Foreach((track) => track.Dispose(), (clip) => clip.Dispose());
             childs = null;
             parent = null;
-            ID = 0;
         }
 
 
@@ -280,19 +255,7 @@ namespace UnityEngine.Timeline
 
         public override int GetHashCode()
         {
-            return ID.GetHashCode();
-        }
-
-        public static bool operator ==(XTrack l, XTrack r)
-        {
-            if (r == null) return false;
-            return l.ID == r.ID;
-        }
-
-        public static bool operator !=(XTrack l, XTrack r)
-        {
-            if (r == null) return true;
-            return l.ID != r.ID;
+            return ((ID << 4) + 375).GetHashCode();
         }
 
         public static implicit operator bool(XTrack track)

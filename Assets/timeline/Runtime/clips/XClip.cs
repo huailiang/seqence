@@ -4,6 +4,8 @@ namespace UnityEngine.Timeline
 {
     public interface IClip
     {
+        float start { get; }
+
         float duration { get; }
 
         float end { get; }
@@ -15,7 +17,6 @@ namespace UnityEngine.Timeline
 
     public class XClip<T> : IClip where T : XTrack
     {
-
         protected XTimeline timeline
         {
             get { return track.timeline; }
@@ -54,13 +55,11 @@ namespace UnityEngine.Timeline
         public void Update(float time, float prev)
         {
             float tick = time - start;
-            if ((time >= start && prev < start) ||
-                (time <= end && prev > end))
+            if ((time >= start && prev < start) || (time <= end && prev > end))
             {
                 OnEnter();
             }
-            if ((time > end && prev <= time) ||
-                (time < start || prev >= start))
+            if ((time > end && prev <= time) || (time < start || prev >= start))
             {
                 OnExit();
             }
@@ -96,7 +95,5 @@ namespace UnityEngine.Timeline
         {
             return clip != null;
         }
-
     }
-
 }

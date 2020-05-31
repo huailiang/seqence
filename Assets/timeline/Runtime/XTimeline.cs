@@ -46,7 +46,7 @@ namespace UnityEngine.Timeline
             trackTrees = new XTrack[len];
             for (int i = 0; i < len; i++)
             {
-                trackTrees[i] = XTrack.NewTrack(tracksData[i], this);
+                trackTrees[i] = XTrackFactory.Get(tracksData[i], this);
             }
             prev = 0;
         }

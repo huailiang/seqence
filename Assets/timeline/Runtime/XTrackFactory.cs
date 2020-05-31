@@ -1,0 +1,33 @@
+﻿using UnityEngine.Timeline.Data;
+
+namespace UnityEngine.Timeline
+{
+    public class XTrackFactory
+    {
+
+        public static XTrack Get(TrackData data, XTimeline tl)
+        {
+            XTrack xTrack = null;
+            switch (data.type)
+            {
+                case TrackType.Marker:
+                    xTrack = new XMarkerTrack(data);
+                    break;
+                case TrackType.Animation:
+                    xTrack = new XAnimationTrack(data as BindTrackData);
+                    break;
+                case TrackType.BoneFx:
+                    xTrack = new XBoneFxTrack(data);
+                    break;
+                case TrackType.SceneFx:
+                    xTrack = new XSceneFxTrack(data);
+                    break;
+                default:
+                    Debug.LogError("unknown track " + data.type);
+                    break;
+            }
+            if (xTrack) xTrack.timeline = tl;
+            return xTrack;
+        }
+    }
+}

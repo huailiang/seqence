@@ -1,52 +1,138 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline
 {
+    class PlayheadContextMenu : Manipulator
+    {
+        readonly TimeAreaItem m_TimeAreaItem;
+
+        public PlayheadContextMenu(TimeAreaItem timeAreaItem)
+        {
+            m_TimeAreaItem = timeAreaItem;
+        }
+
+        protected override bool ContextClick(Event evt)
+        {
+            if (!m_TimeAreaItem.bounds.Contains(evt.mousePosition)) return false;
+
+            var tolerance = 0.25f / TimelineWindow.inst.state.frameRate;
+            var menu = new GenericMenu();
+            float time = TimelineWindow.inst.state.timeline.Time;
+            menu.AddItem(EditorGUIUtility.TrTextContent("Select/Clips Ending Before"), false,
+                () => SelectMenuCallback(x => x.end < time + tolerance));
+            menu.AddItem(EditorGUIUtility.TrTextContent("Select/Clips Starting Before"), false,
+                () => SelectMenuCallback(x => x.start < time + tolerance));
+            menu.AddItem(EditorGUIUtility.TrTextContent("Select/Clips Ending After"), false,
+                () => SelectMenuCallback(x => x.end - time >= -tolerance));
+            menu.AddItem(EditorGUIUtility.TrTextContent("Select/Clips Starting After"), false,
+                () => SelectMenuCallback(x => x.start - time >= -tolerance));
+            menu.AddItem(EditorGUIUtility.TrTextContent("Select/Clips Intersecting"), false,
+                () => SelectMenuCallback(x => x.start <= time && time <= x.end));
+            menu.AddItem(EditorGUIUtility.TrTextContent("Select/Blends Intersecting"), false,
+                () => SelectMenuCallback(x => SelectBlendingIntersecting(x, TimelineWindow.inst.state.timeline.Time)));
+            menu.ShowAsContext();
+            return true;
+        }
+
+        static bool SelectBlendingIntersecting(IClip clip, double time)
+        {
+            return false;
+            // return clip.start <= time && time <= clip.end &&
+            //        ((time <= clip.start + clip.blendInDuration) || (time >= clip.end - clip.blendOutDuration));
+        }
+
+        static void SelectMenuCallback(Func<IClip, bool> selector)
+        {
+            // var allClips = TimelineWindow.inst.treeView.allClipGuis;
+            // if (allClips == null) return;
+            //
+            // SelectionManager.Clear();
+            // for (var i = 0; i != allClips.Count; ++i)
+            // {
+            //     var c = allClips[i];
+            //
+            //     if (c != null && c.clip != null && selector(c.clip))
+            //     {
+            //         SelectionManager.Add(c.clip);
+            //     }
+            // }
+        }
+    }
+
+    class TimeAreaContextMenu : Manipulator
+    {
+        protected override bool ContextClick(Event evt)
+        {
+            if (TimelineWindow.inst.timeAreaRect.Contains(Event.current.mousePosition))
+            {
+                var menu = new GenericMenu();
+                AddTimeAreaMenuItems(menu);
+                menu.ShowAsContext();
+                return true;
+            }
+            return false;
+        }
+
+        internal static void AddTimeAreaMenuItems(GenericMenu menu)
+        {
+            // TimelineState state = TimelineWindow.inst.state;
+            // foreach (var value in Enum.GetValues(typeof(TimelineAsset.DurationMode)))
+            // {
+            //     var item = EditorGUIUtility.TextContent(string.Format(TimelineWindow.Styles.DurationModeText,
+            //         L10n.Tr(ObjectNames.NicifyVariableName(mode.ToString()))));
+            //
+            //     menu.AddDisabledItem(item);
+            //     menu.AddItem(TimelineStyles.showMarkersOnTimeline, state.showMarkerHeader,
+            //         () => new ToggleShowMarkersOnTimeline().Execute(state));
+            // }
+        }
+
+        
+    }
+
     class Scrub : Manipulator
     {
-        readonly Func<Event, TimelineWindow, bool> m_OnMouseDown;
+        readonly Func<Event, bool> m_OnMouseDown;
         readonly Action<double> m_OnMouseDrag;
         readonly Action m_OnMouseUp;
 
         bool m_IsCaptured;
 
-        public Scrub(Func<Event, TimelineWindow, bool> onMouseDown, Action<double> onMouseDrag, Action onMouseUp)
+        public Scrub(Func<Event, bool> onMouseDown, Action<double> onMouseDrag, Action onMouseUp)
         {
             m_OnMouseDown = onMouseDown;
             m_OnMouseDrag = onMouseDrag;
             m_OnMouseUp = onMouseUp;
         }
 
-        protected override bool MouseDown(Event evt, TimelineWindow state)
+        protected override bool MouseDown(Event evt)
         {
             if (evt.button != 0) return false;
 
-            if (!m_OnMouseDown(evt, state)) return false;
+            if (!m_OnMouseDown(evt)) return false;
 
-            // state.AddCaptured(this);
+            TimelineWindow.inst.AddCaptured(this);
             m_IsCaptured = true;
-
             return true;
         }
 
-        protected override bool MouseUp(Event evt, TimelineWindow state)
+        protected override bool MouseUp(Event evt)
         {
             if (!m_IsCaptured) return false;
 
             m_IsCaptured = false;
-            // state.RemoveCaptured(this);
-
+            TimelineWindow.inst.RemoveCaptured(this);
             m_OnMouseUp();
-
             return true;
         }
 
-        protected override bool MouseDrag(Event evt, TimelineWindow state)
+        protected override bool MouseDrag(Event evt)
         {
             if (!m_IsCaptured) return false;
 
-            m_OnMouseDrag(state.GetSnappedTimeAtMousePosition(evt.mousePosition));
+            m_OnMouseDrag(TimelineWindow.inst.GetSnappedTimeAtMousePosition(evt.mousePosition));
             return true;
         }
     }
@@ -112,10 +198,11 @@ namespace UnityEditor.Timeline
         {
             m_Style = style;
             headColor = Color.white;
-            var scrub = new Scrub((evt, state) =>
+            var scrub = new Scrub((evt) =>
             {
                 firstDrag = true;
-                return state.timeAreaRect.Contains(evt.mousePosition) && bounds.Contains((Vector2) evt.mousePosition);
+                return TimelineWindow.inst.timeAreaRect.Contains(evt.mousePosition) &&
+                       bounds.Contains((Vector2) evt.mousePosition);
             }, (d) =>
             {
                 onDrag?.Invoke(d);
