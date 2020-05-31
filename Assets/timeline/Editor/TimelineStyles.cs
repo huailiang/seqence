@@ -4,7 +4,8 @@ namespace UnityEditor.Timeline
 {
     class TimelineStyles
     {
-
+       public static GUIStyle bottomShadow = "Icon.Shadow";
+       
         public static readonly GUIContent referenceTrackLabel =
             EditorGUIUtility.TrTextContent("R", "This track references an external asset");
 
@@ -80,11 +81,15 @@ namespace UnityEditor.Timeline
         public readonly static Color colorInlineCurveOutOfRangeOverlay = new Color(0.0f, 0.0f, 0.0f, 0.5f);
 
         public readonly static Color markerHeaderDrawerBackgroundColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
+        
+        public readonly static Color colorTooltipBackground = new Color(29.0f / 255.0f, 32.0f / 255.0f, 33.0f / 255.0f);
 
         public readonly static Color colorControl = new Color(0.2313f, 0.6353f, 0.5843f, 1.0f);
 
         public readonly static Color colorSubSequenceBackground = new Color(0.1294118f, 0.1764706f, 0.1764706f, 1.0f);
 
+        public readonly static Color  colorSequenceBackground = new Color(0.16f, 0.16f, 0.16f, 1.0f);
+        
         public readonly static Color colorTrackSubSequenceBackground =
             new Color(0.1607843f, 0.2156863f, 0.2156863f, 1.0f);
 

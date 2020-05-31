@@ -28,8 +28,6 @@ namespace UnityEditor.Timeline
         {
             uint id = uint.MaxValue;
             Debug.Log(id);
-            id++;
-            Debug.Log(id);
         }
 
         [MenuItem("Window/Timeline", false, 1)]

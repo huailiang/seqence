@@ -5,8 +5,7 @@ namespace UnityEditor.Timeline
     partial class TimelineWindow
     {
         public TimelineState state { get; private set; }
-
-
+        
         public void InitialToolbar()
         {
             state = TimelineState.inst;
