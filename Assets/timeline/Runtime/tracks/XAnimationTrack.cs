@@ -6,9 +6,12 @@ namespace UnityEngine.Timeline
     [Track("动作", true)]
     public class XAnimationTrack : XBindTrack
     {
+        public override TrackType trackType
+        {
+            get { return TrackType.Animation; }
+        }
 
-        public XAnimationTrack(BindTrackData data):
-            base(data)
+        public XAnimationTrack(BindTrackData data) : base(data)
         {
         }
 
@@ -21,8 +24,5 @@ namespace UnityEngine.Timeline
         {
             return new XAnimationClip(this, data);
         }
-
-     
     }
-
 }

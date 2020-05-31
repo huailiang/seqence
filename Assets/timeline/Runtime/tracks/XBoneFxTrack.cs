@@ -10,6 +10,11 @@ namespace UnityEngine.Timeline
 
         public GameObject target;
 
+        public override TrackType trackType
+        {
+            get { return TrackType.BoneFx; }
+        }
+
         public XBoneFxTrack(TrackData data) :
             base(data)
         {

@@ -5,7 +5,11 @@ namespace UnityEngine.Timeline
 {
     public class XMarkerTrack : XTrack
     {
-        
+        public override TrackType trackType
+        {
+            get { return TrackType.Marker; }
+        }
+
         public XMarkerTrack(TrackData data) : base(data)
         {
         }

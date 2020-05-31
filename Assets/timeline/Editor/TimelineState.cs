@@ -15,6 +15,7 @@ namespace UnityEditor.Timeline
                 if (_inst == null)
                 {
                     _inst = new TimelineState();
+                    _inst.Initial();
                 }
                 return _inst;
             }
@@ -36,6 +37,12 @@ namespace UnityEditor.Timeline
             set { name = value; }
         }
 
+        public void Initial()
+        {
+            playing = false;
+            showMarkerHeader = true;
+        }
+        
         public void CreateTimeline()
         {
             TimelineConfig config = new TimelineConfig();

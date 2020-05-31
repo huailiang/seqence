@@ -12,11 +12,6 @@ namespace UnityEditor.Timeline
             get  { return m_TimeArea; }
         }
 
-        internal static class Styles
-        {
-            public static string DurationModeText = L10n.Tr("Duration Mode/{0}");
-        }
-
         float m_LastFrameRate;
         Rect timeAreaRect;
 
@@ -29,7 +24,7 @@ namespace UnityEditor.Timeline
                 {
                     hRangeLocked = false,
                     vRangeLocked = true,
-                    margin = 10,
+                    margin = 0,
                     scaleWithWindow = true,
                     hSlider = true,
                     vSlider = false,
@@ -44,7 +39,7 @@ namespace UnityEditor.Timeline
         {
             timeAreaRect.x = winArea.x + WindowConstants.rightAreaMargn;
             timeAreaRect.y = m_TimeArea.topmargin + WindowConstants.timeAreaYPosition;
-            m_TimeArea.TimeRuler(timeAreaRect, 3, true, false, 1.0f, TimeArea.TimeFormat.Frame);
+            m_TimeArea.TimeRuler(timeAreaRect, 1, true, false, 1.0f, TimeArea.TimeFormat.Frame);
         }
 
 

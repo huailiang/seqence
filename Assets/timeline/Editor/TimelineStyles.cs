@@ -4,7 +4,6 @@ namespace UnityEditor.Timeline
 {
     class TimelineStyles
     {
-        const string k_Elipsis = "…";
 
         public static readonly GUIContent referenceTrackLabel =
             EditorGUIUtility.TrTextContent("R", "This track references an external asset");
@@ -80,7 +79,7 @@ namespace UnityEditor.Timeline
 
         public readonly static Color colorInlineCurveOutOfRangeOverlay = new Color(0.0f, 0.0f, 0.0f, 0.5f);
 
-        public readonly static Color markerHeaderDrawerBackgroundColor = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+        public readonly static Color markerHeaderDrawerBackgroundColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
 
         public readonly static Color colorControl = new Color(0.2313f, 0.6353f, 0.5843f, 1.0f);
 

@@ -28,6 +28,8 @@ namespace UnityEngine.Timeline
         public XTimeline timeline;
 
         public XTrack parent { get; set; }
+        
+        public abstract TrackType trackType { get; }
 
         public XTrack root
         {
