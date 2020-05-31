@@ -19,7 +19,6 @@ namespace UnityEditor.Timeline
             TransportToolbarGUI();
             TimelineHeaderGUI();
             DrawMarkerDrawer();
-            TimeCursorGUI();
             winArea = position;
         }
 
