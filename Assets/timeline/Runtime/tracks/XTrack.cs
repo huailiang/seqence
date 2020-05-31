@@ -215,7 +215,6 @@ namespace UnityEngine.Timeline
             if (!mute)
             {
                 Foreach((track) => track.Process(time, prev), (clip) => clip.Update(time, prev));
-
                 MarkTrigerCheck(time, prev);
             }
         }
