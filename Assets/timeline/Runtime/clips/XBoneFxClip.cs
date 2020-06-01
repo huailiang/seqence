@@ -31,6 +31,7 @@ namespace UnityEngine.Timeline
                     fx.transform.localPosition = data.pos;
                     fx.transform.localRotation = Quaternion.Euler(data.rot);
                     fx.transform.localScale = data.scale;
+                    ps = tf.gameObject.GetComponentsInChildren<ParticleSystem>();
                 }
             }
         }

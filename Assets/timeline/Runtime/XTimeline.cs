@@ -1,4 +1,5 @@
-﻿using UnityEngine.Timeline.Data;
+﻿using UnityEngine.Playables;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
@@ -6,9 +7,12 @@ namespace UnityEngine.Timeline
     {
         public TimelineConfig config;
         public XTrack[] trackTrees;
+       
         private float prev;
 
         private static uint id = 0;
+
+        public PlayableGraph graph { get; set; }
 
         public static uint IncID
         {
@@ -41,6 +45,7 @@ namespace UnityEngine.Timeline
 
         private void Build()
         {
+            graph = PlayableGraph.Create("TimelineGraph");
             var tracksData = config.tracks;
             int len = tracksData.Length;
             trackTrees = new XTrack[len];
@@ -48,6 +53,7 @@ namespace UnityEngine.Timeline
             {
                 trackTrees[i] = XTrackFactory.Get(tracksData[i], this);
             }
+            graph.Play();
             prev = 0;
         }
 

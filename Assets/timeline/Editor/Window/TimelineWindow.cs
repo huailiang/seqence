@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace UnityEditor.Timeline
 {
+
+    [EditorWindowTitle(title = "Timeline", useTypeNameAsIconName = true)]
     partial class TimelineWindow : EditorWindow
     {
         public static TimelineWindow inst;
@@ -56,8 +58,10 @@ namespace UnityEditor.Timeline
         public static void ShowWindow()
         {
             inst = GetWindow<TimelineWindow>(typeof(SceneView));
-            var icon = EditorGUIUtility.IconContent("TimelineAsset Icon").image as Texture2D;
-            inst.titleContent = new GUIContent("  Timeline Editor", icon);
+            inst.titleContent = EditorGUIUtility.IconContent("TimelineAsset Icon","Timeline");
+            inst.titleContent.text = "  Timeline";
         }
+
     }
+
 }

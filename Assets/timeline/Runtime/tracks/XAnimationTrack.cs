@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using UnityEngine.Animations;
 using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
@@ -6,6 +6,9 @@ namespace UnityEngine.Timeline
     [Track("动作", true)]
     public class XAnimationTrack : XBindTrack
     {
+
+        public AnimationPlayableOutput playableOutput;
+
         public override TrackType trackType
         {
             get { return TrackType.Animation; }
@@ -13,6 +16,11 @@ namespace UnityEngine.Timeline
 
         public XAnimationTrack(BindTrackData data) : base(data)
         {
+            if (bindObj)
+            {
+                var amtor = bindObj.GetComponent<Animator>();
+                playableOutput = AnimationPlayableOutput.Create(timeline.graph, "AnimationOutput", amtor);
+            }
         }
 
         public override void Process(float time, float prev)
