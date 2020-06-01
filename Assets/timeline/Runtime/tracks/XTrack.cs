@@ -23,6 +23,8 @@ namespace UnityEngine.Timeline
 
         public XMarker[] marks;
 
+        // public IMixClip[] mixs;
+
         protected TrackMode mode;
 
         public XTimeline timeline;

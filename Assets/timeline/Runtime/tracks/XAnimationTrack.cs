@@ -7,7 +7,7 @@ namespace UnityEngine.Timeline
     public class XAnimationTrack : XBindTrack
     {
         public AnimationPlayableOutput playableOutput;
-        private AnimationMixerPlayable mixPlayable;
+        // private AnimationMixerPlayable mixPlayable;
         private int idx = 0;
 
         public override TrackType trackType
@@ -21,18 +21,14 @@ namespace UnityEngine.Timeline
             {
                 var amtor = bindObj.GetComponent<Animator>();
                 playableOutput = AnimationPlayableOutput.Create(timeline.graph, "AnimationOutput", amtor);
+                // mixPlayable = AnimationMixerPlayable.Create(timeline.graph,2);
             }
-        }
-
-        public override void Process(float time, float prev)
-        {
-            base.Process(time, prev);
         }
 
         protected override IClip BuildClip(ClipData data)
         {
             var clip = new XAnimationClip(this, data);
-            clip.weight = idx++;
+            clip.port = idx++;
             return clip;
         }
     }

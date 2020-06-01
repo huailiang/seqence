@@ -8,7 +8,7 @@ namespace UnityEngine.Timeline
     {
         AnimationClipPlayable playable;
 
-        public int weight = 0;
+        public int port = 0;
 
 
         public XAnimationClip(XAnimationTrack track, ClipData data) : base(track, data)
