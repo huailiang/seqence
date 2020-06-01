@@ -17,11 +17,11 @@ namespace UnityEngine.Timeline
     {
         public readonly uint ID;
 
-        protected XTrack[] childs;
+        public XTrack[] childs;
 
-        protected IClip[] clips;
+        public IClip[] clips;
 
-        protected XMarker[] marks;
+        public XMarker[] marks;
 
         protected TrackMode mode;
 
@@ -53,7 +53,11 @@ namespace UnityEngine.Timeline
         {
             get { return (mode & TrackMode.Record) > 0; }
         }
-
+        
+        public bool locked
+        {
+            get { return (mode & TrackMode.Lock) > 0; }
+        }
 
         protected XTrack(TrackData data)
         {
@@ -101,54 +105,7 @@ namespace UnityEngine.Timeline
             this.childs = childs;
             this.clips = clips;
         }
-
-
-#if UNITY_EDITOR
-
-        public bool locked
-        {
-            get { return (mode & TrackMode.Lock) > 0; }
-        }
-
-        public void AddSub(XTrack track)
-        {
-            var tmp = new XTrack[childs.Length + 1];
-            for (int i = 0; i < childs.Length; i++)
-            {
-                tmp[i] = childs[i];
-            }
-            tmp[childs.Length] = track;
-            childs = tmp;
-        }
-
-        private void Remv()
-        {
-            if (parent)
-            {
-                var chs = parent.childs;
-                int idx = -1;
-                for (int i = 0; i < chs.Length; i++)
-                {
-                    if (chs[i].Equals(this))
-                    {
-                        idx = i;
-                        break;
-                    }
-                }
-                if (idx >= 0)
-                {
-                    int len = chs.Length - 1;
-                    var tmp = new XTrack[len];
-                    for (int i = 0; i < len; i++)
-                    {
-                        tmp[i] = i < idx ? chs[i] : chs[i + 1];
-                    }
-                    parent.childs = tmp;
-                }
-            }
-        }
-#endif
-
+        
 
         protected void Foreach(Action<XTrack> track, Action<IClip> clip)
         {

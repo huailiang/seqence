@@ -4,15 +4,14 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-
     public class XAnimationClip : XClip<XAnimationTrack>
     {
-
         AnimationClipPlayable playable;
 
+        public int weight = 0;
 
-        public XAnimationClip(XAnimationTrack track, ClipData data) :
-         base(track, data)
+
+        public XAnimationClip(XAnimationTrack track, ClipData data) : base(track, data)
         {
             AnimClipData anData = data as AnimClipData;
             var clip = Resources.Load<AnimationClip>(anData.anim);
@@ -25,8 +24,5 @@ namespace UnityEngine.Timeline
         {
             playable.SetTime(tick);
         }
-
     }
-
-
 }

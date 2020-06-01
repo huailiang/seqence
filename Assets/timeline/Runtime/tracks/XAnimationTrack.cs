@@ -6,8 +6,9 @@ namespace UnityEngine.Timeline
     [Track("动作", true)]
     public class XAnimationTrack : XBindTrack
     {
-
         public AnimationPlayableOutput playableOutput;
+        private AnimationMixerPlayable mixPlayable;
+        private int idx = 0;
 
         public override TrackType trackType
         {
@@ -30,7 +31,9 @@ namespace UnityEngine.Timeline
 
         protected override IClip BuildClip(ClipData data)
         {
-            return new XAnimationClip(this, data);
+            var clip = new XAnimationClip(this, data);
+            clip.weight = idx++;
+            return clip;
         }
     }
 }
