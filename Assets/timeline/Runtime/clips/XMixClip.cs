@@ -9,7 +9,7 @@ public interface IMixClip
     void Update(float time, float prev);
 }
 
-public class XMixClip<T> : IMixClip where T : XTrack
+public sealed class XMixClip<T> : IMixClip where T : XTrack
 {
     public float start { get; set; }
     public float duration { get; set; }
@@ -34,7 +34,7 @@ public class XMixClip<T> : IMixClip where T : XTrack
         }
     }
 
-    protected virtual void OnMix(float weight)
+    private void OnMix(float weight)
     {
         
     }

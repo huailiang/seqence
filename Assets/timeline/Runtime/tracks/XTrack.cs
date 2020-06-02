@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
@@ -23,7 +24,7 @@ namespace UnityEngine.Timeline
 
         public XMarker[] marks;
 
-        // public IMixClip[] mixs;
+        public List<IMixClip> mixs;
 
         protected TrackMode mode;
 
@@ -32,6 +33,11 @@ namespace UnityEngine.Timeline
         public XTrack parent { get; set; }
 
         public abstract TrackType trackType { get; }
+
+        protected bool hasMix
+        {
+            get { return mixs != null; }
+        }
 
         public XTrack root
         {
@@ -55,14 +61,15 @@ namespace UnityEngine.Timeline
         {
             get { return (mode & TrackMode.Record) > 0; }
         }
-        
+
         public bool locked
         {
             get { return (mode & TrackMode.Lock) > 0; }
         }
 
-        protected XTrack(TrackData data)
+        protected XTrack(XTimeline tl, TrackData data)
         {
+            timeline = tl;
             ID = XTimeline.IncID;
             mode = TrackMode.Normal;
             if (data != null)
@@ -107,7 +114,7 @@ namespace UnityEngine.Timeline
             this.childs = childs;
             this.clips = clips;
         }
-        
+
 
         protected void Foreach(Action<XTrack> track, Action<IClip> clip)
         {
@@ -167,6 +174,22 @@ namespace UnityEngine.Timeline
         protected XMarker BuildMark(MarkData data)
         {
             return new XMarker(this, data);
+        }
+
+        public virtual void OnPostBuild()
+        {
+        }
+
+        protected void AddMix(IMixClip mix)
+        {
+            if (mixs == null)
+            {
+                mixs = new List<IMixClip>();
+            }
+            if (!mixs.Contains(mix))
+            {
+                mixs.Add(mix);
+            }
         }
 
         public virtual void Process(float time, float prev)

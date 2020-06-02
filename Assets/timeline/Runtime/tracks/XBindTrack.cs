@@ -3,19 +3,15 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    
     public abstract class XBindTrack : XTrack
     {
-
         public GameObject bindObj;
 
-        public XBindTrack(BindTrackData data) :
-            base(data)
+        protected XBindTrack(XTimeline tl, BindTrackData data) 
+            : base(tl, data)
         {
             var obj = Resources.Load<GameObject>(data.prefab);
-            bindObj = GameObject.Instantiate<GameObject>(obj);
+            bindObj = Object.Instantiate<GameObject>(obj);
         }
-
     }
-
 }

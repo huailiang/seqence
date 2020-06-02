@@ -3,11 +3,19 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
+    public enum TimelinePlayMode
+    {
+        EditorPause,
+        EditorRun,
+        RealRunning,
+    }
+
     public class XTimeline
     {
         public TimelineConfig config;
         public XTrack[] trackTrees;
-       
+        public TimelinePlayMode mode;
+
         private float prev;
 
         private static uint id = 0;

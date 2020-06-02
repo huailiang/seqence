@@ -15,8 +15,8 @@ namespace UnityEngine.Timeline
             get { return TrackType.BoneFx; }
         }
 
-        public XBoneFxTrack(TrackData data) :
-            base(data)
+        public XBoneFxTrack(XTimeline tl, TrackData data) :
+            base(tl,data)
         {
         }
 

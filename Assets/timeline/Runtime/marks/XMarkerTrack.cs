@@ -10,7 +10,7 @@ namespace UnityEngine.Timeline
             get { return TrackType.Marker; }
         }
 
-        public XMarkerTrack(TrackData data) : base(data)
+        public XMarkerTrack(XTimeline tl, TrackData data) : base(tl, data)
         {
         }
 
@@ -18,7 +18,5 @@ namespace UnityEngine.Timeline
         {
             throw new System.Exception("marker no clip");
         }
-
-       
     }
 }
