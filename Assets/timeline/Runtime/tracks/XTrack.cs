@@ -196,22 +196,50 @@ namespace UnityEngine.Timeline
         {
             if (!mute)
             {
-                Foreach((track) => track.Process(time, prev), (clip) => clip.Update(time, prev));
-                MarkTrigerCheck(time, prev);
+                bool mix = MixTriger(time, out var mixClip);
+                Foreach((track) => track.Process(time, prev), (clip) =>
+                {
+                    if (mix) clip.Update(time, prev);
+                });
+                MarkTriger(time, prev);
+                if (mix) OnMixer(time, mixClip);
             }
         }
 
-        private void MarkTrigerCheck(float time, float prev)
+        protected virtual void OnMixer(float time, IMixClip mix)
+        {
+        }
+
+        private bool MixTriger(float time, out IMixClip mixClip)
+        {
+            if (mixs != null)
+            {
+                int cnt = mixs.Count;
+                for (int i = 0; i < cnt; i++)
+                {
+                    if (mixs[i].IsIn(time))
+                    {
+                        mixClip = mixs[i];
+                        return true;
+                    }
+                }
+            }
+            mixClip = null;
+            return false;
+        }
+
+        private void MarkTriger(float time, float prev)
         {
             for (int i = 0; i < marks.Length; i++)
             {
-                if (marks[i].time > prev && marks[i].time <= time)
+                var mark = marks[i];
+                if (mark.time > prev && mark.time <= time)
                 {
-                    marks[i].OnTriger();
+                    mark.OnTriger();
                 }
-                if (marks[i].reverse && marks[i].time >= time && marks[i].time < prev)
+                if (mark.reverse && mark.time >= time && mark.time < prev)
                 {
-                    marks[i].OnTriger();
+                    mark.OnTriger();
                 }
             }
         }
@@ -221,6 +249,9 @@ namespace UnityEngine.Timeline
             Foreach((track) => track.Dispose(), (clip) => clip.Dispose());
             childs = null;
             parent = null;
+            mixs.Clear();
+            mixs = null;
+            marks = null;
         }
 
 

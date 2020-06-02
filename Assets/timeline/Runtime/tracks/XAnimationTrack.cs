@@ -1,4 +1,5 @@
 ﻿using UnityEngine.Animations;
+using UnityEngine.Playables;
 using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
@@ -30,7 +31,7 @@ namespace UnityEngine.Timeline
             base.OnPostBuild();
             if (hasMix)
             {
-                mixPlayable = AnimationMixerPlayable.Create(timeline.graph,2);
+                mixPlayable = AnimationMixerPlayable.Create(timeline.graph, 2);
             }
         }
 
@@ -48,6 +49,32 @@ namespace UnityEngine.Timeline
             tmp = clip.end;
             idx++;
             return clip;
+        }
+
+        private AnimationClipPlayable playA, playB;
+
+        protected override void OnMixer(float time, IMixClip mix)
+        {
+            if (mixPlayable.IsValid())
+            {
+                var graph = timeline.graph;
+                if (!mix.connect)
+                {
+                    XAnimationClip clipA = (XAnimationClip) mix.blendA;
+                    XAnimationClip clipB = (XAnimationClip) mix.blendB;
+                    if (clipA && clipB)
+                    {
+                        playA = clipA.playable;
+                        playB = clipB.playable;
+                        graph.Connect(playA, 0, mixPlayable, clipA.port);
+                        graph.Connect(playB, 0, mixPlayable, clipB.port);
+                    }
+                }
+                mix.connect = true;
+                float weight = (time - mix.start) / mix.duration;
+                mixPlayable.SetInputWeight(playA, 1 - weight);
+                mixPlayable.SetInputWeight(playB, weight);
+            }
         }
     }
 }

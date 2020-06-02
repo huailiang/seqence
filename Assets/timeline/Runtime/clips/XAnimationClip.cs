@@ -6,7 +6,7 @@ namespace UnityEngine.Timeline
 {
     public class XAnimationClip : XClip<XAnimationTrack>
     {
-        AnimationClipPlayable playable;
+        public AnimationClipPlayable playable;
 
         public int port = 0;
 
