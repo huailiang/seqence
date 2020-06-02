@@ -22,7 +22,14 @@ namespace UnityEngine.Timeline
 
         protected override void OnUpdate(float tick)
         {
-            playable.SetTime(tick);
+            if (timeline.isRunning)
+            {
+                playable.SetTime(tick);
+            }
+            else
+            {
+                timeline.graph.Evaluate(tick);
+            }
         }
     }
 }
