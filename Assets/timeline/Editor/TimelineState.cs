@@ -44,6 +44,7 @@ namespace UnityEditor.Timeline
             data.type = TrackType.Marker;
             config.tracks[0] = data;
             timeline = new XTimeline(config);
+            timeline.mode = TimelinePlayMode.EditorRun;
         }
 
         public void Open(string path)

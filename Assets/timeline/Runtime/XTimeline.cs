@@ -38,6 +38,11 @@ namespace UnityEngine.Timeline
             get { return trackTrees[0] as XMarkerTrack; }
         }
 
+        public bool isRunning
+        {
+            get { return mode != TimelinePlayMode.EditorPause; }
+        }
+
         public XTimeline(string path)
         {
             config = new TimelineConfig();
@@ -63,6 +68,7 @@ namespace UnityEngine.Timeline
             }
             graph.Play();
             prev = 0;
+            if (isRunning) graph.Play();
         }
 
 
