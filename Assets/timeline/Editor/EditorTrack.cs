@@ -112,5 +112,12 @@ namespace UnityEditor.Timeline
                 }
             }
         }
+
+        public static bool IsAllSubTrackMuted(this XTrack track)
+        {
+            bool ret = true;
+            track.ForeachHierachyTrack((t) => { ret = ret & t.mute; });
+            return ret;
+        }
     }
 }

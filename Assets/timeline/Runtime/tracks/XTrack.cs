@@ -57,6 +57,14 @@ namespace UnityEngine.Timeline
             get { return (mode & TrackMode.Mute) > 0; }
         }
 
+        public bool parentMute
+        {
+            get
+            {
+                return parent != null ? parent.mute : mute;
+            }
+        }
+
         public bool record
         {
             get { return (mode & TrackMode.Record) > 0; }
@@ -65,6 +73,14 @@ namespace UnityEngine.Timeline
         public bool locked
         {
             get { return (mode & TrackMode.Lock) > 0; }
+        }
+
+        public bool parentLocked
+        {
+            get
+            {
+                return parent != null ? parent.locked : locked;
+            }
         }
 
         protected XTrack(XTimeline tl, TrackData data)

@@ -8,6 +8,8 @@ namespace UnityEditor.Timeline
         public readonly static GUIStyle bottomShadow = "Icon.Shadow";
         public readonly static GUIStyle displayBackground = "sequenceClip";
         public readonly static GUIStyle tinyFont = "tinyFont";
+        public readonly static GUIStyle lockedBG = "Icon.LockedBG";
+        public readonly static GUIStyle fontClip = "Font.Clip";
 
         public static readonly GUIContent referenceTrackLabel =
             EditorGUIUtility.TrTextContent("R", "This track references an external asset");
