@@ -5,7 +5,7 @@ namespace UnityEngine.Timeline
     public class XActiveMark : XMarker
     {
         private bool active;
-        
+
         public XActiveMark(XTrack track, ActiveData data) : base(track, data)
         {
             active = data.active;
@@ -15,7 +15,7 @@ namespace UnityEngine.Timeline
         {
             base.OnTriger();
             var bind = track as XBindTrack;
-            if (bind )
+            if (bind)
             {
                 var go = bind.bindObj;
                 if (go)

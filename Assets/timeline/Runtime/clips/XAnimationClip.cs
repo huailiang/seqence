@@ -7,16 +7,16 @@ namespace UnityEngine.Timeline
     public class XAnimationClip : XClip<XAnimationTrack>
     {
         public AnimationClipPlayable playable;
-
+        private AnimationClip aclip;
         public int port = 0;
 
 
         public XAnimationClip(XAnimationTrack track, ClipData data) : base(track, data)
         {
             AnimClipData anData = data as AnimClipData;
-            var clip = Resources.Load<AnimationClip>(anData.anim);
-            playable = AnimationClipPlayable.Create(timeline.graph, clip);
-            track.playableOutput.SetSourcePlayable(playable, 0);
+            aclip = Resources.Load<AnimationClip>(anData.anim);
+            playable = AnimationClipPlayable.Create(timeline.graph, aclip);
+            track.playableOutput.SetSourcePlayable(playable, port);
         }
 
 
@@ -30,6 +30,20 @@ namespace UnityEngine.Timeline
             {
                 timeline.graph.Evaluate(tick);
             }
+        }
+
+
+        protected override void OnExit()
+        {
+            port = 0;
+            base.OnExit();
+        }
+
+        protected override void OnDestroy()
+        {
+            playable.Destroy();
+            Resources.UnloadAsset(aclip);
+            base.OnDestroy();
         }
     }
 }

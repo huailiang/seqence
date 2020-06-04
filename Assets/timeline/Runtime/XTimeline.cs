@@ -104,6 +104,13 @@ namespace UnityEngine.Timeline
                             dur = clip.end;
                         }
                     }));
+                    track.ForeachMark(mark =>
+                    {
+                        if (mark.time > dur)
+                        {
+                            dur = mark.time;
+                        }
+                    });
                 }
             }
             return dur;
