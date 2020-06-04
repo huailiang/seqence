@@ -34,6 +34,24 @@ namespace UnityEngine.Timeline.Data
             slowRate = reader.ReadSingle();
         }
     }
+
+    public class ActiveData : MarkData
+    {
+        public bool active;
+        
+        
+        public override void Write(BinaryWriter writer)
+        {
+            base.Write(writer);
+            writer.Write(active);
+        }
+
+        public override void Read(BinaryReader reader)
+        {
+            base.Read(reader);
+            active = reader.ReadBoolean();
+        }
+    }
     
     public class JumpMarkData : MarkData
     {
