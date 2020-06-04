@@ -20,6 +20,7 @@ namespace UnityEngine.Timeline.Data
             duration = reader.ReadSingle();
         }
     }
+    
 
     public class SceneFxClipData : ClipData
     {

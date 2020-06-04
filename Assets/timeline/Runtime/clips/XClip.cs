@@ -68,11 +68,7 @@ namespace UnityEngine.Timeline
                 OnUpdate(tick);
             }
         }
-
-        protected virtual void OnAwake()
-        {
-        }
-
+        
         protected virtual void OnEnter()
         {
         }

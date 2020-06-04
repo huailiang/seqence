@@ -1,18 +1,16 @@
-﻿using UnityEngine;
-using UnityEngine.Timeline.Data;
+﻿using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
     public class XBoneFxClip : XClip<XBoneFxTrack>
     {
-
+        private GameObject fx;
         ParticleSystem[] ps;
         uint seed;
 
-        public XBoneFxClip(XBoneFxTrack track, ClipData data) :
-            base(track, data)
+        public XBoneFxClip(XBoneFxTrack track, ClipData data) : base(track, data)
         {
-            Load((BoneFxClipData)data);
+            Load((BoneFxClipData) data);
         }
 
         private void Load(BoneFxClipData data)
@@ -26,12 +24,15 @@ namespace UnityEngine.Timeline
                 if (go != null)
                 {
                     var tf = go.transform.Find(data.bone);
-                    var fx = Resources.Load<GameObject>(data.prefab);
-                    fx = GameObject.Instantiate<GameObject>(fx);
-                    fx.transform.localPosition = data.pos;
-                    fx.transform.localRotation = Quaternion.Euler(data.rot);
-                    fx.transform.localScale = data.scale;
-                    ps = tf.gameObject.GetComponentsInChildren<ParticleSystem>();
+                    var obj = Resources.Load<GameObject>(data.prefab);
+                    if (obj)
+                    {
+                        fx = Object.Instantiate<GameObject>(obj);
+                        fx.transform.localPosition = data.pos;
+                        fx.transform.localRotation = Quaternion.Euler(data.rot);
+                        fx.transform.localScale = data.scale;
+                        ps = tf.gameObject.GetComponentsInChildren<ParticleSystem>();
+                    }
                 }
             }
         }
@@ -47,6 +48,21 @@ namespace UnityEngine.Timeline
             }
         }
 
+        protected override void OnDestroy()
+        {
+            if (fx)
+            {
+                if (Application.isPlaying)
+                {
+                    Object.Destroy(fx);
+                }
+                else
+                {
+                    Object.DestroyImmediate(fx);
+                }
+            }
+            ps = null;
+            base.OnDestroy();
+        }
     }
-
 }
