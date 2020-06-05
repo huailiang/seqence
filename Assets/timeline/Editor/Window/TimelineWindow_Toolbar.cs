@@ -2,7 +2,7 @@
 
 namespace UnityEditor.Timeline
 {
-    partial class TimelineWindow
+    public partial class TimelineWindow
     {
 
         void TransportToolbarGUI()

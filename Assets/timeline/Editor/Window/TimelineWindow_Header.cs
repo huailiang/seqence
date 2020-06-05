@@ -3,7 +3,7 @@ using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline
 {
-    partial class TimelineWindow
+    public partial class TimelineWindow
     {
         void TimelineHeaderGUI()
         {

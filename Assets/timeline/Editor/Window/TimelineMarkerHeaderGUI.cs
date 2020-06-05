@@ -2,7 +2,7 @@
 
 namespace UnityEditor.Timeline
 {
-    partial class TimelineWindow
+    public partial class TimelineWindow
     {
         
         private Rect markderRect;
@@ -26,7 +26,7 @@ namespace UnityEditor.Timeline
         {
             var backgroundColor = TimelineStyles.markerHeaderDrawerBackgroundColor;
             markderRect.x = winArea.x + WindowConstants.rightAreaMargn;
-            markderRect.y = m_TimeArea.topmargin + WindowConstants.markerRowYPosition;
+            markderRect.y =  WindowConstants.markerRowYPosition;
             markderRect.width = winArea.width;
             EditorGUI.DrawRect(markderRect, backgroundColor);
         }

@@ -2,8 +2,8 @@
 {
     class WindowConstants
     {
-        public const float rowGap = 2;
-        public const float timeAreaYPosition = 15.0f;
+        public const float rowGap = 4;
+        public const float timeAreaYPosition = 18.0f;
         public const float timeAreaHeight = 20.0f;
 
         public const float sliderWidth = 160.0f;
@@ -12,6 +12,7 @@
         public const float markerRowHeight = 18.0f;
         public const float markerRowYPosition = timeAreaYPosition + timeAreaHeight + rowGap;
 
+        public const float trackRowYPosition = markerRowYPosition + markerRowHeight + rowGap;
         public const float defaultHeaderWidth = 307.0f;
         public const float defaultBindingAreaWidth = 40.0f;
 

@@ -4,14 +4,13 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
-
-    enum WrapMode
+    public enum WrapMode
     {
         Loop,
         Hold
     }
 
-    class TimelineState
+    public class TimelineState
     {
         public TimelineState(TimelineWindow win)
         {

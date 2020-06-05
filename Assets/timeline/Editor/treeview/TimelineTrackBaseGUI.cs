@@ -4,7 +4,7 @@ using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline
 {
-    abstract class TimelineTrackBaseGUI : TreeViewItem, IBounds
+    public abstract class TimelineTrackBaseGUI : TreeViewItem, IBounds
     {
 
         public XTrack track { get; }

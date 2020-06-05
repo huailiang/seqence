@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UnityEditor.Timeline
 {
-    partial class TimelineWindow
+    public partial class TimelineWindow
     {
         [NonSerialized] TimeArea m_TimeArea;
 

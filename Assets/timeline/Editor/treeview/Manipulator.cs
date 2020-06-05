@@ -2,7 +2,7 @@
 
 namespace UnityEditor.Timeline
 {
-    abstract class Manipulator
+    public abstract class Manipulator
     {
         int m_Id;
 

@@ -5,7 +5,7 @@ namespace UnityEditor.Timeline
 {
 
     [EditorWindowTitle(title = "Timeline", useTypeNameAsIconName = true)]
-    partial class TimelineWindow : EditorWindow
+    public partial class TimelineWindow : EditorWindow
     {
         
         public static TimelineWindow inst;
@@ -55,8 +55,8 @@ namespace UnityEditor.Timeline
         [MenuItem("Assets/Create/Timeline", false, 450)]
         public static void CreateNewTimeline()
         {
-            uint id = uint.MaxValue;
-            Debug.Log(id);
+            ShowWindow();
+            inst.state?.CreateTimeline();
         }
 
         [MenuItem("Window/Timeline", false, 1)]
