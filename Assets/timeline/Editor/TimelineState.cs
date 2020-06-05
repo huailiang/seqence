@@ -15,7 +15,6 @@ namespace UnityEditor.Timeline
         public TimelineWindow window;
 
         public bool playing { get; set; }
-        public bool recording { get; set; }
         public bool showMarkerHeader { get; set; }
 
         public XTimeline timeline;
@@ -63,7 +62,7 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 float time = timeline.Time + 1.0f / frameRate;
-                timeline.Process(time);
+                timeline.ProcessImmediately(time);
             }
         }
 
@@ -72,13 +71,13 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 float time = timeline.Time - 1.0f / frameRate;
-                timeline.Process(time);
+                timeline.ProcessImmediately(time);
             }
         }
 
         public void FrameStart()
         {
-            timeline?.Process(0);
+            timeline?.ProcessImmediately(0);
         }
 
         public void FrameEnd()
@@ -86,8 +85,32 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 float end = timeline.RecalcuteDuration();
-                timeline.Process(end);
+                timeline.ProcessImmediately(end);
             }
         }
+
+        public void Update()
+        {
+            if (playing) SimRun();
+        }
+
+        public void SetPlaying(bool play)
+        {
+            playing = play;
+            if(play)
+            {
+                SimRun();
+            }
+        }
+
+        private void SimRun()
+        {
+            if (timeline)
+            {
+                //timeline.Process();
+            }
+        }
+
     }
+
 }

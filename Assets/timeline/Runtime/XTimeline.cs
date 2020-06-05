@@ -32,7 +32,7 @@ namespace UnityEngine.Timeline
         public float Time
         {
             get { return prev; }
-            set { ProcessImediately(value); }
+            set { ProcessImmediately(value); }
         }
 
         public XMarkerTrack markerTrack
@@ -76,23 +76,23 @@ namespace UnityEngine.Timeline
 
         public void Process(float time)
         {
-            if (slow < 1e-4)
+            if (slow < 1e-5)
             {
                 //pause
             }
             else if (delay < 1)
             {
-                delay += 1 / slow;
+                delay += slow;
             }
             if (delay >= 1)
             {
-                ProcessImediately(time);
+                ProcessImmediately(time);
                 delay = 0;
             }
         }
 
 
-        public void ProcessImediately(float time)
+        public void ProcessImmediately(float time)
         {
             for (int i = 0; i < trackTrees.Length; i++)
             {

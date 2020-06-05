@@ -23,12 +23,17 @@ namespace UnityEditor.Timeline
         {
             state = new TimelineState(this);
             InitializeTimeArea();
-            InitialToolbar();
             InitializeMarkerHeader();
+        }
+
+        private void Update()
+        {
+           // Debug.Log(System.Environment.TickCount);
         }
 
         void OnGUI()
         {
+            state?.Update();
             TimelineTimeAreaGUI();
             TransportToolbarGUI();
             TimelineHeaderGUI();

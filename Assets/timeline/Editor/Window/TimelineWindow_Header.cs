@@ -1,6 +1,4 @@
-﻿using UnityEditor;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline

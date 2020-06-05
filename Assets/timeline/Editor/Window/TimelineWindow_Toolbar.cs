@@ -4,10 +4,6 @@ namespace UnityEditor.Timeline
 {
     partial class TimelineWindow
     {
-        
-        public void InitialToolbar()
-        {
-        }
 
         void TransportToolbarGUI()
         {
@@ -59,7 +55,7 @@ namespace UnityEditor.Timeline
             var isPlaying = GUILayout.Toggle(state.playing, TimelineStyles.playContent, EditorStyles.toolbarButton);
             if (EditorGUI.EndChangeCheck())
             {
-                state.playing = isPlaying;
+                state.SetPlaying(isPlaying);
             }
         }
 
@@ -92,7 +88,7 @@ namespace UnityEditor.Timeline
 
             if (EditorGUI.EndChangeCheck())
             {
-                state.timeline?.Process(float.Parse(newCurrentTime));
+                state.timeline?.ProcessImmediately(float.Parse(newCurrentTime));
             }
         }
 
