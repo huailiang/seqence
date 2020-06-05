@@ -7,6 +7,7 @@ namespace UnityEditor.Timeline
     [EditorWindowTitle(title = "Timeline", useTypeNameAsIconName = true)]
     partial class TimelineWindow : EditorWindow
     {
+        
         public static TimelineWindow inst;
         
         public Rect winArea { get; set; }
@@ -28,12 +29,11 @@ namespace UnityEditor.Timeline
 
         private void Update()
         {
-           // Debug.Log(System.Environment.TickCount);
+            state?.Update();
         }
 
         void OnGUI()
         {
-            state?.Update();
             TimelineTimeAreaGUI();
             TransportToolbarGUI();
             TimelineHeaderGUI();

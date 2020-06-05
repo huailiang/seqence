@@ -4,6 +4,13 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
+
+    enum WrapMode
+    {
+        Loop,
+        Hold
+    }
+
     class TimelineState
     {
         public TimelineState(TimelineWindow win)
@@ -12,16 +19,14 @@ namespace UnityEditor.Timeline
             Initial();
         }
 
+        public XTimeline timeline;
+        public int frameRate = 30;
+        public WrapMode mode;
+        private string name;
         public TimelineWindow window;
 
         public bool playing { get; set; }
         public bool showMarkerHeader { get; set; }
-
-        public XTimeline timeline;
-
-        public int frameRate = 30;
-
-        private string name;
 
         public string Name
         {
@@ -31,6 +36,7 @@ namespace UnityEditor.Timeline
 
         public void Initial()
         {
+            mode = WrapMode.Hold;
             playing = false;
             showMarkerHeader = true;
         }
@@ -89,17 +95,39 @@ namespace UnityEditor.Timeline
             }
         }
 
+        private int _last = 0;
+        private float _time = 0;
+        private float _duration = 0;
         public void Update()
         {
-            if (playing) SimRun();
+            if (playing)
+            {
+                var t = Environment.TickCount;
+                float delta = 1000.0f / frameRate;
+                if (t - _last > delta)
+                {
+                    _time += delta;
+                    if (_time >= _duration)
+                    {
+                        if (mode == WrapMode.Hold)
+                            SetPlaying(false);
+                        else
+                            _time = 0;
+                    }
+                    SimRun();
+                    _last = t;
+                }
+            }
         }
 
         public void SetPlaying(bool play)
         {
             playing = play;
-            if(play)
+            if (play && timeline)
             {
-                SimRun();
+                _duration = timeline.RecalcuteDuration();
+                _time = timeline.Time;
+                _last = Environment.TickCount;
             }
         }
 
@@ -107,7 +135,7 @@ namespace UnityEditor.Timeline
         {
             if (timeline)
             {
-                //timeline.Process();
+                timeline.Process(_time);
             }
         }
 
