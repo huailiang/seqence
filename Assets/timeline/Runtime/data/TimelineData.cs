@@ -11,7 +11,8 @@ namespace UnityEngine.Timeline.Data
         Marker,
         BoneFx,
         SceneFx,
-        Animation
+        Animation,
+        PostProcess,
     }
 
     public class TrackData

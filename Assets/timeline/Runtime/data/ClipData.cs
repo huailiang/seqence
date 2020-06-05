@@ -20,7 +20,7 @@ namespace UnityEngine.Timeline.Data
             duration = reader.ReadSingle();
         }
     }
-    
+
 
     public class SceneFxClipData : ClipData
     {
@@ -91,5 +91,9 @@ namespace UnityEngine.Timeline.Data
             trim_end = reader.ReadSingle();
             loop = reader.ReadBoolean();
         }
+    }
+
+    public class PostprocessData : ClipData
+    {
     }
 }
