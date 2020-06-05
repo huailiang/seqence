@@ -15,6 +15,7 @@ namespace UnityEngine.Timeline
         public override void OnTriger()
         {
             base.OnTriger();
+            timeline.slow = slow;
         }
 
     }

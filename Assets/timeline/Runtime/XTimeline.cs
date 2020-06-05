@@ -17,6 +17,8 @@ namespace UnityEngine.Timeline
         public TimelinePlayMode mode;
 
         private float prev;
+        [Range(0, 1)] public float slow = 1;
+        private float delay;
 
         private static uint id = 0;
 
@@ -30,7 +32,7 @@ namespace UnityEngine.Timeline
         public float Time
         {
             get { return prev; }
-            set { Process(value); }
+            set { ProcessImediately(value); }
         }
 
         public XMarkerTrack markerTrack
@@ -58,6 +60,7 @@ namespace UnityEngine.Timeline
 
         private void Build()
         {
+            delay = 1;
             graph = PlayableGraph.Create("TimelineGraph");
             var tracksData = config.tracks;
             int len = tracksData.Length;
@@ -71,8 +74,25 @@ namespace UnityEngine.Timeline
             if (isRunning) graph.Play();
         }
 
-
         public void Process(float time)
+        {
+            if (slow < 1e-4)
+            {
+                //pause
+            }
+            else if (delay < 1)
+            {
+                delay += 1 / slow;
+            }
+            if (delay >= 1)
+            {
+                ProcessImediately(time);
+                delay = 0;
+            }
+        }
+
+
+        public void ProcessImediately(float time)
         {
             for (int i = 0; i < trackTrees.Length; i++)
             {
