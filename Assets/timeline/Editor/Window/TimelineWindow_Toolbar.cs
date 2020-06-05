@@ -27,6 +27,8 @@ namespace UnityEditor.Timeline
                 NewButtonGUI();
                 OpenButtonGUI();
                 SaveButtonGUI();
+                GUILayout.FlexibleSpace();
+                InspectGUI();
             }
             GUILayout.EndHorizontal();
             GUILayout.EndHorizontal();
@@ -134,6 +136,21 @@ namespace UnityEditor.Timeline
                 else
                 {
                     DoSave();
+                }
+            }
+        }
+
+        void InspectGUI()
+        {
+            if (GUILayout.Button(TimelineStyles.mixOn, EditorStyles.toolbarButton))
+            {
+                if (state.timeline == null)
+                {
+                    EditorUtility.DisplayDialog("warn", "not create timeline in editor", "ok");
+                }
+                else
+                {
+                    TimelineInspector.ShowWindow(this);
                 }
             }
         }
