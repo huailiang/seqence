@@ -4,7 +4,6 @@ namespace UnityEditor.Timeline
 {
     public partial class TimelineWindow
     {
-
         void TransportToolbarGUI()
         {
             GUILayout.BeginHorizontal();
@@ -142,16 +141,9 @@ namespace UnityEditor.Timeline
 
         void InspectGUI()
         {
-            if (GUILayout.Button(TimelineStyles.mixOn, EditorStyles.toolbarButton))
+            if (GUILayout.Button(TimelineStyles.inspectBtn, EditorStyles.toolbarButton))
             {
-                if (state.timeline == null)
-                {
-                    EditorUtility.DisplayDialog("warn", "not create timeline in editor", "ok");
-                }
-                else
-                {
-                    TimelineInspector.ShowWindow(this);
-                }
+                TimelineInspector.ShowWindow(this);
             }
         }
 

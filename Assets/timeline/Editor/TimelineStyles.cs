@@ -49,11 +49,8 @@ namespace UnityEditor.Timeline
         public static readonly GUIContent previewContent =
             EditorGUIUtility.TrTextContent("Preview", "Enable/disable scene preview mode");
 
-        public static readonly GUIContent mixOff =
-            EditorGUIUtility.IconContent("TimelineEditModeMixOFF", "|Mix Mode (1)");
-
         public static readonly GUIContent
-            mixOn = EditorGUIUtility.IconContent("TimelineEditModeMixON", "|Mix Mode (1)");
+            inspectBtn = EditorGUIUtility.IconContent("TimelineEditModeMixON", "| timeline inspector");
 
         public static readonly GUIContent showMarkersOn = EditorGUIUtility.TrTextContentWithIcon(string.Empty,
             "Show / Hide Timeline Markers", "TimelineMarkerAreaButtonEnabled");
