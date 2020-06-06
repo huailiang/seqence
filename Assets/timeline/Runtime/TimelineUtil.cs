@@ -48,7 +48,7 @@ namespace UnityEngine.Timeline
 
         public static bool CanRecord(MemberInfo track)
         {
-            if (Attribute.GetCustomAttribute(track, typeof(TrackAttribute)) is TrackAttribute attr)
+            if (Attribute.GetCustomAttribute(track, typeof(TrackDescriptorAttribute)) is TrackDescriptorAttribute attr)
             {
                 return attr.recordable;
             }

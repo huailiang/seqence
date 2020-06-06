@@ -2,21 +2,28 @@
 
 namespace UnityEngine.Timeline
 {
-
     [AttributeUsage(AttributeTargets.Class)]
-    public class TrackAttribute : Attribute
+    public class TrackDescriptorAttribute : Attribute
     {
-
         public string desc;
 
         public bool recordable;
 
 
-        public TrackAttribute(string desc, bool record)
+        public TrackDescriptorAttribute(string desc, bool record)
         {
             this.desc = desc;
             this.recordable = record;
         }
+    }
 
+    public class TrackRequreType : Attribute
+    {
+        public Type type;
+
+        public TrackRequreType(Type t)
+        {
+            type = t;
+        }
     }
 }

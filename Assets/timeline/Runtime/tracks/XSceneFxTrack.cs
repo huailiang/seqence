@@ -3,7 +3,7 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    [Track("场景特效", true)]
+    [TrackDescriptor("场景特效", true)]
     public class XSceneFxTrack : XTrack
     {
         private TrackData data;

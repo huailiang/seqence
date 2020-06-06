@@ -3,7 +3,7 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    [Track("骨骼特效", false)]
+    [TrackDescriptor("骨骼特效", false)]
     public class XBoneFxTrack : XTrack
     {
         public GameObject target;
