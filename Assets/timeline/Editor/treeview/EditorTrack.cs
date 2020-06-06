@@ -9,7 +9,6 @@ namespace UnityEditor.Timeline
         public Rect rect;
         public Rect head;
         public bool select;
-        internal const int icoWdt = 16;
         private GenericMenu pm;
 
         public uint ID
@@ -113,11 +112,15 @@ namespace UnityEditor.Timeline
             GUILayout.BeginHorizontal();
             GUILayout.Space(5);
             GUILayout.Label(track.ToString());
-            if (GUILayout.Button("lock", GUILayout.MaxWidth(icoWdt)))
+            OnGUIHeader();
+            if (GUILayout.Button("mute", TimelineStyles.mute))
+            {
+                track.SetFlag(TrackMode.Mute, !track.mute);
+            }
+            if (GUILayout.Button("lock", TimelineStyles.locked))
             {
                 track.SetFlag(TrackMode.Lock, !track.locked);
             }
-            OnGUIHeader();
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }

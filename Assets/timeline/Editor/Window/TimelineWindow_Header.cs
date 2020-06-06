@@ -41,9 +41,10 @@ namespace UnityEditor.Timeline
                     string[] values = System.Enum.GetNames(e.GetType());
                     for (int i = 1; i < values.Length; i++)
                     {
-                        pm.AddItem(EditorGUIUtility.TrTextContent(values[i]), false, OnAddTrackItem,i);
+                        pm.AddItem(EditorGUIUtility.TrTextContent(values[i]), false, OnAddTrackItem, i);
                     }
-                    pm.ShowAsContext();
+                    Rect rect = new Rect(Event.current.mousePosition, new Vector2(200, 0));
+                    pm.DropDown(rect);
                 }
             }
         }
@@ -51,7 +52,7 @@ namespace UnityEditor.Timeline
         private void OnAddTrackItem(object arg)
         {
             TrackType type = (TrackType) arg;
-            TrackData data =EditorTrackFactory.CreateData(type);
+            TrackData data = EditorTrackFactory.CreateData(type);
             var track = XTrackFactory.Get(data, state.timeline);
             tree.AddTrack(track);
             state.timeline.AddRootTrack(track);

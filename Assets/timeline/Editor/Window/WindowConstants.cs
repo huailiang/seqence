@@ -6,8 +6,8 @@
         public const float timeAreaYPosition = 18.0f;
         public const float timeAreaHeight = 20.0f;
 
-        public const float sliderWidth = 160.0f;
-        public const float rightAreaMargn = 162.0f;
+        public const float sliderWidth = 200.0f;
+        public const float rightAreaMargn = 202.0f;
 
         public const float markerRowHeight = 18.0f;
         public const float markerRowYPosition = timeAreaYPosition + timeAreaHeight + rowGap;
@@ -15,13 +15,6 @@
         public const float trackRowYPosition = markerRowYPosition + markerRowHeight + rowGap;
         public const float defaultHeaderWidth = 307.0f;
         public const float defaultBindingAreaWidth = 40.0f;
-
-        public const float minHierarchySplitter = 0.15f;
-        public const float maxHierarchySplitter = 10.50f;
-        public const float hierarchySplitterDefaultPercentage = 0.2f;
-
-        public const float minHeaderWidth = 315.0f;
-        public const float maxHeaderWidth = 650.0f;
 
         public const float minTimeCodeWidth = 28.0f; // Enough space to display up to 9999 without clipping
 

@@ -5,10 +5,13 @@ namespace UnityEditor.Timeline
     class TimelineStyles
     {
         public readonly static GUIStyle bottomShadow = "Icon.Shadow";
-        public readonly static GUIStyle displayBackground = "sequenceClip";
-        public readonly static GUIStyle tinyFont = "tinyFont";
         public readonly static GUIStyle lockedBG = "Icon.LockedBG";
         public readonly static GUIStyle fontClip = "Font.Clip";
+        public readonly static GUIStyle mute = "Icon.Mute";
+        public readonly static GUIStyle locked = "Icon.Locked";
+        public readonly static GUIStyle autoKey = "Icon.AutoKey";
+        public readonly static GUIStyle keyframe = "Icon.Keyframe";
+        public readonly static GUIStyle  clips = "Icon.Curves";
 
         public static readonly GUIContent referenceTrackLabel =
             EditorGUIUtility.TrTextContent("R", "This track references an external asset");
