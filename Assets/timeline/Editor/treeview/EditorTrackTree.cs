@@ -18,7 +18,9 @@ namespace UnityEditor.Timeline
         {
             if (hierachy != null && hierachy.Count > 0)
             {
-                return hierachy.Where(x => x.select).Select(x => x.track).Last();
+                var list = hierachy.Where(x => x.select);
+                var editorTracks = list as EditorTrack[] ?? list.ToArray();
+                return editorTracks.Any() ? editorTracks.Select(x => x.track).Last() : null;
             }
             return null;
         }
@@ -46,10 +48,9 @@ namespace UnityEditor.Timeline
         {
             EditorTrack etrack = EditorTrackFactory.Get(track);
             float y = _y + height * idx + WindowConstants.rowGap * idx;
-            int depth = 0;
-            if (track.parent) depth++;
+            int offset = track.parent ? 10 : 0;
             etrack.rect = new Rect(x, y, width, height);
-            etrack.head = new Rect(depth * 10, y, WindowConstants.sliderWidth, height);
+            etrack.head = new Rect(offset, y, WindowConstants.sliderWidth - offset, height);
 
             idx++;
             list.Add(etrack);
@@ -100,9 +101,9 @@ namespace UnityEditor.Timeline
         {
             EditorTrack etrack = EditorTrackFactory.Get(track);
             float y = _y + height * idx + WindowConstants.rowGap * idx;
-            int depth = track.parent ? 1 : 0;
+            float offset = track.parent ? 10 : 0;
             etrack.rect = new Rect(x, y, width, height);
-            etrack.head = new Rect(depth * 10, y, WindowConstants.sliderWidth, height);
+            etrack.head = new Rect(offset, y, WindowConstants.sliderWidth - offset, height);
             hierachy.Add(etrack);
             int last = hierachy.Count - 1;
             for (int i = last; i > idx; i--)
@@ -110,6 +111,7 @@ namespace UnityEditor.Timeline
                 hierachy[i] = hierachy[i - 1];
             }
             hierachy[idx] = etrack;
+            TimelineWindow.inst.Repaint();
         }
 
         public void OnRmTrack(EditorTrack track)
@@ -125,6 +127,7 @@ namespace UnityEditor.Timeline
                 it.rect.y -= delta;
                 it.head.y -= delta;
             }
+            TimelineWindow.inst.Repaint();
         }
 
         public void OnGUI(TimelineState state)

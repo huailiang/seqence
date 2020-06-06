@@ -9,9 +9,8 @@ namespace UnityEditor.Timeline
             get { return Color.cyan; }
         }
 
-        protected override void GUIHeader()
+        protected override void OnGUIHeader()
         {
-            base.GUIHeader();
         }
     }
 }

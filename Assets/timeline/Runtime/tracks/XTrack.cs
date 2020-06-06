@@ -131,7 +131,19 @@ namespace UnityEngine.Timeline
             this.childs = childs;
             this.clips = clips;
         }
-        
+
+        public void SetMute(bool mute)
+        {
+            if (mute)
+            {
+                mode |= TrackMode.Mute;
+            }
+            else
+            {
+                mode &= ~(TrackMode.Mute);
+            }
+        }
+
         protected void Foreach(Action<XTrack> track, Action<IClip> clip)
         {
             ForeachClip(clip);

@@ -9,7 +9,7 @@ namespace UnityEditor.Timeline
         public Rect rect;
         public Rect head;
         public bool select;
-        
+
         private GenericMenu pm;
 
         public uint ID
@@ -56,6 +56,14 @@ namespace UnityEditor.Timeline
                     pm.AddSeparator("");
                     pm.AddItem(EditorGUIUtility.TrTextContent("Add Clip \t"), false, AddClip);
                     pm.AddItem(EditorGUIUtility.TrTextContent("Delete \t"), false, DeleteClip);
+                    if (track.mute)
+                    {
+                        pm.AddItem(EditorGUIUtility.TrTextContent("UnMute Clip \t"), false, UnmuteClip);
+                    }
+                    else
+                    {
+                        pm.AddItem(EditorGUIUtility.TrTextContent("Mute Clip \t"), false, MuteClip);
+                    }
                     pm.ShowAsContext();
                 }
             }
@@ -69,11 +77,20 @@ namespace UnityEditor.Timeline
             }
         }
 
-        protected virtual void GUIHeader()
+        protected void GUIHeader()
+        {
+            GUILayout.BeginArea(head);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(track.ToString());
+            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+        }
+
+        protected virtual void OnGUIHeader()
         {
         }
 
-        protected virtual void GUIContent()
+        protected void GUIContent()
         {
             var clips = track.clips;
             Rect tmp = rect;
@@ -89,6 +106,13 @@ namespace UnityEditor.Timeline
                     EditorGUI.DrawRect(tmp, TimelineStyles.colorRecordingClipOutline);
                 }
             }
+            GUILayout.BeginArea(rect);
+            OnGUIContent();
+            GUILayout.EndArea();
+        }
+
+        protected virtual void OnGUIContent()
+        {
         }
 
         private void AddClip()
@@ -99,6 +123,19 @@ namespace UnityEditor.Timeline
         private void DeleteClip()
         {
             Debug.Log("delete Click");
+            TimelineWindow.inst.Repaint();
+        }
+
+        private void MuteClip()
+        {
+            track.SetMute(true);
+            TimelineWindow.inst.Repaint();
+        }
+
+        private void UnmuteClip()
+        {
+            track.SetMute(false);
+            TimelineWindow.inst.Repaint();
         }
     }
 }

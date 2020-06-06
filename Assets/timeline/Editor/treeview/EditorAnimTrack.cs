@@ -10,12 +10,9 @@ namespace UnityEditor.Timeline
             get { return Color.yellow; }
         }
 
-        protected override void GUIHeader()
+        protected override void OnGUIHeader()
         {
-            base.GUIHeader();
             XBindTrack btrack = track as XBindTrack;
-
-            GUILayout.BeginArea(head);
             GUILayout.Space(4);
             if (GUILayout.Button("rec", GUILayout.MaxWidth(16)))
             {
@@ -30,9 +27,8 @@ namespace UnityEditor.Timeline
             }
         }
 
-        protected override void GUIContent()
+        protected override void OnGUIContent()
         {
-            base.GUIContent();
         }
     }
 }

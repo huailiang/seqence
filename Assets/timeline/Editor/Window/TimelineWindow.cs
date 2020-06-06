@@ -39,10 +39,10 @@ namespace UnityEditor.Timeline
             TransportToolbarGUI();
             if (state.timeline)
             {
-                TimelineTimeAreaGUI();
                 TimelineHeaderGUI();
                 DrawMarkerDrawer();
                 tree.OnGUI(state);
+                TimelineTimeAreaGUI();
             }
             else
             {
