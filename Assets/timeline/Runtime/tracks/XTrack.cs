@@ -257,16 +257,19 @@ namespace UnityEngine.Timeline
 
         private void MarkTriger(float time, float prev)
         {
-            for (int i = 0; i < marks.Length; i++)
+            if (marks != null)
             {
-                var mark = marks[i];
-                if (mark.time > prev && mark.time <= time)
+                for (int i = 0; i < marks.Length; i++)
                 {
-                    mark.OnTriger();
-                }
-                if (mark.reverse && mark.time >= time && mark.time < prev)
-                {
-                    mark.OnTriger();
+                    var mark = marks[i];
+                    if (mark.time > prev && mark.time <= time)
+                    {
+                        mark.OnTriger();
+                    }
+                    if (mark.reverse && mark.time >= time && mark.time < prev)
+                    {
+                        mark.OnTriger();
+                    }
                 }
             }
         }

@@ -74,7 +74,6 @@ namespace UnityEngine.Timeline
             {
                 trackTrees[i] = XTrackFactory.Get(tracksData[i], this);
             }
-            graph.Play();
             prev = 0;
             if (isRunning) graph.Play();
         }

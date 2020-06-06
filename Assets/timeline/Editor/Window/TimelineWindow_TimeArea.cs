@@ -11,7 +11,7 @@ namespace UnityEditor.Timeline
         public Rect timeAreaRect;
 
         public TimelineState state { get; private set; }
-        
+
         void InitializeTimeArea()
         {
             if (m_TimeArea == null)
@@ -37,21 +37,11 @@ namespace UnityEditor.Timeline
             timeAreaRect.x = winArea.x + WindowConstants.rightAreaMargn;
             timeAreaRect.y = m_TimeArea.topmargin + WindowConstants.timeAreaYPosition;
             m_TimeArea.TimeRuler(timeAreaRect, 1, true, false, 1.0f, TimeArea.TimeFormat.Frame);
-            
+
             DrawTimeOnSlider();
             DrawTimeCursor();
         }
 
-        public float TimeToPixel(float time)
-        {
-            return m_TimeArea.TimeToPixel(time, timeAreaRect);
-        }
-
-        public float PiexlToTime(float pixel)
-        {
-            return m_TimeArea.PixelToTime(pixel, timeAreaRect);
-        }
-        
         void DrawTimeOnSlider()
         {
             float colorDimFactor = EditorGUIUtility.isProSkin ? 0.7f : 0.9f;
@@ -79,15 +69,17 @@ namespace UnityEditor.Timeline
 
         public float GetSnappedTimeAtMousePosition(Vector2 pos)
         {
-            Debug.Log(pos);
-            return 0.0f;
+            return m_TimeArea.PixelToTime(pos.x, timeAreaRect);
         }
 
+        public float TimeToPixel(float time)
+        {
+            return m_TimeArea.TimeToPixel(time, timeAreaRect);
+        }
 
         void OnTrackHeadDrag(float newTime)
         {
             state.timeline.Time = Mathf.Max(0.0f, newTime);
         }
-        
     }
 }
