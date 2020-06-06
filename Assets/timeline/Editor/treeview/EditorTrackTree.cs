@@ -54,7 +54,6 @@ namespace UnityEditor.Timeline
 
             idx++;
             list.Add(etrack);
-
             if (track.childs != null)
             {
                 for (int i = 0; i < track.childs.Length; i++)
@@ -72,10 +71,10 @@ namespace UnityEditor.Timeline
                 float delta = 0;
                 if (it.track.ID == track.track.ID)
                 {
+                    it.SetHeight(height);
                     delta = height - it.rect.height;
                 }
-                it.rect.height += delta;
-                it.head.height += delta;
+                it.YOffset(delta);
             }
         }
 
@@ -109,6 +108,7 @@ namespace UnityEditor.Timeline
             for (int i = last; i > idx; i--)
             {
                 hierachy[i] = hierachy[i - 1];
+                hierachy[i].YOffset(height + WindowConstants.rowGap);
             }
             hierachy[idx] = etrack;
             TimelineWindow.inst.Repaint();
@@ -124,8 +124,7 @@ namespace UnityEditor.Timeline
                 {
                     delta = track.rect.height + WindowConstants.rowGap;
                 }
-                it.rect.y -= delta;
-                it.head.y -= delta;
+                it.YOffset(-delta);
             }
             TimelineWindow.inst.Repaint();
         }

@@ -13,12 +13,15 @@ namespace UnityEditor.Timeline
         protected override void OnGUIHeader()
         {
             XBindTrack btrack = track as XBindTrack;
-            GUILayout.Space(4);
-            if (GUILayout.Button("rec", GUILayout.MaxWidth(16)))
+            if (GUILayout.Button("rec", GUILayout.MaxWidth(icoWdt)))
             {
-                Debug.Log("recod mode");
+                Debug.Log("start recod mode");
+                track.SetFlag(TrackMode.Record, !track.record);
             }
-            GUILayout.EndArea();
+            if (GUILayout.Button("clip", GUILayout.MaxWidth(icoWdt)))
+            {
+                Debug.Log("show record clip");
+            }
             if (btrack && btrack.bindObj)
             {
 #pragma warning disable 618

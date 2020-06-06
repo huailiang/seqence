@@ -133,5 +133,7 @@ namespace UnityEditor.Timeline
             track.ForeachHierachyTrack((t) => { ret = ret & t.mute; });
             return ret;
         }
+
+      
     }
 }

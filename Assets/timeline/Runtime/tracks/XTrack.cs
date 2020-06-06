@@ -132,15 +132,15 @@ namespace UnityEngine.Timeline
             this.clips = clips;
         }
 
-        public void SetMute(bool mute)
+        public void SetFlag(TrackMode mode, bool flag)
         {
-            if (mute)
+            if (flag)
             {
-                mode |= TrackMode.Mute;
+                this.mode |= mode;
             }
             else
             {
-                mode &= ~(TrackMode.Mute);
+                this.mode &= ~(mode);
             }
         }
 

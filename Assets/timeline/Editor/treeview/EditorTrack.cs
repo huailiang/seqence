@@ -9,7 +9,7 @@ namespace UnityEditor.Timeline
         public Rect rect;
         public Rect head;
         public bool select;
-
+        internal const int icoWdt = 18;
         private GenericMenu pm;
 
         public uint ID
@@ -46,7 +46,14 @@ namespace UnityEditor.Timeline
 
             GUIHeader();
             GUIContent();
+            if (!track.locked)
+            {
+                ProcessEvent();
+            }
+        }
 
+        protected void ProcessEvent()
+        {
             var e = Event.current;
             if (e.type == EventType.ContextClick)
             {
@@ -77,11 +84,30 @@ namespace UnityEditor.Timeline
             }
         }
 
+        public void YOffset(float y)
+        {
+            head.y += y;
+            rect.y += y;
+        }
+
+        public void SetHeight(float height)
+        {
+            head.height = height;
+            rect.height = height;
+        }
+
         protected void GUIHeader()
         {
-            GUILayout.BeginArea(head);
+            var tmp = head;
+            tmp.y += head.height / 4;
+            GUILayout.BeginArea(tmp);
             GUILayout.BeginHorizontal();
             GUILayout.Label(track.ToString());
+            if (GUILayout.Button("lock", GUILayout.MaxWidth(icoWdt)))
+            {
+                track.SetFlag(TrackMode.Lock, !track.locked);
+            }
+            OnGUIHeader();
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
@@ -128,13 +154,13 @@ namespace UnityEditor.Timeline
 
         private void MuteClip()
         {
-            track.SetMute(true);
+            track.SetFlag(TrackMode.Mute, true);
             TimelineWindow.inst.Repaint();
         }
 
         private void UnmuteClip()
         {
-            track.SetMute(false);
+            track.SetFlag(TrackMode.Mute, false);
             TimelineWindow.inst.Repaint();
         }
     }
