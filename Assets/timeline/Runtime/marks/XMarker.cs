@@ -2,7 +2,6 @@
 
 namespace UnityEngine.Timeline
 {
-    
     public class XMarker
     {
         protected XTrack track { get; set; }
@@ -32,8 +31,12 @@ namespace UnityEngine.Timeline
             get { return true; }
         }
 
-        public virtual void OnTriger() { }
+        public virtual void OnTriger()
+        {
+        }
 
+        public virtual void Dispose()
+        {
+        }
     }
-
 }

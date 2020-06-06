@@ -5,35 +5,9 @@ using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline
 {
+   
     public class EditorTrackTree
     {
-        public struct EditorTrack
-        {
-            public XTrack track;
-            public Rect rect;
-            public Rect head;
-            public bool select;
-
-            public uint ID
-            {
-                get { return track.ID; }
-            }
-
-            public void OnGUI()
-            {
-                var backgroundColor = select
-                    ? TimelineStyles.colorTrackSubSequenceBackgroundSelected
-                    : TimelineStyles.markerHeaderDrawerBackgroundColor;
-                EditorGUI.DrawRect(rect, backgroundColor);
-
-                var headColor = backgroundColor;
-                EditorGUI.DrawRect(head, headColor);
-
-                track.GUIHeader(head);
-                track.GUIContent(rect);
-            }
-        }
-
         public List<EditorTrack> hierachy;
 
         private int idx = 0;
@@ -61,9 +35,7 @@ namespace UnityEditor.Timeline
 
         private void Add(XTrack track, IList<EditorTrack> list)
         {
-            EditorTrack etrack = new EditorTrack();
-            etrack.track = track;
-            etrack.@select = false;
+            EditorTrack etrack = EditorTrackFactory.Get(track);
             float y = _y + height * idx + WindowConstants.rowGap * idx;
             etrack.rect = new Rect(x, y, width, height);
             etrack.head = new Rect(0, y, WindowConstants.sliderWidth, height);
@@ -114,8 +86,7 @@ namespace UnityEditor.Timeline
 
         public void AddTrack(XTrack track, int idx)
         {
-            EditorTrack etrack = new EditorTrack();
-            etrack.track = track;
+            EditorTrack etrack = EditorTrackFactory.Get(track);
             float y = _y + height * idx + WindowConstants.rowGap * idx;
             etrack.rect = new Rect(x, y, width, height);
             etrack.head = new Rect(0, y, WindowConstants.sliderWidth, height);

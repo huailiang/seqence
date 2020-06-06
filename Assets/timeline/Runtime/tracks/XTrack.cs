@@ -131,23 +131,12 @@ namespace UnityEngine.Timeline
             this.childs = childs;
             this.clips = clips;
         }
-
-
+        
         protected void Foreach(Action<XTrack> track, Action<IClip> clip)
         {
             ForeachClip(clip);
             ForeachTrack(track);
         }
-
-#if UNITY_EDITOR
-        public virtual void GUIHeader(Rect rect)
-        {
-        }
-
-        public virtual void GUIContent(Rect rect)
-        {
-        }
-#endif
 
         public void ForeachMark(Action<XMarker> marker)
         {
@@ -276,7 +265,8 @@ namespace UnityEngine.Timeline
 
         public virtual void Dispose()
         {
-            Foreach((track) => track.Dispose(), (clip) => clip.Dispose());
+            Foreach(track => track.Dispose(), clip => clip.Dispose());
+            ForeachMark(mark => mark.Dispose());
             childs = null;
             parent = null;
             mixs.Clear();
