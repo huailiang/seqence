@@ -1,4 +1,7 @@
-﻿using UnityEngine.Animations;
+﻿#if UNITY_EDITOR
+using UnityEditor;
+#endif
+using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline.Data;
 
@@ -83,5 +86,26 @@ namespace UnityEngine.Timeline
                 mixPlayable.SetInputWeight(playB, weight);
             }
         }
+
+#if UNITY_EDITOR
+        public override void GUIHeader(Rect rect)
+        {
+            if (bindObj)
+            {
+#pragma warning disable 618
+                EditorGUILayout.ObjectField(bindObj, typeof(Animator), GUILayout.MaxWidth(10));
+#pragma warning restore 618
+            }
+        }
+
+
+        public override void GUIContent(Rect rect)
+        {
+            base.GUIContent(rect);
+            if (clips != null)
+            {
+            }
+        }
+#endif
     }
 }

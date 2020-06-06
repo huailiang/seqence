@@ -28,6 +28,9 @@ namespace UnityEditor.Timeline
 
                 var headColor = backgroundColor;
                 EditorGUI.DrawRect(head, headColor);
+
+                track.GUIHeader(head);
+                track.GUIContent(rect);
             }
         }
 

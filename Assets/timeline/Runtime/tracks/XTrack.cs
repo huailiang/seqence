@@ -12,7 +12,7 @@ namespace UnityEngine.Timeline
         Record = 1 << 2,
         Lock = 1 << 3,
     }
-    
+
 
     public abstract class XTrack
     {
@@ -31,7 +31,7 @@ namespace UnityEngine.Timeline
         public XTimeline timeline;
 
         public XTrack parent { get; set; }
-        
+
         public virtual bool cloneable
         {
             get { return true; }
@@ -66,10 +66,7 @@ namespace UnityEngine.Timeline
 
         public bool parentMute
         {
-            get
-            {
-                return parent != null ? parent.mute : mute;
-            }
+            get { return parent != null ? parent.mute : mute; }
         }
 
         public bool record
@@ -84,10 +81,7 @@ namespace UnityEngine.Timeline
 
         public bool parentLocked
         {
-            get
-            {
-                return parent != null ? parent.locked : locked;
-            }
+            get { return parent != null ? parent.locked : locked; }
         }
 
         protected XTrack(XTimeline tl, TrackData data)
@@ -144,6 +138,16 @@ namespace UnityEngine.Timeline
             ForeachClip(clip);
             ForeachTrack(track);
         }
+
+#if UNITY_EDITOR
+        public virtual void GUIHeader(Rect rect)
+        {
+        }
+
+        public virtual void GUIContent(Rect rect)
+        {
+        }
+#endif
 
         public void ForeachMark(Action<XMarker> marker)
         {

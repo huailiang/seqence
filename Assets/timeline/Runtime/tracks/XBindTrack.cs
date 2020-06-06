@@ -49,5 +49,6 @@ namespace UnityEngine.Timeline
         protected virtual void OnBind()
         {
         }
+        
     }
 }
