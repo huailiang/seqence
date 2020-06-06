@@ -12,7 +12,7 @@ namespace UnityEngine.Timeline
         Record = 1 << 2,
         Lock = 1 << 3,
     }
-
+    
 
     public abstract class XTrack
     {
@@ -31,8 +31,15 @@ namespace UnityEngine.Timeline
         public XTimeline timeline;
 
         public XTrack parent { get; set; }
+        
+        public virtual bool cloneable
+        {
+            get { return true; }
+        }
 
         public abstract TrackType trackType { get; }
+
+        public abstract XTrack Clone();
 
         protected bool hasMix
         {

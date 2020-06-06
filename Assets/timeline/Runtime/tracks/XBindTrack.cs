@@ -7,11 +7,13 @@ namespace UnityEngine.Timeline
     {
         public GameObject bindObj;
 
-        protected XBindTrack(XTimeline tl, BindTrackData data) 
-            : base(tl, data)
+        protected XBindTrack(XTimeline tl, BindTrackData data) : base(tl, data)
         {
-            var obj = Resources.Load<GameObject>(data.prefab);
-            bindObj = Object.Instantiate<GameObject>(obj);
+            if (!string.IsNullOrEmpty(data.prefab))
+            {
+                var obj = Resources.Load<GameObject>(data.prefab);
+                bindObj = Object.Instantiate(obj);
+            }
         }
     }
 }

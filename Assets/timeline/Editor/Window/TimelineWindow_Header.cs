@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
@@ -27,9 +28,19 @@ namespace UnityEditor.Timeline
                 XTrack parent = null;
                 if (parent)
                 {
+                    var track = parent.Clone();
+                    track.parent = parent;
+                    int idx = tree.IndexOfTrack(parent);
+                    tree.AddTrack(track, ++idx);
+                }
+                else
+                {
+                    BindTrackData data = new BindTrackData();
+                    data.type = TrackType.Animation;
+                    var track = XTrackFactory.Get(data, state.timeline);
+                    tree.AddTrack(track);
                 }
             }
-
         }
 
 

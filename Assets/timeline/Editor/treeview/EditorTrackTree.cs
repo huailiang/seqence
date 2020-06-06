@@ -11,10 +11,18 @@ namespace UnityEditor.Timeline
         {
             public XTrack track;
             public Rect rect;
+            public bool select;
+
+            public uint ID
+            {
+                get { return track.ID; }
+            }
 
             public void OnGUI()
             {
-                var backgroundColor = TimelineStyles.markerHeaderDrawerBackgroundColor;
+                var backgroundColor = select
+                    ? TimelineStyles.colorTrackSubSequenceBackgroundSelected
+                    : TimelineStyles.markerHeaderDrawerBackgroundColor;
                 EditorGUI.DrawRect(rect, backgroundColor);
             }
         }
@@ -48,6 +56,7 @@ namespace UnityEditor.Timeline
         {
             EditorTrack etrack = new EditorTrack();
             etrack.track = track;
+            etrack.@select = false;
             float y = _y + height * idx + WindowConstants.rowGap * idx;
             etrack.rect = new Rect(x, y, width, height);
             idx++;
@@ -76,12 +85,31 @@ namespace UnityEditor.Timeline
             }
         }
 
+        public int IndexOfTrack(XTrack track)
+        {
+            for (int i = 0; i < hierachy.Count; i++)
+            {
+                var it = hierachy[i];
+                if (it.ID == track.ID)
+                {
+                    return i;
+                }
+            }
+            return 0;
+        }
+
+        public void AddTrack(XTrack track)
+        {
+            int idx = hierachy.Count;
+            AddTrack(track, idx);
+        }
+
         public void AddTrack(XTrack track, int idx)
         {
-            EditorTrack etrack = new EditorTrack();;
+            EditorTrack etrack = new EditorTrack();
             etrack.track = track;
             float y = _y + height * idx + WindowConstants.rowGap * idx;
-            etrack.rect = new Rect(x,y,width,height);
+            etrack.rect = new Rect(x, y, width, height);
             hierachy.Add(etrack);
             int last = hierachy.Count - 1;
             for (int i = last; i > idx; i--)
@@ -97,7 +125,7 @@ namespace UnityEditor.Timeline
             {
                 var it = hierachy[i];
                 float delta = 0;
-                if (it.track.ID == track.track.ID)
+                if (it.ID == track.track.ID)
                 {
                     delta = track.rect.height + WindowConstants.rowGap;
                 }
@@ -105,8 +133,12 @@ namespace UnityEditor.Timeline
             }
         }
 
-        public void OnGUI()
+        public void OnGUI(TimelineState state)
         {
+            if (hierachy == null)
+            {
+                BuildTreeHierachy(state);
+            }
             foreach (var it in hierachy)
             {
                 it.OnGUI();

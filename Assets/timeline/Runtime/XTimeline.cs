@@ -26,7 +26,12 @@ namespace UnityEngine.Timeline
 
         public static uint IncID
         {
-            get { return id++; }
+            get
+            {
+                id++;
+                if (id == 0) id++; //overide
+                return id;
+            }
         }
 
         public float Time

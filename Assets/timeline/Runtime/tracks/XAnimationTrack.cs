@@ -11,14 +11,21 @@ namespace UnityEngine.Timeline
         private AnimationMixerPlayable mixPlayable;
         private int idx = 0;
         private float tmp = 0;
+        private BindTrackData data;
 
         public override TrackType trackType
         {
             get { return TrackType.Animation; }
         }
 
+        public override XTrack Clone()
+        {
+            return new XAnimationTrack(timeline, data);
+        }
+
         public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data)
         {
+            this.data = data;
             if (bindObj)
             {
                 var amtor = bindObj.GetComponent<Animator>();

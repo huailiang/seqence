@@ -42,7 +42,7 @@ namespace UnityEditor.Timeline
             EditorGUIUtility.TrTextContent("No timeline found in the scene");
 
         public static readonly GUIContent createNewTimelineText =
-            EditorGUIUtility.TrTextContent("Create a new Timeline and Director Component for Game Object");
+            EditorGUIUtility.TrTextContent("Create a new Timeline to start");
 
         public static readonly GUIContent addContent = EditorGUIUtility.TrTextContent("Add", "Add new tracks.");
 

@@ -1,4 +1,4 @@
-﻿using UnityEngine.Timeline;
+﻿using System;
 using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
@@ -8,6 +8,16 @@ namespace UnityEngine.Timeline
         public override TrackType trackType
         {
             get { return TrackType.Marker; }
+        }
+
+        public override bool cloneable
+        {
+            get { return false; }
+        }
+
+        public override XTrack Clone()
+        {
+            throw new Exception("mark track is uncloneable");
         }
 
         public XMarkerTrack(XTimeline tl, TrackData data) : base(tl, data)
