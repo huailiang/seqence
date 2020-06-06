@@ -19,7 +19,7 @@ namespace UnityEditor.Timeline
 
         protected virtual Color trackColor
         {
-            get { return TimelineStyles.colorControl; }
+            get { return Color.red; }
         }
 
         protected bool triger
@@ -74,11 +74,11 @@ namespace UnityEditor.Timeline
                     pm.AddItem(EditorGUIUtility.TrTextContent("Delete \t"), false, DeleteClip);
                     if (track.mute)
                     {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("UnMute Clip \t"), false, UnmuteClip);
+                        pm.AddItem(EditorGUIUtility.TrTextContent("UnMute Track \t"), false, UnmuteClip);
                     }
                     else
                     {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("Mute Clip \t"), false, MuteClip);
+                        pm.AddItem(EditorGUIUtility.TrTextContent("Mute Track \t"), false, MuteClip);
                     }
                     pm.ShowAsContext();
                 }

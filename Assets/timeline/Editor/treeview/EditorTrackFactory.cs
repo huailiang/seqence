@@ -16,6 +16,12 @@ namespace UnityEditor.Timeline
                 case TrackType.SceneFx:
                     xtrack = new EditorSceneFxTrack();
                     break;
+                case TrackType.BoneFx:
+                    xtrack = new EditorBoneTrack();
+                    break;
+                case TrackType.PostProcess:
+                    xtrack = new EditorPostprocessTrack();
+                    break;
                 default:
                     xtrack = new EditorTrack();
                     break;
@@ -23,6 +29,23 @@ namespace UnityEditor.Timeline
             xtrack.@select = false;
             xtrack.track = track;
             return xtrack;
+        }
+
+
+        public static TrackData CreateData(TrackType type)
+        {
+            TrackData data = null;
+            switch (type)
+            {
+                case TrackType.Animation:
+                    data = new BindTrackData();
+                    break;
+                default:
+                    data = new TrackData();
+                    break;
+            }
+            data.type = type;
+            return data;
         }
     }
 }

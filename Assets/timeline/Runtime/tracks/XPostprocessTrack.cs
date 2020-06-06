@@ -29,5 +29,10 @@ namespace UnityEngine.Timeline
         public XPostprocessTrack(XTimeline tl, TrackData data) : base(tl, data)
         {
         }
+
+        public override string ToString()
+        {
+            return "Postps " + ID;
+        }
     }
 }

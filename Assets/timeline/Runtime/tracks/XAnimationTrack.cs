@@ -88,5 +88,16 @@ namespace UnityEngine.Timeline
             }
         }
         
+        public override string ToString()
+        {
+            if (bindObj)
+            {
+                return bindObj + " " + ID;
+            }
+            else
+            {
+                return "Animator " + ID;
+            }
+        }
     }
 }

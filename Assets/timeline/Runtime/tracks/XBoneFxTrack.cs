@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.Timeline.Data;
+﻿using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
@@ -27,6 +26,11 @@ namespace UnityEngine.Timeline
         protected override IClip BuildClip(ClipData data)
         {
             return new XBoneFxClip(this, data);
+        }
+
+        public override string ToString()
+        {
+            return "BoneFx " + ID;
         }
     }
 }

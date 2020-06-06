@@ -36,15 +36,26 @@ namespace UnityEditor.Timeline
                 }
                 else
                 {
-                    BindTrackData data = new BindTrackData();
-                    data.type = TrackType.Animation;
-                    var track = XTrackFactory.Get(data, state.timeline);
-                    tree.AddTrack(track);
-                    state.timeline.AddRootTrack(track);
+                    GenericMenu pm = new GenericMenu();
+                    var e = new TrackType();
+                    string[] values = System.Enum.GetNames(e.GetType());
+                    for (int i = 1; i < values.Length; i++)
+                    {
+                        pm.AddItem(EditorGUIUtility.TrTextContent(values[i]), false, OnAddTrackItem,i);
+                    }
+                    pm.ShowAsContext();
                 }
             }
         }
 
+        private void OnAddTrackItem(object arg)
+        {
+            TrackType type = (TrackType) arg;
+            TrackData data =EditorTrackFactory.CreateData(type);
+            var track = XTrackFactory.Get(data, state.timeline);
+            tree.AddTrack(track);
+            state.timeline.AddRootTrack(track);
+        }
 
         void ShowMarkersButton()
         {

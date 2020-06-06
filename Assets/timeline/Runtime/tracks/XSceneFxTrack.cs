@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.Timeline.Data;
+﻿using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
@@ -7,7 +6,7 @@ namespace UnityEngine.Timeline
     public class XSceneFxTrack : XTrack
     {
         private TrackData data;
-        
+
         public override TrackType trackType
         {
             get { return TrackType.SceneFx; }
@@ -26,6 +25,11 @@ namespace UnityEngine.Timeline
         protected override IClip BuildClip(ClipData data)
         {
             return new XSceneFxClip(this, data);
+        }
+
+        public override string ToString()
+        {
+            return "SceneFx " + ID;
         }
     }
 }

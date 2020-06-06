@@ -21,6 +21,9 @@ namespace UnityEngine.Timeline
                 case TrackType.SceneFx:
                     xTrack = new XSceneFxTrack(tl, data);
                     break;
+                case TrackType.PostProcess:
+                    xTrack =new XPostprocessTrack(tl,data);
+                    break;
                 default:
                     Debug.LogError("unknown track " + data.type);
                     break;
