@@ -30,6 +30,7 @@ namespace UnityEditor.Timeline
 
         private void Update()
         {
+            if (inst == null) inst = this;
             state?.Update();
         }
 

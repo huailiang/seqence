@@ -25,7 +25,7 @@ namespace UnityEditor.Timeline
         {
             if (EditorGUILayout.DropdownButton(TimelineStyles.addContent, FocusType.Passive, "Dropdown"))
             {
-                XTrack parent = null;
+                XTrack parent = tree.GetSelectTrack();
                 if (parent)
                 {
                     var track = parent.Clone();

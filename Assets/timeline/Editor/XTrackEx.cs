@@ -83,13 +83,21 @@ namespace UnityEditor.Timeline
 
         public static void AddSub(this XTrack track, XTrack sub)
         {
-            var tmp = new XTrack[track.childs.Length + 1];
-            for (int i = 0; i < track.childs.Length; i++)
+            if (track.childs == null)
             {
-                tmp[i] = track.childs[i];
+                track.childs = new XTrack[1];
+                track.childs[0] = sub;
             }
-            tmp[track.childs.Length] = sub;
-            track.childs = tmp;
+            else
+            {
+                var tmp = new XTrack[track.childs.Length + 1];
+                for (int i = 0; i < track.childs.Length; i++)
+                {
+                    tmp[i] = track.childs[i];
+                }
+                tmp[track.childs.Length] = sub;
+                track.childs = tmp;
+            }
         }
 
         private static void Remv(this XTrack track)

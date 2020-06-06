@@ -14,7 +14,14 @@ namespace UnityEditor.Timeline
         {
             base.GUIHeader();
             XBindTrack btrack = track as XBindTrack;
-            ;
+
+            GUILayout.BeginArea(head);
+            GUILayout.Space(4);
+            if (GUILayout.Button("rec", GUILayout.MaxWidth(16)))
+            {
+                Debug.Log("recod mode");
+            }
+            GUILayout.EndArea();
             if (btrack && btrack.bindObj)
             {
 #pragma warning disable 618

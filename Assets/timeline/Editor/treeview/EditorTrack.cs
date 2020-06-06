@@ -9,7 +9,7 @@ namespace UnityEditor.Timeline
         public Rect rect;
         public Rect head;
         public bool select;
-
+        
         private GenericMenu pm;
 
         public uint ID
@@ -22,6 +22,15 @@ namespace UnityEditor.Timeline
             get { return TimelineStyles.colorControl; }
         }
 
+        protected bool triger
+        {
+            get
+            {
+                var pos = Event.current.mousePosition;
+                return head.Contains(pos) || rect.Contains(pos);
+            }
+        }
+
         public void OnGUI()
         {
             if (pm == null)
@@ -29,10 +38,9 @@ namespace UnityEditor.Timeline
                 pm = new GenericMenu();
             }
             var backgroundColor = select
-                ? TimelineStyles.colorTrackSubSequenceBackgroundSelected
+                ? TimelineStyles.colorDuration
                 : TimelineStyles.markerHeaderDrawerBackgroundColor;
             EditorGUI.DrawRect(rect, backgroundColor);
-
             var headColor = backgroundColor;
             EditorGUI.DrawRect(head, headColor);
 
@@ -40,15 +48,23 @@ namespace UnityEditor.Timeline
             GUIContent();
 
             var e = Event.current;
-            if (e.type == EventType.MouseUp)
+            if (e.type == EventType.ContextClick)
             {
-                if (rect.Contains(e.mousePosition))
+                if (triger)
                 {
                     pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Insert Before"));
                     pm.AddSeparator("");
                     pm.AddItem(EditorGUIUtility.TrTextContent("Add Clip \t"), false, AddClip);
                     pm.AddItem(EditorGUIUtility.TrTextContent("Delete \t"), false, DeleteClip);
                     pm.ShowAsContext();
+                }
+            }
+            else if (e.type == EventType.MouseDown)
+            {
+                if (triger)
+                {
+                    @select = !@select;
+                    TimelineWindow.inst.Repaint();
                 }
             }
         }
@@ -59,6 +75,20 @@ namespace UnityEditor.Timeline
 
         protected virtual void GUIContent()
         {
+            var clips = track.clips;
+            Rect tmp = rect;
+            if (clips != null)
+            {
+                for (int i = 0; i < clips.Length; i++)
+                {
+                    var clip = clips[i];
+                    float x = TimelineWindow.inst.TimeToPixel(clip.start);
+                    float y = TimelineWindow.inst.TimeToPixel(clip.end);
+                    tmp.x = x;
+                    tmp.width = y - x;
+                    EditorGUI.DrawRect(tmp, TimelineStyles.colorRecordingClipOutline);
+                }
+            }
         }
 
         private void AddClip()

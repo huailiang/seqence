@@ -2,7 +2,6 @@
 
 namespace UnityEditor.Timeline
 {
-
     class TimelineStyles
     {
         public readonly static GUIStyle bottomShadow = "Icon.Shadow";
@@ -49,8 +48,8 @@ namespace UnityEditor.Timeline
         public static readonly GUIContent previewContent =
             EditorGUIUtility.TrTextContent("Preview", "Enable/disable scene preview mode");
 
-        public static readonly GUIContent
-            inspectBtn = EditorGUIUtility.IconContent("TimelineEditModeMixON", "| timeline inspector");
+        public static readonly GUIContent inspectBtn =
+            EditorGUIUtility.IconContent("TimelineEditModeMixON", "| timeline inspector");
 
         public static readonly GUIContent showMarkersOn = EditorGUIUtility.TrTextContentWithIcon(string.Empty,
             "Show / Hide Timeline Markers", "TimelineMarkerAreaButtonEnabled");
@@ -154,13 +153,5 @@ namespace UnityEditor.Timeline
 
         // matches dark skin warning color.
         public static readonly Color kClipErrorColor = new Color(0.957f, 0.737f, 0.008f, 1f);
-
-        // TODO: Make skinnable? If we do, we should probably also make the associated cursors skinnable...
-        public static readonly Color kMixToolColor = Color.white;
-        public static readonly Color kRippleToolColor = new Color(255f / 255f, 210f / 255f, 51f / 255f);
-        public static readonly Color kReplaceToolColor = new Color(165f / 255f, 30f / 255f, 30f / 255f);
-
-        public const string markerDefaultStyle = "MarkerItem";
     }
-
 }
