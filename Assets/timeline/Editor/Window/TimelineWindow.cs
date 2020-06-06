@@ -35,12 +35,12 @@ namespace UnityEditor.Timeline
 
         void OnGUI()
         {
-            TimelineTimeAreaGUI();
             TransportToolbarGUI();
-            TimelineHeaderGUI();
-            DrawMarkerDrawer();
             if (state.timeline)
             {
+                TimelineTimeAreaGUI();
+                TimelineHeaderGUI();
+                DrawMarkerDrawer();
                 tree.OnGUI(state);
             }
             else
@@ -63,7 +63,7 @@ namespace UnityEditor.Timeline
 
         private void CalculCenter()
         {
-            float x = position.width/2 - 100 ;
+            float x = position.width / 2 - 100;
             float y = position.height / 2;
             float width = position.width / 2;
             centerArea = new Rect(x, y, width, 40);

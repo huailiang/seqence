@@ -32,6 +32,7 @@ namespace UnityEditor.Timeline
                     track.parent = parent;
                     int idx = tree.IndexOfTrack(parent);
                     tree.AddTrack(track, ++idx);
+                    parent.AddSub(track);
                 }
                 else
                 {
@@ -39,6 +40,7 @@ namespace UnityEditor.Timeline
                     data.type = TrackType.Animation;
                     var track = XTrackFactory.Get(data, state.timeline);
                     tree.AddTrack(track);
+                    state.timeline.AddRootTrack(track);
                 }
             }
         }

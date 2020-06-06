@@ -74,6 +74,12 @@ namespace UnityEditor.Timeline
             track.marks = list.ToArray();
         }
 
+        public static void AddRootTrack(this XTimeline timeline, XTrack track)
+        {
+            var tracks = timeline.trackTrees.ToList();
+            tracks.Add(track);
+            timeline.trackTrees = tracks.ToArray();
+        }
 
         public static void AddSub(this XTrack track, XTrack sub)
         {

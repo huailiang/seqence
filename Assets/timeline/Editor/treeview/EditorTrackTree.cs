@@ -11,6 +11,7 @@ namespace UnityEditor.Timeline
         {
             public XTrack track;
             public Rect rect;
+            public Rect head;
             public bool select;
 
             public uint ID
@@ -24,6 +25,9 @@ namespace UnityEditor.Timeline
                     ? TimelineStyles.colorTrackSubSequenceBackgroundSelected
                     : TimelineStyles.markerHeaderDrawerBackgroundColor;
                 EditorGUI.DrawRect(rect, backgroundColor);
+
+                var headColor = backgroundColor;
+                EditorGUI.DrawRect(head, headColor);
             }
         }
 
@@ -46,7 +50,7 @@ namespace UnityEditor.Timeline
             idx = 0;
             var trees = state.timeline.trackTrees;
             hierachy = new List<EditorTrack>();
-            for (int i = 0; i < trees.Length; i++)
+            for (int i = 1; i < trees.Length; i++) // 0 is marker track
             {
                 Add(trees[i], hierachy);
             }
@@ -59,6 +63,7 @@ namespace UnityEditor.Timeline
             etrack.@select = false;
             float y = _y + height * idx + WindowConstants.rowGap * idx;
             etrack.rect = new Rect(x, y, width, height);
+            etrack.head = new Rect(0, y, WindowConstants.sliderWidth, height);
             idx++;
             list.Add(etrack);
 
@@ -82,6 +87,7 @@ namespace UnityEditor.Timeline
                     delta = height - it.rect.height;
                 }
                 it.rect.height += delta;
+                it.head.height += delta;
             }
         }
 
@@ -100,8 +106,7 @@ namespace UnityEditor.Timeline
 
         public void AddTrack(XTrack track)
         {
-            int idx = hierachy.Count;
-            AddTrack(track, idx);
+            AddTrack(track, hierachy.Count);
         }
 
         public void AddTrack(XTrack track, int idx)
@@ -110,6 +115,7 @@ namespace UnityEditor.Timeline
             etrack.track = track;
             float y = _y + height * idx + WindowConstants.rowGap * idx;
             etrack.rect = new Rect(x, y, width, height);
+            etrack.head = new Rect(0, y, WindowConstants.sliderWidth, height);
             hierachy.Add(etrack);
             int last = hierachy.Count - 1;
             for (int i = last; i > idx; i--)
@@ -130,6 +136,7 @@ namespace UnityEditor.Timeline
                     delta = track.rect.height + WindowConstants.rowGap;
                 }
                 it.rect.y -= delta;
+                it.head.y -= delta;
             }
         }
 
