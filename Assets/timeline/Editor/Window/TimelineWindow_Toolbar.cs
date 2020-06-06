@@ -26,7 +26,7 @@ namespace UnityEditor.Timeline
                 NewButtonGUI();
                 OpenButtonGUI();
                 SaveButtonGUI();
-                GUILayout.FlexibleSpace();
+                GUILayout.Space(4);
                 InspectGUI();
             }
             GUILayout.EndHorizontal();

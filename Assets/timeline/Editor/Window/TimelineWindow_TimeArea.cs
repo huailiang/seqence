@@ -11,6 +11,7 @@ namespace UnityEditor.Timeline
         public Rect timeAreaRect;
 
         public TimelineState state { get; private set; }
+        readonly GUIContent m_HeaderContent = new GUIContent();
 
         void InitializeTimeArea()
         {
@@ -43,10 +44,21 @@ namespace UnityEditor.Timeline
         {
             float colorDimFactor = EditorGUIUtility.isProSkin ? 0.7f : 0.9f;
             Color c = TimelineStyles.timeCursor.normal.textColor * colorDimFactor;
-            float time = state.timeline.Time + 11f;
+            float time = state.timeline.Time + 0.1f;
             time = m_TimeArea.TimeToPixel(time, timeAreaRect);
             Rect rec = new Rect(time, timeAreaRect.y, 2, tree.TracksBtmY);
             EditorGUI.DrawRect(rec, c);
+            rec.height = timeAreaRect.height;
+            rec.x -= 4;
+            GUI.Box(rec, m_HeaderContent, TimelineStyles.timeCursor);
+
+            var e = Event.current;
+            if (e.type == EventType.MouseDrag && timeAreaRect.Contains(e.mousePosition))
+            {
+                float xtime = m_TimeArea.PixelToTime(e.mousePosition.x, timeAreaRect);
+                state.timeline.Time = xtime;
+                TimelineWindow.inst.Repaint();
+            }
         }
 
         public float GetSnappedTimeAtMousePosition(Vector2 pos)

@@ -67,7 +67,10 @@ namespace UnityEditor.Timeline
             {
                 if (triger)
                 {
-                    pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Insert Before"));
+                    if (TimelineWindow.inst.tree.AnySelect())
+                        pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect All"), false, UnSelectAll);
+                    else
+                        pm.AddDisabledItem(EditorGUIUtility.TrTextContent("UnSelect All"));
                     pm.AddSeparator("");
                     pm.AddItem(EditorGUIUtility.TrTextContent("Add Clip \t"), false, AddClip);
                     pm.AddItem(EditorGUIUtility.TrTextContent("Delete \t"), false, DeleteClip);
@@ -82,7 +85,7 @@ namespace UnityEditor.Timeline
                     pm.ShowAsContext();
                 }
             }
-            else if (e.type == EventType.MouseDown)
+            else if (e.type == EventType.MouseUp)
             {
                 if (triger)
                 {
@@ -152,6 +155,11 @@ namespace UnityEditor.Timeline
 
         protected virtual void OnGUIContent()
         {
+        }
+
+        private void UnSelectAll()
+        {
+            TimelineWindow.inst.tree?.ResetSelect();
         }
 
         private void AddClip()

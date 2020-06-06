@@ -48,6 +48,7 @@ namespace UnityEditor.Timeline
             data.type = TrackType.Marker;
             config.tracks[0] = data;
             timeline = new XTimeline(config);
+            timeline.Time = 2.0f;
             timeline.mode = TimelinePlayMode.EditorRun;
         }
 

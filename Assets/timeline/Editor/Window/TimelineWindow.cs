@@ -7,7 +7,7 @@ namespace UnityEditor.Timeline
     {
         public static TimelineWindow inst;
         
-        private EditorTrackTree tree;
+        public EditorTrackTree tree;
         
         public Rect winArea { get; set; }
 

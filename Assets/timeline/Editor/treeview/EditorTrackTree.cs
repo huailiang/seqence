@@ -153,5 +153,31 @@ namespace UnityEditor.Timeline
                 it.OnGUI();
             }
         }
+
+        public void ResetSelect()
+        {
+            if (hierachy != null)
+                foreach (var iTrack in hierachy)
+                {
+                    iTrack.@select = false;
+                }
+            TimelineWindow.inst.Repaint();
+        }
+
+        public bool AnySelect()
+        {
+            if (hierachy != null)
+            {
+                foreach (var it in hierachy)
+                {
+                    if (it.@select)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }

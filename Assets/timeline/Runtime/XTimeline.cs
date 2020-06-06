@@ -36,7 +36,13 @@ namespace UnityEngine.Timeline
         public float Time
         {
             get { return prev; }
-            set { ProcessImmediately(value); }
+            set
+            {
+                if (Mathf.Abs(value - prev) > 1e-4)
+                {
+                    ProcessImmediately(value);
+                }
+            }
         }
 
         public XMarkerTrack markerTrack
