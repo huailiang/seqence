@@ -9,7 +9,7 @@ namespace UnityEditor.Timeline
         public Rect rect;
         public Rect head;
         public bool select;
-        internal const int icoWdt = 18;
+        internal const int icoWdt = 16;
         private GenericMenu pm;
 
         public uint ID
@@ -40,9 +40,18 @@ namespace UnityEditor.Timeline
             var backgroundColor = select
                 ? TimelineStyles.colorDuration
                 : TimelineStyles.markerHeaderDrawerBackgroundColor;
-            EditorGUI.DrawRect(rect, backgroundColor);
+
             var headColor = backgroundColor;
             EditorGUI.DrawRect(head, headColor);
+            Rect tmp = head;
+            tmp.width = 4;
+            EditorGUI.DrawRect(tmp, trackColor);
+
+            EditorGUI.DrawRect(rect, backgroundColor);
+            tmp = rect;
+            tmp.height = 2;
+            tmp.y = rect.y + rect.height - 2;
+            EditorGUI.DrawRect(tmp, trackColor * 0.9f);
 
             GUIHeader();
             GUIContent();
@@ -102,6 +111,7 @@ namespace UnityEditor.Timeline
             tmp.y += head.height / 4;
             GUILayout.BeginArea(tmp);
             GUILayout.BeginHorizontal();
+            GUILayout.Space(5);
             GUILayout.Label(track.ToString());
             if (GUILayout.Button("lock", GUILayout.MaxWidth(icoWdt)))
             {

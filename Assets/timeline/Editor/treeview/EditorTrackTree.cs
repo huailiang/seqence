@@ -14,6 +14,19 @@ namespace UnityEditor.Timeline
         private float x, width, _y;
         private const float height = 40;
 
+        public float TracksBtmY
+        {
+            get
+            {
+                if (hierachy != null && hierachy.Count > 0)
+                {
+                    var track = hierachy.Last();
+                    return track.rect.y + track.rect.height / 2;
+                }
+                return WindowConstants.markerRowYPosition;
+            }
+        }
+
         public XTrack GetSelectTrack()
         {
             if (hierachy != null && hierachy.Count > 0)

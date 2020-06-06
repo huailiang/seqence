@@ -28,8 +28,7 @@ namespace UnityEngine.Timeline
         {
             get
             {
-                id++;
-                if (id == 0) id++; //overide
+                if (++id == 0) id++; //overide
                 return id;
             }
         }

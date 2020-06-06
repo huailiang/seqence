@@ -35,11 +35,8 @@ namespace UnityEditor.Timeline
         public void TimelineTimeAreaGUI()
         {
             timeAreaRect.x = winArea.x + WindowConstants.rightAreaMargn;
-            timeAreaRect.y = m_TimeArea.topmargin + WindowConstants.timeAreaYPosition;
+            timeAreaRect.y = WindowConstants.timeAreaYPosition;
             m_TimeArea.TimeRuler(timeAreaRect, 1, true, false, 1.0f, TimeArea.TimeFormat.Frame);
-
-            DrawTimeOnSlider();
-            DrawTimeCursor();
         }
 
         void DrawTimeOnSlider()
@@ -48,20 +45,8 @@ namespace UnityEditor.Timeline
             Color c = TimelineStyles.timeCursor.normal.textColor * colorDimFactor;
             float time = state.timeline.Time + 11f;
             time = m_TimeArea.TimeToPixel(time, timeAreaRect);
-            Rect rec = new Rect(time, timeAreaRect.y, 2, winArea.height);
+            Rect rec = new Rect(time, timeAreaRect.y, 2, tree.TracksBtmY);
             EditorGUI.DrawRect(rec, c);
-        }
-
-        void DrawTimeCursor()
-        {
-            if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
-            {
-                if (timeAreaRect.Contains(Event.current.mousePosition))
-                {
-                    state.playing = false;
-                    state.timeline.Time = Mathf.Max(0.0f, GetSnappedTimeAtMousePosition(Event.current.mousePosition));
-                }
-            }
         }
 
         public float GetSnappedTimeAtMousePosition(Vector2 pos)

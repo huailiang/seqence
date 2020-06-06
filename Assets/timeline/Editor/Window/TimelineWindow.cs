@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityEditor.Timeline
@@ -7,18 +6,13 @@ namespace UnityEditor.Timeline
     public partial class TimelineWindow : EditorWindow
     {
         public static TimelineWindow inst;
+        
         private EditorTrackTree tree;
+        
         public Rect winArea { get; set; }
 
         public Rect centerArea { get; set; }
 
-        readonly List<Manipulator> m_CaptureSession = new List<Manipulator>();
-
-
-        public float sequencerHeaderWidth
-        {
-            get { return winArea.width - WindowConstants.sliderWidth; }
-        }
 
         private void OnEnable()
         {
@@ -39,10 +33,12 @@ namespace UnityEditor.Timeline
             TransportToolbarGUI();
             if (state.timeline)
             {
+                TimelineTimeAreaGUI();
                 TimelineHeaderGUI();
                 DrawMarkerDrawer();
                 tree.OnGUI(state);
-                TimelineTimeAreaGUI();
+                DrawTimeOnSlider();
+                DrawSptLine();
             }
             else
             {
@@ -52,14 +48,12 @@ namespace UnityEditor.Timeline
             winArea = position;
         }
 
-        public void AddCaptured(Manipulator manipulator)
+        private void DrawSptLine()
         {
-            if (!m_CaptureSession.Contains(manipulator)) m_CaptureSession.Add(manipulator);
-        }
-
-        public void RemoveCaptured(Manipulator manipulator)
-        {
-            m_CaptureSession.Remove(manipulator);
+            Color c = TimelineStyles.timeCursor.normal.textColor * 0.6f;
+            float x = WindowConstants.sliderWidth + 2;
+            Rect rec = new Rect(x, WindowConstants.timeAreaYPosition, 1, tree.TracksBtmY);
+            EditorGUI.DrawRect(rec, c);
         }
 
         private void CalculCenter()
