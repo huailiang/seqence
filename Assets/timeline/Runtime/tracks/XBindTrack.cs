@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.Timeline.Data;
+﻿using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
@@ -11,9 +10,25 @@ namespace UnityEngine.Timeline
         {
             if (!string.IsNullOrEmpty(data.prefab))
             {
-                var obj = Resources.Load<GameObject>(data.prefab);
-                bindObj = Object.Instantiate(obj);
+                Rebind(data.prefab);
             }
+        }
+
+        public void Rebind(string prefab)
+        {
+            var obj = Resources.Load<GameObject>(prefab);
+            bindObj = Object.Instantiate(obj);
+            OnBind();
+        }
+
+        public void DyncBind(GameObject go)
+        {
+            bindObj = go;
+            OnBind();
+        }
+
+        protected virtual void OnBind()
+        {
         }
     }
 }
