@@ -42,7 +42,7 @@ namespace UnityEditor.Timeline
             }
             else
             {
-                CalculCenter();
+                CalculWindowCenter();
                 EditorGUI.LabelField(centerArea, TimelineStyles.createNewTimelineText);
             }
             winArea = position;
@@ -56,7 +56,7 @@ namespace UnityEditor.Timeline
             EditorGUI.DrawRect(rec, c);
         }
 
-        private void CalculCenter()
+        private void CalculWindowCenter()
         {
             float x = position.width / 2 - 100;
             float y = position.height / 2;

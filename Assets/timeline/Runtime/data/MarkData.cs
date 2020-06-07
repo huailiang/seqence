@@ -9,12 +9,15 @@ namespace UnityEngine.Timeline.Data
         Slow = 1 << 2,
     }
 
-    public class MarkData
+    public abstract class MarkData
     {
         public float time;
 
+        protected abstract MarkType type { get; }
+
         public virtual void Write(BinaryWriter writer)
         {
+            writer.Write((int)type);
             writer.Write(time);
         }
 
@@ -29,9 +32,13 @@ namespace UnityEngine.Timeline.Data
     {
         public float slowRate;
 
+        protected override MarkType type
+        {
+            get { return MarkType.Slow; }
+        }
+
         public override void Write(BinaryWriter writer)
         {
-            writer.Write((int) MarkType.Slow);
             base.Write(writer);
             writer.Write(slowRate);
         }
@@ -47,10 +54,13 @@ namespace UnityEngine.Timeline.Data
     {
         public bool active;
 
+        protected override MarkType type
+        {
+            get { return MarkType.Active; }
+        }
 
         public override void Write(BinaryWriter writer)
         {
-            writer.Write((int) MarkType.Active);
             base.Write(writer);
             writer.Write(active);
         }
@@ -66,9 +76,13 @@ namespace UnityEngine.Timeline.Data
     {
         public float jump;
 
+        protected override MarkType type
+        {
+            get { return MarkType.Jump; }
+        }
+
         public override void Write(BinaryWriter writer)
         {
-            writer.Write((int) MarkType.Jump);
             base.Write(writer);
             writer.Write(jump);
         }
