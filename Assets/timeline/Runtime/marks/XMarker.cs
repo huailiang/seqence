@@ -8,11 +8,16 @@ namespace UnityEngine.Timeline
 
         protected MarkData data { get; set; }
 
+        public MarkType type
+        {
+            get { return data.type; }
+        }
+
         protected XTimeline timeline
         {
             get { return track.timeline; }
         }
-        
+
         public XMarker(XTrack track, MarkData data)
         {
             this.track = track;

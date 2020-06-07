@@ -59,7 +59,7 @@ namespace UnityEditor.Timeline
 
         private void Add(XTrack track, IList<EditorTrack> list)
         {
-            EditorTrack etrack = EditorTrackFactory.Get(track);
+            EditorTrack etrack = EditorFactory.GetTrack(track);
             float y = _y + height * idx + WindowConstants.rowGap * idx;
             int offset = track.parent ? 10 : 0;
             etrack.rect = new Rect(x, y, width, height);
@@ -111,7 +111,7 @@ namespace UnityEditor.Timeline
 
         public void AddTrack(XTrack track, int idx)
         {
-            EditorTrack etrack = EditorTrackFactory.Get(track);
+            EditorTrack etrack = EditorFactory.GetTrack(track);
             float y = _y + height * idx + WindowConstants.rowGap * idx;
             float offset = track.parent ? 10 : 0;
             etrack.rect = new Rect(x, y, width, height);

@@ -23,6 +23,7 @@ namespace UnityEditor.Timeline
         public WrapMode mode;
         private string name;
         public TimelineWindow window;
+        public AssetConfig config;
 
         public bool playing { get; set; }
         public bool showMarkerHeader { get; set; }
@@ -38,6 +39,10 @@ namespace UnityEditor.Timeline
             mode = WrapMode.Hold;
             playing = false;
             showMarkerHeader = true;
+            if (config == null)
+            {
+                config = AssetDatabase.LoadAssetAtPath<AssetConfig>(AssetConfigEditor.path);
+            }
         }
 
         public void CreateTimeline()
@@ -97,6 +102,7 @@ namespace UnityEditor.Timeline
         private int _last = 0;
         private float _time = 0;
         private float _duration = 0;
+
         public void Update()
         {
             if (playing)
@@ -137,7 +143,5 @@ namespace UnityEditor.Timeline
                 timeline.Process(_time);
             }
         }
-
     }
-
 }

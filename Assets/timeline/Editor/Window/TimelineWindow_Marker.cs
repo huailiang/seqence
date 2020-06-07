@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
@@ -19,6 +21,36 @@ namespace UnityEditor.Timeline
             {
                 DrawMarkerDrawerHeaderBackground();
                 DrawMarkerDrawerHeader();
+            }
+            var e = Event.current;
+            if (markderRect.Contains(e.mousePosition))
+            {
+                if (e.type == EventType.MouseUp)
+                {
+                    GenericMenu gm = new GenericMenu();
+                    var marks = TypeUtilities.GetBelongMarks(TrackType.Marker);
+                    foreach (var mark in marks)
+                    {
+                        string str = mark.ToString();
+                        int idx = str.LastIndexOf('.');
+                        str = str.Substring(idx + 1);
+                        var ct = EditorGUIUtility.TrTextContent("Add " + str);
+                        gm.AddItem(ct, false, AddRectMark, new MarkAction(mark, e.mousePosition.x));
+                    }
+                    gm.ShowAsContext();
+                }
+            }
+        }
+
+        struct MarkAction
+        {
+            public Type type;
+            public float posX;
+
+            public MarkAction(Type t, float x)
+            {
+                type = t;
+                posX = x;
             }
         }
 
@@ -47,13 +79,21 @@ namespace UnityEditor.Timeline
             }
         }
 
+        void AddRectMark(object arg)
+        {
+            MarkAction markAction = (MarkAction) arg;
+            float time = PiexlToTime(markAction.posX);
+            EditorFactory.MakeMarker(markAction.type, time);
+        }
+
         void DrawMarkItem(XMarker mark)
         {
             float x = TimeToPixel(mark.time);
             Rect rect = markderRect;
             rect.x = x;
             rect.width = 20;
-            GUI.Box(rect, m_HeaderContent, TimelineStyles.timeCursor);
+            GUIContent cont = state.config.GetIcon(mark.type);
+            GUI.Box(rect, cont, GUIStyle.none);
         }
     }
 }

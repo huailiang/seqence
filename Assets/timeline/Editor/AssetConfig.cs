@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
@@ -10,6 +11,7 @@ namespace UnityEditor.Timeline
     {
         public MarkType type;
         public Texture2D ico;
+        private GUIContent content;
 
         public MarkConfig()
         {
@@ -17,6 +19,11 @@ namespace UnityEditor.Timeline
         }
 
         private bool folder;
+
+        public GUIContent Content
+        {
+            get { return new GUIContent(ico, type + "."); }
+        }
 
         public void OnGUI()
         {
@@ -35,6 +42,11 @@ namespace UnityEditor.Timeline
     {
         public MarkConfig[] marks;
 
+        public GUIContent GetIcon(MarkType type)
+        {
+            return marks.Where(x => x.type == type).Select(x => x.Content).First();
+        }
+
         public void Save()
         {
             EditorUtility.SetDirty(this);
@@ -48,7 +60,7 @@ namespace UnityEditor.Timeline
     {
         private AssetConfig conf;
 
-        const string path = "Assets/timeline/Editor/StyleSheets/conf.asset";
+        internal const string path = "Assets/timeline/Editor/StyleSheets/conf.asset";
 
         // [MenuItem("Assets/TimelineConf")]
         static void CreateAsset()

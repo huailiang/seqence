@@ -56,8 +56,7 @@ namespace UnityEditor.Timeline
             if (e.type == EventType.MouseDrag && timeAreaRect.Contains(e.mousePosition))
             {
                 float xtime = m_TimeArea.PixelToTime(e.mousePosition.x, timeAreaRect);
-                state.timeline.Time = xtime;
-                TimelineWindow.inst.Repaint();
+                OnTrackHeadDrag(xtime);
             }
         }
 
@@ -79,6 +78,7 @@ namespace UnityEditor.Timeline
         void OnTrackHeadDrag(float newTime)
         {
             state.timeline.Time = Mathf.Max(0.0f, newTime);
+            TimelineWindow.inst.Repaint();
         }
     }
 }

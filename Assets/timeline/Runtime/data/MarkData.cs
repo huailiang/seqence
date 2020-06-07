@@ -13,7 +13,7 @@ namespace UnityEngine.Timeline.Data
     {
         public float time;
 
-        protected abstract MarkType type { get; }
+        public abstract MarkType type { get; }
 
         public virtual void Write(BinaryWriter writer)
         {
@@ -32,7 +32,7 @@ namespace UnityEngine.Timeline.Data
     {
         public float slowRate;
 
-        protected override MarkType type
+        public override MarkType type
         {
             get { return MarkType.Slow; }
         }
@@ -54,7 +54,7 @@ namespace UnityEngine.Timeline.Data
     {
         public bool active;
 
-        protected override MarkType type
+        public override MarkType type
         {
             get { return MarkType.Active; }
         }
@@ -76,7 +76,7 @@ namespace UnityEngine.Timeline.Data
     {
         public float jump;
 
-        protected override MarkType type
+        public override MarkType type
         {
             get { return MarkType.Jump; }
         }

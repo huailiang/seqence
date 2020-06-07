@@ -53,7 +53,7 @@ namespace UnityEditor.Timeline
             if (track.marks != null)
             {
                 var list = track.marks.ToList();
-                if (list.Contains(marker))
+                if (!list.Contains(marker))
                 {
                     list.Add(marker);
                     list.Sort((x, y) => x.time.CompareTo(y.time));
