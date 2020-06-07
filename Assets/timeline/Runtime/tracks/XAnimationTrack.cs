@@ -84,7 +84,16 @@ namespace UnityEngine.Timeline
                 mixPlayable.SetInputWeight(playB, weight);
             }
         }
-        
+
+        protected override void OnBind()
+        {
+            base.OnBind();
+            for (int i = 0; i < clips.Length; i++)
+            {
+                ((XAnimationClip) clips[i]).RebindPlayable();
+            }
+        }
+
         public override string ToString()
         {
             if (bindObj)

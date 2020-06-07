@@ -71,6 +71,11 @@ namespace UnityEditor.Timeline
             return m_TimeArea.TimeToPixel(time, timeAreaRect);
         }
 
+        public float PiexlToTime(float piexl)
+        {
+            return m_TimeArea.PixelToTime(piexl, timeAreaRect);
+        }
+
         void OnTrackHeadDrag(float newTime)
         {
             state.timeline.Time = Mathf.Max(0.0f, newTime);

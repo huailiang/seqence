@@ -16,7 +16,15 @@ namespace UnityEngine.Timeline
             AnimClipData anData = data as AnimClipData;
             aclip = Resources.Load<AnimationClip>(anData.anim);
             playable = AnimationClipPlayable.Create(timeline.graph, aclip);
-            track.playableOutput.SetSourcePlayable(playable, port);
+            RebindPlayable();
+        }
+
+        public void RebindPlayable()
+        {
+            if (track.playableOutput.IsOutputValid())
+            {
+                track.playableOutput.SetSourcePlayable(playable, port);
+            }
         }
 
 

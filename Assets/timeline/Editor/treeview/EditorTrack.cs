@@ -80,7 +80,7 @@ namespace UnityEditor.Timeline
                     else
                         pm.AddDisabledItem(EditorGUIUtility.TrTextContent("UnSelect All"));
                     pm.AddSeparator("");
-                    pm.AddItem(EditorGUIUtility.TrTextContent("Add Clip \t"), false, AddClip);
+                    pm.AddItem(EditorGUIUtility.TrTextContent("Add Clip \t"), false, AddClip, e.mousePosition);
                     pm.AddItem(EditorGUIUtility.TrTextContent("Delete \t"), false, DeleteClip);
                     if (track.mute)
                     {
@@ -179,9 +179,10 @@ namespace UnityEditor.Timeline
             TimelineWindow.inst.tree?.ResetSelect();
         }
 
-        private void AddClip()
+        protected virtual void AddClip(object mpos)
         {
             Debug.Log("Add Clip");
+            TimelineWindow.inst.Repaint();
         }
 
         private void DeleteClip()

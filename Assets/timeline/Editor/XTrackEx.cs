@@ -11,67 +11,96 @@ namespace UnityEditor.Timeline
     {
         public static bool AddClip(this XTrack track, IClip clip)
         {
-            var list = track.clips.ToList();
-            if (list.Contains(clip))
+            if (track.clips == null)
             {
-                return false;
+                track.clips = new IClip[1];
+                track.clips[0] = clip;
+                return true;
             }
             else
             {
-                list.Add(clip);
-                list.Sort((x, y) => x.start.CompareTo(y.start));
-                track.clips = list.ToArray();
-                return true;
+                var list = track.clips.ToList();
+                if (list.Contains(clip))
+                {
+                    return false;
+                }
+                else
+                {
+                    list.Add(clip);
+                    list.Sort((x, y) => x.start.CompareTo(y.start));
+                    track.clips = list.ToArray();
+                    return true;
+                }
             }
         }
 
         public static bool RmClip(this XTrack track, IClip clip)
         {
-            var list = track.clips.ToList();
-            if (list.Contains(clip))
+            if (track.clips != null && track.clips.Length > 0)
             {
-                list.Remove(clip);
-                return true;
+                var list = track.clips.ToList();
+                if (list.Contains(clip))
+                {
+                    list.Remove(clip);
+                    return true;
+                }
             }
             return false;
         }
 
         public static bool AddMarker(this XTrack track, XMarker marker)
         {
-            var list = track.marks.ToList();
-            if (list.Contains(marker))
+            if (track.marks != null)
             {
-                list.Add(marker);
-                list.Sort((x, y) => x.time.CompareTo(y.time));
-                track.marks = list.ToArray();
-                return true;
+                var list = track.marks.ToList();
+                if (list.Contains(marker))
+                {
+                    list.Add(marker);
+                    list.Sort((x, y) => x.time.CompareTo(y.time));
+                    track.marks = list.ToArray();
+                    return true;
+                }
+            }
+            else
+            {
+                track.marks = new XMarker[1];
+                track.marks[0] = marker;
             }
             return false;
         }
 
         public static bool RmMarker(this XTrack track, XMarker marker)
         {
-            var list = track.marks.ToList();
-            if (list.Contains(marker))
+            if (track.marks != null)
             {
-                list.Remove(marker);
-                return true;
+                var list = track.marks.ToList();
+                if (list.Contains(marker))
+                {
+                    list.Remove(marker);
+                    return true;
+                }
             }
             return false;
         }
 
         public static void SortClip(this XTrack track)
         {
-            var list = track.clips.ToList();
-            list.Sort((x, y) => x.start.CompareTo(y.start));
-            track.clips = list.ToArray();
+            if (track.clips != null && track.clips.Length > 0)
+            {
+                var list = track.clips.ToList();
+                list.Sort((x, y) => x.start.CompareTo(y.start));
+                track.clips = list.ToArray();
+            }
         }
 
         public static void SortMark(this XTrack track)
         {
-            var list = track.marks.ToList();
-            list.Sort((x, y) => x.time.CompareTo(y.time));
-            track.marks = list.ToArray();
+            if (track.marks != null && track.marks.Length > 0)
+            {
+                var list = track.marks.ToList();
+                list.Sort((x, y) => x.time.CompareTo(y.time));
+                track.marks = list.ToArray();
+            }
         }
 
         public static void AddRootTrack(this XTimeline timeline, XTrack track)
@@ -133,7 +162,5 @@ namespace UnityEditor.Timeline
             track.ForeachHierachyTrack((t) => { ret = ret & t.mute; });
             return ret;
         }
-
-      
     }
 }
