@@ -85,6 +85,24 @@ namespace UnityEditor.Timeline
             return ret;
         }
 
+        public static List<Type> GetRootChilds(Type trackType)
+        {
+            List<Type> list = new List<Type>();
+            var tracks = AllTracksExcMarkers();
+            foreach (var track in tracks)
+            {
+                var usage = (UseParentAttribute[]) Attribute.GetCustomAttributes(track, typeof(UseParentAttribute));
+                foreach (var use in usage)
+                {
+                    if (use.parent == trackType)
+                    {
+                        list.Add(track);
+                    }
+                }
+            }
+            return list;
+        }
+
 
         // [MenuItem("Tools/Test")]
         public static void FetchAllTrack()

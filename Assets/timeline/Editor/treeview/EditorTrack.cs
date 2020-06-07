@@ -1,8 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline
 {
+    public struct TrackMenuAction
+    {
+        public string desc;
+        public bool on;
+        public GenericMenu.MenuFunction2 fun;
+        public object arg;
+    }
+
     public class EditorTrack
     {
         public XTrack track;
@@ -21,6 +30,8 @@ namespace UnityEditor.Timeline
             get { return Color.red; }
         }
 
+        protected virtual List<TrackMenuAction> actions { get; }
+
         protected bool triger
         {
             get
@@ -32,10 +43,6 @@ namespace UnityEditor.Timeline
 
         public void OnGUI()
         {
-            if (pm == null)
-            {
-                pm = new GenericMenu();
-            }
             var backgroundColor = select
                 ? TimelineStyles.colorDuration
                 : TimelineStyles.markerHeaderDrawerBackgroundColor;
@@ -67,6 +74,7 @@ namespace UnityEditor.Timeline
             {
                 if (triger)
                 {
+                    pm = new GenericMenu();
                     if (TimelineWindow.inst.tree.AnySelect())
                         pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect All"), false, UnSelectAll);
                     else
@@ -81,6 +89,15 @@ namespace UnityEditor.Timeline
                     else
                     {
                         pm.AddItem(EditorGUIUtility.TrTextContent("Mute Track \t"), false, MuteClip);
+                    }
+                    pm.AddSeparator("");
+                    if (actions != null)
+                    {
+                        for (int i = 0; i < actions.Count; i++)
+                        {
+                            var at = actions[i];
+                            pm.AddItem(EditorGUIUtility.TrTextContent(at.desc), at.@on, at.fun, at.arg);
+                        }
                     }
                     pm.ShowAsContext();
                 }

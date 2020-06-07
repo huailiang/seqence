@@ -26,4 +26,16 @@ namespace UnityEngine.Timeline
             type = t;
         }
     }
+
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public class UseParentAttribute : Attribute
+    {
+        public Type parent;
+
+        public UseParentAttribute(Type t)
+        {
+            parent = t;
+        }
+    }
 }

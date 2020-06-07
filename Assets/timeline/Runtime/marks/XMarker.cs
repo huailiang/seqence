@@ -12,8 +12,7 @@ namespace UnityEngine.Timeline
         {
             get { return track.timeline; }
         }
-
-
+        
         public XMarker(XTrack track, MarkData data)
         {
             this.track = track;

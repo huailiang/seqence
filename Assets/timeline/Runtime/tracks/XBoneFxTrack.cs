@@ -3,6 +3,7 @@
 namespace UnityEngine.Timeline
 {
     [TrackDescriptor("骨骼特效", true)]
+    [UseParent(typeof(XAnimationTrack))]
     public class XBoneFxTrack : XTrack
     {
         public GameObject target;

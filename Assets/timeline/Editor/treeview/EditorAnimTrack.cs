@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
@@ -11,6 +14,42 @@ namespace UnityEditor.Timeline
         protected override Color trackColor
         {
             get { return Color.yellow; }
+        }
+
+        protected override List<TrackMenuAction> actions
+        {
+            get
+            {
+                var types = TypeUtilities.GetRootChilds(typeof(XAnimationTrack));
+                List<TrackMenuAction> ret = new List<TrackMenuAction>();
+                for (int i = 0; i < types.Count; i++)
+                {
+                    var str = types[i].ToString();
+                    int idx = str.LastIndexOf('.');
+                    if (idx >= 0)
+                    {
+                        str = str.Substring(idx + 1);
+                    }
+                    var act = new TrackMenuAction()
+                    {
+                        desc = "Add " + str, on = false, fun = AddSubTrack, arg = types[i]
+                    };
+                    ret.Add(act);
+                }
+                return ret;
+            }
+        }
+
+        private void AddSubTrack(object arg)
+        {
+            Type type = (Type) arg;
+            TrackData data = EditorTrackFactory.CreateData(type);
+            var state = TimelineWindow.inst.state;
+            var tr = XTrackFactory.Get(data, state.timeline);
+            tr.parent = this.track;
+            tr.parent.AddSub(tr);
+            int idx = TimelineWindow.inst.tree.IndexOfTrack(this.track);
+            TimelineWindow.inst.tree.AddTrack(tr, idx + 1);
         }
 
         private void InitStyle()
