@@ -33,30 +33,6 @@ namespace UnityEditor.Timeline
         }
 
 
-        public static TrackData CreateData(Type type)
-        {
-            TrackData data = null;
-            if (type == typeof(XAnimationTrack))
-            {
-                data = new BindTrackData(TrackType.Animation);
-            }
-            else if (type == typeof(XPostprocessTrack))
-            {
-                data = new TrackData(TrackType.PostProcess);
-            }
-            else if (type == typeof(XBoneFxTrack))
-            {
-                data = new TrackData(TrackType.BoneFx);
-            }
-            else if (type == typeof(XSceneFxTrack))
-            {
-                data = new TrackData(TrackType.SceneFx);
-            }
-            else
-            {
-                throw new Exception("not implement trackdata for default");
-            }
-            return data;
-        }
+        
     }
 }

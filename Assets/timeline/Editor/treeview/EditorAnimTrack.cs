@@ -43,9 +43,9 @@ namespace UnityEditor.Timeline
         private void AddSubTrack(object arg)
         {
             Type type = (Type) arg;
-            TrackData data = EditorTrackFactory.CreateData(type);
+            TrackData data = XTimelineFactory.CreateTrackData(type);
             var state = TimelineWindow.inst.state;
-            var tr = XTrackFactory.Get(data, state.timeline);
+            var tr = XTimelineFactory.GetTrack(data, state.timeline);
             tr.parent = this.track;
             tr.parent.AddSub(tr);
             int idx = TimelineWindow.inst.tree.IndexOfTrack(this.track);
@@ -97,19 +97,22 @@ namespace UnityEditor.Timeline
             ObjectSelector.get.Show(null, typeof(AnimationClip), null, false, null, obj =>
             {
                 AnimationClip u_clip = (AnimationClip) obj;
-                Vector2 v2 = (Vector2) mpos;
-                float start = TimelineWindow.inst.PiexlToTime(v2.x);
-                AnimClipData data = new AnimClipData();
-                data.start = start;
-                data.duration = u_clip.averageDuration;
-                data.trim_start = 0;
-                data.loop = u_clip.isLooping;
-                XAnimationTrack atr = (XAnimationTrack) track;
-                XAnimationClip clip = new XAnimationClip((XAnimationTrack) track, data);
-                clip.aclip = u_clip;
-                clip.port = track.clips?.Length ?? 0;
-                track.AddClip(clip);
-                base.AddClip(mpos);
+                if (u_clip != null)
+                {
+                    Vector2 v2 = (Vector2) mpos;
+                    float start = TimelineWindow.inst.PiexlToTime(v2.x);
+                    AnimClipData data = new AnimClipData();
+                    data.start = start;
+                    data.duration = u_clip.averageDuration;
+                    data.trim_start = 0;
+                    data.loop = u_clip.isLooping;
+                    XAnimationTrack atr = (XAnimationTrack) track;
+                    XAnimationClip clip = new XAnimationClip((XAnimationTrack) track, data);
+                    clip.aclip = u_clip;
+                    clip.port = track.clips?.Length ?? 0;
+                    track.AddClip(clip);
+                    base.AddClip(mpos);
+                }
             }, null);
         }
     }

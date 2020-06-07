@@ -2,6 +2,13 @@
 
 namespace UnityEngine.Timeline.Data
 {
+    public enum MarkType
+    {
+        Active = 1,
+        Jump = 1 << 1,
+        Slow = 1 << 2,
+    }
+
     public class MarkData
     {
         public float time;
@@ -16,14 +23,15 @@ namespace UnityEngine.Timeline.Data
             time = reader.ReadSingle();
         }
     }
-    
-    
+
+
     public class SlowMarkData : MarkData
     {
         public float slowRate;
 
         public override void Write(BinaryWriter writer)
         {
+            writer.Write((int) MarkType.Slow);
             base.Write(writer);
             writer.Write(slowRate);
         }
@@ -38,10 +46,11 @@ namespace UnityEngine.Timeline.Data
     public class ActiveData : MarkData
     {
         public bool active;
-        
-        
+
+
         public override void Write(BinaryWriter writer)
         {
+            writer.Write((int) MarkType.Active);
             base.Write(writer);
             writer.Write(active);
         }
@@ -52,13 +61,14 @@ namespace UnityEngine.Timeline.Data
             active = reader.ReadBoolean();
         }
     }
-    
+
     public class JumpMarkData : MarkData
     {
         public float jump;
 
         public override void Write(BinaryWriter writer)
         {
+            writer.Write((int) MarkType.Jump);
             base.Write(writer);
             writer.Write(jump);
         }
@@ -69,5 +79,4 @@ namespace UnityEngine.Timeline.Data
             jump = reader.ReadSingle();
         }
     }
-    
 }

@@ -117,7 +117,7 @@ namespace UnityEngine.Timeline
                     childs = new XTrack[len];
                     for (int i = 0; i < len; i++)
                     {
-                        childs[i] = XTrackFactory.Get(data.childs[i], timeline);
+                        childs[i] = XTimelineFactory.GetTrack(data.childs[i], timeline);
                         childs[i].parent = this;
                     }
                 }

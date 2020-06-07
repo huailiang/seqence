@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace UnityEngine.Timeline.Data
 {
-    [Flags]
     public enum TrackType
     {
         Marker = 1,
@@ -62,15 +61,16 @@ namespace UnityEngine.Timeline.Data
 
             for (int j = 0; j < len; j++)
             {
-                clips[j].Read(reader);
+                clips[j] = XTimelineFactory.CreateClipData(reader);
             }
             for (int j = 0; j < len2; j++)
             {
+                childs[j] = new TrackData((TrackType) reader.ReadInt32());
                 childs[j].Read(reader);
             }
             for (int i = 0; i < len3; i++)
             {
-                marks[i].Read(reader);
+                marks[i] = XTimelineFactory.CreateMarkData(reader);
             }
         }
     }

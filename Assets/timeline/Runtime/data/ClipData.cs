@@ -2,14 +2,25 @@
 
 namespace UnityEngine.Timeline.Data
 {
-    public class ClipData
+    public enum ClipType
+    {
+        BoneFx = 1 << 1,
+        SceneFx = 1 << 2,
+        Animation = 1 << 3,
+        PostProcess = 1 << 4,
+    }
+
+    public abstract class ClipData
     {
         public float start;
 
         public float duration;
 
+        public abstract ClipType type { get; }
+
         public virtual void Write(BinaryWriter writer)
         {
+            writer.Write((int) type);
             writer.Write(start);
             writer.Write(duration);
         }
@@ -27,6 +38,11 @@ namespace UnityEngine.Timeline.Data
         public string prefab;
         public uint seed;
         public Vector3 pos, rot, scale;
+
+        public override ClipType type
+        {
+            get { return ClipType.SceneFx; }
+        }
 
         public override void Write(BinaryWriter writer)
         {
@@ -53,6 +69,11 @@ namespace UnityEngine.Timeline.Data
     {
         public string bone;
 
+        public override ClipType type
+        {
+            get { return ClipType.BoneFx; }
+        }
+
         public override void Write(BinaryWriter writer)
         {
             base.Write(writer);
@@ -73,6 +94,11 @@ namespace UnityEngine.Timeline.Data
         public float trim_start, trim_end;
 
         public bool loop;
+
+        public override ClipType type
+        {
+            get { return ClipType.Animation; }
+        }
 
         public override void Write(BinaryWriter writer)
         {
@@ -95,5 +121,9 @@ namespace UnityEngine.Timeline.Data
 
     public class PostprocessData : ClipData
     {
+        public override ClipType type
+        {
+            get { return ClipType.PostProcess; }
+        }
     }
 }
