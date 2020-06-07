@@ -152,17 +152,11 @@ namespace UnityEditor.Timeline
         protected void GUIContent()
         {
             var clips = track.clips;
-            Rect tmp = rect;
             if (clips != null)
             {
                 for (int i = 0; i < clips.Length; i++)
                 {
-                    var clip = clips[i];
-                    float x = TimelineWindow.inst.TimeToPixel(clip.start);
-                    float y = TimelineWindow.inst.TimeToPixel(clip.end);
-                    tmp.x = x;
-                    tmp.width = y - x;
-                    EditorGUI.DrawRect(tmp, TimelineStyles.colorRecordingClipOutline);
+                    new EditorClip(this, clips[i]).OnGUI();
                 }
             }
             GUILayout.BeginArea(rect);
@@ -181,7 +175,6 @@ namespace UnityEditor.Timeline
 
         protected virtual void AddClip(object mpos)
         {
-            Debug.Log("Add Clip");
             TimelineWindow.inst.Repaint();
         }
 

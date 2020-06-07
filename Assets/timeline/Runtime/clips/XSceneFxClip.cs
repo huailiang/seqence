@@ -8,6 +8,11 @@ namespace UnityEngine.Timeline
         private ParticleSystem[] particleSystems;
         private bool restart = false;
 
+        public override string Display
+        {
+            get { return prefabGameObject != null ? prefabGameObject.name : ""; }
+        }
+
         public XSceneFxClip(XSceneFxTrack track, ClipData data) : base(track, data)
         {
             SceneFxClipData fxdata = (SceneFxClipData) data;

@@ -4,11 +4,13 @@ namespace UnityEngine.Timeline
 {
     public interface IClip
     {
-        float start { get; }
+        float start { get; set; }
 
         float duration { get; }
 
         float end { get; }
+
+        string Display { get; }
 
         void Update(float time, float prev);
 
@@ -40,11 +42,17 @@ namespace UnityEngine.Timeline
         public float start
         {
             get { return data.start; }
+            set { data.start = value; }
         }
 
         public float end
         {
             get { return start + duration; }
+        }
+
+        public virtual string Display
+        {
+            get { return string.Empty; }
         }
 
         public void Dispose()
@@ -68,7 +76,7 @@ namespace UnityEngine.Timeline
                 OnUpdate(tick);
             }
         }
-        
+
         protected virtual void OnEnter()
         {
         }

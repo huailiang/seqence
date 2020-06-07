@@ -94,10 +94,9 @@ namespace UnityEditor.Timeline
 
         protected override void AddClip(object mpos)
         {
-            
             ObjectSelector.get.Show(null, typeof(AnimationClip), null, false, null, obj =>
             {
-                AnimationClip u_clip = (AnimationClip)obj;
+                AnimationClip u_clip = (AnimationClip) obj;
                 Vector2 v2 = (Vector2) mpos;
                 float start = TimelineWindow.inst.PiexlToTime(v2.x);
                 AnimClipData data = new AnimClipData();
@@ -107,10 +106,11 @@ namespace UnityEditor.Timeline
                 data.loop = u_clip.isLooping;
                 XAnimationTrack atr = (XAnimationTrack) track;
                 XAnimationClip clip = new XAnimationClip((XAnimationTrack) track, data);
+                clip.aclip = u_clip;
+                clip.port = track.clips?.Length ?? 0;
                 track.AddClip(clip);
                 base.AddClip(mpos);
             }, null);
-           
         }
     }
 }

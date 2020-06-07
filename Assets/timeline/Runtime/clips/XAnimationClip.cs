@@ -7,8 +7,13 @@ namespace UnityEngine.Timeline
     public class XAnimationClip : XClip<XAnimationTrack>
     {
         public AnimationClipPlayable playable;
-        private AnimationClip aclip;
+        public AnimationClip aclip;
         public int port = 0;
+
+        public override string Display
+        {
+            get { return aclip != null ? aclip.name + " " + port : " anim:" + port; }
+        }
 
 
         public XAnimationClip(XAnimationTrack track, ClipData data) : base(track, data)

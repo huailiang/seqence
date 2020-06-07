@@ -8,6 +8,11 @@ namespace UnityEngine.Timeline
         ParticleSystem[] ps;
         uint seed;
 
+        public override string Display
+        {
+            get { return fx ? fx.name : "fx"; }
+        }
+
         public XBoneFxClip(XBoneFxTrack track, ClipData data) : base(track, data)
         {
             Load((BoneFxClipData) data);

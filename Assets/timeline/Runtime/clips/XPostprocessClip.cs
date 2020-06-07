@@ -4,8 +4,12 @@ namespace UnityEngine.Timeline
 {
     public class XPostprocessClip : XClip<XPostprocessTrack>
     {
-        public XPostprocessClip(XPostprocessTrack track, ClipData data)
-            : base(track, data)
+        public override string Display
+        {
+            get { return "post process"; }
+        }
+
+        public XPostprocessClip(XPostprocessTrack track, ClipData data) : base(track, data)
         {
         }
     }
