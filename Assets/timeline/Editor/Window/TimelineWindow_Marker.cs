@@ -5,6 +5,18 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
+     struct MarkAction
+    {
+        public Type type;
+        public float posX;
+
+        public MarkAction(Type t, float x)
+        {
+            type = t;
+            posX = x;
+        }
+    }
+
     public partial class TimelineWindow
     {
         private Rect markderRect;
@@ -42,17 +54,6 @@ namespace UnityEditor.Timeline
             }
         }
 
-        struct MarkAction
-        {
-            public Type type;
-            public float posX;
-
-            public MarkAction(Type t, float x)
-            {
-                type = t;
-                posX = x;
-            }
-        }
 
         void DrawMarkerDrawerHeaderBackground()
         {

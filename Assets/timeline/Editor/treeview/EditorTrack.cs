@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -105,7 +104,12 @@ namespace UnityEditor.Timeline
                     for (int i = 0; i < marks.Count; i++)
                     {
                         var mark = marks[i];
-                        pm.AddItem(EditorGUIUtility.TrTextContent(mark.ToString()), false, AddMark, mark);
+                        string str = mark.ToString();
+                        int idx = str.LastIndexOf('.');
+                        str = str.Substring(idx + 1);
+                        var ct = EditorGUIUtility.TrTextContent("Add " + str);
+                        MarkAction action = new MarkAction() {type = mark, posX = e.mousePosition.x};
+                        pm.AddItem(ct, false, AddMark, action);
                     }
                     pm.ShowAsContext();
                 }
@@ -167,6 +171,14 @@ namespace UnityEditor.Timeline
                     new EditorClip(this, clips[i]).OnGUI();
                 }
             }
+            var marks = track.marks;
+            if (marks != null)
+            {
+                for (int i = 0; i < marks.Length; i++)
+                {
+                    DrawMarkItem(marks[i]);
+                }
+            }
             if (track.locked)
             {
                 GUI.Box(rect, "", TimelineStyles.lockedBG);
@@ -174,6 +186,18 @@ namespace UnityEditor.Timeline
             GUILayout.BeginArea(rect);
             OnGUIContent();
             GUILayout.EndArea();
+        }
+
+        void DrawMarkItem(XMarker mark)
+        {
+            float x = TimelineWindow.inst.TimeToPixel(mark.time);
+            Rect tmp = rect;
+            tmp.x = x;
+            tmp.y = rect.y + rect.height / 4;
+            tmp.width = 20;
+            GUIContent cont = TimelineWindow.inst.state.config.GetIcon(mark.type);
+            
+            GUI.Box(tmp, cont, GUIStyle.none);
         }
 
         protected virtual void OnGUIContent()
@@ -187,8 +211,9 @@ namespace UnityEditor.Timeline
 
         private void AddMark(object m)
         {
-            Type t = (Type) m;
-            Debug.Log("add mark " + t);
+            MarkAction t = (MarkAction) m;
+            float time = TimelineWindow.inst.PiexlToTime(t.posX);
+            EditorFactory.MakeMarker(t.type, time, track);
         }
 
         protected virtual void AddClip(object mpos)

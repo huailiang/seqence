@@ -57,6 +57,19 @@ namespace UnityEditor.Timeline
             }
         }
 
+        public void MarksOffset(bool show)
+        {
+            float delta = WindowConstants.markerRowHeight;
+            if (!show) delta = -delta;
+            if (hierachy != null)
+            {
+                foreach (var it in hierachy)
+                {
+                    it.YOffset(delta);
+                }
+            }
+        }
+
         private void Add(XTrack track, IList<EditorTrack> list)
         {
             EditorTrack etrack = EditorFactory.GetTrack(track);

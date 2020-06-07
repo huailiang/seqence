@@ -16,7 +16,10 @@ namespace UnityEngine.Timeline
         public override void OnTriger()
         {
             base.OnTriger();
-            timeline.ProcessImmediately(jump);
+            if (jump != timeline.Time)
+            {
+                timeline.ProcessImmediately(jump);
+            }
         }
     }
 }

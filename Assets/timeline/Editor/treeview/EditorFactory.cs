@@ -36,6 +36,11 @@ namespace UnityEditor.Timeline
         public static XMarker MakeMarker(Type t, float time)
         {
             var track = TimelineWindow.inst.state.timeline.trackTrees[0];
+            return MakeMarker(t, time, track);
+        }
+
+        public static XMarker MakeMarker(Type t, float time, XTrack track)
+        {
             XMarker marker = null;
             if (t == typeof(XJumpMarker))
             {

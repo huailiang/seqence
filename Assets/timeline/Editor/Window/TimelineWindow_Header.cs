@@ -45,7 +45,7 @@ namespace UnityEditor.Timeline
 
         private void OnAddTrackItem(object arg)
         {
-            Type type =  (Type)arg;
+            Type type = (Type) arg;
             TrackData data = XTimelineFactory.CreateTrackData(type);
             var track = XTimelineFactory.GetTrack(data, state.timeline);
             tree.AddTrack(track);
@@ -55,7 +55,12 @@ namespace UnityEditor.Timeline
         void ShowMarkersButton()
         {
             var content = state.showMarkerHeader ? TimelineStyles.showMarkersOn : TimelineStyles.showMarkersOff;
+            bool b = state.showMarkerHeader;
             SetShowMarkerHeader(GUILayout.Toggle(state.showMarkerHeader, content, GUI.skin.button));
+            if (b != state.showMarkerHeader)
+            {
+                tree.MarksOffset(state.showMarkerHeader);
+            }
         }
 
         internal void SetShowMarkerHeader(bool newValue)
