@@ -5,7 +5,7 @@ using UnityEngine.Timeline.Data;
 namespace UnityEngine.Timeline
 {
     [TrackRequreType(typeof(Animator))]
-    [TrackDescriptor("动作", true)]
+    [TrackDescriptor("动作", false)]
     public class XAnimationTrack : XBindTrack
     {
         public AnimationPlayableOutput playableOutput;

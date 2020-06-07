@@ -44,8 +44,7 @@ namespace UnityEditor.Timeline
         {
             TimelineConfig config = new TimelineConfig();
             config.tracks = new TrackData[1];
-            TrackData data = new TrackData();
-            data.type = TrackType.Marker;
+            TrackData data = new TrackData(TrackType.Marker);
             config.tracks[0] = data;
             timeline = new XTimeline(config);
             timeline.Time = 2.0f;

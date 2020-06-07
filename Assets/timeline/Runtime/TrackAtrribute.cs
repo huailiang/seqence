@@ -7,13 +7,13 @@ namespace UnityEngine.Timeline
     {
         public string desc;
 
-        public bool recordable;
+        public bool isOnlySub;
 
 
-        public TrackDescriptorAttribute(string desc, bool record)
+        public TrackDescriptorAttribute(string desc, bool onlySub)
         {
             this.desc = desc;
-            this.recordable = record;
+            isOnlySub = onlySub;
         }
     }
 

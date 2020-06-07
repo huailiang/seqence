@@ -1,6 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
+﻿using System.IO;
+
 namespace UnityEngine.Timeline
 {
     public class TimelineUtil
@@ -44,15 +43,6 @@ namespace UnityEngine.Timeline
             {
                 return arr;
             }
-        }
-
-        public static bool CanRecord(MemberInfo track)
-        {
-            if (Attribute.GetCustomAttribute(track, typeof(TrackDescriptorAttribute)) is TrackDescriptorAttribute attr)
-            {
-                return attr.recordable;
-            }
-            return false;
         }
 
 

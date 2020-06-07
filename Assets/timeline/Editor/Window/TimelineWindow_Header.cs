@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
 
@@ -25,33 +26,26 @@ namespace UnityEditor.Timeline
         {
             if (EditorGUILayout.DropdownButton(TimelineStyles.addContent, FocusType.Passive, "Dropdown"))
             {
-                XTrack parent = tree.GetSelectTrack();
-                if (parent)
+                GenericMenu pm = new GenericMenu();
+                var types = TypeUtilities.AllRootTrackExcMarkers();
+                for (int i = 0; i < types.Count; i++)
                 {
-                    var track = parent.Clone();
-                    track.parent = parent;
-                    int idx = tree.IndexOfTrack(parent);
-                    tree.AddTrack(track, ++idx);
-                    parent.AddSub(track);
-                }
-                else
-                {
-                    GenericMenu pm = new GenericMenu();
-                    var e = new TrackType();
-                    string[] values = System.Enum.GetNames(e.GetType());
-                    for (int i = 1; i < values.Length; i++)
+                    string str = types[i].ToString();
+                    int idx = str.LastIndexOf('.');
+                    if (idx >= 0)
                     {
-                        pm.AddItem(EditorGUIUtility.TrTextContent(values[i]), false, OnAddTrackItem, i);
+                        str = str.Substring(idx + 1);
                     }
-                    Rect rect = new Rect(Event.current.mousePosition, new Vector2(200, 0));
-                    pm.DropDown(rect);
+                    pm.AddItem(EditorGUIUtility.TrTextContent(str), false, OnAddTrackItem, types[i]);
                 }
+                Rect rect = new Rect(Event.current.mousePosition, new Vector2(200, 0));
+                pm.DropDown(rect);
             }
         }
 
         private void OnAddTrackItem(object arg)
         {
-            TrackType type = (TrackType) arg;
+            Type type =  (Type)arg;
             TrackData data = EditorTrackFactory.CreateData(type);
             var track = XTrackFactory.Get(data, state.timeline);
             tree.AddTrack(track);

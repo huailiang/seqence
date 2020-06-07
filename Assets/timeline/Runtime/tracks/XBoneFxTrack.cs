@@ -2,7 +2,7 @@
 
 namespace UnityEngine.Timeline
 {
-    [TrackDescriptor("骨骼特效", false)]
+    [TrackDescriptor("骨骼特效", true)]
     public class XBoneFxTrack : XTrack
     {
         public GameObject target;

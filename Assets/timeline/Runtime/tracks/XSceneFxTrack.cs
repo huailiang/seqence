@@ -2,7 +2,7 @@
 
 namespace UnityEngine.Timeline
 {
-    [TrackDescriptor("场景特效", true)]
+    [TrackDescriptor("场景特效", false)]
     public class XSceneFxTrack : XTrack
     {
         private TrackData data;
