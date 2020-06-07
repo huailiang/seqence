@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
@@ -36,6 +37,18 @@ namespace UnityEngine.Timeline
         public UseParentAttribute(Type t)
         {
             parent = t;
+        }
+    }
+
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public class MarkUsageAttribute : Attribute
+    {
+        public TrackType type;
+
+        public MarkUsageAttribute(TrackType t)
+        {
+            this.type = t;
         }
     }
 }

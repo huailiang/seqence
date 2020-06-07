@@ -159,6 +159,10 @@ namespace UnityEditor.Timeline
                     new EditorClip(this, clips[i]).OnGUI();
                 }
             }
+            if (track.locked)
+            {
+                GUI.Box(rect, "", TimelineStyles.lockedBG);
+            }
             GUILayout.BeginArea(rect);
             OnGUIContent();
             GUILayout.EndArea();

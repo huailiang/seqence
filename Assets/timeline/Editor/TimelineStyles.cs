@@ -13,7 +13,7 @@ namespace UnityEditor.Timeline
         public readonly static GUIStyle keyframe = "Icon.Keyframe";
         public readonly static GUIStyle clips = "Icon.Curves";
         public static readonly GUIStyle timeCursor = "Icon.TimeCursor";
-        
+
         public static readonly GUIContent referenceTrackLabel =
             EditorGUIUtility.TrTextContent("R", "This track references an external asset");
 
@@ -69,7 +69,6 @@ namespace UnityEditor.Timeline
         public static readonly GUIContent markerCollapseButton =
             EditorGUIUtility.TrTextContent(string.Empty, "Expand / Collapse Track Markers");
 
-        
 
         public readonly static Color colorDuration = new Color(0.66f, 0.66f, 0.66f, 1.0f);
 

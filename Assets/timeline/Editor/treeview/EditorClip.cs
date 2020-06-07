@@ -55,7 +55,7 @@ namespace UnityEditor.Timeline
             }
 
             tmp.y = rect.y + tmp.height / 3;
-            EditorGUI.LabelField(tmp, clip.Display);
+            EditorGUI.LabelField(tmp, clip.Display, TimelineStyles.fontClip);
         }
 
         private bool draging;

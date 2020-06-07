@@ -2,13 +2,12 @@
 
 namespace UnityEngine.Timeline
 {
+    [MarkUsage(TrackType.Marker)]
     public class XJumpMarker : XMarker
     {
-
         private float jump;
 
-        public XJumpMarker(XTrack track, JumpMarkData data) :
-            base(track, data)
+        public XJumpMarker(XTrack track, JumpMarkData data) : base(track, data)
         {
             jump = data.jump;
         }
@@ -19,8 +18,5 @@ namespace UnityEngine.Timeline
             base.OnTriger();
             timeline.ProcessImmediately(jump);
         }
-
     }
-
-
 }
