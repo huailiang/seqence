@@ -1,18 +1,19 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace UnityEngine.Timeline.Data
 {
+    [Flags]
     public enum TrackType
     {
-        Marker,
-        BoneFx,
-        SceneFx,
-        Animation,
-        PostProcess,
+        Marker = 1,
+        BoneFx = 1 << 1,
+        SceneFx = 1 << 2,
+        Animation = 1 << 3,
+        PostProcess = 1 << 4,
     }
 
     public class TrackData

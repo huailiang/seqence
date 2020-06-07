@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -99,6 +100,13 @@ namespace UnityEditor.Timeline
                             pm.AddItem(EditorGUIUtility.TrTextContent(at.desc), at.@on, at.fun, at.arg);
                         }
                     }
+                    pm.AddSeparator("");
+                    var marks = TypeUtilities.GetBelongMarks(track.trackType);
+                    for (int i = 0; i < marks.Count; i++)
+                    {
+                        var mark = marks[i];
+                        pm.AddItem(EditorGUIUtility.TrTextContent(mark.ToString()), false, AddMark, mark);
+                    }
                     pm.ShowAsContext();
                 }
             }
@@ -175,6 +183,12 @@ namespace UnityEditor.Timeline
         private void UnSelectAll()
         {
             TimelineWindow.inst.tree?.ResetSelect();
+        }
+
+        private void AddMark(object m)
+        {
+            Type t = (Type) m;
+            Debug.Log("add mark " + t);
         }
 
         protected virtual void AddClip(object mpos)

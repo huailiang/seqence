@@ -33,6 +33,10 @@ namespace UnityEngine.Timeline
         {
             base.OnEnter();
             restart = true;
+            if (prefabGameObject)
+            {
+                prefabGameObject.SetActive(true);
+            }
         }
 
         protected override void OnUpdate(float tick)

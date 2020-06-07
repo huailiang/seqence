@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
@@ -99,6 +100,22 @@ namespace UnityEditor.Timeline
                         list.Add(track);
                     }
                 }
+            }
+            return list;
+        }
+
+        public static List<Type> GetBelongMarks(TrackType trackType)
+        {
+            List<Type> list = new List<Type>();
+            var marks = GetAllMarkerTypes();
+            foreach (var mark in marks)
+            {
+                var usage = (MarkUsageAttribute) Attribute.GetCustomAttribute(mark, typeof(MarkUsageAttribute));
+                if (usage != null)
+                    if ((usage.type & trackType) > 0)
+                    {
+                        list.Add(mark);
+                    }
             }
             return list;
         }
