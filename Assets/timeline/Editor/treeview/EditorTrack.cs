@@ -81,7 +81,7 @@ namespace UnityEditor.Timeline
                         pm.AddDisabledItem(EditorGUIUtility.TrTextContent("UnSelect All"));
                     pm.AddSeparator("");
                     pm.AddItem(EditorGUIUtility.TrTextContent("Add Clip \t"), false, AddClip, e.mousePosition);
-                    pm.AddItem(EditorGUIUtility.TrTextContent("Delete \t"), false, DeleteClip);
+                    pm.AddItem(EditorGUIUtility.TrTextContent("Delete \t"), false, DeleteClip, e.mousePosition);
                     if (track.mute)
                     {
                         pm.AddItem(EditorGUIUtility.TrTextContent("UnMute Track \t"), false, UnmuteClip);
@@ -196,7 +196,7 @@ namespace UnityEditor.Timeline
             tmp.y = rect.y + rect.height / 4;
             tmp.width = 20;
             GUIContent cont = TimelineWindow.inst.state.config.GetIcon(mark.type);
-            
+
             GUI.Box(tmp, cont, GUIStyle.none);
         }
 
@@ -221,10 +221,27 @@ namespace UnityEditor.Timeline
             TimelineWindow.inst.Repaint();
         }
 
-        private void DeleteClip()
+        private void DeleteClip(object mpos)
         {
             Debug.Log("delete Click");
-            TimelineWindow.inst.Repaint();
+            Vector2 pos = (Vector2) mpos;
+            float time = TimelineWindow.inst.PiexlToTime(pos.x);
+            bool find = false;
+            for (int i = 0; i < track.clips.Length; i++)
+            {
+                var clip = track.clips[i];
+                if (time >= clip.start && time <= clip.end)
+                {
+                    track.RmClip(clip);
+                    find = true;
+                    TimelineWindow.inst.Repaint();
+                    break;
+                }
+            }
+            if (!find)
+            {
+                EditorUtility.DisplayDialog("tip", "not select clip", "ok");
+            }
         }
 
         private void MuteClip()

@@ -42,6 +42,7 @@ namespace UnityEditor.Timeline
                 if (list.Contains(clip))
                 {
                     list.Remove(clip);
+                    track.clips = list.ToArray();
                     return true;
                 }
             }
