@@ -78,12 +78,12 @@ namespace UnityEditor.Timeline
                     if (TimelineWindow.inst.tree.AnySelect())
                     {
                         pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect All  \t #u"), false, UnSelectAll, false);
-                        pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Select All \t %s"));
+                        pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Select All \t %#s"));
                     }
                     else
                     {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("Select All  \t #s"), false, UnSelectAll, true);
-                        pm.AddDisabledItem(EditorGUIUtility.TrTextContent("UnSelect All \t %u"));
+                        pm.AddItem(EditorGUIUtility.TrTextContent("Select All Tracks \t %#s"), false, UnSelectAll, true);
+                        pm.AddDisabledItem(EditorGUIUtility.TrTextContent("UnSelect All Tracks \t %u"));
                     }
 
                     pm.AddSeparator("");
@@ -96,6 +96,14 @@ namespace UnityEditor.Timeline
                     else
                     {
                         pm.AddItem(EditorGUIUtility.TrTextContent("Mute Track \t"), false, MuteClip);
+                    }
+                    if (@select)
+                    {
+                        pm.AddItem(EditorGUIUtility.TrTextContent("Select Track \t #s"), false, SelectTrack, false);
+                    }
+                    else
+                    {
+                        pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect Track \t #s"), false, SelectTrack, true);
                     }
                     pm.AddSeparator("");
                     if (actions != null)
@@ -121,14 +129,13 @@ namespace UnityEditor.Timeline
                     pm.ShowAsContext();
                 }
             }
-            else if (e.type == EventType.MouseUp)
-            {
-                if (triger)
-                {
-                    @select = !@select;
-                    TimelineWindow.inst.Repaint();
-                }
-            }
+        }
+
+        private void SelectTrack(object arg)
+        {
+            bool sele = (bool) arg;
+            this.@select = sele;
+            TimelineWindow.inst.Repaint();
         }
 
         public void YOffset(float y)

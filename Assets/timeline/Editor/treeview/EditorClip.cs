@@ -26,31 +26,18 @@ namespace UnityEditor.Timeline
             tmp.x = rectX;
             tmp.width = y - rectX;
             tmp.height = rect.height - 2;
-            EditorGUI.DrawRect(tmp, Color.white);
-            tmp.x = rectX + 1;
-            tmp.width = y - rectX - 2;
-            tmp.y = rect.y + 1;
-            tmp.height = rect.height - 3;
             EditorGUI.DrawRect(tmp, Color.gray);
+            EditorGUI.DrawOutline(tmp, 1, Color.white);
 
             var e = Event.current;
             Vector2 p = e.mousePosition;
-            if (rect.Contains(p))
+            if (tmp.Contains(p))
             {
                 switch (e.type)
                 {
-                    case EventType.MouseUp:
-                        OnMouseUp(p);
-                        e.Use();
-                        break;
                     case EventType.MouseDrag:
                     case EventType.ScrollWheel:
                         OnDrag(e);
-                        e.Use();
-                        break;
-                    case EventType.MouseDown:
-                        OnMouseDown(p);
-                        e.Use();
                         break;
                 }
             }
@@ -60,19 +47,11 @@ namespace UnityEditor.Timeline
         }
 
 
-        private void OnMouseDown(Vector2 v2)
-        {
-            Debug.Log("mouse down");
-        }
-
         private void OnDrag(Event e)
         {
             rectX += e.delta.x;
             clip.start = TimelineWindow.inst.PiexlToTime(rectX);
-        }
-
-        private void OnMouseUp(Vector2 v2)
-        {
+            e.Use();
         }
     }
 }
