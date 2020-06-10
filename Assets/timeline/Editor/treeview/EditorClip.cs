@@ -8,74 +8,71 @@ namespace UnityEditor.Timeline
         public EditorTrack track;
         public IClip clip;
 
+        private float rectX;
+
         public EditorClip(EditorTrack tr, IClip c)
         {
             this.track = tr;
             this.clip = c;
-            draging = false;
+            rectX = 0;
         }
 
         public void OnGUI()
         {
             var rect = track.rect;
             Rect tmp = rect;
-            float x = TimelineWindow.inst.TimeToPixel(clip.start);
+            rectX = TimelineWindow.inst.TimeToPixel(clip.start);
             float y = TimelineWindow.inst.TimeToPixel(clip.end);
-            tmp.x = x;
-            tmp.width = y - x;
+            tmp.x = rectX;
+            tmp.width = y - rectX;
             tmp.height = rect.height - 2;
             EditorGUI.DrawRect(tmp, Color.white);
-            tmp.x = x + 1;
-            tmp.width = y - x - 2;
+            tmp.x = rectX + 1;
+            tmp.width = y - rectX - 2;
             tmp.y = rect.y + 1;
             tmp.height = rect.height - 3;
             EditorGUI.DrawRect(tmp, Color.gray);
 
             var e = Event.current;
             Vector2 p = e.mousePosition;
-            if (tmp.Contains(p))
+            if (rect.Contains(p))
             {
                 switch (e.type)
                 {
                     case EventType.MouseUp:
                         OnMouseUp(p);
+                        e.Use();
                         break;
                     case EventType.MouseDrag:
                     case EventType.ScrollWheel:
                         OnDrag(e);
+                        e.Use();
                         break;
                     case EventType.MouseDown:
                         OnMouseDown(p);
+                        e.Use();
                         break;
                 }
             }
-            else if (draging)
-            {
-                OnMouseUp(p);
-            }
 
-            tmp.y = rect.y ;
+            tmp.y = rect.y;
             EditorGUI.LabelField(tmp, clip.Display, TimelineStyles.fontClip);
         }
 
-        private bool draging;
 
         private void OnMouseDown(Vector2 v2)
         {
-            draging = true;
             Debug.Log("mouse down");
         }
 
         private void OnDrag(Event e)
         {
-            draging = true;
-            // Debug.Log(e.mousePosition);
-            clip.start += e.delta.x;
+            rectX += e.delta.x;
+            clip.start = TimelineWindow.inst.PiexlToTime(rectX);
         }
 
         private void OnMouseUp(Vector2 v2)
         {
-            draging = false;
         }
     }
 }

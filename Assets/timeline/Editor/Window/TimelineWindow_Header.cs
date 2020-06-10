@@ -27,8 +27,11 @@ namespace UnityEditor.Timeline
             if (EditorGUILayout.DropdownButton(TimelineStyles.addContent, FocusType.Passive, "Dropdown"))
             {
                 GenericMenu pm = new GenericMenu();
+                bool cd = (state.timeline.trackTrees.Length > 1);
+
                 if (TimelineWindow.inst.tree.AnySelect())
-                {   pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect All tracks \t #u"), false, tree.ResetSelect,
+                {
+                    pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect All tracks \t #u"), false, tree.ResetSelect,
                         false);
                     pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Select All tracks \t %s"));
                 }
@@ -39,10 +42,17 @@ namespace UnityEditor.Timeline
                         true);
                 }
 
-                pm.AddItem(EditorGUIUtility.TrTextContent("Mute All  tracks \t #m"), false, MuteAll);
-                pm.AddItem(EditorGUIUtility.TrTextContent("Lock All tracks \t #l"), false, LockAll);
+                if (cd)
+                {
+                    pm.AddItem(EditorGUIUtility.TrTextContent("Mute All  tracks \t #m"), false, MuteAll);
+                    pm.AddItem(EditorGUIUtility.TrTextContent("Lock All tracks \t #l"), false, LockAll);
+                }
+                else
+                {
+                    pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Mute All  tracks \t #m"), false);
+                    pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Lock All tracks \t #l"), false);
+                }
                 pm.AddSeparator("");
-
                 var types = TypeUtilities.AllRootTrackExcMarkers();
                 for (int i = 0; i < types.Count; i++)
                 {

@@ -47,11 +47,11 @@ namespace UnityEditor.Timeline
 
         public void CreateTimeline()
         {
-            TimelineConfig config = new TimelineConfig();
-            config.tracks = new TrackData[1];
+            TimelineConfig xconf = new TimelineConfig();
+            xconf.tracks = new TrackData[1];
             TrackData data = new TrackData(TrackType.Marker);
-            config.tracks[0] = data;
-            timeline = new XTimeline(config);
+            xconf.tracks[0] = data;
+            timeline = new XTimeline(xconf);
             timeline.Time = 2.0f;
             timeline.mode = TimelinePlayMode.EditorRun;
         }
