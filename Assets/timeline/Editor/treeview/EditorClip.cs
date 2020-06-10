@@ -13,7 +13,6 @@ namespace UnityEditor.Timeline
             this.track = tr;
             this.clip = c;
             draging = false;
-            st = 0;
         }
 
         public void OnGUI()
@@ -42,7 +41,8 @@ namespace UnityEditor.Timeline
                         OnMouseUp(p);
                         break;
                     case EventType.MouseDrag:
-                        OnDrag(p);
+                    case EventType.ScrollWheel:
+                        OnDrag(e);
                         break;
                     case EventType.MouseDown:
                         OnMouseDown(p);
@@ -54,24 +54,23 @@ namespace UnityEditor.Timeline
                 OnMouseUp(p);
             }
 
-            tmp.y = rect.y + tmp.height / 3;
+            tmp.y = rect.y ;
             EditorGUI.LabelField(tmp, clip.Display, TimelineStyles.fontClip);
         }
 
         private bool draging;
-        private float st;
 
         private void OnMouseDown(Vector2 v2)
         {
             draging = true;
-            st = v2.x;
+            Debug.Log("mouse down");
         }
 
-        private void OnDrag(Vector2 v2)
+        private void OnDrag(Event e)
         {
             draging = true;
-            float delta = st - v2.x;
-            // clip.start += delta;
+            // Debug.Log(e.mousePosition);
+            clip.start += e.delta.x;
         }
 
         private void OnMouseUp(Vector2 v2)

@@ -167,12 +167,13 @@ namespace UnityEditor.Timeline
             }
         }
 
-        public void ResetSelect()
+        public void ResetSelect(object arg)
         {
+            bool select = (bool) arg;
             if (hierachy != null)
                 foreach (var iTrack in hierachy)
                 {
-                    iTrack.@select = false;
+                    iTrack.@select = select;
                 }
             TimelineWindow.inst.Repaint();
         }

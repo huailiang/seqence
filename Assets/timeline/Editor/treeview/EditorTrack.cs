@@ -76,15 +76,22 @@ namespace UnityEditor.Timeline
                 {
                     pm = new GenericMenu();
                     if (TimelineWindow.inst.tree.AnySelect())
-                        pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect All"), false, UnSelectAll);
+                    {
+                        pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect All  \t #u"), false, UnSelectAll, false);
+                        pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Select All \t %s"));
+                    }
                     else
-                        pm.AddDisabledItem(EditorGUIUtility.TrTextContent("UnSelect All"));
+                    {
+                        pm.AddItem(EditorGUIUtility.TrTextContent("Select All  \t #s"), false, UnSelectAll, true);
+                        pm.AddDisabledItem(EditorGUIUtility.TrTextContent("UnSelect All \t %u"));
+                    }
+
                     pm.AddSeparator("");
-                    pm.AddItem(EditorGUIUtility.TrTextContent("Add Clip \t"), false, AddClip, e.mousePosition);
-                    pm.AddItem(EditorGUIUtility.TrTextContent("Delete \t"), false, DeleteClip, e.mousePosition);
+                    pm.AddItem(EditorGUIUtility.TrTextContent("Add Clip \t #a"), false, AddClip, e.mousePosition);
+                    pm.AddItem(EditorGUIUtility.TrTextContent("Delete \t #d"), false, DeleteClip, e.mousePosition);
                     if (track.mute)
                     {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("UnMute Track \t"), false, UnmuteClip);
+                        pm.AddItem(EditorGUIUtility.TrTextContent("UnMute Track \t "), false, UnmuteClip);
                     }
                     else
                     {
@@ -204,9 +211,10 @@ namespace UnityEditor.Timeline
         {
         }
 
-        private void UnSelectAll()
+        public void UnSelectAll(object arg)
         {
-            TimelineWindow.inst.tree?.ResetSelect();
+            bool select = (bool) arg;
+            TimelineWindow.inst.tree?.ResetSelect(select);
         }
 
         private void AddMark(object m)
