@@ -44,7 +44,6 @@ namespace UnityEditor.Timeline
             if (clip)
             {
                 EditorGUILayout.LabelField(clip.prefabGameObject.name);
-                
             }
         }
     }

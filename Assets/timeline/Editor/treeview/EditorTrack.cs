@@ -136,8 +136,11 @@ namespace UnityEditor.Timeline
         {
             bool sele = (bool) arg;
             this.@select = sele;
-
-            TimelineInspector.inst?.SetActive(this, sele);
+            if (TimelineInspector.inst!=null)
+            {
+                TimelineInspector.ShowWindow();
+                TimelineInspector.inst.SetActive(this, sele);
+            }
             TimelineWindow.inst.Repaint();
         }
 
@@ -213,7 +216,6 @@ namespace UnityEditor.Timeline
             tmp.y = rect.y + rect.height / 4;
             tmp.width = 20;
             GUIContent cont = TimelineWindow.inst.state.config.GetIcon(mark.type);
-
             GUI.Box(tmp, cont, GUIStyle.none);
         }
 
@@ -223,8 +225,13 @@ namespace UnityEditor.Timeline
 
         public void UnSelectAll(object arg)
         {
-            bool select = (bool) arg;
-            TimelineWindow.inst.tree?.ResetSelect(select);
+            bool selet = (bool) arg;
+            TimelineWindow.inst.tree?.ResetSelect(selet);
+            if (TimelineInspector.inst!=null)
+            {
+                TimelineInspector.ShowWindow();
+                TimelineInspector.inst.SetActive(this, selet);
+            }
         }
 
         private void AddMark(object m)
@@ -286,15 +293,16 @@ namespace UnityEditor.Timeline
             if (trackF)
             {
                 int cnt = track.childs?.Length ?? 0;
+                int i = 0;
                 EditorGUILayout.LabelField("sub track count:" + cnt);
                 if (track.clips != null)
                 {
-                    clipF = EditorGUILayout.Foldout(clipF, "clips:");
+                    clipF = EditorGUILayout.Foldout(clipF, "clips " + track.clips.Length);
                     if (clipF)
                     {
                         foreach (var clip in track.clips)
                         {
-                            EditorGUILayout.LabelField(clip.Display);
+                            EditorGUILayout.LabelField(++i + ": " + clip.Display);
                             clip.start = EditorGUILayout.FloatField("start", clip.start);
                             float d = EditorGUILayout.FloatField("duration", clip.duration);
                             if (d > 0)
@@ -307,16 +315,18 @@ namespace UnityEditor.Timeline
                 }
                 if (track.marks != null)
                 {
-                    markF = EditorGUILayout.Foldout(markF, "marks");
+                    markF = EditorGUILayout.Foldout(markF, "marks " + track.marks.Length);
                     if (markF)
                     {
+                        i = 0;
                         foreach (var mark in track.marks)
                         {
-                            EditorGUILayout.LabelField(mark.type.ToString());
+                            EditorGUILayout.LabelField((++i) + ": " + mark.type);
                             mark.time = EditorGUILayout.FloatField("time", mark.time);
                         }
                     }
                 }
+                EditorGUILayout.Space();
                 EditorGUILayout.Space();
             }
         }
