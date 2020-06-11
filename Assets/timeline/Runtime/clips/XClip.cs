@@ -6,7 +6,7 @@ namespace UnityEngine.Timeline
     {
         float start { get; set; }
 
-        float duration { get; }
+        float duration { get; set; }
 
         float end { get; }
 
@@ -37,6 +37,7 @@ namespace UnityEngine.Timeline
         public float duration
         {
             get { return data.duration; }
+            set { data.duration = value; }
         }
 
         public float start

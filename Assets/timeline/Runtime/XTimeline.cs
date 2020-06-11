@@ -103,19 +103,21 @@ namespace UnityEngine.Timeline
 
         public void ProcessImmediately(float time)
         {
-            for (int i = 0; i < trackTrees.Length; i++)
-            {
-                trackTrees[i].Process(time, prev);
-            }
+            if (trackTrees != null)
+                for (int i = 0; i < trackTrees.Length; i++)
+                {
+                    trackTrees[i].Process(time, prev);
+                }
             prev = time;
         }
 
         public void Dispose()
         {
-            for (int i = 0; i < trackTrees.Length; i++)
-            {
-                trackTrees[i].Dispose();
-            }
+            if (trackTrees != null)
+                for (int i = 0; i < trackTrees.Length; i++)
+                {
+                    trackTrees[i].Dispose();
+                }
         }
 
         public float RecalcuteDuration()

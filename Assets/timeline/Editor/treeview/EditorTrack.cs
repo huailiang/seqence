@@ -239,18 +239,21 @@ namespace UnityEditor.Timeline
         private void DeleteClip(object mpos)
         {
             Debug.Log("delete Click");
-            Vector2 pos = (Vector2) mpos;
+            Vector2 pos = (Vector2)mpos;
             float time = TimelineWindow.inst.PiexlToTime(pos.x);
             bool find = false;
-            for (int i = 0; i < track.clips.Length; i++)
+            if (track.clips != null)
             {
-                var clip = track.clips[i];
-                if (time >= clip.start && time <= clip.end)
+                for (int i = 0; i < track.clips.Length; i++)
                 {
-                    track.RmClip(clip);
-                    find = true;
-                    TimelineWindow.inst.Repaint();
-                    break;
+                    var clip = track.clips[i];
+                    if (time >= clip.start && time <= clip.end)
+                    {
+                        track.RmClip(clip);
+                        find = true;
+                        TimelineWindow.inst.Repaint();
+                        break;
+                    }
                 }
             }
             if (!find)

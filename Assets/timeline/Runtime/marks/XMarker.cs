@@ -28,6 +28,7 @@ namespace UnityEngine.Timeline
         public float time
         {
             get { return data.time; }
+            set { data.time = value; }
         }
 
         public virtual bool reverse
