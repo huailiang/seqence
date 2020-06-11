@@ -8,5 +8,6 @@ namespace UnityEditor.Timeline
         {
             get { return Color.magenta; }
         }
+
     }
 }

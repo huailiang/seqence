@@ -143,7 +143,7 @@ namespace UnityEditor.Timeline
         {
             if (GUILayout.Button(TimelineStyles.inspectBtn, EditorStyles.toolbarButton))
             {
-                TimelineInspector.ShowWindow(this);
+                TimelineInspector.ShowWindow();
             }
         }
 

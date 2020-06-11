@@ -36,5 +36,16 @@ namespace UnityEditor.Timeline
                 }
             }, null);
         }
+
+
+        protected override void OnInspectorClip(IClip c)
+        {
+            XSceneFxClip clip = (XSceneFxClip) c;
+            if (clip)
+            {
+                EditorGUILayout.LabelField(clip.prefabGameObject.name);
+                
+            }
+        }
     }
 }

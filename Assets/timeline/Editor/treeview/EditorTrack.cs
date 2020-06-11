@@ -12,7 +12,7 @@ namespace UnityEditor.Timeline
         public object arg;
     }
 
-    public class EditorTrack
+    public class EditorTrack : ITimelineInspector
     {
         public XTrack track;
         public Rect rect;
@@ -82,7 +82,8 @@ namespace UnityEditor.Timeline
                     }
                     else
                     {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("Select All Tracks \t %#s"), false, UnSelectAll, true);
+                        pm.AddItem(EditorGUIUtility.TrTextContent("Select All Tracks \t %#s"), false, UnSelectAll,
+                            true);
                         pm.AddDisabledItem(EditorGUIUtility.TrTextContent("UnSelect All Tracks \t %u"));
                     }
 
@@ -99,11 +100,11 @@ namespace UnityEditor.Timeline
                     }
                     if (@select)
                     {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("Select Track \t #s"), false, SelectTrack, false);
+                        pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect Track \t #s"), false, SelectTrack, false);
                     }
                     else
                     {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect Track \t #s"), false, SelectTrack, true);
+                        pm.AddItem(EditorGUIUtility.TrTextContent("Select Track \t #s"), false, SelectTrack, true);
                     }
                     pm.AddSeparator("");
                     if (actions != null)
@@ -135,6 +136,8 @@ namespace UnityEditor.Timeline
         {
             bool sele = (bool) arg;
             this.@select = sele;
+
+            TimelineInspector.inst?.SetActive(this, sele);
             TimelineWindow.inst.Repaint();
         }
 
@@ -239,7 +242,7 @@ namespace UnityEditor.Timeline
         private void DeleteClip(object mpos)
         {
             Debug.Log("delete Click");
-            Vector2 pos = (Vector2)mpos;
+            Vector2 pos = (Vector2) mpos;
             float time = TimelineWindow.inst.PiexlToTime(pos.x);
             bool find = false;
             if (track.clips != null)
@@ -272,6 +275,54 @@ namespace UnityEditor.Timeline
         {
             track.SetFlag(TrackMode.Mute, false);
             TimelineWindow.inst.Repaint();
+        }
+
+
+        private bool clipF, markF, trackF;
+
+        public void OnInspector()
+        {
+            trackF = EditorGUILayout.Foldout(trackF, "track: " + track.trackType + " " + track.ID);
+            if (trackF)
+            {
+                int cnt = track.childs?.Length ?? 0;
+                EditorGUILayout.LabelField("sub track count:" + cnt);
+                if (track.clips != null)
+                {
+                    clipF = EditorGUILayout.Foldout(clipF, "clips:");
+                    if (clipF)
+                    {
+                        foreach (var clip in track.clips)
+                        {
+                            EditorGUILayout.LabelField(clip.Display);
+                            clip.start = EditorGUILayout.FloatField("start", clip.start);
+                            float d = EditorGUILayout.FloatField("duration", clip.duration);
+                            if (d > 0)
+                            {
+                                clip.duration = d;
+                            }
+                            OnInspectorClip(clip);
+                        }
+                    }
+                }
+                if (track.marks != null)
+                {
+                    markF = EditorGUILayout.Foldout(markF, "marks");
+                    if (markF)
+                    {
+                        foreach (var mark in track.marks)
+                        {
+                            EditorGUILayout.LabelField(mark.type.ToString());
+                            mark.time = EditorGUILayout.FloatField("time", mark.time);
+                        }
+                    }
+                }
+                EditorGUILayout.Space();
+            }
+        }
+
+        protected virtual void OnInspectorClip(IClip clip)
+        {
         }
     }
 }
