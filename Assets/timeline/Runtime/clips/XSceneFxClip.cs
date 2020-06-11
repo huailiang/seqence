@@ -16,14 +16,29 @@ namespace UnityEngine.Timeline
         public XSceneFxClip(XSceneFxTrack track, ClipData data) : base(track, data)
         {
             SceneFxClipData fxdata = (SceneFxClipData) data;
-            var obj = Resources.Load<GameObject>(fxdata.prefab);
+            Load(fxdata.prefab, fxdata.pos, fxdata.rot, fxdata.scale);
+        }
+
+        public void SetReference(GameObject refObj)
+        {
+            prefabGameObject = refObj;
+        }
+
+        public void Load(string path)
+        {
+            Load(path, Vector3.zero, Vector3.zero, Vector3.one);
+        }
+
+        public void Load(string path, Vector3 pos, Vector3 rot, Vector3 scale)
+        {
+            var obj = Resources.Load<GameObject>(path);
             if (obj != null)
             {
                 prefabGameObject = Object.Instantiate(obj);
                 var tf = prefabGameObject.transform;
-                tf.position = fxdata.pos;
-                tf.rotation = Quaternion.Euler(fxdata.rot);
-                tf.localScale = fxdata.scale;
+                tf.position = pos;
+                tf.rotation = Quaternion.Euler(rot);
+                tf.localScale = scale;
 
                 particleSystems = tf.GetComponentsInChildren<ParticleSystem>();
             }

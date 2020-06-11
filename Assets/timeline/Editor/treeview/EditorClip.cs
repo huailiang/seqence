@@ -30,11 +30,11 @@ namespace UnityEditor.Timeline
             EditorGUI.DrawOutline(tmp, 1, Color.white);
 
             Rect left = tmp;
-            left.x = tmp.x - tmp.width / 4;
-            left.width = tmp.width / 2;
+            left.x = tmp.x - Mathf.Min(10, tmp.width / 4);
+            left.width = Mathf.Min(20, tmp.width / 2);
             EditorGUIUtility.AddCursorRect(left, MouseCursor.SplitResizeLeftRight);
             Rect right = left;
-            right.x = tmp.x + tmp.width * 0.75f;
+            right.x = tmp.x + tmp.width - Mathf.Min(10, tmp.width / 4);
             EditorGUIUtility.AddCursorRect(right, MouseCursor.SplitResizeLeftRight);
 
             var e = Event.current;
@@ -64,20 +64,27 @@ namespace UnityEditor.Timeline
 
         private void DragStart(Event e)
         {
+            rectX = TimelineWindow.inst.TimeToPixel(clip.start);
             rectX += e.delta.x;
             var start2 = TimelineWindow.inst.PiexlToTime(rectX);
-            clip.duration += (start2 - clip.start);
-            clip.start = start2;
-            e.Use();
+            if (start2 >= 0 && start2 <= clip.end)
+            {
+                clip.duration -= (start2 - clip.start);
+                clip.start = start2;
+                e.Use();
+            }
         }
 
         private void DragEnd(Event e)
         {
             rectX = TimelineWindow.inst.TimeToPixel(clip.end);
             rectX += e.delta.x;
-            var end = TimelineWindow.inst.TimeToPixel(rectX);
-            clip.duration = end - clip.start;
-            e.Use();
+            var end = TimelineWindow.inst.PiexlToTime(rectX);
+            if (end > clip.start)
+            {
+                clip.duration += (end - clip.end);
+                e.Use();
+            }
         }
 
 
