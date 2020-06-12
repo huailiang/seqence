@@ -38,12 +38,6 @@ namespace UnityEditor.Timeline
         }
 
 
-        protected override TrackData BuildChildData(int i)
-        {
-            throw new System.NotImplementedException();
-        }
-
-
         protected override void OnInspectorClip(IClip c)
         {
             XSceneFxClip clip = (XSceneFxClip) c;

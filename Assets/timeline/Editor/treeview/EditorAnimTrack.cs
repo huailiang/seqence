@@ -104,6 +104,7 @@ namespace UnityEditor.Timeline
                     AnimClipData data = new AnimClipData();
                     data.start = start;
                     data.duration = u_clip.averageDuration;
+                    data.anim = AssetDatabase.GetAssetPath(u_clip);
                     data.trim_start = 0;
                     data.loop = u_clip.isLooping;
                     XAnimationTrack atr = (XAnimationTrack) track;
@@ -114,12 +115,6 @@ namespace UnityEditor.Timeline
                     base.AddClip(mpos);
                 }
             }, null);
-        }
-
-
-        protected override TrackData BuildChildData(int i)
-        {
-            throw new NotImplementedException();
         }
     }
 }

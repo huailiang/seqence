@@ -75,9 +75,10 @@ namespace UnityEditor.Timeline
         {
             if (!string.IsNullOrEmpty(path))
             {
+                timeline.BuildConf();
                 timeline.config.Write(path);
                 var p = path.Replace(".bytes", ".xml");
-                timeline.config.Write(p);
+                timeline.config.WriteXml(p);
             }
             else
             {

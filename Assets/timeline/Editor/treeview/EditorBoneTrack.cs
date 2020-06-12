@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
@@ -11,9 +10,5 @@ namespace UnityEditor.Timeline
         }
         
 
-        protected override TrackData BuildChildData(int i)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

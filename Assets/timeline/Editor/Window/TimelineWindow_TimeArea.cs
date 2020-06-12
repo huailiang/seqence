@@ -17,7 +17,7 @@ namespace UnityEditor.Timeline
         {
             if (m_TimeArea == null)
             {
-                timeAreaRect = new UnityEngine.Rect(0, 0, winArea.width, WindowConstants.timeAreaHeight);
+                timeAreaRect.height = WindowConstants.timeAreaHeight;
                 m_TimeArea = new TimeArea(false)
                 {
                     hRangeLocked = false,
@@ -35,6 +35,7 @@ namespace UnityEditor.Timeline
 
         public void TimelineTimeAreaGUI()
         {
+            timeAreaRect.width = winArea.width;
             timeAreaRect.x = winArea.x + WindowConstants.rightAreaMargn;
             timeAreaRect.y = WindowConstants.timeAreaYPosition;
             m_TimeArea.TimeRuler(timeAreaRect, 1, true, false, 1.0f, TimeArea.TimeFormat.Frame);
