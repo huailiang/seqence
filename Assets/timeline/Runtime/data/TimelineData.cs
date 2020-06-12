@@ -102,36 +102,41 @@ namespace UnityEngine.Timeline.Data
 
         public void Write(string path)
         {
-            FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
-            BinaryWriter writer = new BinaryWriter(fs);
-            int cnt = tracks.Length;
-            writer.Write(cnt);
-            for (int i = 0; i < cnt; i++)
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write))
+            using (BinaryWriter writer = new BinaryWriter(fs))
             {
-                tracks[i].Write(writer);
-            }
-            writer.Flush();
-            writer.Close();
-            fs.Close();
+                int cnt = tracks.Length;
+                writer.Write(cnt);
+                for (int i = 0; i < cnt; i++)
+                {
+                    tracks[i].Write(writer);
+                }
+                writer.Flush();
+
 #if UNITY_EDITOR
-            AssetDatabase.ImportAsset(path);
+                AssetDatabase.ImportAsset(path);
 #endif
+            }
         }
 
         public void Read(string path)
         {
-            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-            BinaryReader reader = new BinaryReader(fs);
-            int cnt = reader.ReadInt32();
-            tracks = new TrackData[cnt];
-            for (int i = 0; i < cnt; i++)
+            if (!string.IsNullOrEmpty(path))
             {
-                var type = (TrackType) reader.ReadInt32();
-                tracks[i] = new TrackData(type);
-                tracks[i].Read(reader);
+                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                using (BinaryReader reader = new BinaryReader(fs))
+                {
+                    int cnt = reader.ReadInt32();
+                    tracks = new TrackData[cnt];
+                    for (int i = 0; i < cnt; i++)
+                    {
+                        var type = (TrackType) reader.ReadInt32();
+                        tracks[i] = new TrackData(type);
+                        tracks[i].Read(reader);
+                    }
+                }
             }
-            fs.Close();
-            fs.Close();
         }
+        
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UnityEditor.Timeline
 {
@@ -103,16 +104,24 @@ namespace UnityEditor.Timeline
                     {
                         DoSave();
                     }
-                    else
-                    {
-                        state.CreateTimeline();
-                    }
                 }
                 else
                 {
-                    state.CreateTimeline();
+                    string path = EditorUtility.SaveFilePanel("open", "Assets/", "timel","bytes");
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        path = path.Substring(path.IndexOf("Assets/", StringComparison.Ordinal));
+                        CreateTimeline(path);
+                    }
                 }
             }
+        }
+
+        void CreateTimeline(string path)
+        {
+            state.CreateTimeline(path);
+            AssetDatabase.ImportAsset(path);
+            AssetDatabase.Refresh();
         }
 
         void OpenButtonGUI()
@@ -149,9 +158,7 @@ namespace UnityEditor.Timeline
 
         private void DoSave()
         {
-            string path = EditorUtility.SaveFilePanel("save", "Assets/", "timeline", "bytes");
-            state.timeline.config.Write(path);
-            AssetDatabase.ImportAsset(path);
+            state.Save();
             AssetDatabase.Refresh();
         }
     }

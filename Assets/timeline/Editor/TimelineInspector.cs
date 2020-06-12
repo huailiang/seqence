@@ -69,16 +69,19 @@ namespace UnityEditor.Timeline
         private void OnGUI()
         {
             inst = this;
-            GUILayout.BeginVertical();
-            EditorGUILayout.LabelField(state.Name);
-            EditorGUILayout.IntField("fps: ", state.frameRate);
-            EditorGUILayout.Toggle("playing:", state.playing);
-            EditorGUILayout.EnumPopup("wrapmode:", state.mode);
-            foreach (var item in focus)
+            if (state != null)
             {
-                item.OnInspector();
+                GUILayout.BeginVertical();
+                EditorGUILayout.LabelField(state.Name);
+                EditorGUILayout.IntField("fps: ", state.frameRate);
+                EditorGUILayout.Toggle("playing:", state.playing);
+                EditorGUILayout.EnumPopup("wrapmode:", state.mode);
+                foreach (var item in focus)
+                {
+                    item.OnInspector();
+                }
+                GUILayout.EndVertical();
             }
-            GUILayout.EndVertical();
         }
     }
 }

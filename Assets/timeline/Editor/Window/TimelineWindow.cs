@@ -6,9 +6,9 @@ namespace UnityEditor.Timeline
     public partial class TimelineWindow : EditorWindow
     {
         public static TimelineWindow inst;
-        
+
         public EditorTrackTree tree;
-        
+
         public Rect winArea { get; set; }
 
         public Rect centerArea { get; set; }
@@ -64,12 +64,6 @@ namespace UnityEditor.Timeline
             centerArea = new Rect(x, y, width, 40);
         }
 
-        [MenuItem("Assets/Create/Timeline", false, 450)]
-        public static void CreateNewTimeline()
-        {
-            ShowWindow();
-            inst.state?.CreateTimeline();
-        }
 
         [MenuItem("Window/Timeline", false, 1)]
         public static void ShowWindow()

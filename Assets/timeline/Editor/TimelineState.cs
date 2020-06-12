@@ -24,6 +24,7 @@ namespace UnityEditor.Timeline
         private string name;
         public TimelineWindow window;
         public AssetConfig config;
+        private string path;
 
         public bool playing { get; set; }
         public bool showMarkerHeader { get; set; }
@@ -45,12 +46,14 @@ namespace UnityEditor.Timeline
             }
         }
 
-        public void CreateTimeline()
+        public void CreateTimeline(string path)
         {
+            this.path = path;
             TimelineConfig xconf = new TimelineConfig();
             xconf.tracks = new TrackData[1];
             TrackData data = new TrackData(TrackType.Marker);
             xconf.tracks[0] = data;
+            xconf.Write(path);
             timeline = new XTimeline(xconf);
             timeline.Time = 2.0f;
             timeline.mode = TimelinePlayMode.EditorRun;
@@ -58,12 +61,25 @@ namespace UnityEditor.Timeline
 
         public void Open(string path)
         {
+            this.path = path;
             timeline = new XTimeline(path);
             Name = path.Replace(".bytes", "");
             int index = Name.IndexOf("Assets", StringComparison.Ordinal);
             if (index >= 0)
             {
                 Name = Name.Substring(index + 7);
+            }
+        }
+
+        public void Save()
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                timeline.config.Write(path);
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("warn", "save path is null", "ok");
             }
         }
 
