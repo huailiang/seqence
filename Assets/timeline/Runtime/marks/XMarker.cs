@@ -4,9 +4,9 @@ namespace UnityEngine.Timeline
 {
     public class XMarker
     {
-        protected XTrack track { get; set; }
+        protected XTrack track { get; }
 
-        protected MarkData data { get; set; }
+        public MarkData data { get; }
 
         public MarkType type
         {

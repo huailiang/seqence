@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
@@ -9,5 +10,10 @@ namespace UnityEditor.Timeline
             get { return Color.magenta; }
         }
 
+
+        protected override TrackData BuildChildData(int i)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

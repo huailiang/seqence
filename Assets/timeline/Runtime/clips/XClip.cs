@@ -8,6 +8,8 @@ namespace UnityEngine.Timeline
 
         float duration { get; set; }
 
+        ClipData data { get; }
+
         float end { get; }
 
         string Display { get; }
@@ -24,9 +26,9 @@ namespace UnityEngine.Timeline
             get { return track.timeline; }
         }
 
-        protected T track { get; set; }
+        protected T track { get; }
 
-        protected ClipData data { get; set; }
+        public ClipData data { get; }
 
         public XClip(T track, ClipData data)
         {

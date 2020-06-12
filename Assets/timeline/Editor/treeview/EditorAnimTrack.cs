@@ -116,6 +116,10 @@ namespace UnityEditor.Timeline
             }, null);
         }
 
-        
+
+        protected override TrackData BuildChildData(int i)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

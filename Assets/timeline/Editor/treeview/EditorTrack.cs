@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
@@ -12,7 +13,7 @@ namespace UnityEditor.Timeline
         public object arg;
     }
 
-    public class EditorTrack : ITimelineInspector
+    public abstract class EditorTrack : ITimelineInspector
     {
         public XTrack track;
         public Rect rect;
@@ -136,7 +137,7 @@ namespace UnityEditor.Timeline
         {
             bool sele = (bool) arg;
             this.@select = sele;
-            if (TimelineInspector.inst!=null)
+            if (TimelineInspector.inst != null)
             {
                 TimelineInspector.ShowWindow();
                 TimelineInspector.inst.SetActive(this, sele);
@@ -227,7 +228,7 @@ namespace UnityEditor.Timeline
         {
             bool selet = (bool) arg;
             TimelineWindow.inst.tree?.ResetSelect(selet);
-            if (TimelineInspector.inst!=null)
+            if (TimelineInspector.inst != null)
             {
                 TimelineInspector.ShowWindow();
                 TimelineInspector.inst.SetActive(this, selet);
@@ -283,6 +284,39 @@ namespace UnityEditor.Timeline
             track.SetFlag(TrackMode.Mute, false);
             TimelineWindow.inst.Repaint();
         }
+
+        protected TrackData BuildTrackData()
+        {
+            TrackData data = new TrackData(track.trackType);
+            data.clips = new ClipData[track.clips.Length];
+            if (track.clips != null)
+            {
+                for (int i = 0; i < track.clips.Length; i++)
+                {
+                    data.clips[i] = track.clips[i].data;
+                }
+            }
+            if (track.marks != null)
+            {
+                data.marks = new MarkData[track.marks.Length];
+                for (int i = 0; i < track.marks.Length; i++)
+                {
+                    data.marks[i] = track.marks[i].data;
+                }
+            }
+            if (track.childs != null)
+            {
+                data.childs = new TrackData[track.childs.Length];
+                for (int i = 0; i < data.childs.Length; i++)
+                {
+                    data.childs[i] = BuildChildData(i);
+                }
+            }
+            return data;
+        }
+        
+
+        protected abstract TrackData BuildChildData(int i);
 
 
         private bool clipF, markF, trackF;

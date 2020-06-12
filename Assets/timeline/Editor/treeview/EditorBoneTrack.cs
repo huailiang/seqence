@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Timeline;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
@@ -8,6 +8,12 @@ namespace UnityEditor.Timeline
         protected override Color trackColor
         {
             get { return Color.green; }
+        }
+        
+
+        protected override TrackData BuildChildData(int i)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -25,8 +25,7 @@ namespace UnityEditor.Timeline
                     xtrack = new EditorPostprocessTrack();
                     break;
                 default:
-                    xtrack = new EditorTrack();
-                    break;
+                    throw new Exception("unknow track build");
             }
             xtrack.@select = false;
             xtrack.track = track;

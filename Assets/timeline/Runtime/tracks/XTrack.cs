@@ -83,7 +83,7 @@ namespace UnityEngine.Timeline
         {
             get { return parent != null ? parent.locked : locked; }
         }
-
+        
         protected XTrack(XTimeline tl, TrackData data)
         {
             timeline = tl;
@@ -124,13 +124,6 @@ namespace UnityEngine.Timeline
             }
         }
 
-
-        protected XTrack(XTrack parent, XTrack[] childs, IClip[] clips)
-        {
-            this.parent = parent;
-            this.childs = childs;
-            this.clips = clips;
-        }
 
         public void SetFlag(TrackMode mode, bool flag)
         {

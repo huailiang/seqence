@@ -20,6 +20,12 @@ namespace UnityEngine.Timeline.Data
 
         public abstract ClipType type { get; }
 
+        public void BuildData(IClip c)
+        {
+            this.start = c.start;
+            this.duration = c.duration;
+        }
+
         public virtual void Write(BinaryWriter writer)
         {
             writer.Write((int) type);
