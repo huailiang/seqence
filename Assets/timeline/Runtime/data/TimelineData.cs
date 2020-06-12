@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Xml.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -6,6 +8,7 @@ using UnityEditor;
 
 namespace UnityEngine.Timeline.Data
 {
+    [Serializable]
     public enum TrackType
     {
         Marker = 1,
@@ -15,6 +18,7 @@ namespace UnityEngine.Timeline.Data
         PostProcess = 1 << 4,
     }
 
+    [System.Serializable]
     public class TrackData
     {
         public ClipData[] clips;
@@ -75,6 +79,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
+    [System.Serializable]
     public class BindTrackData : TrackData
     {
         public string prefab;
@@ -96,6 +101,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
+    [System.Serializable]
     public class TimelineConfig
     {
         public TrackData[] tracks;
@@ -119,6 +125,24 @@ namespace UnityEngine.Timeline.Data
             }
         }
 
+        public void WriteXml(string path)
+        {
+            XmlSerializer serializer = new XmlSerializer(GetType());
+            string content;
+            using (StringWriter writer = new StringWriter())
+            {
+                serializer.Serialize(writer, this);
+                content = writer.ToString();
+            }
+            using (StreamWriter stream_writer = new StreamWriter(path))
+            {
+                stream_writer.Write(content);
+            }
+#if UNITY_EDITOR
+            AssetDatabase.ImportAsset(path);
+#endif
+        }
+
         public void Read(string path)
         {
             if (!string.IsNullOrEmpty(path))
@@ -137,6 +161,14 @@ namespace UnityEngine.Timeline.Data
                 }
             }
         }
-        
+
+        public TimelineConfig ReadXml(string path)
+        {
+            XmlSerializer serializer = new XmlSerializer(GetType());
+            using (StreamReader reader = new StreamReader(path))
+            {
+                return (TimelineConfig) serializer.Deserialize(reader);
+            }
+        }
     }
 }

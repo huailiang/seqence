@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace UnityEngine.Timeline.Data
 {
+    [Serializable]
     public enum MarkType
     {
         Active = 1,
@@ -28,6 +30,7 @@ namespace UnityEngine.Timeline.Data
     }
 
 
+    [Serializable]
     public class SlowMarkData : MarkData
     {
         public float slowRate;
@@ -50,6 +53,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
+    [Serializable]
     public class ActiveData : MarkData
     {
         public bool active;
@@ -72,6 +76,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
+    [Serializable]
     public class JumpMarkData : MarkData
     {
         public float jump;

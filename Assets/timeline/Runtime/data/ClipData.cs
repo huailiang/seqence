@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace UnityEngine.Timeline.Data
 {
+    [Serializable]
     public enum ClipType
     {
         BoneFx = 1 << 1,
@@ -32,7 +34,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
-
+    [System.Serializable]
     public class SceneFxClipData : ClipData
     {
         public string prefab;
@@ -65,6 +67,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
+    [System.Serializable]
     public class BoneFxClipData : SceneFxClipData
     {
         public string bone;
@@ -87,6 +90,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
+    [System.Serializable]
     public class AnimClipData : ClipData
     {
         public string anim;
@@ -119,6 +123,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
+    [System.Serializable]
     public class PostprocessData : ClipData
     {
         public override ClipType type
