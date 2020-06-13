@@ -11,7 +11,6 @@ namespace UnityEditor.Timeline
         public readonly static GUIStyle locked = "Icon.Locked";
         public readonly static GUIStyle autoKey = "Icon.AutoKey";
         public readonly static GUIStyle keyframe = "Icon.Keyframe";
-        public readonly static GUIStyle clips = "Icon.Curves";
         public static readonly GUIStyle timeCursor = "Icon.TimeCursor";
 
         public static readonly GUIContent referenceTrackLabel =

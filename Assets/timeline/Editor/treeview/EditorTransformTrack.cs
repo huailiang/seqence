@@ -86,7 +86,7 @@ namespace UnityEditor.Timeline
                     Rect r = rect;
                     r.x = TimelineWindow.inst.TimeToPixel(Data.time[i]);
                     r.width = 16;
-                    GUI.Box(r, "", TimelineStyles.timeCursor);
+                    GUI.Box(r, "", TimelineStyles.keyframe);
                 }
             }
         }
