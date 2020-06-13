@@ -3,14 +3,35 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public class TrackDescriptorAttribute : Attribute
+    public enum TrackFlag
     {
-        public bool isOnlySub;
-        
-        public TrackDescriptorAttribute( bool onlySub)
+        SubOnly = 1,
+        RootOnly = 1 << 1,
+        NoClip = 1 << 2,
+    }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public class TrackFlagAttribute : Attribute
+    {
+        public bool isOnlySub
         {
-            isOnlySub = onlySub;
+            get { return (flag & TrackFlag.SubOnly) > 0; }
+        }
+
+        public bool allowClip
+        {
+            get
+            {
+                bool noclip = (flag & TrackFlag.NoClip) > 0;
+                return !noclip;
+            }
+        }
+
+        private TrackFlag flag;
+
+        public TrackFlagAttribute(TrackFlag flag)
+        {
+            this.flag = flag;
         }
     }
 

@@ -2,7 +2,7 @@
 
 namespace UnityEngine.Timeline
 {
-    [TrackDescriptor(false)]
+    [TrackFlag(TrackFlag.RootOnly)]
     public class XSceneFxTrack : XTrack
     {
         private TrackData data;

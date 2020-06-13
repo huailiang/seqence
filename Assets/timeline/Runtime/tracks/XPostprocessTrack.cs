@@ -3,7 +3,7 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    [TrackDescriptor( false)]
+    [TrackFlag(TrackFlag.RootOnly)]
     public class XPostprocessTrack : XTrack
     {
         public override TrackType trackType

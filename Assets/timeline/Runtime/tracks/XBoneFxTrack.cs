@@ -2,7 +2,7 @@
 
 namespace UnityEngine.Timeline
 {
-    [TrackDescriptor(true)]
+    [TrackFlag(TrackFlag.SubOnly)]
     [UseParent(typeof(XAnimationTrack))]
     public class XBoneFxTrack : XTrack
     {

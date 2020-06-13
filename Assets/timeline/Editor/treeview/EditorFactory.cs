@@ -14,8 +14,7 @@ namespace UnityEditor.Timeline
             EditorTrack xtrack = (EditorTrack) Activator.CreateInstance(t);
             if (xtrack != null)
             {
-                xtrack.@select = false;
-                xtrack.track = track;
+                xtrack.OnInit(track);
             }
             return xtrack;
         }

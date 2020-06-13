@@ -61,9 +61,9 @@ namespace UnityEditor.Timeline
             var tracks = AllTracksExcMarkers();
             foreach (var track in tracks)
             {
-                var desc = (TrackDescriptorAttribute) Attribute.GetCustomAttribute(track,
-                    typeof(TrackDescriptorAttribute));
-                if (!desc.isOnlySub)
+                var flag = (TrackFlagAttribute) Attribute.GetCustomAttribute(track,
+                    typeof(TrackFlagAttribute));
+                if (!flag.isOnlySub)
                 {
                     ret.Add(track);
                 }

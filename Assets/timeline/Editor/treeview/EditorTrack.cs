@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -19,6 +20,9 @@ namespace UnityEditor.Timeline
         public Rect head;
         public bool select;
         private GenericMenu pm;
+        private bool allowClip;
+
+        private GUIContent _addclip, _unselect, _select,_delete;
 
         public uint ID
         {
@@ -44,6 +48,18 @@ namespace UnityEditor.Timeline
                 var pos = Event.current.mousePosition;
                 return head.Contains(pos) || rect.Contains(pos);
             }
+        }
+
+        public void OnInit(XTrack t)
+        {
+            @select = false;
+            track = t;
+            var flag = (TrackFlagAttribute) Attribute.GetCustomAttribute(t.GetType(), typeof(TrackFlagAttribute));
+            allowClip = flag.allowClip;
+            _addclip = EditorGUIUtility.TrTextContent("Add Clip \t #a");
+            _unselect = EditorGUIUtility.TrTextContent("UnSelect All  \t #u");
+            _select = EditorGUIUtility.TrTextContent("Select All Tracks \t %#s");
+            _delete = EditorGUIUtility.TrTextContent("Delete Clip\t #d");
         }
 
         public void OnGUI()
@@ -82,19 +98,27 @@ namespace UnityEditor.Timeline
                     pm = new GenericMenu();
                     if (TimelineWindow.inst.tree.AnySelect())
                     {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect All  \t #u"), false, UnSelectAll, false);
-                        pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Select All \t %#s"));
+                        pm.AddItem(_unselect, false, UnSelectAll, false);
+                        pm.AddDisabledItem(_select);
                     }
                     else
                     {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("Select All Tracks \t %#s"), false, UnSelectAll,
-                            true);
-                        pm.AddDisabledItem(EditorGUIUtility.TrTextContent("UnSelect All Tracks \t %u"));
+                        pm.AddItem(_select, false, UnSelectAll, true);
+                        pm.AddDisabledItem(_unselect);
                     }
 
                     pm.AddSeparator("");
-                    pm.AddItem(EditorGUIUtility.TrTextContent("Add Clip \t #a"), false, AddClip, e.mousePosition);
-                    pm.AddItem(EditorGUIUtility.TrTextContent("Delete Clip\t #d"), false, DeleteClip, e.mousePosition);
+                    if (allowClip)
+                    {
+                        pm.AddItem(_addclip, false, AddClip, e.mousePosition);
+                        pm.AddItem(_delete, false, DeleteClip, e.mousePosition);
+                    }
+                    else
+                    {
+                        pm.AddDisabledItem(_addclip, false);
+                        pm.AddDisabledItem(_delete, false);
+                    }
+                    
                     pm.AddItem(EditorGUIUtility.TrTextContent("Delete Track\t #t"), false, DeleteTrack);
                     if (track.mute)
                     {

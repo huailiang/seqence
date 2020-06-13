@@ -2,11 +2,10 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    [TrackDescriptor(true)]
+    [TrackFlag(TrackFlag.SubOnly | TrackFlag.NoClip)]
     [UseParent(typeof(XAnimationTrack))]
     public class XTransformTrack : XTrack
     {
-       
         public GameObject target
         {
             get
@@ -18,7 +17,7 @@ namespace UnityEngine.Timeline
                 return null;
             }
         }
-        
+
         public override TrackType trackType
         {
             get { return TrackType.Transform; }
@@ -28,7 +27,7 @@ namespace UnityEngine.Timeline
         {
             throw new System.NotImplementedException();
         }
-        
+
         public XTransformTrack(XTimeline tl, TrackData data) : base(tl, data)
         {
         }
@@ -37,6 +36,5 @@ namespace UnityEngine.Timeline
         {
             throw new System.NotImplementedException();
         }
-        
     }
 }
