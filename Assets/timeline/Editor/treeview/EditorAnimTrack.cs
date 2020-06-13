@@ -6,6 +6,7 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
+    [TrackEditor(typeof(XAnimationTrack))]
     public class EditorAnimTrack : EditorTrack
     {
         static GUIContent s_ArmForRecordContentOn;
@@ -14,6 +15,11 @@ namespace UnityEditor.Timeline
         protected override Color trackColor
         {
             get { return Color.yellow; }
+        }
+
+        protected override string trackHeader
+        {
+            get { return "角色" + ID; }
         }
 
         protected override List<TrackMenuAction> actions
@@ -74,12 +80,6 @@ namespace UnityEditor.Timeline
                 btrack.bindObj =
                     (GameObject) EditorGUILayout.ObjectField(btrack.bindObj, typeof(Animator), GUILayout.MaxWidth(80));
 #pragma warning restore 618
-            }
-            if (GUILayout.Button("", TimelineStyles.clips, GUILayout.MaxWidth(16)))
-            {
-                Debug.Log("show record clip");
-                bool cl = btrack.GetFlag(TrackMode.Clip);
-                btrack.SetFlag(TrackMode.Clip, !cl);
             }
             bool recd = track.record;
             if (GUILayout.Button(recd ? s_ArmForRecordContentOn : s_ArmForRecordContentOff, TimelineStyles.autoKey,

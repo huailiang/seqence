@@ -11,7 +11,6 @@ namespace UnityEngine.Timeline
         Mute = 1 << 1,
         Record = 1 << 2,
         Lock = 1 << 3,
-        Clip = 1 << 4,
     }
 
 

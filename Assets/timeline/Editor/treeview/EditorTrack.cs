@@ -30,6 +30,11 @@ namespace UnityEditor.Timeline
             get { return Color.red; }
         }
 
+        protected virtual string trackHeader
+        {
+            get { return track + " " + ID; }
+        }
+
         protected virtual List<TrackMenuAction> actions { get; }
 
         protected bool triger
@@ -160,7 +165,7 @@ namespace UnityEditor.Timeline
             GUILayout.BeginArea(tmp);
             GUILayout.BeginHorizontal();
             GUILayout.Space(5);
-            GUILayout.Label(track.ToString());
+            GUILayout.Label(trackHeader);
             OnGUIHeader();
             if (GUILayout.Button("mute", TimelineStyles.mute, GUILayout.MaxWidth(16)))
             {
@@ -233,7 +238,7 @@ namespace UnityEditor.Timeline
             EditorFactory.MakeMarker(t.type, time, track);
         }
 
-        
+
         private void AddClip(object mpos)
         {
             Vector2 v2 = (Vector2) mpos;
@@ -244,7 +249,6 @@ namespace UnityEditor.Timeline
 
         protected virtual void OnAddClip(float time)
         {
-            
         }
 
         private void DeleteClip(object mpos)

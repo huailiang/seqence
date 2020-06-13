@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Experimental.XR;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
 
@@ -9,26 +10,13 @@ namespace UnityEditor.Timeline
     {
         public static EditorTrack GetTrack(XTrack track)
         {
-            EditorTrack xtrack = null;
-            switch (track.trackType)
+            var t = TypeUtilities.GetEditorTrack(track);
+            EditorTrack xtrack = (EditorTrack) Activator.CreateInstance(t);
+            if (xtrack != null)
             {
-                case TrackType.Animation:
-                    xtrack = new EditorAnimTrack();
-                    break;
-                case TrackType.SceneFx:
-                    xtrack = new EditorSceneFxTrack();
-                    break;
-                case TrackType.BoneFx:
-                    xtrack = new EditorBoneTrack();
-                    break;
-                case TrackType.PostProcess:
-                    xtrack = new EditorPostprocessTrack();
-                    break;
-                default:
-                    throw new Exception("unknow track build");
+                xtrack.@select = false;
+                xtrack.track = track;
             }
-            xtrack.@select = false;
-            xtrack.track = track;
             return xtrack;
         }
 

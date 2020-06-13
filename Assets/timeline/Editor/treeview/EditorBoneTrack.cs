@@ -4,11 +4,17 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
+    [TrackEditor(typeof(XBoneFxTrack))]
     public class EditorBoneTrack : EditorTrack
     {
         protected override Color trackColor
         {
             get { return Color.green; }
+        }
+
+        protected override string trackHeader
+        {
+            get { return "骨骼特效" + ID; }
         }
 
         protected override void OnAddClip(float t)

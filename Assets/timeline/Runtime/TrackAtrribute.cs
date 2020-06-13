@@ -6,14 +6,10 @@ namespace UnityEngine.Timeline
     [AttributeUsage(AttributeTargets.Class)]
     public class TrackDescriptorAttribute : Attribute
     {
-        public string desc;
-
         public bool isOnlySub;
-
-
-        public TrackDescriptorAttribute(string desc, bool onlySub)
+        
+        public TrackDescriptorAttribute( bool onlySub)
         {
-            this.desc = desc;
             isOnlySub = onlySub;
         }
     }

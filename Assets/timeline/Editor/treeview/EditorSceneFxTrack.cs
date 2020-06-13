@@ -4,11 +4,17 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
+    [TrackEditor(typeof(XSceneFxTrack))]
     public class EditorSceneFxTrack : EditorTrack
     {
         protected override Color trackColor
         {
             get { return Color.cyan; }
+        }
+
+        protected override string trackHeader
+        {
+            get { return "场景特效" + ID; }
         }
 
         protected override void OnGUIHeader()

@@ -10,7 +10,7 @@ namespace UnityEditor.Timeline
     class TimelineInspector : EditorWindow
     {
         public static TimelineInspector inst;
-        
+
         public static void ShowWindow()
         {
             inst = GetWindow<TimelineInspector>("timeline inspector");
@@ -20,17 +20,20 @@ namespace UnityEditor.Timeline
         private void OnGUI()
         {
             inst = this;
-            var state = TimelineWindow.inst.state;
-            if (state != null)
+            if (TimelineWindow.inst)
             {
-                GUILayout.BeginVertical();
-                EditorGUILayout.LabelField(state.Name);
-                EditorGUILayout.IntField("fps: ", state.frameRate);
-                EditorGUILayout.Toggle("playing:", state.playing);
-                EditorGUILayout.EnumPopup("wrapmode:", state.mode);
-                GUIMark();
-                GUITracks();
-                GUILayout.EndVertical();
+                var state = TimelineWindow.inst.state;
+                if (state != null)
+                {
+                    GUILayout.BeginVertical();
+                    EditorGUILayout.LabelField(state.Name);
+                    EditorGUILayout.IntField("fps: ", state.frameRate);
+                    EditorGUILayout.Toggle("playing:", state.playing);
+                    EditorGUILayout.EnumPopup("wrapmode:", state.mode);
+                    GUIMark();
+                    GUITracks();
+                    GUILayout.EndVertical();
+                }
             }
         }
 

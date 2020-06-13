@@ -14,7 +14,6 @@ namespace UnityEditor.Timeline
         private static Type[] s_AllClipTypes;
         private static Type[] s_MarkerTypes;
 
-
         public static bool IsConcretePlayableAsset(Type t)
         {
             return typeof(IClip).IsAssignableFrom(t) && !t.IsAbstract && !t.IsGenericType && !t.IsInterface;
@@ -49,20 +48,6 @@ namespace UnityEditor.Timeline
             return s_AllTrackTypes;
         }
 
-
-        public static void AllTrackDescriptor()
-        {
-            var types = AllTrackTypes();
-            foreach (var type in types)
-            {
-                var desc = (TrackDescriptorAttribute) Attribute.GetCustomAttribute(type,
-                    typeof(TrackDescriptorAttribute));
-                if (desc != null)
-                {
-                    Debug.Log(desc.desc);
-                }
-            }
-        }
 
         public static IEnumerable<Type> AllTracksExcMarkers()
         {
@@ -120,26 +105,19 @@ namespace UnityEditor.Timeline
             return list;
         }
 
-
-        // [MenuItem("Tools/Test")]
-        public static void FetchAllTrack()
+        public static Type GetEditorTrack(XTrack track)
         {
-            var types = AllTracksExcMarkers();
+            var a = Assembly.GetExecutingAssembly();
+            var types = a.GetTypes();
             foreach (var type in types)
             {
-                Debug.Log("track:" + type);
+                var usage = (TrackEditorAttribute) Attribute.GetCustomAttribute(type, typeof(TrackEditorAttribute));
+                if (usage != null)
+                {
+                    return type;
+                }
             }
-            AllTrackDescriptor();
-            types = GetAllMarkerTypes();
-            foreach (var type in types)
-            {
-                Debug.Log("mark:" + type);
-            }
-            types = AllClipTypes();
-            foreach (var type in types)
-            {
-                Debug.Log("clip: " + type);
-            }
+            return null;
         }
     }
 }

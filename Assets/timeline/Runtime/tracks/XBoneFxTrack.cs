@@ -2,12 +2,23 @@
 
 namespace UnityEngine.Timeline
 {
-    [TrackDescriptor("骨骼特效", true)]
+    [TrackDescriptor(true)]
     [UseParent(typeof(XAnimationTrack))]
     public class XBoneFxTrack : XTrack
     {
-        public GameObject target;
         private TrackData data;
+
+        public GameObject target
+        {
+            get
+            {
+                if (parent && parent is XBindTrack)
+                {
+                    return (parent as XBindTrack).bindObj;
+                }
+                return null;
+            }
+        }
 
         public override TrackType trackType
         {

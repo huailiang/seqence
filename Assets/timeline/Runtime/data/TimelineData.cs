@@ -16,6 +16,7 @@ namespace UnityEngine.Timeline.Data
         SceneFx = 1 << 2,
         Animation = 1 << 3,
         PostProcess = 1 << 4,
+        Transform = 1 << 5,
     }
 
     [Serializable]
@@ -77,7 +78,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class BindTrackData : TrackData
     {
         public string prefab;
@@ -95,7 +96,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class TimelineConfig
     {
         public TrackData[] tracks;
