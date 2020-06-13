@@ -13,23 +13,10 @@
         public const float markerRowYPosition = timeAreaYPosition + timeAreaHeight + rowGap;
 
         public const float trackRowYPosition = markerRowYPosition + markerRowHeight + rowGap;
-        public const float defaultHeaderWidth = 307.0f;
-        public const float defaultBindingAreaWidth = 40.0f;
 
         public const float minTimeCodeWidth = 28.0f; // Enough space to display up to 9999 without clipping
 
         public const float shadowUnderTimelineHeight = 15.0f;
-        public const float refTimeWidth = 50.0f;
-
-        public const float selectorWidth = 32.0f;
-        public const float cogButtonWidth = 32.0f;
-        public const float cogButtonPadding = 16.0f;
-
-        public const float trackHeaderButtonSize = 16.0f;
-        public const float trackHeaderButtonPadding = 6f;
-        public const float trackOptionButtonVerticalPadding = 4f;
-        public const float trackHeaderMaxButtonsWidth = 5 * (trackHeaderButtonSize + trackHeaderButtonPadding);
-
-        public const float trackInsertionMarkerHeight = 1f;
+        public const float RawHeight = 36;
     }
 }

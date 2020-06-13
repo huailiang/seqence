@@ -19,8 +19,8 @@ namespace UnityEditor.Timeline
         public void Inspector()
         {
             EditorGUILayout.LabelField(baseMarker.type.ToString());
-            baseMarker.time = EditorGUILayout.FloatField("time", baseMarker.time);
-            baseMarker.reverse = EditorGUILayout.Toggle("reverse", baseMarker.reverse);
+            baseMarker.time = EditorGUILayout.FloatField(" time", baseMarker.time);
+            baseMarker.reverse = EditorGUILayout.Toggle(" reverse", baseMarker.reverse);
             OnInspector();
         }
 
@@ -41,7 +41,7 @@ namespace UnityEditor.Timeline
 
         protected override void OnInspector()
         {
-            marker.jump = EditorGUILayout.FloatField("jump:", marker.jump);
+            marker.jump = EditorGUILayout.FloatField(" jump:", marker.jump);
         }
     }
 
@@ -57,7 +57,7 @@ namespace UnityEditor.Timeline
 
         protected override void OnInspector()
         {
-            marker.active = EditorGUILayout.Toggle("active", marker.active);
+            marker.active = EditorGUILayout.Toggle(" active", marker.active);
         }
     }
 
@@ -73,7 +73,7 @@ namespace UnityEditor.Timeline
 
         protected override void OnInspector()
         {
-            marker.slow = EditorGUILayout.FloatField("slowRate", marker.slow);
+            marker.slow = EditorGUILayout.FloatField(" slowRate", marker.slow);
         }
     }
 }

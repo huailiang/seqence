@@ -9,10 +9,8 @@ namespace UnityEditor.Timeline
     public class EditorTrackTree
     {
         public List<EditorTrack> hierachy;
-
         private int idx = 0;
         private float x, width, _y;
-        private const float height = 40;
 
         public float TracksBtmY
         {
@@ -73,10 +71,10 @@ namespace UnityEditor.Timeline
         private void Add(XTrack track, IList<EditorTrack> list)
         {
             EditorTrack etrack = EditorFactory.GetTrack(track);
-            float y = _y + height * idx + WindowConstants.rowGap * idx;
+            float y = _y + WindowConstants.RawHeight * idx + WindowConstants.rowGap * idx;
             int offset = track.parent ? 10 : 0;
-            etrack.rect = new Rect(x, y, width, height);
-            etrack.head = new Rect(offset, y, WindowConstants.sliderWidth - offset, height);
+            etrack.rect = new Rect(x, y, width, WindowConstants.RawHeight);
+            etrack.head = new Rect(offset, y, WindowConstants.sliderWidth - offset, WindowConstants.RawHeight);
 
             idx++;
             list.Add(etrack);
@@ -125,16 +123,16 @@ namespace UnityEditor.Timeline
         public void AddTrack(XTrack track, int idx)
         {
             EditorTrack etrack = EditorFactory.GetTrack(track);
-            float y = _y + height * idx + WindowConstants.rowGap * idx;
+            float y = _y + WindowConstants.RawHeight * idx + WindowConstants.rowGap * idx;
             float offset = track.parent ? 10 : 0;
-            etrack.rect = new Rect(x, y, width, height);
-            etrack.head = new Rect(offset, y, WindowConstants.sliderWidth - offset, height);
+            etrack.rect = new Rect(x, y, width, WindowConstants.RawHeight);
+            etrack.head = new Rect(offset, y, WindowConstants.sliderWidth - offset, WindowConstants.RawHeight);
             hierachy.Add(etrack);
             int last = hierachy.Count - 1;
             for (int i = last; i > idx; i--)
             {
                 hierachy[i] = hierachy[i - 1];
-                hierachy[i].YOffset(height + WindowConstants.rowGap);
+                hierachy[i].YOffset(WindowConstants.RawHeight + WindowConstants.rowGap);
             }
             hierachy[idx] = etrack;
             TimelineWindow.inst.Repaint();

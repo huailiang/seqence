@@ -22,7 +22,7 @@ namespace UnityEditor.Timeline
         private GenericMenu pm;
         private bool allowClip;
 
-        private GUIContent _addclip, _unselect, _select,_delete;
+        private GUIContent _addclip, _unselect, _select, _delete;
 
         public uint ID
         {
@@ -118,7 +118,7 @@ namespace UnityEditor.Timeline
                         pm.AddDisabledItem(_addclip, false);
                         pm.AddDisabledItem(_delete, false);
                     }
-                    
+
                     pm.AddItem(EditorGUIUtility.TrTextContent("Delete Track\t #t"), false, DeleteTrack);
                     if (track.mute)
                     {
@@ -319,7 +319,7 @@ namespace UnityEditor.Timeline
         }
 
 
-        private bool clipF, markF, trackF;
+        private bool markF, trackF;
 
         public void OnInspector()
         {
@@ -332,17 +332,13 @@ namespace UnityEditor.Timeline
                 int i = 0;
                 if (track.clips != null)
                 {
-                    clipF = EditorGUILayout.Foldout(clipF, "clips " + track.clips.Length);
-                    if (clipF)
+                    foreach (var clip in track.clips)
                     {
-                        foreach (var clip in track.clips)
-                        {
-                            EditorGUILayout.LabelField(++i + ": " + clip.Display);
-                            clip.start = EditorGUILayout.FloatField("start", clip.start);
-                            float d = EditorGUILayout.FloatField("duration", clip.duration);
-                            if (d > 0) clip.duration = d;
-                            OnInspectorClip(clip);
-                        }
+                        EditorGUILayout.LabelField(" " + (++i) + ": " + clip.Display);
+                        clip.start = EditorGUILayout.FloatField(" start", clip.start);
+                        float d = EditorGUILayout.FloatField(" duration", clip.duration);
+                        if (d > 0) clip.duration = d;
+                        OnInspectorClip(clip);
                     }
                 }
                 if (track.marks != null)
@@ -353,8 +349,8 @@ namespace UnityEditor.Timeline
                         i = 0;
                         foreach (var mark in track.marks)
                         {
-                            EditorGUILayout.LabelField((++i) + ": " + mark.type);
-                            mark.time = EditorGUILayout.FloatField("time", mark.time);
+                            EditorGUILayout.LabelField(" " + (++i) + ": " + mark.type);
+                            mark.time = EditorGUILayout.FloatField(" time", mark.time);
                         }
                     }
                 }
