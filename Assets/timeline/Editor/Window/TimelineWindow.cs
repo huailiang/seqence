@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline
 {
@@ -13,6 +14,10 @@ namespace UnityEditor.Timeline
 
         public Rect centerArea { get; set; }
 
+        public XTimeline timeline
+        {
+            get { return inst.state.timeline; }
+        }
 
         private void OnEnable()
         {

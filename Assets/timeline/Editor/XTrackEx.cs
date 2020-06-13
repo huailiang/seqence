@@ -131,7 +131,7 @@ namespace UnityEditor.Timeline
             }
         }
 
-        private static void Remv(this XTrack track)
+        public static void Remove(this XTrack track, XTimeline timeline)
         {
             if (track.parent)
             {
@@ -154,6 +154,15 @@ namespace UnityEditor.Timeline
                         tmp[i] = i < idx ? chs[i] : chs[i + 1];
                     }
                     track.parent.childs = tmp;
+                }
+            }
+            else
+            {
+                var list = timeline.trackTrees.ToList();
+                if (list.Contains(track))
+                {
+                    list.Remove(track);
+                    timeline.trackTrees = list.ToArray();
                 }
             }
         }

@@ -91,10 +91,10 @@ namespace UnityEditor.Timeline
 
         public void OnTrackHeightChange(EditorTrack track, float height)
         {
+            float delta = 0;
             for (int i = 0; i < hierachy.Count; i++)
             {
                 var it = hierachy[i];
-                float delta = 0;
                 if (it.track.ID == track.track.ID)
                 {
                     it.SetHeight(height);
@@ -140,17 +140,23 @@ namespace UnityEditor.Timeline
             TimelineWindow.inst.Repaint();
         }
 
-        public void OnRmTrack(EditorTrack track)
+        public void RmTrack(EditorTrack track)
         {
+            int idx = -1;
+            float delta = 0;
             for (int i = 0; i < hierachy.Count; i++)
             {
                 var it = hierachy[i];
-                float delta = 0;
                 if (it.ID == track.track.ID)
                 {
+                    idx = i;
                     delta = track.rect.height + WindowConstants.rowGap;
                 }
                 it.YOffset(-delta);
+            }
+            if (idx >= 0)
+            {
+                hierachy.RemoveAt(idx);
             }
             TimelineWindow.inst.Repaint();
         }

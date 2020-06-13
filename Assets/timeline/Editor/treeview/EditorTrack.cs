@@ -89,7 +89,8 @@ namespace UnityEditor.Timeline
 
                     pm.AddSeparator("");
                     pm.AddItem(EditorGUIUtility.TrTextContent("Add Clip \t #a"), false, AddClip, e.mousePosition);
-                    pm.AddItem(EditorGUIUtility.TrTextContent("Delete \t #d"), false, DeleteClip, e.mousePosition);
+                    pm.AddItem(EditorGUIUtility.TrTextContent("Delete Clip\t #d"), false, DeleteClip, e.mousePosition);
+                    pm.AddItem(EditorGUIUtility.TrTextContent("Delete Track\t #t"), false, DeleteTrack);
                     if (track.mute)
                     {
                         pm.AddItem(EditorGUIUtility.TrTextContent("UnMute Track \t "), false, UnmuteClip);
@@ -269,6 +270,13 @@ namespace UnityEditor.Timeline
             {
                 EditorUtility.DisplayDialog("tip", "not select clip", "ok");
             }
+        }
+
+
+        private void DeleteTrack()
+        {
+            TimelineWindow.inst.tree.RmTrack(this);
+            track.Remove(TimelineWindow.inst.timeline);
         }
 
         private void MuteClip()

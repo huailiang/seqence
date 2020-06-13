@@ -34,7 +34,7 @@ namespace UnityEditor.Timeline
 
         public static XMarker MakeMarker(Type t, float time)
         {
-            var track = TimelineWindow.inst.state.timeline.trackTrees[0];
+            var track = TimelineWindow.inst.timeline.trackTrees[0];
             return MakeMarker(t, time, track);
         }
 

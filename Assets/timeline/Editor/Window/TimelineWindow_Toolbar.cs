@@ -1,10 +1,12 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline
 {
     public partial class TimelineWindow
     {
+        
         void TransportToolbarGUI()
         {
             GUILayout.BeginHorizontal();
@@ -107,7 +109,7 @@ namespace UnityEditor.Timeline
                 }
                 else
                 {
-                    string path = EditorUtility.SaveFilePanel("open", "Assets/", "timel","bytes");
+                    string path = EditorUtility.SaveFilePanel("open", "Assets/", "timel", "bytes");
                     if (!string.IsNullOrEmpty(path))
                     {
                         path = path.Substring(path.IndexOf("Assets/", StringComparison.Ordinal));
