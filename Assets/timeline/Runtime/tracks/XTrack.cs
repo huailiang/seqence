@@ -11,6 +11,7 @@ namespace UnityEngine.Timeline
         Mute = 1 << 1,
         Record = 1 << 2,
         Lock = 1 << 3,
+        Clip = 1 << 4,
     }
 
 
@@ -61,7 +62,7 @@ namespace UnityEngine.Timeline
 
         public bool mute
         {
-            get { return (mode & TrackMode.Mute) > 0; }
+            get { return GetFlag(TrackMode.Mute); }
         }
 
         public bool parentMute
@@ -71,19 +72,19 @@ namespace UnityEngine.Timeline
 
         public bool record
         {
-            get { return (mode & TrackMode.Record) > 0; }
+            get { return GetFlag(TrackMode.Record); }
         }
 
         public bool locked
         {
-            get { return (mode & TrackMode.Lock) > 0; }
+            get { return GetFlag(TrackMode.Lock); }
         }
 
         public bool parentLocked
         {
             get { return parent != null ? parent.locked : locked; }
         }
-        
+
         protected XTrack(XTimeline tl, TrackData data)
         {
             timeline = tl;
@@ -124,6 +125,10 @@ namespace UnityEngine.Timeline
             }
         }
 
+        public bool GetFlag(TrackMode mode)
+        {
+            return (this.mode & mode) > 0;
+        }
 
         public void SetFlag(TrackMode mode, bool flag)
         {

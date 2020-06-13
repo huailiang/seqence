@@ -75,15 +75,17 @@ namespace UnityEditor.Timeline
                     (GameObject) EditorGUILayout.ObjectField(btrack.bindObj, typeof(Animator), GUILayout.MaxWidth(80));
 #pragma warning restore 618
             }
-            if (GUILayout.Button("", TimelineStyles.clips))
-            {
-                Debug.Log("start recod mode");
-                track.SetFlag(TrackMode.Record, !track.record);
-            }
-            bool recd = track.record;
-            if (GUILayout.Button(recd ? s_ArmForRecordContentOn : s_ArmForRecordContentOff, TimelineStyles.autoKey))
+            if (GUILayout.Button("", TimelineStyles.clips, GUILayout.MaxWidth(16)))
             {
                 Debug.Log("show record clip");
+                bool cl = btrack.GetFlag(TrackMode.Clip);
+                btrack.SetFlag(TrackMode.Clip, !cl);
+            }
+            bool recd = track.record;
+            if (GUILayout.Button(recd ? s_ArmForRecordContentOn : s_ArmForRecordContentOff, TimelineStyles.autoKey,
+                GUILayout.MaxWidth(16)))
+            {
+                Debug.Log("start recod mode");
                 btrack.SetFlag(TrackMode.Record, !recd);
             }
         }

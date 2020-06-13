@@ -162,11 +162,11 @@ namespace UnityEditor.Timeline
             GUILayout.Space(5);
             GUILayout.Label(track.ToString());
             OnGUIHeader();
-            if (GUILayout.Button("mute", TimelineStyles.mute))
+            if (GUILayout.Button("mute", TimelineStyles.mute, GUILayout.MaxWidth(16)))
             {
                 track.SetFlag(TrackMode.Mute, !track.mute);
             }
-            if (GUILayout.Button("lock", TimelineStyles.locked))
+            if (GUILayout.Button("lock", TimelineStyles.locked, GUILayout.MaxWidth(16)))
             {
                 track.SetFlag(TrackMode.Lock, !track.locked);
             }
