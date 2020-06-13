@@ -51,7 +51,8 @@ namespace UnityEditor.Timeline
             this.path = path;
             TimelineConfig xconf = new TimelineConfig();
             xconf.tracks = new TrackData[1];
-            TrackData data = new TrackData(TrackType.Marker);
+            TrackData data = new TrackData();
+            data.type = TrackType.Marker;
             xconf.tracks[0] = data;
             xconf.Write(path);
             timeline = new XTimeline(xconf);

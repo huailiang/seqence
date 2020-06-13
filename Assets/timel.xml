@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TimelineConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <tracks>
+    <TrackData>
+      <type>Marker</type>
+    </TrackData>
+    <TrackData>
+      <clips>
+        <ClipData xsi:type="AnimClipData">
+          <start>23.90012</start>
+          <duration>18.55529</duration>
+          <anim>Assets/test/LOGIN.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>true</loop>
+        </ClipData>
+      </clips>
+      <type>Animation</type>
+    </TrackData>
+  </tracks>
+</TimelineConfig>

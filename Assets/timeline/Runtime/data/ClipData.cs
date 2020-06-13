@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace UnityEngine.Timeline.Data
 {
@@ -12,6 +13,10 @@ namespace UnityEngine.Timeline.Data
         PostProcess = 1 << 4,
     }
 
+    [XmlInclude(typeof(AnimClipData))]
+    [XmlInclude(typeof(SceneFxClipData))]
+    [XmlInclude(typeof(BoneFxClipData))]
+    [XmlInclude(typeof(PostprocessData))]
     public abstract class ClipData
     {
         public float start;
@@ -77,7 +82,7 @@ namespace UnityEngine.Timeline.Data
     public class BoneFxClipData : SceneFxClipData
     {
         public string bone;
-
+        
         public override ClipType type
         {
             get { return ClipType.BoneFx; }

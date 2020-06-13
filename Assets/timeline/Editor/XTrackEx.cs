@@ -181,7 +181,7 @@ namespace UnityEditor.Timeline
 
         public static TrackData BuildTrackData(this XTrack track)
         {
-            TrackData data = new TrackData(track.trackType);
+            TrackData data = new TrackData();
             data.type = track.trackType;
 
             if (track.clips != null)
@@ -197,7 +197,7 @@ namespace UnityEditor.Timeline
                 data.marks = new MarkData[track.marks.Length];
                 for (int i = 0; i < track.marks.Length; i++)
                 {
-                    data.marks[i] = track.marks[i].data;
+                    data.marks[i] = track.marks[i].MarkData;
                 }
             }
             if (track.childs != null)

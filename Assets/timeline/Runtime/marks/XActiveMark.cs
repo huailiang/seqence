@@ -7,9 +7,9 @@ namespace UnityEngine.Timeline
     {
         private bool active;
 
-        public XActiveMark(XTrack track, ActiveData data) : base(track, data)
+        public XActiveMark(XTrack track, ActiveMarkData markData) : base(track, markData)
         {
-            active = data.active;
+            active = markData.active;
         }
 
         public override void OnTriger()

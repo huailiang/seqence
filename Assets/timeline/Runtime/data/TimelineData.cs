@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace UnityEngine.Timeline.Data
@@ -17,7 +18,8 @@ namespace UnityEngine.Timeline.Data
         PostProcess = 1 << 4,
     }
 
-    [System.Serializable]
+    [Serializable]
+    [XmlInclude(typeof(BindTrackData))]
     public class TrackData
     {
         public ClipData[] clips;
@@ -25,10 +27,6 @@ namespace UnityEngine.Timeline.Data
         public TrackData[] childs;
         public TrackType type;
 
-        public TrackData(TrackType t)
-        {
-            type = t;
-        }
 
         public virtual void Write(BinaryWriter writer)
         {
@@ -68,7 +66,8 @@ namespace UnityEngine.Timeline.Data
             }
             for (int j = 0; j < len2; j++)
             {
-                childs[j] = new TrackData((TrackType) reader.ReadInt32());
+                childs[j] = new TrackData();
+                childs[j].type = (TrackType) reader.ReadInt32();
                 childs[j].Read(reader);
             }
             for (int i = 0; i < len3; i++)
@@ -93,10 +92,6 @@ namespace UnityEngine.Timeline.Data
         {
             base.Read(reader);
             prefab = reader.ReadString();
-        }
-
-        public BindTrackData(TrackType t) : base(t)
-        {
         }
     }
 
@@ -154,7 +149,8 @@ namespace UnityEngine.Timeline.Data
                     for (int i = 0; i < cnt; i++)
                     {
                         var type = (TrackType) reader.ReadInt32();
-                        tracks[i] = new TrackData(type);
+                        tracks[i] = new TrackData();
+                        tracks[i].type = type;
                         tracks[i].Read(reader);
                     }
                 }

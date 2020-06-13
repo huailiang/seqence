@@ -248,7 +248,6 @@ namespace UnityEditor.Timeline
 
         private void DeleteClip(object mpos)
         {
-            Debug.Log("delete Click");
             Vector2 pos = (Vector2) mpos;
             float time = TimelineWindow.inst.PiexlToTime(pos.x);
             bool find = false;

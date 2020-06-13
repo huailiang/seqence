@@ -6,11 +6,11 @@ namespace UnityEngine.Timeline
     {
         protected XTrack track { get; }
 
-        public MarkData data { get; }
+        public MarkData MarkData { get; }
 
         public MarkType type
         {
-            get { return data.type; }
+            get { return MarkData.type; }
         }
 
         protected XTimeline timeline
@@ -18,17 +18,17 @@ namespace UnityEngine.Timeline
             get { return track.timeline; }
         }
 
-        public XMarker(XTrack track, MarkData data)
+        public XMarker(XTrack track, MarkData markData)
         {
             this.track = track;
-            this.data = data;
+            this.MarkData = markData;
         }
 
 
         public float time
         {
-            get { return data.time; }
-            set { data.time = value; }
+            get { return MarkData.time; }
+            set { MarkData.time = value; }
         }
 
         public virtual bool reverse

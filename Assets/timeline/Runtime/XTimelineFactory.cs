@@ -42,19 +42,23 @@ namespace UnityEngine.Timeline
             TrackData data = null;
             if (type == typeof(XAnimationTrack))
             {
-                data = new BindTrackData(TrackType.Animation);
+                data = new BindTrackData();
+                data.type = TrackType.Animation;
             }
             else if (type == typeof(XPostprocessTrack))
             {
-                data = new TrackData(TrackType.PostProcess);
+                data = new TrackData();
+                data.type = TrackType.PostProcess;
             }
             else if (type == typeof(XBoneFxTrack))
             {
-                data = new TrackData(TrackType.BoneFx);
+                data = new TrackData();
+                data.type = TrackType.BoneFx;
             }
             else if (type == typeof(XSceneFxTrack))
             {
-                data = new TrackData(TrackType.SceneFx);
+                data = new TrackData();
+                data.type = TrackType.SceneFx;
             }
             else
             {
@@ -69,7 +73,7 @@ namespace UnityEngine.Timeline
             switch (type)
             {
                 case MarkType.Active:
-                    data = new ActiveData();
+                    data = new ActiveMarkData();
                     break;
                 case MarkType.Jump:
                     data = new JumpMarkData();

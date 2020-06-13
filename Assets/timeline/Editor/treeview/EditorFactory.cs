@@ -51,7 +51,7 @@ namespace UnityEditor.Timeline
             }
             else if (t == typeof(XActiveMark))
             {
-                marker = new XActiveMark(track, new ActiveData() {time = time});
+                marker = new XActiveMark(track, new ActiveMarkData() {time = time});
             }
             else
             {

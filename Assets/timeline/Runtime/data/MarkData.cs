@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace UnityEngine.Timeline.Data
 {
@@ -11,6 +12,9 @@ namespace UnityEngine.Timeline.Data
         Slow = 1 << 2,
     }
 
+    [XmlInclude(typeof(JumpMarkData))]
+    [XmlInclude(typeof(SlowMarkData))]
+    [XmlInclude(typeof(ActiveMarkData))]
     public abstract class MarkData
     {
         public float time;
@@ -19,7 +23,7 @@ namespace UnityEngine.Timeline.Data
 
         public virtual void Write(BinaryWriter writer)
         {
-            writer.Write((int)type);
+            writer.Write((int) type);
             writer.Write(time);
         }
 
@@ -54,7 +58,7 @@ namespace UnityEngine.Timeline.Data
     }
 
     [Serializable]
-    public class ActiveData : MarkData
+    public class ActiveMarkData : MarkData
     {
         public bool active;
 
