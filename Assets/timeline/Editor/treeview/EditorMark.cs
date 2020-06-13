@@ -4,11 +4,16 @@ namespace UnityEditor.Timeline
 {
     public class EditorMark
     {
-        private XMarker baseMarker;
+        protected XMarker baseMarker;
 
-        public EditorMark(XMarker marker)
+        public void Init(XMarker marker)
         {
-            baseMarker = marker;
+            this.baseMarker = marker;
+            OnInit();
+        }
+
+        protected virtual void OnInit()
+        {
         }
 
         public void Inspector()
@@ -29,9 +34,9 @@ namespace UnityEditor.Timeline
     {
         private XJumpMarker marker;
 
-        public EditorJumpMark(XJumpMarker marker) : base(marker)
+        protected override void OnInit()
         {
-            this.marker = marker;
+            this.marker = (XJumpMarker) baseMarker;
         }
 
         protected override void OnInspector()
@@ -45,9 +50,9 @@ namespace UnityEditor.Timeline
     {
         private XActiveMark marker;
 
-        public EditorActiveMark(XActiveMark marker) : base(marker)
+        protected override void OnInit()
         {
-            this.marker = marker;
+            this.marker = (XActiveMark) baseMarker;
         }
 
         protected override void OnInspector()
@@ -61,9 +66,9 @@ namespace UnityEditor.Timeline
     {
         private XSlowMarker marker;
 
-        public EditorSlowMark(XSlowMarker marker) : base(marker)
+        protected override void OnInit()
         {
-            this.marker = marker;
+            this.marker = (XSlowMarker) baseMarker;
         }
 
         protected override void OnInspector()

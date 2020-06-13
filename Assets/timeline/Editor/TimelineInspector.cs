@@ -54,6 +54,7 @@ namespace UnityEditor.Timeline
                 {
                     var t = TypeUtilities.GetEditorAsset(marks[i].GetType());
                     emarks[i] = (EditorMark) Activator.CreateInstance(t);
+                    emarks[i].Init(marks[i]);
                 }
             }
             if (emarks != null)

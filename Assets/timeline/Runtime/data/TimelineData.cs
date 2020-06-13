@@ -21,6 +21,7 @@ namespace UnityEngine.Timeline.Data
 
     [Serializable]
     [XmlInclude(typeof(BindTrackData))]
+    [XmlInclude(typeof(TransformTrackData))]
     public class TrackData
     {
         public ClipData[] clips;
@@ -93,6 +94,43 @@ namespace UnityEngine.Timeline.Data
         {
             base.Read(reader);
             prefab = reader.ReadString();
+        }
+    }
+
+    public class TransformTrackData : TrackData
+    {
+        public Vector3[] pos;
+        public Vector3[] rot;
+
+        public override void Read(BinaryReader reader)
+        {
+            base.Read(reader);
+            int cnt = reader.ReadInt32();
+            pos = new Vector3[cnt];
+            for (int i = 0; i < cnt; i++)
+            {
+                pos[i] = reader.ReadV3();
+            }
+            cnt = reader.ReadInt32();
+            for (int i = 0; i < cnt; i++)
+            {
+                rot[i] = reader.ReadV3();
+            }
+        }
+
+        public override void Write(BinaryWriter writer)
+        {
+            base.Write(writer);
+            int cnt = pos?.Length ?? 0;
+            for (int i = 0; i < cnt; i++)
+            {
+                writer.Write(pos[i]);
+            }
+            cnt = rot?.Length ?? 0;
+            for (int i = 0; i < cnt; i++)
+            {
+                writer.Write(rot[i]);
+            }
         }
     }
 

@@ -65,7 +65,7 @@ namespace UnityEngine.Timeline
             }
             else if (type == typeof(XTransformTrack))
             {
-                data = new TrackData();
+                data = new TransformTrackData();
                 data.type = TrackType.Transform;
             }
             else

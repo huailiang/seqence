@@ -9,9 +9,6 @@ namespace UnityEditor.Timeline
     [TimelineEditor(typeof(XAnimationTrack))]
     public class EditorAnimTrack : EditorTrack
     {
-        static GUIContent s_ArmForRecordContentOn;
-        static GUIContent s_ArmForRecordContentOff;
-
         protected override Color trackColor
         {
             get { return Color.yellow; }
@@ -58,21 +55,9 @@ namespace UnityEditor.Timeline
             TimelineWindow.inst.tree.AddTrack(tr, idx + 1);
         }
 
-        private void InitStyle()
-        {
-            if (s_ArmForRecordContentOn == null)
-            {
-                s_ArmForRecordContentOn = new GUIContent(TimelineStyles.autoKey.active.background);
-            }
-            if (s_ArmForRecordContentOff == null)
-            {
-                s_ArmForRecordContentOff = new GUIContent(TimelineStyles.autoKey.normal.background);
-            }
-        }
 
         protected override void OnGUIHeader()
         {
-            InitStyle();
             XBindTrack btrack = track as XBindTrack;
             if (btrack)
             {
@@ -81,18 +66,9 @@ namespace UnityEditor.Timeline
                     (GameObject) EditorGUILayout.ObjectField(btrack.bindObj, typeof(Animator), GUILayout.MaxWidth(80));
 #pragma warning restore 618
             }
-            bool recd = track.record;
-            if (GUILayout.Button(recd ? s_ArmForRecordContentOn : s_ArmForRecordContentOff, TimelineStyles.autoKey,
-                GUILayout.MaxWidth(16)))
-            {
-                Debug.Log("start recod mode");
-                btrack.SetFlag(TrackMode.Record, !recd);
-            }
+            EditorGUILayout.Space();
         }
 
-        protected override void OnGUIContent()
-        {
-        }
 
         protected override void OnAddClip(float t)
         {
