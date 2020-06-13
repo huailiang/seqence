@@ -150,9 +150,6 @@ namespace UnityEditor.Timeline
         public static readonly GUIContent openContent = new GUIContent(open_ico, "open.");
         public static readonly GUIContent saveContent = new GUIContent(save_ico, "save.");
 
-        // public GUIContent playrangeContent;
-        public static readonly float kBaseIndent = 15.0f;
-        public static readonly float kDurationGuiThickness = 1.0f;
 
         // matches dark skin warning color.
         public static readonly Color kClipErrorColor = new Color(0.957f, 0.737f, 0.008f, 1f);

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UnityEditor.Timeline
 {
@@ -12,63 +11,12 @@ namespace UnityEditor.Timeline
     {
         public static void ShowWindow()
         {
-            inst = GetWindow<TimelineInspector>("timeline inspector");
+            GetWindow<TimelineInspector>("timeline inspector");
         }
-
-        public static TimelineInspector inst;
-
-        private TimelineState state
-        {
-            get { return TimelineWindow.inst?.state ?? null; }
-        }
-
-        private List<ITimelineInspector> focus;
-
-        private void OnEnable()
-        {
-            focus = new List<ITimelineInspector>();
-        }
-
-        private void OnDisable()
-        {
-            focus.Clear();
-        }
-
-        private void OnDestroy()
-        {
-            focus.Clear();
-        }
-
-        public void SetActive(ITimelineInspector act, bool show = true)
-        {
-            if (!focus.Contains(act))
-            {
-                if (show)
-                {
-                    focus.Add(act);
-                }
-            }
-            else
-            {
-                if (!show)
-                {
-                    focus.Remove(act);
-                }
-            }
-        }
-
-        public void Remove(ITimelineInspector act)
-        {
-            if (focus.Contains(act))
-            {
-                focus.Remove(act);
-            }
-        }
-
 
         private void OnGUI()
         {
-            inst = this;
+            var state = TimelineWindow.inst.state;
             if (state != null)
             {
                 GUILayout.BeginVertical();
@@ -76,11 +24,53 @@ namespace UnityEditor.Timeline
                 EditorGUILayout.IntField("fps: ", state.frameRate);
                 EditorGUILayout.Toggle("playing:", state.playing);
                 EditorGUILayout.EnumPopup("wrapmode:", state.mode);
-                foreach (var item in focus)
-                {
-                    item.OnInspector();
-                }
+                GUIMark();
+                GUISelect();
                 GUILayout.EndVertical();
+            }
+        }
+
+
+        private bool markF;
+
+        private void GUIMark()
+        {
+            if (markF)
+            {
+                var timeline = TimelineWindow.inst.timeline;
+                var marks = timeline?.trackTrees?[0].marks;
+                if (marks != null)
+                {
+                    int i = 0;
+                    using (GUIColorOverride color = new GUIColorOverride(Color.red))
+                    {
+                        markF = EditorGUILayout.Foldout(markF, "marks");
+                    }
+                    foreach (var mark in marks)
+                    {
+                        EditorGUILayout.LabelField(++i + ": " + mark.type);
+                        mark.time = EditorGUILayout.FloatField("time", mark.time);
+                        mark.reverse = EditorGUILayout.Toggle("reverse", mark.reverse);
+                    }
+                }
+            }
+            GUILayout.Space(4);
+        }
+
+        private void GUISelect()
+        {
+            var trees = TimelineWindow.inst.tree;
+            if (trees != null && trees.hierachy != null)
+            {
+                foreach (var track in trees.hierachy)
+                {
+                    if (track.@select)
+                    {
+                        ITimelineInspector gui = track as ITimelineInspector;
+                        gui.OnInspector();
+                        GUILayout.Space(4);
+                    }
+                }
             }
         }
     }

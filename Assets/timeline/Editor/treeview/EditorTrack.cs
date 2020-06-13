@@ -131,17 +131,13 @@ namespace UnityEditor.Timeline
                     pm.ShowAsContext();
                 }
             }
+            e.Use();
         }
 
         private void SelectTrack(object arg)
         {
             bool sele = (bool) arg;
             this.@select = sele;
-            if (TimelineInspector.inst != null)
-            {
-                TimelineInspector.ShowWindow();
-                TimelineInspector.inst.SetActive(this, sele);
-            }
             TimelineWindow.inst.Repaint();
         }
 
@@ -228,11 +224,6 @@ namespace UnityEditor.Timeline
         {
             bool selet = (bool) arg;
             TimelineWindow.inst.tree?.ResetSelect(selet);
-            if (TimelineInspector.inst != null)
-            {
-                TimelineInspector.ShowWindow();
-                TimelineInspector.inst.SetActive(this, selet);
-            }
         }
 
         private void AddMark(object m)
@@ -296,7 +287,10 @@ namespace UnityEditor.Timeline
 
         public void OnInspector()
         {
-            trackF = EditorGUILayout.Foldout(trackF, "track: " + track.trackType + " " + track.ID);
+            using (GUIColorOverride color = new GUIColorOverride(Color.red))
+            {
+                trackF = EditorGUILayout.Foldout(trackF, "track: " + track.trackType + " " + track.ID);
+            }
             if (trackF)
             {
                 int cnt = track.childs?.Length ?? 0;
@@ -333,8 +327,6 @@ namespace UnityEditor.Timeline
                         }
                     }
                 }
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
             }
         }
 

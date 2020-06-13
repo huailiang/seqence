@@ -18,6 +18,11 @@ namespace UnityEngine.Timeline
             Load((BoneFxClipData) data);
         }
 
+        public void SetFx(GameObject obj)
+        {
+            fx = obj;
+        }
+
         private void Load(BoneFxClipData data)
         {
             var root = track.root;
@@ -41,6 +46,7 @@ namespace UnityEngine.Timeline
                 }
             }
         }
+        
 
         protected override void OnUpdate(float time)
         {

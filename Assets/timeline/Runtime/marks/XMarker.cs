@@ -33,7 +33,8 @@ namespace UnityEngine.Timeline
 
         public virtual bool reverse
         {
-            get { return true; }
+            get { return MarkData.reverse; }
+            set { MarkData.reverse = value; }
         }
 
         public virtual void OnTriger()

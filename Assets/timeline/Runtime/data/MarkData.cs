@@ -19,17 +19,21 @@ namespace UnityEngine.Timeline.Data
     {
         public float time;
 
+        public bool reverse;
+
         public abstract MarkType type { get; }
 
         public virtual void Write(BinaryWriter writer)
         {
             writer.Write((int) type);
             writer.Write(time);
+            writer.Write(reverse);
         }
 
         public virtual void Read(BinaryReader reader)
         {
             time = reader.ReadSingle();
+            reverse = reader.ReadBoolean();
         }
     }
 

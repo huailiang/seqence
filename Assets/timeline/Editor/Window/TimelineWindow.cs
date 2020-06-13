@@ -44,6 +44,7 @@ namespace UnityEditor.Timeline
                 tree.OnGUI(state);
                 DrawTimeOnSlider();
                 DrawSptLine();
+                EventMenuHandler();
             }
             else
             {
@@ -51,6 +52,20 @@ namespace UnityEditor.Timeline
                 EditorGUI.LabelField(centerArea, TimelineStyles.createNewTimelineText);
             }
             winArea = position;
+        }
+
+        private void EventMenuHandler()
+        {
+            if (tree != null)
+            {
+                Rect rt = winArea;
+                rt.y = tree.TracksBtmY;
+                var e = Event.current;
+                if (e.type == EventType.ContextClick && rt.Contains(e.mousePosition))
+                {
+                    GenCustomMenu();
+                }
+            }
         }
 
         private void DrawSptLine()
