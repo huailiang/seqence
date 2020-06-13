@@ -129,9 +129,9 @@ namespace UnityEditor.Timeline
                         pm.AddItem(ct, false, AddMark, action);
                     }
                     pm.ShowAsContext();
+                    e.Use();
                 }
             }
-            e.Use();
         }
 
         private void SelectTrack(object arg)
@@ -293,9 +293,7 @@ namespace UnityEditor.Timeline
             }
             if (trackF)
             {
-                int cnt = track.childs?.Length ?? 0;
                 int i = 0;
-                EditorGUILayout.LabelField("sub track count:" + cnt);
                 if (track.clips != null)
                 {
                     clipF = EditorGUILayout.Foldout(clipF, "clips " + track.clips.Length);

@@ -65,6 +65,10 @@ namespace UnityEditor.Timeline
                 {
                     GenCustomMenu();
                 }
+                else if (e.type == EventType.Layout)
+                {
+                    TimelineInspector.inst.Repaint();
+                }
             }
         }
 

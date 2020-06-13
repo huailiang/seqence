@@ -9,13 +9,17 @@ namespace UnityEditor.Timeline
 
     class TimelineInspector : EditorWindow
     {
+        public static TimelineInspector inst;
+        
         public static void ShowWindow()
         {
-            GetWindow<TimelineInspector>("timeline inspector");
+            inst = GetWindow<TimelineInspector>("timeline inspector");
+            inst.Show();
         }
 
         private void OnGUI()
         {
+            inst = this;
             var state = TimelineWindow.inst.state;
             if (state != null)
             {
@@ -25,7 +29,7 @@ namespace UnityEditor.Timeline
                 EditorGUILayout.Toggle("playing:", state.playing);
                 EditorGUILayout.EnumPopup("wrapmode:", state.mode);
                 GUIMark();
-                GUISelect();
+                GUITracks();
                 GUILayout.EndVertical();
             }
         }
@@ -35,17 +39,17 @@ namespace UnityEditor.Timeline
 
         private void GUIMark()
         {
-            if (markF)
+            var timeline = TimelineWindow.inst.timeline;
+            var marks = timeline?.trackTrees?[0].marks;
+            if (marks != null)
             {
-                var timeline = TimelineWindow.inst.timeline;
-                var marks = timeline?.trackTrees?[0].marks;
-                if (marks != null)
+                int i = 0;
+                using (GUIColorOverride color = new GUIColorOverride(Color.red))
                 {
-                    int i = 0;
-                    using (GUIColorOverride color = new GUIColorOverride(Color.red))
-                    {
-                        markF = EditorGUILayout.Foldout(markF, "marks");
-                    }
+                    markF = EditorGUILayout.Foldout(markF, "marks");
+                }
+                if (markF)
+                {
                     foreach (var mark in marks)
                     {
                         EditorGUILayout.LabelField(++i + ": " + mark.type);
@@ -57,19 +61,16 @@ namespace UnityEditor.Timeline
             GUILayout.Space(4);
         }
 
-        private void GUISelect()
+        private void GUITracks()
         {
             var trees = TimelineWindow.inst.tree;
-            if (trees != null && trees.hierachy != null)
+            if (trees?.hierachy != null)
             {
                 foreach (var track in trees.hierachy)
                 {
-                    if (track.@select)
-                    {
-                        ITimelineInspector gui = track as ITimelineInspector;
-                        gui.OnInspector();
-                        GUILayout.Space(4);
-                    }
+                    ITimelineInspector gui = (ITimelineInspector) track;
+                    gui.OnInspector();
+                    GUILayout.Space(4);
                 }
             }
         }
