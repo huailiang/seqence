@@ -41,7 +41,7 @@ namespace UnityEditor.Timeline
             {
                 switch (e.type)
                 {
-                    case (EventType.MouseUp):
+                    case (EventType.ContextClick):
                         if (e.button == 1)
                         {
                             GenericMenu gm = new GenericMenu();
@@ -117,7 +117,7 @@ namespace UnityEditor.Timeline
 
         void AddRectMark(object arg)
         {
-            MarkAction markAction = (MarkAction)arg;
+            MarkAction markAction = (MarkAction) arg;
             float time = PiexlToTime(markAction.posX);
             EditorFactory.MakeMarker(markAction.type, time);
         }

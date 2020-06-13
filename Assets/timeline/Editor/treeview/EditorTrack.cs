@@ -233,9 +233,18 @@ namespace UnityEditor.Timeline
             EditorFactory.MakeMarker(t.type, time, track);
         }
 
-        protected virtual void AddClip(object mpos)
+        
+        private void AddClip(object mpos)
         {
+            Vector2 v2 = (Vector2) mpos;
+            float start = TimelineWindow.inst.PiexlToTime(v2.x);
+            OnAddClip(start);
             TimelineWindow.inst.Repaint();
+        }
+
+        protected virtual void OnAddClip(float time)
+        {
+            
         }
 
         private void DeleteClip(object mpos)
@@ -262,7 +271,6 @@ namespace UnityEditor.Timeline
                 EditorUtility.DisplayDialog("tip", "not select clip", "ok");
             }
         }
-
 
         private void DeleteTrack()
         {
@@ -304,10 +312,7 @@ namespace UnityEditor.Timeline
                             EditorGUILayout.LabelField(++i + ": " + clip.Display);
                             clip.start = EditorGUILayout.FloatField("start", clip.start);
                             float d = EditorGUILayout.FloatField("duration", clip.duration);
-                            if (d > 0)
-                            {
-                                clip.duration = d;
-                            }
+                            if (d > 0) clip.duration = d;
                             OnInspectorClip(clip);
                         }
                     }

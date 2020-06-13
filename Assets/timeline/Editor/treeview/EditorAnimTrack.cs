@@ -94,17 +94,15 @@ namespace UnityEditor.Timeline
         {
         }
 
-        protected override void AddClip(object mpos)
+        protected override void OnAddClip(float t)
         {
             ObjectSelector.get.Show(null, typeof(AnimationClip), null, false, null, obj =>
             {
                 AnimationClip u_clip = (AnimationClip) obj;
                 if (u_clip != null)
                 {
-                    Vector2 v2 = (Vector2) mpos;
-                    float start = TimelineWindow.inst.PiexlToTime(v2.x);
                     AnimClipData data = new AnimClipData();
-                    data.start = start;
+                    data.start = t;
                     data.duration = u_clip.averageDuration;
                     data.anim = AssetDatabase.GetAssetPath(u_clip);
                     data.trim_start = 0;
@@ -114,7 +112,6 @@ namespace UnityEditor.Timeline
                     clip.aclip = u_clip;
                     clip.port = track.clips?.Length ?? 0;
                     track.AddClip(clip);
-                    base.AddClip(mpos);
                 }
             }, null);
         }
