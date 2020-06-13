@@ -18,6 +18,13 @@ namespace UnityEngine.Timeline
             }
         }
 
+        private TransformTrackData _data;
+
+        public TransformTrackData Data
+        {
+            get { return _data; }
+        }
+
         public override TrackType trackType
         {
             get { return TrackType.Transform; }
@@ -30,6 +37,51 @@ namespace UnityEngine.Timeline
 
         public XTransformTrack(XTimeline tl, TrackData data) : base(tl, data)
         {
+            _data = (TransformTrackData) data;
+        }
+
+
+        public void AddItem(float t, Vector3 pos, Vector3 rot)
+        {
+            if (_data.time != null)
+            {
+                var time = _data.time;
+                bool find = false;
+                for (int i = 0; i < time.Length; i++)
+                {
+                    if (time[i] == t)
+                    {
+                        _data.pos[i] = pos;
+                        _data.rot[i] = rot;
+                        find = true;
+                        break;
+                    }
+                }
+                if (!find)
+                {
+                    TimelineUtil.Add(ref _data.time, t);
+                    TimelineUtil.Add(ref _data.pos, pos);
+                    TimelineUtil.Add(ref _data.rot, rot);
+                }
+            }
+        }
+
+        public void RmItem(float t)
+        {
+            if (_data.time != null)
+            {
+                var time = _data.time;
+                for (int i = 0; i < time.Length; i++)
+                {
+                    if (time[i] == t)
+                    {
+                        _data.time = TimelineUtil.Remv(_data.time, i);
+                        _data.pos = TimelineUtil.Remv(_data.pos, i);
+                        _data.rot = TimelineUtil.Remv(_data.rot, i);
+                        break;
+                    }
+                }
+            }
         }
 
         protected override IClip BuildClip(ClipData data)

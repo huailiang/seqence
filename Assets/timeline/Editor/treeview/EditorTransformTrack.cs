@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
@@ -9,6 +11,7 @@ namespace UnityEditor.Timeline
     {
         static GUIContent s_ArmForRecordContentOn;
         static GUIContent s_ArmForRecordContentOff;
+        private TransformTrackData Data;
 
         protected override Color trackColor
         {
@@ -18,6 +21,25 @@ namespace UnityEditor.Timeline
         protected override string trackHeader
         {
             get { return "位移" + ID; }
+        }
+
+        protected override List<TrackMenuAction> actions
+        {
+            get
+            {
+                List<TrackMenuAction> retl = new List<TrackMenuAction>();
+                TrackMenuAction action = new TrackMenuAction();
+                action.desc = " Item";
+                action.fun = OnAdditem;
+                action.arg = 0;
+                retl.Add(action);
+                return retl;
+            }
+        }
+
+        private void OnAdditem(object arg)
+        {
+            
         }
 
         protected override void OnAddClip(float time)
@@ -40,19 +62,33 @@ namespace UnityEditor.Timeline
         protected override void OnGUIHeader()
         {
             InitStyle();
-            XBindTrack btrack = track as XBindTrack;
+
             bool recd = track.record;
             if (GUILayout.Button(recd ? s_ArmForRecordContentOn : s_ArmForRecordContentOff, TimelineStyles.autoKey,
                 GUILayout.MaxWidth(16)))
             {
                 Debug.Log("start recod mode");
-                btrack.SetFlag(TrackMode.Record, !recd);
+                track.SetFlag(TrackMode.Record, !recd);
             }
         }
 
         protected override void OnGUIContent()
         {
-            
+            if (Data == null)
+            {
+                var tt = (track as XTransformTrack);
+                Data = tt?.Data;
+            }
+            if (Data?.time != null)
+            {
+                for (int i = 0; i < Data.time.Length; i++)
+                {
+                    Rect r = rect;
+                    r.x = TimelineWindow.inst.TimeToPixel(Data.time[i]);
+                    r.width = 16;
+                    GUI.Box(r, "", TimelineStyles.timeCursor);
+                }
+            }
         }
     }
 }

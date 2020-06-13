@@ -99,6 +99,7 @@ namespace UnityEngine.Timeline.Data
 
     public class TransformTrackData : TrackData
     {
+        public float[] time;
         public Vector3[] pos;
         public Vector3[] rot;
 
@@ -106,12 +107,19 @@ namespace UnityEngine.Timeline.Data
         {
             base.Read(reader);
             int cnt = reader.ReadInt32();
+            time = new float[cnt];
+            for (int i = 0; i < cnt; i++)
+            {
+                time[i] = reader.ReadSingle();
+            }
+            cnt = reader.ReadInt32();
             pos = new Vector3[cnt];
             for (int i = 0; i < cnt; i++)
             {
                 pos[i] = reader.ReadV3();
             }
             cnt = reader.ReadInt32();
+            rot = new Vector3[cnt];
             for (int i = 0; i < cnt; i++)
             {
                 rot[i] = reader.ReadV3();
@@ -121,7 +129,12 @@ namespace UnityEngine.Timeline.Data
         public override void Write(BinaryWriter writer)
         {
             base.Write(writer);
-            int cnt = pos?.Length ?? 0;
+            int cnt = time?.Length ?? 0;
+            for (int i = 0; i < cnt; i++)
+            {
+                writer.Write(time[i]);
+            }
+            cnt = pos?.Length ?? 0;
             for (int i = 0; i < cnt; i++)
             {
                 writer.Write(pos[i]);
