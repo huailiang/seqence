@@ -4,7 +4,7 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
-    [TrackEditor(typeof(XPostprocessTrack))]
+    [TimelineEditor(typeof(XPostprocessTrack))]
     public class EditorPostprocessTrack : EditorTrack
     {
         protected override Color trackColor

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UnityEditor.Timeline
 {
@@ -39,25 +40,33 @@ namespace UnityEditor.Timeline
 
 
         private bool markF;
+        private EditorMark[] emarks;
 
         private void GUIMark()
         {
             var timeline = TimelineWindow.inst.timeline;
             var marks = timeline?.trackTrees?[0].marks;
-            if (marks != null)
+            if (marks != null && (emarks == null || emarks.Length != marks.Length))
             {
-                int i = 0;
+                int len = marks.Length;
+                emarks = new EditorMark[len];
+                for (int i = 0; i < len; i++)
+                {
+                    var t = TypeUtilities.GetEditorAsset(marks[i].GetType());
+                    emarks[i] = (EditorMark) Activator.CreateInstance(t);
+                }
+            }
+            if (emarks != null)
+            {
                 using (GUIColorOverride color = new GUIColorOverride(Color.red))
                 {
                     markF = EditorGUILayout.Foldout(markF, "marks");
                 }
                 if (markF)
                 {
-                    foreach (var mark in marks)
+                    foreach (var mark in emarks)
                     {
-                        EditorGUILayout.LabelField(++i + ": " + mark.type);
-                        mark.time = EditorGUILayout.FloatField("time", mark.time);
-                        mark.reverse = EditorGUILayout.Toggle("reverse", mark.reverse);
+                        mark.Inspector();
                     }
                 }
             }

@@ -105,14 +105,15 @@ namespace UnityEditor.Timeline
             return list;
         }
 
-        public static Type GetEditorTrack(XTrack track)
+        public static Type GetEditorAsset(Type at)
         {
             var a = Assembly.GetExecutingAssembly();
             var types = a.GetTypes();
             foreach (var type in types)
             {
-                var usage = (TrackEditorAttribute) Attribute.GetCustomAttribute(type, typeof(TrackEditorAttribute));
-                if (usage != null)
+                var usage = (TimelineEditorAttribute) Attribute.GetCustomAttribute(type,
+                    typeof(TimelineEditorAttribute));
+                if (usage != null && usage.type == at)
                 {
                     return type;
                 }

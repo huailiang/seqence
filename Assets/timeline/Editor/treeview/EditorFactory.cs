@@ -10,7 +10,7 @@ namespace UnityEditor.Timeline
     {
         public static EditorTrack GetTrack(XTrack track)
         {
-            var t = TypeUtilities.GetEditorTrack(track);
+            var t = TypeUtilities.GetEditorAsset(track.GetType());
             EditorTrack xtrack = (EditorTrack) Activator.CreateInstance(t);
             if (xtrack != null)
             {

@@ -4,7 +4,7 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
-    [TrackEditor(typeof(XBoneFxTrack))]
+    [TimelineEditor(typeof(XBoneFxTrack))]
     public class EditorBoneTrack : EditorTrack
     {
         protected override Color trackColor

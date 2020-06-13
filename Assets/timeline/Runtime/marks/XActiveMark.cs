@@ -5,11 +5,17 @@ namespace UnityEngine.Timeline
     [MarkUsage(TrackType.SceneFx | TrackType.Animation)]
     public class XActiveMark : XMarker
     {
-        private bool active;
+        private ActiveMarkData _data;
+
+        public bool active
+        {
+            get { return _data.active; }
+            set { _data.active = value; }
+        }
 
         public XActiveMark(XTrack track, ActiveMarkData markData) : base(track, markData)
         {
-            active = markData.active;
+            _data = markData;
         }
 
         public override void OnTriger()

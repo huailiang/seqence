@@ -6,7 +6,7 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
-    [TrackEditor(typeof(XAnimationTrack))]
+    [TimelineEditor(typeof(XAnimationTrack))]
     public class EditorAnimTrack : EditorTrack
     {
         static GUIContent s_ArmForRecordContentOn;

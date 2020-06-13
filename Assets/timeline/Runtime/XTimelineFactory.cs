@@ -26,6 +26,9 @@ namespace UnityEngine.Timeline
                 case TrackType.PostProcess:
                     xTrack = new XPostprocessTrack(tl, data);
                     break;
+                case TrackType.Transform:
+                    xTrack = new XTransformTrack(tl, data);
+                    break;
                 default:
                     Debug.LogError("unknown track " + data.type);
                     break;
@@ -60,6 +63,11 @@ namespace UnityEngine.Timeline
                 data = new TrackData();
                 data.type = TrackType.SceneFx;
             }
+            else if (type == typeof(XTransformTrack))
+            {
+                data = new TrackData();
+                data.type = TrackType.Transform;
+            }
             else
             {
                 throw new Exception("not implement trackdata for default");
@@ -90,7 +98,7 @@ namespace UnityEngine.Timeline
 
         public static MarkData CreateMarkData(BinaryReader reader)
         {
-            MarkType type =(MarkType) reader.ReadInt32();
+            MarkType type = (MarkType) reader.ReadInt32();
             var mark = CreateMarkData(type);
             mark.Read(reader);
             return mark;
