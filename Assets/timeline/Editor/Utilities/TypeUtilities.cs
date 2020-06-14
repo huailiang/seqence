@@ -103,7 +103,7 @@ namespace UnityEditor.Timeline
             return list;
         }
 
-        public static Type GetEditorAsset(Type at)
+        private static Type GetEditorAsset(Type at)
         {
             var a = Assembly.GetExecutingAssembly();
             var types = a.GetTypes();

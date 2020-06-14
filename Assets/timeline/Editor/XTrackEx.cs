@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
@@ -10,6 +11,22 @@ namespace UnityEditor.Timeline
     /// </summary>
     public static class XTrackEx
     {
+        public static List<XTimelineObject> TrackAssets(this XTrack track)
+        {
+            var clips = track.clips.ToList();
+            var marks = track.marks.ToList();
+            var childs = track.childs.ToList();
+            var list = new List<XTimelineObject>();
+            for (int i = 0; i < clips.Count; i++)
+            {
+                XTimelineObject clip = clips[i] as XTimelineObject;
+                if (clip) list.Add(clip);
+            }
+            list.AddRange(marks);
+            list.AddRange(childs);
+            return list;
+        }
+
         public static bool AddClip(this XTrack track, IClip clip)
         {
             if (track.clips == null)

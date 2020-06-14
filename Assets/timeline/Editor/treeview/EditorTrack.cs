@@ -366,12 +366,6 @@ namespace UnityEditor.Timeline
                     {
                         mark.Inspector();
                     }
-                    foreach (var mark in track.marks)
-                    {
-                        EditorGUILayout.LabelField(" mark" + (++i) + ": " + mark.type, TimelineStyles.titleStyle);
-                        mark.time = EditorGUILayout.FloatField(" time", mark.time);
-                        mark.reverse = EditorGUILayout.Toggle(" reverse", mark.reverse);
-                    }
                 }
             }
         }

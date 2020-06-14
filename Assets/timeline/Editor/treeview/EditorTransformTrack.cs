@@ -29,7 +29,7 @@ namespace UnityEditor.Timeline
             {
                 List<TrackMenuAction> retl = new List<TrackMenuAction>();
                 TrackMenuAction action = new TrackMenuAction();
-                action.desc = " Item";
+                action.desc = "Add Item";
                 action.fun = OnAdditem;
                 action.arg = 0;
                 retl.Add(action);
