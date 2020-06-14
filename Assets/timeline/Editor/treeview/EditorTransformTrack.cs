@@ -117,7 +117,7 @@ namespace UnityEditor.Timeline
         protected override void OnInspectorTrack()
         {
             EditorGUILayout.LabelField("recoding: " + recoding);
-            if (recoding && go)
+            if (recoding && go && Data?.time != null)
             {
                 EditorGUILayout.LabelField("target: " + go.name);
                 for (int i = 0; i < Data.time.Length; i++)

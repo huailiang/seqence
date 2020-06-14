@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
@@ -49,9 +50,14 @@ namespace UnityEditor.Timeline
             TrackData data = XTimelineFactory.CreateTrackData(type);
             var state = TimelineWindow.inst.state;
             var tr = XTimelineFactory.GetTrack(data, state.timeline);
+            var tmp = track;
+            if (track.childs != null)
+            {
+                tmp = track.childs.Last();
+            }
             tr.parent = this.track;
             tr.parent.AddSub(tr);
-            int idx = TimelineWindow.inst.tree.IndexOfTrack(this.track);
+            int idx = TimelineWindow.inst.tree.IndexOfTrack(tmp);
             TimelineWindow.inst.tree.AddTrack(tr, idx + 1);
         }
 
