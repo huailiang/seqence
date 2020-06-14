@@ -17,12 +17,14 @@ namespace UnityEngine.Timeline.Data
         Animation = 1 << 3,
         PostProcess = 1 << 4,
         Transform = 1 << 5,
-        Logic = 1 << 6,
+        LogicValue = 1 << 6,
     }
 
     [Serializable]
     [XmlInclude(typeof(BindTrackData))]
     [XmlInclude(typeof(TransformTrackData))]
+    [XmlInclude(typeof(LogicTrackData))]
+    [XmlInclude(typeof(PostprocessData))]
     public class TrackData
     {
         public ClipData[] clips;

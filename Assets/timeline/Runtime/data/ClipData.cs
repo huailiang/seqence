@@ -26,6 +26,7 @@ namespace UnityEngine.Timeline.Data
     [XmlInclude(typeof(SceneFxClipData))]
     [XmlInclude(typeof(BoneFxClipData))]
     [XmlInclude(typeof(PostprocessData))]
+    [XmlInclude(typeof(LogicClipData))]
     public abstract class ClipData
     {
         public float start;
@@ -54,7 +55,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class SceneFxClipData : ClipData
     {
         public string prefab;
@@ -87,7 +88,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class BoneFxClipData : SceneFxClipData
     {
         public string bone;
@@ -148,7 +149,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class AnimClipData : ClipData
     {
         public string anim;
@@ -181,7 +182,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class PostprocessData : ClipData
     {
         public override ClipType type

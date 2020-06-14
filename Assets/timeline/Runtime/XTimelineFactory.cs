@@ -29,7 +29,7 @@ namespace UnityEngine.Timeline
                 case TrackType.Transform:
                     xTrack = new XTransformTrack(tl, data);
                     break;
-                case TrackType.Logic:
+                case TrackType.LogicValue:
                     xTrack = new XLogicValueTrack(tl, data);
                     break;
                 default:
@@ -74,7 +74,7 @@ namespace UnityEngine.Timeline
             else if (type == typeof(XLogicValueTrack))
             {
                 data = new LogicTrackData();
-                data.type = TrackType.Logic;
+                data.type = TrackType.LogicValue;
             }
             else
             {
