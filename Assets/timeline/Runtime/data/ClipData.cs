@@ -82,7 +82,7 @@ namespace UnityEngine.Timeline.Data
     public class BoneFxClipData : SceneFxClipData
     {
         public string bone;
-        
+
         public override ClipType type
         {
             get { return ClipType.BoneFx; }
@@ -91,7 +91,8 @@ namespace UnityEngine.Timeline.Data
         public override void Write(BinaryWriter writer)
         {
             base.Write(writer);
-            writer.Write(bone);
+            var b = string.IsNullOrEmpty(bone) ? "" : bone;
+            writer.Write(b);
         }
 
         public override void Read(BinaryReader reader)

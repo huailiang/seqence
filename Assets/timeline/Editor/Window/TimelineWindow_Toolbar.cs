@@ -107,7 +107,7 @@ namespace UnityEditor.Timeline
                 }
                 else
                 {
-                    string path = EditorUtility.SaveFilePanel("open", "Assets/", "timel", "bytes");
+                    string path = EditorUtility.SaveFilePanel("open", "Assets/", "timeline", "bytes");
                     if (!string.IsNullOrEmpty(path))
                     {
                         path = path.Substring(path.IndexOf("Assets/", StringComparison.Ordinal));

@@ -67,7 +67,7 @@ namespace UnityEditor.Timeline
                 }
                 else if (e.type == EventType.Layout)
                 {
-                    TimelineInspector.inst.Repaint();
+                    TimelineInspector.inst?.Repaint();
                 }
             }
         }

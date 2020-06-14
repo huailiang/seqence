@@ -102,7 +102,11 @@ namespace UnityEngine.Timeline.Data
         public float[] time;
         public Vector3[] pos;
         public Vector3[] rot;
-
+        
+#if UNITY_EDITOR
+        public bool select;
+#endif
+        
         public override void Read(BinaryReader reader)
         {
             base.Read(reader);

@@ -64,9 +64,15 @@ namespace UnityEngine.Timeline
                     TimelineUtil.Add(ref _data.rot, rot);
                 }
             }
+            else
+            {
+                _data.time = new[] {t};
+                _data.pos = new[] {pos};
+                _data.rot = new[] {rot};
+            }
         }
 
-        public void RmItem(float t)
+        public bool RmItem(float t)
         {
             if (_data.time != null)
             {
@@ -75,13 +81,23 @@ namespace UnityEngine.Timeline
                 {
                     if (time[i] == t)
                     {
-                        _data.time = TimelineUtil.Remv(_data.time, i);
-                        _data.pos = TimelineUtil.Remv(_data.pos, i);
-                        _data.rot = TimelineUtil.Remv(_data.rot, i);
-                        break;
+                        return RmItemAt(i);
                     }
                 }
             }
+            return false;
+        }
+
+        public bool RmItemAt(int i)
+        {
+            if (_data.time?.Length > i)
+            {
+                _data.time = TimelineUtil.Remv(_data.time, i);
+                _data.pos = TimelineUtil.Remv(_data.pos, i);
+                _data.rot = TimelineUtil.Remv(_data.rot, i);
+                return true;
+            }
+            return false;
         }
 
         protected override IClip BuildClip(ClipData data)

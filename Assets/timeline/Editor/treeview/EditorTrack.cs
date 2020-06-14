@@ -237,9 +237,7 @@ namespace UnityEditor.Timeline
             {
                 GUI.Box(rect, "", TimelineStyles.lockedBG);
             }
-            GUILayout.BeginArea(rect);
             OnGUIContent();
-            GUILayout.EndArea();
         }
 
         void DrawMarkItem(XMarker mark)
@@ -338,6 +336,7 @@ namespace UnityEditor.Timeline
             }
             if (trackF)
             {
+                OnInspectorTrack();
                 int i = 0;
                 if (track.clips != null)
                 {
@@ -368,6 +367,10 @@ namespace UnityEditor.Timeline
                     }
                 }
             }
+        }
+
+        protected virtual void OnInspectorTrack()
+        {
         }
 
         protected virtual void OnInspectorClip(IClip clip)

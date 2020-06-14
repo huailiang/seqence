@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
@@ -9,8 +8,10 @@ namespace UnityEditor.Timeline
     [TimelineEditor(typeof(XTransformTrack))]
     public class EditorTransformTrack : EditorTrack
     {
-        static GUIContent s_ArmForRecordContentOn;
-        static GUIContent s_ArmForRecordContentOff;
+        static GUIContent s_RecordOn;
+        static GUIContent s_RecordOff;
+        static GUIContent s_KeyOn;
+        static GUIContent s_KeyOff;
         private TransformTrackData Data;
 
         protected override Color trackColor
@@ -23,24 +24,6 @@ namespace UnityEditor.Timeline
             get { return "位移" + ID; }
         }
 
-        protected override List<TrackMenuAction> actions
-        {
-            get
-            {
-                List<TrackMenuAction> retl = new List<TrackMenuAction>();
-                TrackMenuAction action = new TrackMenuAction();
-                action.desc = "Add Item";
-                action.fun = OnAdditem;
-                action.arg = 0;
-                retl.Add(action);
-                return retl;
-            }
-        }
-
-        private void OnAdditem(object arg)
-        {
-        }
-
         protected override void OnAddClip(float time)
         {
             throw new Exception("transform no clips");
@@ -48,28 +31,66 @@ namespace UnityEditor.Timeline
 
         private void InitStyle()
         {
-            if (s_ArmForRecordContentOn == null)
+            if (s_RecordOn == null)
             {
-                s_ArmForRecordContentOn = new GUIContent(TimelineStyles.autoKey.active.background);
+                s_RecordOn = new GUIContent(TimelineStyles.autoKey.active.background);
             }
-            if (s_ArmForRecordContentOff == null)
+            if (s_RecordOff == null)
             {
-                s_ArmForRecordContentOff = new GUIContent(TimelineStyles.autoKey.normal.background);
+                s_RecordOff = new GUIContent(TimelineStyles.autoKey.normal.background);
+            }
+            if (s_KeyOn == null)
+            {
+                s_KeyOn = new GUIContent(TimelineStyles.keyframe.active.background);
+            }
+            if (s_KeyOff == null)
+            {
+                s_KeyOff = new GUIContent(TimelineStyles.keyframe.normal.background);
             }
         }
 
         protected override void OnGUIHeader()
         {
             InitStyle();
-
             bool recd = track.record;
-            var content = recd ? s_ArmForRecordContentOn : s_ArmForRecordContentOff;
+            var content = recd ? s_RecordOn : s_RecordOff;
             if (GUILayout.Button(content, TimelineStyles.autoKey, GUILayout.MaxWidth(16)))
             {
-                Debug.Log("start recod mode");
+                if (recd)
+                {
+                    StopRecd();
+                }
+                else
+                {
+                    StartRecd();
+                }
                 track.SetFlag(TrackMode.Record, !recd);
             }
+            if (go)
+            {
+                var e = Event.current;
+                if (recoding)
+                {
+                    if (e.type == EventType.KeyDown)
+                    {
+                        if (e.keyCode == KeyCode.F)
+                        {
+                            PrepareOperation(e.mousePosition);
+                        }
+                    }
+                    if (e.type == EventType.MouseDown)
+                    {
+                        var t = TimelineWindow.inst.PiexlToTime(e.mousePosition.x);
+                        if (ContainsT(t, out var i))
+                        {
+                            Data.@select = !Data.@select;
+                            e.Use();
+                        }
+                    }
+                }
+            }
         }
+
 
         protected override void OnGUIContent()
         {
@@ -84,10 +105,92 @@ namespace UnityEditor.Timeline
                 {
                     Rect r = rect;
                     r.x = TimelineWindow.inst.TimeToPixel(Data.time[i]);
-                    r.width = 16;
-                    GUI.Box(r, "", TimelineStyles.keyframe);
+                    r.width = 20;
+                    r.y = rect.y + rect.height / 3;
+                    GUIContent gct = Data.@select ? s_KeyOn : s_KeyOff;
+                    GUI.Box(r, gct, TimelineStyles.keyframe);
                 }
             }
+        }
+
+
+        protected override void OnInspectorTrack()
+        {
+            EditorGUILayout.LabelField("recoding: " + recoding);
+            if (recoding && go)
+            {
+                EditorGUILayout.LabelField("target: " + go.name);
+                for (int i = 0; i < Data.time.Length; i++)
+                {
+                    Data.time[i] = EditorGUILayout.FloatField("time", Data.time[i]);
+                    Data.pos[i] = EditorGUILayout.Vector3Field("pos", Data.pos[i]);
+                    Data.rot[i] = EditorGUILayout.Vector3Field("rot", Data.rot[i]);
+                    EditorGUILayout.Space();
+                }
+            }
+        }
+
+        private GameObject go;
+        private bool recoding;
+
+
+        private void PrepareOperation(Vector2 pos)
+        {
+            float t = TimelineWindow.inst.PiexlToTime(pos.x);
+            if (ContainsT(t, out var i))
+            {
+                if (EditorUtility.DisplayDialog("tip", "Do you want delete item", "ok", "no"))
+                {
+                    RmItem(i);
+                }
+                GUIUtility.ExitGUI();
+            }
+            else
+            {
+                AddItem(t);
+            }
+        }
+
+        private bool ContainsT(float t, out int i)
+        {
+            i = 0;
+            var time = Data.time;
+            if (time != null)
+            {
+                for (int j = 0; j < time.Length; j++)
+                {
+                    if (Mathf.Abs(time[j] - t) < 1f)
+                    {
+                        i = j;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private void AddItem(float t)
+        {
+            var tt = track as XTransformTrack;
+            tt.AddItem(t, go.transform.localPosition, go.transform.localEulerAngles);
+            TimelineWindow.inst.Repaint();
+        }
+
+        private void RmItem(int i)
+        {
+            var tt = track as XTransformTrack;
+            if (tt.RmItemAt(i)) TimelineWindow.inst.Repaint();
+        }
+
+        private void StartRecd()
+        {
+            go = GameObject.Find("root");
+            recoding = true;
+        }
+
+        private void StopRecd()
+        {
+            recoding = false;
         }
     }
 }
