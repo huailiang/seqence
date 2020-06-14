@@ -11,7 +11,6 @@ namespace UnityEditor.Timeline
         public Rect timeAreaRect;
 
         public TimelineState state { get; private set; }
-        readonly GUIContent m_HeaderContent = new GUIContent();
 
         void InitializeTimeArea()
         {
@@ -51,7 +50,7 @@ namespace UnityEditor.Timeline
             EditorGUI.DrawRect(rec, c);
             rec.height = timeAreaRect.height;
             rec.x -= 4;
-            GUI.Box(rec, m_HeaderContent, TimelineStyles.timeCursor);
+            GUI.Box(rec, TimelineStyles.emptyContent, TimelineStyles.timeCursor);
 
             var e = Event.current;
             if (e.type == EventType.MouseDrag && timeAreaRect.Contains(e.mousePosition))

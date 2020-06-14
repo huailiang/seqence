@@ -10,6 +10,14 @@ namespace UnityEngine.Timeline
         RealRunning,
     }
 
+    public class XTimelineObject
+    {
+        public static implicit operator bool(XTimelineObject obj)
+        {
+            return obj != null;
+        }
+    }
+
     public class XTimeline
     {
         public TimelineConfig config;

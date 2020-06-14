@@ -14,7 +14,7 @@ namespace UnityEngine.Timeline
     }
 
 
-    public abstract class XTrack
+    public abstract class XTrack : XTimelineObject
     {
         public readonly uint ID;
 

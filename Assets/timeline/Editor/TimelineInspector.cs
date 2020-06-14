@@ -52,14 +52,12 @@ namespace UnityEditor.Timeline
                 emarks = new EditorMark[len];
                 for (int i = 0; i < len; i++)
                 {
-                    var t = TypeUtilities.GetEditorAsset(marks[i].GetType());
-                    emarks[i] = (EditorMark) Activator.CreateInstance(t);
-                    emarks[i].Init(marks[i]);
+                    emarks[i] = (EditorMark)TypeUtilities.InitEObject(marks[i]);
                 }
             }
             if (emarks != null)
             {
-                using (GUIColorOverride color = new GUIColorOverride(Color.red))
+                using (GUIColorOverride color = new GUIColorOverride(Color.green))
                 {
                     markF = EditorGUILayout.Foldout(markF, "marks");
                 }

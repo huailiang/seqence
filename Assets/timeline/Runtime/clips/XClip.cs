@@ -19,7 +19,7 @@ namespace UnityEngine.Timeline
         void Dispose();
     }
 
-    public class XClip<T> : IClip where T : XTrack
+    public class XClip<T> : XTimelineObject, IClip where T : XTrack
     {
         protected XTimeline timeline
         {

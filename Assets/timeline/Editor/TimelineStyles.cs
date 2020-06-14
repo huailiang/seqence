@@ -13,10 +13,6 @@ namespace UnityEditor.Timeline
         public readonly static GUIStyle keyframe = "Icon.Keyframe";
         public static readonly GUIStyle timeCursor = "Icon.TimeCursor";
 
-        public static readonly GUIContent referenceTrackLabel =
-            EditorGUIUtility.TrTextContent("R", "This track references an external asset");
-
-        public static readonly GUIContent recordingLabel = EditorGUIUtility.TrTextContent("Recording...");
         public static readonly GUIContent sequenceSelectorIcon = EditorGUIUtility.IconContent("TimelineSelector");
 
         public static readonly GUIContent playContent =
@@ -68,6 +64,8 @@ namespace UnityEditor.Timeline
         public static readonly GUIContent markerCollapseButton =
             EditorGUIUtility.TrTextContent(string.Empty, "Expand / Collapse Track Markers");
 
+        public static readonly GUIContent emptyContent = new GUIContent();
+
 
         public readonly static Color colorDuration = new Color(0.66f, 0.66f, 0.66f, 1.0f);
 
@@ -75,37 +73,18 @@ namespace UnityEditor.Timeline
 
         public readonly static Color colorAnimEditorBinding = new Color(54.0f / 255.0f, 54.0f / 255.0f, 54.0f / 255.0f);
 
-        public readonly static Color colorTimelineBackground = new Color(0.2f, 0.2f, 0.2f, 1.0f);
-
-        public readonly static Color colorLockTextBG = Color.red;
-
-        public readonly static Color colorInlineCurveVerticalLines = new Color(1.0f, 1.0f, 1.0f, 0.2f);
-
         public readonly static Color colorInlineCurveOutOfRangeOverlay = new Color(0.0f, 0.0f, 0.0f, 0.5f);
 
         public readonly static Color markerHeaderDrawerBackgroundColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
 
         public readonly static Color colorTooltipBackground = new Color(29.0f / 255.0f, 32.0f / 255.0f, 33.0f / 255.0f);
 
-        public readonly static Color colorControl = new Color(0.2313f, 0.6353f, 0.5843f, 1.0f);
-
-        public readonly static Color colorSubSequenceBackground = new Color(0.1294118f, 0.1764706f, 0.1764706f, 1.0f);
+        public readonly static Color colorSubSequenceBackground = new Color(0.129f, 0.176f, 0.176f, 1.0f);
 
         public readonly static Color colorSequenceBackground = new Color(0.16f, 0.16f, 0.16f, 1.0f);
 
-        public readonly static Color colorTrackSubSequenceBackground =
-            new Color(0.1607843f, 0.2156863f, 0.2156863f, 1.0f);
-
-        public readonly static Color colorTrackSubSequenceBackgroundSelected =
-            new Color(0.0726923f, 0.252f, 0.252f, 1.0f);
-
-        public readonly static Color colorSubSequenceOverlay = new Color(0.02f, 0.025f, 0.025f, 0.30f);
-
-        public readonly static Color colorSubSequenceDurationLine = new Color(0.0f, 1.0f, 0.88f, 0.46f);
-
 
         private static readonly string _edit_img = @"Assets/timeline/Editor/StyleSheets/Images/";
-
 
         private static Texture2D _new_ico, _save_ico, _open_ico;
 
@@ -149,8 +128,19 @@ namespace UnityEditor.Timeline
         public static readonly GUIContent openContent = new GUIContent(open_ico, "open.");
         public static readonly GUIContent saveContent = new GUIContent(save_ico, "save.");
 
+        private static GUIStyle _titleStyle;
 
-        // matches dark skin warning color.
-        public static readonly Color kClipErrorColor = new Color(0.957f, 0.737f, 0.008f, 1f);
+        public static GUIStyle titleStyle
+        {
+            get
+            {
+                if (_titleStyle == null)
+                {
+                    _titleStyle = new GUIStyle();
+                    _titleStyle.fontStyle = FontStyle.Bold;
+                }
+                return _titleStyle;
+            }
+        }
     }
 }

@@ -2,13 +2,13 @@ using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline
 {
-    public class EditorMark
+    public class EditorMark : EditorObject
     {
         protected XMarker baseMarker;
-
-        public void Init(XMarker marker)
+        
+        public override void OnInit(XTimelineObject marker)
         {
-            this.baseMarker = marker;
+            this.baseMarker = (XMarker) marker;
             OnInit();
         }
 
@@ -18,7 +18,7 @@ namespace UnityEditor.Timeline
 
         public void Inspector()
         {
-            EditorGUILayout.LabelField(baseMarker.type.ToString());
+            EditorGUILayout.LabelField(baseMarker.type.ToString(), TimelineStyles.titleStyle);
             baseMarker.time = EditorGUILayout.FloatField(" time", baseMarker.time);
             baseMarker.reverse = EditorGUILayout.Toggle(" reverse", baseMarker.reverse);
             OnInspector();

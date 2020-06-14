@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Experimental.XR;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
 
@@ -10,13 +9,7 @@ namespace UnityEditor.Timeline
     {
         public static EditorTrack GetTrack(XTrack track)
         {
-            var t = TypeUtilities.GetEditorAsset(track.GetType());
-            EditorTrack xtrack = (EditorTrack) Activator.CreateInstance(t);
-            if (xtrack != null)
-            {
-                xtrack.OnInit(track);
-            }
-            return xtrack;
+            return (EditorTrack) TypeUtilities.InitEObject(track);
         }
 
         public static XMarker MakeMarker(Type t, float time)

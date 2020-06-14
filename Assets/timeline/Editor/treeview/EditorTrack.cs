@@ -13,15 +13,12 @@ namespace UnityEditor.Timeline
         public object arg;
     }
 
-    public class EditorTrack : ITimelineInspector
+    public class EditorTrack : EditorObject, ITimelineInspector
     {
         public XTrack track;
-        public Rect rect;
-        public Rect head;
-        public bool select;
+        public Rect rect, head;
+        public bool select, allowClip;
         private GenericMenu pm;
-        private bool allowClip;
-
         private GUIContent _addclip, _unselect, _select, _delete;
 
         public uint ID
@@ -39,6 +36,11 @@ namespace UnityEditor.Timeline
             get { return track + " " + ID; }
         }
 
+        protected bool locked
+        {
+            get { return track.locked; }
+        }
+
         protected virtual List<TrackMenuAction> actions { get; }
 
         protected bool triger
@@ -50,10 +52,10 @@ namespace UnityEditor.Timeline
             }
         }
 
-        public void OnInit(XTrack t)
+        public override void OnInit(XTimelineObject t)
         {
             @select = false;
-            track = t;
+            track = (XTrack) t;
             var flag = (TrackFlagAttribute) Attribute.GetCustomAttribute(t.GetType(), typeof(TrackFlagAttribute));
             allowClip = flag.allowClip;
             _addclip = EditorGUIUtility.TrTextContent("Add Clip \t #a");
@@ -82,10 +84,7 @@ namespace UnityEditor.Timeline
 
             GUIHeader();
             GUIContent();
-            if (!track.locked)
-            {
-                ProcessEvent();
-            }
+            ProcessEvent();
         }
 
         protected void ProcessEvent()
@@ -108,7 +107,7 @@ namespace UnityEditor.Timeline
                     }
 
                     pm.AddSeparator("");
-                    if (allowClip)
+                    if (allowClip && !locked)
                     {
                         pm.AddItem(_addclip, false, AddClip, e.mousePosition);
                         pm.AddItem(_delete, false, DeleteClip, e.mousePosition);
@@ -128,6 +127,16 @@ namespace UnityEditor.Timeline
                     {
                         pm.AddItem(EditorGUIUtility.TrTextContent("Mute Track \t"), false, MuteClip);
                     }
+                    if (locked)
+                    {
+                        pm.AddItem(EditorGUIUtility.TrTextContent("UnLock Track \t #l"), false,
+                            () => track.SetFlag(TrackMode.Lock, false));
+                    }
+                    else
+                    {
+                        pm.AddItem(EditorGUIUtility.TrTextContent("Lock Track \t #l"), false,
+                            () => track.SetFlag(TrackMode.Lock, true));
+                    }
                     if (@select)
                     {
                         pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect Track \t #s"), false, SelectTrack, false);
@@ -142,7 +151,7 @@ namespace UnityEditor.Timeline
                         for (int i = 0; i < actions.Count; i++)
                         {
                             var at = actions[i];
-                            pm.AddItem(EditorGUIUtility.TrTextContent(at.desc), at.@on, at.fun, at.arg);
+                            if (!locked) pm.AddItem(EditorGUIUtility.TrTextContent(at.desc), at.@on, at.fun, at.arg);
                         }
                     }
                     pm.AddSeparator("");
@@ -155,7 +164,7 @@ namespace UnityEditor.Timeline
                         str = str.Substring(idx + 1);
                         var ct = EditorGUIUtility.TrTextContent("Add " + str);
                         MarkAction action = new MarkAction() {type = mark, posX = e.mousePosition.x};
-                        pm.AddItem(ct, false, AddMark, action);
+                        if (!locked) pm.AddItem(ct, false, AddMark, action);
                     }
                     pm.ShowAsContext();
                     e.Use();
@@ -191,14 +200,13 @@ namespace UnityEditor.Timeline
             GUILayout.Space(5);
             GUILayout.Label(trackHeader);
             OnGUIHeader();
-            if (GUILayout.Button("mute", TimelineStyles.mute, GUILayout.MaxWidth(16)))
-            {
-                track.SetFlag(TrackMode.Mute, !track.mute);
-            }
-            if (GUILayout.Button("lock", TimelineStyles.locked, GUILayout.MaxWidth(16)))
-            {
-                track.SetFlag(TrackMode.Lock, !track.locked);
-            }
+            if (track.mute)
+                if (GUILayout.Button(TimelineStyles.emptyContent, TimelineStyles.mute))
+                    track.SetFlag(TrackMode.Mute, false);
+            if (track.locked)
+                if (GUILayout.Button(TimelineStyles.emptyContent, TimelineStyles.locked))
+                    track.SetFlag(TrackMode.Lock, false);
+
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
@@ -319,13 +327,14 @@ namespace UnityEditor.Timeline
         }
 
 
-        private bool markF, trackF;
+        private bool trackF;
+        private EditorMark[] emarks;
 
         public void OnInspector()
         {
-            using (GUIColorOverride color = new GUIColorOverride(Color.red))
+            using (GUIColorOverride color = new GUIColorOverride(Color.green))
             {
-                trackF = EditorGUILayout.Foldout(trackF, "track: " + track.trackType + " " + track.ID);
+                trackF = EditorGUILayout.Foldout(trackF, trackHeader);
             }
             if (trackF)
             {
@@ -334,7 +343,7 @@ namespace UnityEditor.Timeline
                 {
                     foreach (var clip in track.clips)
                     {
-                        EditorGUILayout.LabelField(" " + (++i) + ": " + clip.Display);
+                        EditorGUILayout.LabelField(" clip" + (++i) + ": " + clip.Display, TimelineStyles.titleStyle);
                         clip.start = EditorGUILayout.FloatField(" start", clip.start);
                         float d = EditorGUILayout.FloatField(" duration", clip.duration);
                         if (d > 0) clip.duration = d;
@@ -343,15 +352,25 @@ namespace UnityEditor.Timeline
                 }
                 if (track.marks != null)
                 {
-                    markF = EditorGUILayout.Foldout(markF, "marks " + track.marks.Length);
-                    if (markF)
+                    i = 0;
+                    int len = track.marks.Length;
+                    if (emarks == null || emarks.Length != len)
                     {
-                        i = 0;
-                        foreach (var mark in track.marks)
+                        emarks = new EditorMark[len];
+                        for (int j = 0; j < len; j++)
                         {
-                            EditorGUILayout.LabelField(" " + (++i) + ": " + mark.type);
-                            mark.time = EditorGUILayout.FloatField(" time", mark.time);
+                            emarks[j] = (EditorMark) TypeUtilities.InitEObject(track.marks[j]);
                         }
+                    }
+                    foreach (var mark in emarks)
+                    {
+                        mark.Inspector();
+                    }
+                    foreach (var mark in track.marks)
+                    {
+                        EditorGUILayout.LabelField(" mark" + (++i) + ": " + mark.type, TimelineStyles.titleStyle);
+                        mark.time = EditorGUILayout.FloatField(" time", mark.time);
+                        mark.reverse = EditorGUILayout.Toggle(" reverse", mark.reverse);
                     }
                 }
             }

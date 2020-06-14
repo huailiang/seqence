@@ -39,7 +39,6 @@ namespace UnityEditor.Timeline
 
         private void OnAdditem(object arg)
         {
-            
         }
 
         protected override void OnAddClip(float time)
@@ -64,8 +63,8 @@ namespace UnityEditor.Timeline
             InitStyle();
 
             bool recd = track.record;
-            if (GUILayout.Button(recd ? s_ArmForRecordContentOn : s_ArmForRecordContentOff, TimelineStyles.autoKey,
-                GUILayout.MaxWidth(16)))
+            var content = recd ? s_ArmForRecordContentOn : s_ArmForRecordContentOff;
+            if (GUILayout.Button(content, TimelineStyles.autoKey, GUILayout.MaxWidth(16)))
             {
                 Debug.Log("start recod mode");
                 track.SetFlag(TrackMode.Record, !recd);

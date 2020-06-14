@@ -2,7 +2,7 @@
 
 namespace UnityEngine.Timeline
 {
-    public class XMarker
+    public class XMarker : XTimelineObject
     {
         protected XTrack track { get; }
 

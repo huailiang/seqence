@@ -194,7 +194,6 @@ namespace UnityEditor.Timeline
                     }
                 }
             }
-
             return false;
         }
     }

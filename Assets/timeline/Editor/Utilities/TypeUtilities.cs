@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
 
@@ -61,8 +60,7 @@ namespace UnityEditor.Timeline
             var tracks = AllTracksExcMarkers();
             foreach (var track in tracks)
             {
-                var flag = (TrackFlagAttribute) Attribute.GetCustomAttribute(track,
-                    typeof(TrackFlagAttribute));
+                var flag = (TrackFlagAttribute) Attribute.GetCustomAttribute(track, typeof(TrackFlagAttribute));
                 if (!flag.isOnlySub)
                 {
                     ret.Add(track);
@@ -119,6 +117,14 @@ namespace UnityEditor.Timeline
                 }
             }
             return null;
+        }
+
+        public static EditorObject InitEObject<T>(T @object) where T : XTimelineObject
+        {
+            var t = TypeUtilities.GetEditorAsset(@object.GetType());
+            var e_obj = (EditorObject) Activator.CreateInstance(t);
+            if (e_obj) e_obj.OnInit(@object);
+            return e_obj;
         }
     }
 }

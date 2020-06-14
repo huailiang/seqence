@@ -4,7 +4,7 @@ namespace UnityEditor.Timeline
 {
     public class Tooltip
     {
-        public GUIStyle style { get; set; }
+        public GUIStyle style { get; }
 
         public string text { get; set; }
 
@@ -53,6 +53,7 @@ namespace UnityEditor.Timeline
             get { return m_ForeColor; }
             set { m_ForeColor = value; }
         }
+
         Rect m_Bounds;
 
         public Rect bounds
@@ -83,8 +84,7 @@ namespace UnityEditor.Timeline
 
         public void Draw()
         {
-            if (string.IsNullOrEmpty(text))
-                return;
+            if (string.IsNullOrEmpty(text)) return;
 
             if (style != null)
             {
@@ -96,8 +96,7 @@ namespace UnityEditor.Timeline
             textBounds.x += pad;
             textBounds.width -= pad;
 
-            using (new GUIColorOverride(foreColor))
-                GUI.Label(textBounds, textContent, font);
+            using (new GUIColorOverride(foreColor)) GUI.Label(textBounds, textContent, font);
         }
     }
 }
