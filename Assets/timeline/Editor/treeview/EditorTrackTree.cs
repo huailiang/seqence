@@ -120,7 +120,7 @@ namespace UnityEditor.Timeline
             AddTrack(track, hierachy.Count);
         }
 
-        public void AddTrack(XTrack track, int idx)
+        public void AddTrack(XTrack track, int idx, bool repaint = true)
         {
             EditorTrack etrack = EditorFactory.GetTrack(track);
             float y = _y + WindowConstants.RawHeight * idx + WindowConstants.rowGap * idx;
@@ -135,10 +135,41 @@ namespace UnityEditor.Timeline
                 hierachy[i].YOffset(WindowConstants.RawHeight + WindowConstants.rowGap);
             }
             hierachy[idx] = etrack;
+            if (repaint) TimelineWindow.inst.Repaint();
+        }
+
+        public void AddChildTracks(XTrack track)
+        {
+            var childs = track.childs;
+            int ix = IndexOfTrack(track);
+            if (childs != null)
+            {
+                for (int i = 0; i < track.childs.Length; i++)
+                {
+                    AddTrack(track.childs[i], ++ix, false);
+                }
+                TimelineWindow.inst.Repaint();
+            }
+        }
+
+        public void RmChildTrack(EditorTrack track)
+        {
+            List<EditorTrack> list = new List<EditorTrack>();
+            for (int i = 0; i < hierachy.Count; i++)
+            {
+                if (hierachy[i].track.parent == track)
+                {
+                    list.Add(hierachy[i]);
+                }
+            }
+            foreach (var editorTrack in list)
+            {
+                RmTrack(editorTrack, false);
+            }
             TimelineWindow.inst.Repaint();
         }
 
-        public void RmTrack(EditorTrack track)
+        public void RmTrack(EditorTrack track, bool repaint = true)
         {
             int idx = -1;
             float delta = 0;
@@ -156,7 +187,7 @@ namespace UnityEditor.Timeline
             {
                 hierachy.RemoveAt(idx);
             }
-            TimelineWindow.inst.Repaint();
+            if (repaint) TimelineWindow.inst.Repaint();
         }
 
         public void OnGUI(TimelineState state)
@@ -165,9 +196,9 @@ namespace UnityEditor.Timeline
             {
                 BuildTreeHierachy(state);
             }
-            foreach (var it in hierachy)
+            for (int i = 0; i < hierachy.Count; i++)
             {
-                it.OnGUI();
+                hierachy[i].OnGUI();
             }
         }
 

@@ -64,7 +64,7 @@ namespace UnityEditor.Timeline
         public static readonly GUIContent markerCollapseButton =
             EditorGUIUtility.TrTextContent(string.Empty, "Expand / Collapse Track Markers");
 
-        public static readonly GUIContent emptyContent = new GUIContent();
+        public static readonly GUIContent empty = new GUIContent();
 
 
         public readonly static Color colorDuration = new Color(0.66f, 0.66f, 0.66f, 1.0f);

@@ -51,7 +51,7 @@ namespace UnityEditor.Timeline
             var state = TimelineWindow.inst.state;
             var tr = XTimelineFactory.GetTrack(data, state.timeline);
             var tmp = track;
-            if (track.childs != null)
+            if (track.childs?.Length > 0)
             {
                 tmp = track.childs.Last();
             }

@@ -48,6 +48,11 @@ namespace UnityEngine.Timeline
             get { return mixs != null; }
         }
 
+        public bool hasChilds
+        {
+            get { return childs != null && childs.Length > 0; }
+        }
+
         public XTrack root
         {
             get

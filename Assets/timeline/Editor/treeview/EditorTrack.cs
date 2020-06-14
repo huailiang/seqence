@@ -17,7 +17,7 @@ namespace UnityEditor.Timeline
     {
         public XTrack track;
         public Rect rect, head;
-        public bool select, allowClip;
+        public bool select, allowClip, showChild;
         private GenericMenu pm;
         private GUIContent _addclip, _unselect, _select, _delete;
 
@@ -55,6 +55,7 @@ namespace UnityEditor.Timeline
         public override void OnInit(XTimelineObject t)
         {
             @select = false;
+            showChild = true;
             track = (XTrack) t;
             var flag = (TrackFlagAttribute) Attribute.GetCustomAttribute(t.GetType(), typeof(TrackFlagAttribute));
             allowClip = flag.allowClip;
@@ -201,12 +202,24 @@ namespace UnityEditor.Timeline
             GUILayout.Label(trackHeader);
             OnGUIHeader();
             if (track.mute)
-                if (GUILayout.Button(TimelineStyles.emptyContent, TimelineStyles.mute))
+                if (GUILayout.Button(TimelineStyles.empty, TimelineStyles.mute))
                     track.SetFlag(TrackMode.Mute, false);
             if (track.locked)
-                if (GUILayout.Button(TimelineStyles.emptyContent, TimelineStyles.locked))
+                if (GUILayout.Button(TimelineStyles.empty, TimelineStyles.locked))
                     track.SetFlag(TrackMode.Lock, false);
-
+            var tree = TimelineWindow.inst.tree;
+            int idx = tree.IndexOfTrack(track);
+            if (track.hasChilds)
+            {
+                if (GUILayout.Button(TimelineStyles.sequenceSelectorIcon, TimelineStyles.bottomShadow))
+                {
+                    if (showChild)
+                        tree.RmChildTrack(this);
+                    else
+                        tree.AddChildTracks(track);
+                    showChild = !showChild;
+                }
+            }
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
