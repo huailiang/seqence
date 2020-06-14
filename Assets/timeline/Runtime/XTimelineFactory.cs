@@ -29,6 +29,9 @@ namespace UnityEngine.Timeline
                 case TrackType.Transform:
                     xTrack = new XTransformTrack(tl, data);
                     break;
+                case TrackType.Logic:
+                    xTrack = new XLogicValueTrack(tl, data);
+                    break;
                 default:
                     Debug.LogError("unknown track " + data.type);
                     break;
@@ -67,6 +70,11 @@ namespace UnityEngine.Timeline
             {
                 data = new TransformTrackData();
                 data.type = TrackType.Transform;
+            }
+            else if (type == typeof(XLogicValueTrack))
+            {
+                data = new LogicTrackData();
+                data.type = TrackType.Logic;
             }
             else
             {
@@ -120,6 +128,9 @@ namespace UnityEngine.Timeline
                     break;
                 case ClipType.SceneFx:
                     clip = new SceneFxClipData();
+                    break;
+                case ClipType.LogicValue:
+                    clip =new LogicClipData();
                     break;
                 default:
                     Debug.Log("unknown clip " + type);

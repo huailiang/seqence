@@ -11,6 +11,15 @@ namespace UnityEngine.Timeline.Data
         SceneFx = 1 << 2,
         Animation = 1 << 3,
         PostProcess = 1 << 4,
+        LogicValue = 1 << 5,
+    }
+
+    public enum LogicType
+    {
+        HP,
+        SP,
+        BeHit,
+        Attack
     }
 
     [XmlInclude(typeof(AnimClipData))]
@@ -99,6 +108,43 @@ namespace UnityEngine.Timeline.Data
         {
             base.Read(reader);
             bone = reader.ReadString();
+        }
+    }
+
+    public class LogicClipData : ClipData
+    {
+        public override ClipType type
+        {
+            get { return ClipType.LogicValue; }
+        }
+
+        public LogicType[] logicType;
+
+        public float[] effect;
+
+        public override void Read(BinaryReader reader)
+        {
+            base.Read(reader);
+            int len = reader.ReadInt32();
+            logicType = new LogicType[len];
+            effect = new float[len];
+            for (int i = 0; i < len; i++)
+            {
+                logicType[i] = (LogicType) reader.ReadInt32();
+                effect[i] = reader.ReadSingle();
+            }
+        }
+
+        public override void Write(BinaryWriter writer)
+        {
+            base.Write(writer);
+            int len = effect?.Length ?? 0;
+            writer.Write(len);
+            for (int i = 0; i < len; i++)
+            {
+                writer.Write((int) logicType[i]);
+                writer.Write(effect[i]);
+            }
         }
     }
 

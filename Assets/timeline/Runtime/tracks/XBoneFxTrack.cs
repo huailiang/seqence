@@ -6,8 +6,6 @@ namespace UnityEngine.Timeline
     [UseParent(typeof(XAnimationTrack))]
     public class XBoneFxTrack : XTrack
     {
-        private TrackData data;
-
         public GameObject target
         {
             get
@@ -32,7 +30,6 @@ namespace UnityEngine.Timeline
 
         public XBoneFxTrack(XTimeline tl, TrackData data) : base(tl, data)
         {
-            this.data = data;
         }
 
         protected override IClip BuildClip(ClipData data)

@@ -17,6 +17,7 @@ namespace UnityEngine.Timeline.Data
         Animation = 1 << 3,
         PostProcess = 1 << 4,
         Transform = 1 << 5,
+        Logic = 1 << 6,
     }
 
     [Serializable]
@@ -97,16 +98,20 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
+    public class LogicTrackData : TrackData
+    {
+    }
+
     public class TransformTrackData : TrackData
     {
         public float[] time;
         public Vector3[] pos;
         public Vector3[] rot;
-        
+
 #if UNITY_EDITOR
         public bool select;
 #endif
-        
+
         public override void Read(BinaryReader reader)
         {
             base.Read(reader);

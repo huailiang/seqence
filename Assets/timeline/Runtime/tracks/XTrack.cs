@@ -30,6 +30,8 @@ namespace UnityEngine.Timeline
 
         public XTimeline timeline;
 
+        protected TrackData data;
+
         public XTrack parent { get; set; }
 
         public virtual bool cloneable
@@ -87,6 +89,7 @@ namespace UnityEngine.Timeline
         protected XTrack(XTimeline tl, TrackData data)
         {
             timeline = tl;
+            this.data = data;
             ID = XTimeline.IncID;
             mode = TrackMode.Normal;
             if (data != null)
