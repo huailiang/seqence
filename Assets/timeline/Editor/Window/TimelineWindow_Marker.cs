@@ -93,7 +93,7 @@ namespace UnityEditor.Timeline
         void DrawMarkerDrawerHeaderBackground()
         {
             var backgroundColor = TimelineStyles.markerHeaderDrawerBackgroundColor;
-            markderRect.x = winArea.x + WindowConstants.rightAreaMargn;
+            markderRect.x = WindowConstants.rightAreaMargn;
             markderRect.y = WindowConstants.markerRowYPosition;
             markderRect.width = winArea.width;
             EditorGUI.DrawRect(markderRect, backgroundColor);

@@ -54,6 +54,14 @@ namespace UnityEditor.Timeline
             InitStyle();
             bool recd = track.record;
             var content = recd ? s_RecordOn : s_RecordOff;
+
+            if (recd)
+            {
+                float remainder = Time.realtimeSinceStartup % 1;
+                TimelineWindow.inst.Repaint();
+                if (remainder < 0.3f) content = TimelineStyles.empty;
+            }
+
             if (GUILayout.Button(content, TimelineStyles.autoKey, GUILayout.MaxWidth(16)))
             {
                 if (recd)

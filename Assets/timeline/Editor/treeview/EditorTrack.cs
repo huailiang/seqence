@@ -17,6 +17,7 @@ namespace UnityEditor.Timeline
     {
         public XTrack track;
         public Rect rect, head;
+        public EditorClip[] eClips;
         public bool select, allowClip, showChild;
         private GenericMenu pm;
         private GUIContent _addclip, _unselect, _select, _delete;
@@ -95,82 +96,87 @@ namespace UnityEditor.Timeline
             {
                 if (triger)
                 {
-                    pm = new GenericMenu();
-                    if (TimelineWindow.inst.tree.AnySelect())
-                    {
-                        pm.AddItem(_unselect, false, UnSelectAll, false);
-                        pm.AddDisabledItem(_select);
-                    }
-                    else
-                    {
-                        pm.AddItem(_select, false, UnSelectAll, true);
-                        pm.AddDisabledItem(_unselect);
-                    }
-
-                    pm.AddSeparator("");
-                    if (allowClip && !locked)
-                    {
-                        pm.AddItem(_addclip, false, AddClip, e.mousePosition);
-                        pm.AddItem(_delete, false, DeleteClip, e.mousePosition);
-                    }
-                    else
-                    {
-                        pm.AddDisabledItem(_addclip, false);
-                        pm.AddDisabledItem(_delete, false);
-                    }
-
-                    pm.AddItem(EditorGUIUtility.TrTextContent("Delete Track\t #t"), false, DeleteTrack);
-                    if (track.mute)
-                    {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("UnMute Track \t "), false, UnmuteClip);
-                    }
-                    else
-                    {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("Mute Track \t"), false, MuteClip);
-                    }
-                    if (locked)
-                    {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("UnLock Track \t #l"), false,
-                            () => track.SetFlag(TrackMode.Lock, false));
-                    }
-                    else
-                    {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("Lock Track \t #l"), false,
-                            () => track.SetFlag(TrackMode.Lock, true));
-                    }
-                    if (@select)
-                    {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect Track \t #s"), false, SelectTrack, false);
-                    }
-                    else
-                    {
-                        pm.AddItem(EditorGUIUtility.TrTextContent("Select Track \t #s"), false, SelectTrack, true);
-                    }
-                    pm.AddSeparator("");
-                    if (actions != null)
-                    {
-                        for (int i = 0; i < actions.Count; i++)
-                        {
-                            var at = actions[i];
-                            if (!locked) pm.AddItem(EditorGUIUtility.TrTextContent(at.desc), at.@on, at.fun, at.arg);
-                        }
-                    }
-                    pm.AddSeparator("");
-                    var marks = TypeUtilities.GetBelongMarks(track.trackType);
-                    for (int i = 0; i < marks.Count; i++)
-                    {
-                        var mark = marks[i];
-                        string str = mark.ToString();
-                        int idx = str.LastIndexOf('.');
-                        str = str.Substring(idx + 1);
-                        var ct = EditorGUIUtility.TrTextContent("Add " + str);
-                        MarkAction action = new MarkAction() {type = mark, posX = e.mousePosition.x};
-                        if (!locked) pm.AddItem(ct, false, AddMark, action);
-                    }
-                    pm.ShowAsContext();
-                    e.Use();
+                    TrackContexMenu(e);
                 }
             }
+        }
+
+        private void TrackContexMenu(Event e)
+        {
+            pm = new GenericMenu();
+            if (TimelineWindow.inst.tree.AnySelect())
+            {
+                pm.AddItem(_unselect, false, UnSelectAll, false);
+                pm.AddDisabledItem(_select);
+            }
+            else
+            {
+                pm.AddItem(_select, false, UnSelectAll, true);
+                pm.AddDisabledItem(_unselect);
+            }
+
+            pm.AddSeparator("");
+            if (allowClip && !locked)
+            {
+                pm.AddItem(_addclip, false, AddClip, e.mousePosition);
+                pm.AddItem(_delete, false, DeleteClip, e.mousePosition);
+            }
+            else
+            {
+                pm.AddDisabledItem(_addclip, false);
+                pm.AddDisabledItem(_delete, false);
+            }
+
+            pm.AddItem(EditorGUIUtility.TrTextContent("Delete Track\t #t"), false, DeleteTrack);
+            if (track.mute)
+            {
+                pm.AddItem(EditorGUIUtility.TrTextContent("UnMute Track \t "), false, UnmuteClip);
+            }
+            else
+            {
+                pm.AddItem(EditorGUIUtility.TrTextContent("Mute Track \t"), false, MuteClip);
+            }
+            if (locked)
+            {
+                pm.AddItem(EditorGUIUtility.TrTextContent("UnLock Track \t #l"), false,
+                    () => track.SetFlag(TrackMode.Lock, false));
+            }
+            else
+            {
+                pm.AddItem(EditorGUIUtility.TrTextContent("Lock Track \t #l"), false,
+                    () => track.SetFlag(TrackMode.Lock, true));
+            }
+            if (@select)
+            {
+                pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect Track \t #s"), false, SelectTrack, false);
+            }
+            else
+            {
+                pm.AddItem(EditorGUIUtility.TrTextContent("Select Track \t #s"), false, SelectTrack, true);
+            }
+            pm.AddSeparator("");
+            if (actions != null)
+            {
+                for (int i = 0; i < actions.Count; i++)
+                {
+                    var at = actions[i];
+                    if (!locked) pm.AddItem(EditorGUIUtility.TrTextContent(at.desc), at.@on, at.fun, at.arg);
+                }
+            }
+            pm.AddSeparator("");
+            var marks = TypeUtilities.GetBelongMarks(track.trackType);
+            for (int i = 0; i < marks.Count; i++)
+            {
+                var mark = marks[i];
+                string str = mark.ToString();
+                int idx = str.LastIndexOf('.');
+                str = str.Substring(idx + 1);
+                var ct = EditorGUIUtility.TrTextContent("Add " + str);
+                MarkAction action = new MarkAction() {type = mark, posX = e.mousePosition.x};
+                if (!locked) pm.AddItem(ct, false, AddMark, action);
+            }
+            pm.ShowAsContext();
+            e.Use();
         }
 
         private void SelectTrack(object arg)
@@ -228,14 +234,24 @@ namespace UnityEditor.Timeline
         {
         }
 
+
         protected void GUIContent()
         {
             var clips = track.clips;
             if (clips != null)
             {
+                int len = clips.Length;
+                if (eClips == null || eClips.Length != len)
+                {
+                    eClips = new EditorClip[len];
+                    for (int i = 0; i < len; i++)
+                    {
+                        eClips[i] = new EditorClip(this, clips[i]);
+                    }
+                }
                 for (int i = 0; i < clips.Length; i++)
                 {
-                    new EditorClip(this, clips[i]).OnGUI();
+                    eClips[i].OnGUI();
                 }
             }
             var marks = track.marks;

@@ -43,7 +43,7 @@ namespace UnityEditor.Timeline
                 throw new Exception("timeline is null");
             }
             var winArea = state.window.winArea;
-            x = winArea.x + WindowConstants.rightAreaMargn;
+            x =  WindowConstants.rightAreaMargn;
             _y = WindowConstants.trackRowYPosition;
             width = winArea.width;
             idx = 0;

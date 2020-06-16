@@ -12,6 +12,9 @@ namespace UnityEditor.Timeline
         public readonly static GUIStyle autoKey = "Icon.AutoKey";
         public readonly static GUIStyle keyframe = "Icon.Keyframe";
         public static readonly GUIStyle timeCursor = "Icon.TimeCursor";
+        public static readonly GUIStyle blendMixIn = "Icon.BlendMixIn";
+        public static readonly GUIStyle blendMixOut = "Icon.BlendMixOut";
+        public static readonly GUIStyle timelineClip = "Icon.Clip";
 
         public static readonly GUIContent sequenceSelectorIcon = EditorGUIUtility.IconContent("TimelineSelector");
 
