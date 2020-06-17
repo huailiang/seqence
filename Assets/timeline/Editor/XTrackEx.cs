@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
 
@@ -96,6 +95,7 @@ namespace UnityEditor.Timeline
                 if (list.Contains(marker))
                 {
                     list.Remove(marker);
+                    track.marks = list.ToArray();
                     return true;
                 }
             }

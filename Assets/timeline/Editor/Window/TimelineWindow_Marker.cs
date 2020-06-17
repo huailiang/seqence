@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using System.Linq;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
 
@@ -171,10 +170,8 @@ namespace UnityEditor.Timeline
         void DeleteRectMark(object arg)
         {
             XMarker select = (XMarker) arg;
-            var tre = state.timeline.trackTrees;
-            var marks = tre[0].marks.ToList();
-            marks.Remove(select);
-            tre[0].marks = marks.ToArray();
+            var track = state.timeline.trackTrees[0];
+            track.RmMarker(select);
         }
 
         void DrawMarkItem(XMarker mark)
