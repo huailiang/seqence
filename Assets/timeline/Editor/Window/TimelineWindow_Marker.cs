@@ -54,6 +54,11 @@ namespace UnityEditor.Timeline
                         OnMouseDown(e);
                         break;
                     case EventType.MouseUp:
+                        if (draging != null)
+                        {
+                            var tre = state.timeline.trackTrees;
+                            tre[0].SortMark();
+                        }
                         draging = null;
                         break;
                     case EventType.MouseDrag:

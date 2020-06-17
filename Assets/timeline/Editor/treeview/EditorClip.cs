@@ -62,6 +62,10 @@ namespace UnityEditor.Timeline
                     }
                     break;
                 case EventType.MouseUp:
+                    if (mode != DragMode.None)
+                    {
+                        track?.track?.SortClip();
+                    }
                     mode = DragMode.None;
                     break;
                 case EventType.MouseDrag:
