@@ -8,12 +8,18 @@ namespace UnityEditor.Timeline
         public EditorTrack track;
         public IClip clip;
         public Rect rect;
+        private DragMode mode;
+        Event e;
+
+        enum DragMode { None, Drag, Left, Right }
 
         public EditorClip(EditorTrack tr, IClip c)
         {
             this.track = tr;
             this.clip = c;
             rect = Rect.zero;
+            mode = DragMode.None;
+            e = Event.current;
         }
 
         public void OnGUI()
@@ -34,31 +40,58 @@ namespace UnityEditor.Timeline
             right.x = rect.x + rect.width - Mathf.Min(10, rect.width / 4);
             EditorGUIUtility.AddCursorRect(right, MouseCursor.SplitResizeLeftRight);
 
-            var e = Event.current;
             Vector2 p = e.mousePosition;
-
             switch (e.type)
             {
-                case EventType.MouseDrag:
-                case EventType.ScrollWheel:
+                case EventType.MouseDown:
                     if (left.Contains(p))
                     {
-                        DragStart(e);
+                        mode = DragMode.Left;
+                        e.Use();
                     }
                     else if (right.Contains(p))
                     {
-                        DragEnd(e);
+                        mode = DragMode.Right;
+                        e.Use();
                     }
-                    else if (rect.Contains(p))
+                    else if (rect.Contains(e.mousePosition))
                     {
-                        OnDrag(e);
+                        mode = DragMode.Drag;
+                        e.Use();
                     }
+                    else
+                    {
+                        mode = DragMode.None;
+                    }
+                    break;
+                case EventType.MouseUp:
+                    mode = DragMode.None;
+                    e.Use();
+                    break;
+                case EventType.MouseDrag:
+                case EventType.ScrollWheel:
+                    Drag(e);
                     break;
             }
             EditorGUI.LabelField(rect, clip.Display, TimelineStyles.fontClip);
             MixProcessor();
         }
 
+        private void Drag(Event e)
+        {
+            if (mode == DragMode.Left)
+            {
+                DragStart(e);
+            }
+            else if (mode == DragMode.Right)
+            {
+                DragEnd(e);
+            }
+            else if (mode == DragMode.Drag)
+            {
+                OnDrag(e);
+            }
+        }
 
         private void MixProcessor()
         {
@@ -73,10 +106,10 @@ namespace UnityEditor.Timeline
                         r.width = c.rect.x + c.rect.width - rect.x;
                         ProcesMixIn(r);
                     }
-                    if (IsInRange(c.clip,clip.end))
+                    if (IsInRange(c.clip, clip.end))
                     {
                         var r = rect;
-                        r.x = c.rect.x ;
+                        r.x = c.rect.x;
                         r.width = rect.x + rect.width - r.x;
                         ProcesMixOut(r);
                     }
@@ -103,7 +136,6 @@ namespace UnityEditor.Timeline
                 new Vector3(mixInRect.xMax, mixInRect.yMin + 1f, 0), Color.white);
         }
 
-
         private void ProcesMixOut(Rect mixOutRect)
         {
             var clipStyle = TimelineStyles.timelineClip;
@@ -113,7 +145,6 @@ namespace UnityEditor.Timeline
             Graphics.DrawLineAA(2.5f, new Vector3(mixOutRect.xMin, mixOutRect.yMax - 1f, 0),
                 new Vector3(mixOutRect.xMax, mixOutRect.yMin + 1f, 0), Color.white);
         }
-
 
         private void DragStart(Event e)
         {
