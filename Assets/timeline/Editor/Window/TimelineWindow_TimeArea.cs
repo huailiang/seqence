@@ -59,10 +59,7 @@ namespace UnityEditor.Timeline
             {
                 case EventType.MouseDown:
                     if (rec.Contains(e.mousePosition))
-                    {
                         time_draging = true;
-                        e.Use();
-                    }
                     break;
                 case EventType.MouseUp:
                     time_draging = false;

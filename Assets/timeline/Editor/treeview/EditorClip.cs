@@ -47,17 +47,14 @@ namespace UnityEditor.Timeline
                     if (left.Contains(p))
                     {
                         mode = DragMode.Left;
-                        e.Use();
                     }
                     else if (right.Contains(p))
                     {
                         mode = DragMode.Right;
-                        e.Use();
                     }
                     else if (rect.Contains(e.mousePosition))
                     {
                         mode = DragMode.Drag;
-                        e.Use();
                     }
                     else
                     {

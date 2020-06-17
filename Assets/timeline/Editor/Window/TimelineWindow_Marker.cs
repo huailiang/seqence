@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
 
@@ -46,18 +47,7 @@ namespace UnityEditor.Timeline
                     case (EventType.ContextClick):
                         if (e.button == 1)
                         {
-                            GenericMenu gm = new GenericMenu();
-                            var marks = TypeUtilities.GetBelongMarks(TrackType.Marker);
-                            foreach (var mark in marks)
-                            {
-                                string str = mark.ToString();
-                                int idx = str.LastIndexOf('.');
-                                str = str.Substring(idx + 1);
-                                var ct = EditorGUIUtility.TrTextContent("Add " + str);
-                                gm.AddItem(ct, false, AddRectMark, new MarkAction(mark, e.mousePosition.x));
-                            }
-                            gm.ShowAsContext();
-                            e.Use();
+                            GenMenu(e);
                         }
                         break;
                     case EventType.MouseDown:
@@ -74,7 +64,41 @@ namespace UnityEditor.Timeline
             }
         }
 
+
+        private void GenMenu(Event e)
+        {
+            GenericMenu gm = new GenericMenu();
+            var marks = TypeUtilities.GetBelongMarks(TrackType.Marker);
+            foreach (var mark in marks)
+            {
+                string str = mark.ToString();
+                int idx = str.LastIndexOf('.');
+                str = str.Substring(idx + 1);
+                var ct = EditorGUIUtility.TrTextContent("Add " + str);
+                gm.AddItem(ct, false, AddRectMark, new MarkAction(mark, e.mousePosition.x));
+            }
+            gm.AddSeparator("");
+            var m = TrigerMark(e);
+            var content = EditorGUIUtility.TrTextContent("Delete #d");
+            if (m != null)
+            {
+                gm.AddItem(content, false, DeleteRectMark, m);
+            }
+            else
+            {
+                gm.AddDisabledItem(content, false);
+            }
+            gm.ShowAsContext();
+            e.Use();
+        }
+
         private void OnMouseDown(Event e)
+        {
+            draging = TrigerMark(e);
+        }
+
+
+        private XMarker TrigerMark(Event e)
         {
             float x = e.mousePosition.x;
             var tre = state.timeline.trackTrees;
@@ -86,12 +110,11 @@ namespace UnityEditor.Timeline
                     float x_ = TimeToPixel(mark.time);
                     if (Mathf.Abs(x - x_) < markWidth)
                     {
-                        draging = mark;
-                        e.Use();
-                        break;
+                        return mark;
                     }
                 }
             }
+            return null;
         }
 
         private void OnMarkDrag(Event e)
@@ -138,6 +161,15 @@ namespace UnityEditor.Timeline
             MarkAction markAction = (MarkAction) arg;
             float time = PiexlToTime(markAction.posX);
             EditorFactory.MakeMarker(markAction.type, time);
+        }
+
+        void DeleteRectMark(object arg)
+        {
+            XMarker select = (XMarker) arg;
+            var tre = state.timeline.trackTrees;
+            var marks = tre[0].marks.ToList();
+            marks.Remove(select);
+            tre[0].marks = marks.ToArray();
         }
 
         void DrawMarkItem(XMarker mark)
