@@ -9,13 +9,14 @@ namespace UnityEditor.Timeline
 
         float m_LastFrameRate;
         public Rect timeAreaRect;
-
+        private bool time_draging;
         public TimelineState state { get; private set; }
 
         void InitializeTimeArea()
         {
             if (m_TimeArea == null)
             {
+                time_draging = false;
                 timeAreaRect.height = WindowConstants.timeAreaHeight;
                 m_TimeArea = new TimeArea(false)
                 {
@@ -50,13 +51,30 @@ namespace UnityEditor.Timeline
             EditorGUI.DrawRect(rec, c);
             rec.height = timeAreaRect.height;
             rec.x -= 4;
+            rec.width = 20;
             GUI.Box(rec, TimelineStyles.empty, TimelineStyles.timeCursor);
 
-            var e = Event.current;
-            if (e.type == EventType.MouseDrag && timeAreaRect.Contains(e.mousePosition))
+            if (e == null) e = Event.current;
+            switch (e.type)
             {
-                float xtime = m_TimeArea.PixelToTime(e.mousePosition.x, timeAreaRect);
-                OnTrackHeadDrag(xtime);
+                case EventType.MouseDown:
+                    if (rec.Contains(e.mousePosition))
+                    {
+                        time_draging = true;
+                        e.Use();
+                    }
+                    break;
+                case EventType.MouseUp:
+                    time_draging = false;
+                    break;
+                case EventType.ScrollWheel:
+                case EventType.MouseDrag:
+                    if (time_draging)
+                    {
+                        float xtime = m_TimeArea.PixelToTime(e.mousePosition.x, timeAreaRect);
+                        OnTrackHeadDrag(xtime);
+                    }
+                    break;
             }
         }
 

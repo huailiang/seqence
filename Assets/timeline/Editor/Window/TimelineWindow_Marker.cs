@@ -20,11 +20,13 @@ namespace UnityEditor.Timeline
     public partial class TimelineWindow
     {
         private Rect markderRect;
-
+        private XMarker draging;
         internal const int markWidth = 20;
+        private Event e;
 
         void InitializeMarkerHeader()
         {
+            draging = null;
             markderRect.width = winArea.width;
             markderRect.height = WindowConstants.markerRowHeight;
         }
@@ -36,7 +38,7 @@ namespace UnityEditor.Timeline
                 DrawMarkerDrawerHeaderBackground();
                 DrawMarkerDrawerHeader();
             }
-            var e = Event.current;
+            if (e == null) e = Event.current;
             if (markderRect.Contains(e.mousePosition))
             {
                 switch (e.type)
@@ -58,6 +60,12 @@ namespace UnityEditor.Timeline
                             e.Use();
                         }
                         break;
+                    case EventType.MouseDown:
+                        OnMouseDown(e);
+                        break;
+                    case EventType.MouseUp:
+                        draging = null;
+                        break;
                     case EventType.MouseDrag:
                     case EventType.ScrollWheel:
                         OnMarkDrag(e);
@@ -66,8 +74,7 @@ namespace UnityEditor.Timeline
             }
         }
 
-
-        private void OnMarkDrag(Event e)
+        private void OnMouseDown(Event e)
         {
             float x = e.mousePosition.x;
             var tre = state.timeline.trackTrees;
@@ -79,13 +86,24 @@ namespace UnityEditor.Timeline
                     float x_ = TimeToPixel(mark.time);
                     if (Mathf.Abs(x - x_) < markWidth)
                     {
-                        x_ += e.delta.x;
-                        x_ = Mathf.Max(0, x_);
-                        mark.time = TimelineWindow.inst.PiexlToTime(x_);
+                        draging = mark;
                         e.Use();
                         break;
                     }
                 }
+            }
+        }
+
+        private void OnMarkDrag(Event e)
+        {
+            float x = e.mousePosition.x;
+            if (draging != null)
+            {
+                float x_ = TimeToPixel(draging.time);
+                x_ += e.delta.x;
+                x_ = Mathf.Max(0, x_);
+                draging.time = TimelineWindow.inst.PiexlToTime(x_);
+                e.Use();
             }
         }
 

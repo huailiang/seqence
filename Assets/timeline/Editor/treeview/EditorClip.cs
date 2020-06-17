@@ -66,7 +66,6 @@ namespace UnityEditor.Timeline
                     break;
                 case EventType.MouseUp:
                     mode = DragMode.None;
-                    e.Use();
                     break;
                 case EventType.MouseDrag:
                 case EventType.ScrollWheel:
