@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -237,6 +238,15 @@ namespace UnityEditor.Timeline
 
         protected void GUIContent()
         {
+            var marks = track.marks;
+            if (marks != null)
+            {
+                SetupEMarks();
+                foreach (var mark in emarks)
+                {
+                    mark.ProcessEvent();
+                }
+            }
             var clips = track.clips;
             if (clips != null)
             {
@@ -254,12 +264,11 @@ namespace UnityEditor.Timeline
                     eClips[i].OnGUI();
                 }
             }
-            var marks = track.marks;
             if (marks != null)
             {
                 for (int i = 0; i < marks.Length; i++)
                 {
-                    DrawMarkItem(marks[i]);
+                    emarks[i].OnGUI(rect);
                 }
             }
             if (track.locked)
@@ -357,6 +366,19 @@ namespace UnityEditor.Timeline
         private bool trackF;
         private EditorMark[] emarks;
 
+        private void SetupEMarks()
+        {
+            int len = track.marks.Length;
+            if (emarks == null || emarks.Length != len)
+            {
+                emarks = new EditorMark[len];
+                for (int j = 0; j < len; j++)
+                {
+                    emarks[j] = (EditorMark) TypeUtilities.InitEObject(track.marks[j]);
+                }
+            }
+        }
+
         public void OnInspector()
         {
             using (GUIColorOverride color = new GUIColorOverride(Color.green))
@@ -380,16 +402,7 @@ namespace UnityEditor.Timeline
                 }
                 if (track.marks != null)
                 {
-                    i = 0;
-                    int len = track.marks.Length;
-                    if (emarks == null || emarks.Length != len)
-                    {
-                        emarks = new EditorMark[len];
-                        for (int j = 0; j < len; j++)
-                        {
-                            emarks[j] = (EditorMark) TypeUtilities.InitEObject(track.marks[j]);
-                        }
-                    }
+                    SetupEMarks();
                     foreach (var mark in emarks)
                     {
                         mark.Inspector();

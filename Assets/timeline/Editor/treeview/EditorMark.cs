@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline
@@ -5,10 +6,15 @@ namespace UnityEditor.Timeline
     public class EditorMark : EditorObject
     {
         protected XMarker baseMarker;
-        
+        private Event e;
+        private bool draging;
+        private Rect rect;
+
         public override void OnInit(XTimelineObject marker)
         {
             this.baseMarker = (XMarker) marker;
+            draging = false;
+            e = Event.current;
             OnInit();
         }
 
@@ -27,7 +33,51 @@ namespace UnityEditor.Timeline
         protected virtual void OnInspector()
         {
         }
+
+        public void OnGUI(Rect r)
+        {
+            float x = TimelineWindow.inst.TimeToPixel(baseMarker.time);
+            rect = r;
+            rect.x = x;
+            rect.y = r.y + r.height / 4;
+            rect.width = 20;
+            GUIContent cont = TimelineWindow.inst.state.config.GetIcon(baseMarker.type);
+            GUI.Box(rect, cont, GUIStyle.none);
+            ProcessEvent();
+        }
+
+        public void ProcessEvent()
+        {
+            switch (e.type)
+            {
+                case EventType.MouseDown:
+                    if (rect.Contains(e.mousePosition))
+                    {
+                        draging = true;
+                    }
+                    break;
+                case EventType.MouseUp:
+                    draging = false;
+                    break;
+                case EventType.MouseDrag:
+                case EventType.ScrollWheel:
+                    OnMarkDrag(e, rect);
+                    break;
+            }
+        }
+
+
+        private void OnMarkDrag(Event e, Rect rect)
+        {
+            if (draging)
+            {
+                rect.x += e.delta.x;
+                baseMarker.time = TimelineWindow.inst.PiexlToTime(rect.x);
+                e.Use();
+            }
+        }
     }
+
 
     [TimelineEditor(typeof(XJumpMarker))]
     public class EditorJumpMark : EditorMark
