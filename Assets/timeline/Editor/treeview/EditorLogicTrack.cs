@@ -38,10 +38,7 @@ namespace UnityEditor.Timeline
             if (clip)
             {
                 LogicClipData data = clip.data as LogicClipData;
-                if (data.effect != null)
-                {
-                    len = data.effect.Length;
-                }
+                len = data.effect?.Length ?? 0;
                 if (len > 0)
                 {
                     for (int i = 0; i < len; i++)
@@ -82,6 +79,7 @@ namespace UnityEditor.Timeline
                         TimelineUtil.Add(ref data.effect, 0.5f);
                     }
                 }
+                EditorGUILayout.Space();
             }
         }
     }

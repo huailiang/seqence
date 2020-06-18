@@ -97,5 +97,16 @@ namespace UnityEditor.Timeline
                 }
             }, null);
         }
+
+
+        protected override void OnInspectorClip(IClip c)
+        {
+            base.OnInspectorClip(c);
+            XAnimationClip xc = c as XAnimationClip;
+            var data = c.data as AnimClipData;
+            data.loop = EditorGUILayout.Toggle("loop", data.loop);
+            data.trim_start = EditorGUILayout.FloatField("start trim", data.trim_start);
+            xc.aclip = (AnimationClip) EditorGUILayout.ObjectField("clip", xc.aclip, typeof(AnimationClip), false);
+        }
     }
 }
