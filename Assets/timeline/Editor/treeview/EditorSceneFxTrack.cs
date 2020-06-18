@@ -43,6 +43,7 @@ namespace UnityEditor.Timeline
 
         protected override void OnInspectorClip(IClip c)
         {
+            base.OnInspectorClip(c);
             XSceneFxClip clip = (XSceneFxClip) c;
             if (clip)
             {

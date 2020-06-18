@@ -394,9 +394,6 @@ namespace UnityEditor.Timeline
                     foreach (var clip in track.clips)
                     {
                         EditorGUILayout.LabelField(" clip" + (++i) + ": " + clip.Display, TimelineStyles.titleStyle);
-                        clip.start = EditorGUILayout.FloatField(" start", clip.start);
-                        float d = EditorGUILayout.FloatField(" duration", clip.duration);
-                        if (d > 0) clip.duration = d;
                         OnInspectorClip(clip);
                     }
                 }
@@ -417,6 +414,9 @@ namespace UnityEditor.Timeline
 
         protected virtual void OnInspectorClip(IClip clip)
         {
+            clip.start = EditorGUILayout.FloatField(" start", clip.start);
+            float d = EditorGUILayout.FloatField(" duration", clip.duration);
+            if (d > 0) clip.duration = d;
         }
     }
 }

@@ -19,7 +19,8 @@ namespace UnityEngine.Timeline.Data
         HP,
         SP,
         BeHit,
-        Attack
+        Attack,
+        MAX  //put MAX at last
     }
 
     [XmlInclude(typeof(AnimClipData))]
