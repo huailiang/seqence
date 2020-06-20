@@ -15,11 +15,13 @@ namespace UnityEngine.Timeline
         {
             if (listPool.Count <= 0)
             {
-                return new T();
+                T t = new T();
+                listPool.AddLast(t);
+                return t;
             }
-            var t = listPool.First.Value;
+            var t2 = listPool.First.Value;
             listPool.RemoveFirst();
-            return t;
+            return t2;
         }
 
         public static void Return(T obj)
