@@ -200,6 +200,7 @@ namespace UnityEngine.Timeline
                     childs[i].ForeachHierachyTrack(track);
                 }
             }
+            track(this);
         }
 
         protected abstract IClip BuildClip(ClipData data);

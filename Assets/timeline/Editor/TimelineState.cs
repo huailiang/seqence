@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
 
@@ -120,7 +121,7 @@ namespace UnityEditor.Timeline
             }
         }
 
-        private int _last = 0;
+        private float _last = 0;
         private float _time = 0;
         private float _duration = 0;
 
@@ -128,8 +129,8 @@ namespace UnityEditor.Timeline
         {
             if (playing)
             {
-                var t = Environment.TickCount;
-                float delta = 1000.0f / frameRate;
+                float t = Time.realtimeSinceStartup;
+                float delta = 1.0f / frameRate;
                 if (t - _last > delta)
                 {
                     _time += delta;
@@ -162,6 +163,7 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 timeline.Process(_time);
+                window.Repaint();
             }
         }
     }

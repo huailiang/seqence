@@ -113,10 +113,13 @@ namespace UnityEditor.Timeline
                 {
                     Rect r = rect;
                     r.x = TimelineWindow.inst.TimeToPixel(Data.time[i]);
-                    r.width = 20;
-                    r.y = rect.y + rect.height / 3;
-                    GUIContent gct = Data.@select ? s_KeyOn : s_KeyOff;
-                    GUI.Box(r, gct, TimelineStyles.keyframe);
+                    if (TimelineWindow.inst.IsPiexlRange(r.x))
+                    {
+                        r.width = 20;
+                        r.y = rect.y + rect.height / 3;
+                        GUIContent gct = Data.@select ? s_KeyOn : s_KeyOff;
+                        GUI.Box(r, gct, TimelineStyles.keyframe);
+                    }
                 }
             }
         }
