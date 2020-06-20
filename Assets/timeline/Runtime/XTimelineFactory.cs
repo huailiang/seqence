@@ -11,25 +11,25 @@ namespace UnityEngine.Timeline
             XTrack xTrack = null;
             switch (data.type)
             {
-                case TrackType.Marker:
+                case AssetType.Marker:
                     xTrack = new XMarkerTrack(tl, data);
                     break;
-                case TrackType.Animation:
+                case AssetType.Animation:
                     xTrack = new XAnimationTrack(tl, data as BindTrackData);
                     break;
-                case TrackType.BoneFx:
+                case AssetType.BoneFx:
                     xTrack = new XBoneFxTrack(tl, data);
                     break;
-                case TrackType.SceneFx:
+                case AssetType.SceneFx:
                     xTrack = new XSceneFxTrack(tl, data);
                     break;
-                case TrackType.PostProcess:
+                case AssetType.PostProcess:
                     xTrack = new XPostprocessTrack(tl, data);
                     break;
-                case TrackType.Transform:
+                case AssetType.Transform:
                     xTrack = new XTransformTrack(tl, data);
                     break;
-                case TrackType.LogicValue:
+                case AssetType.LogicValue:
                     xTrack = new XLogicValueTrack(tl, data);
                     break;
                 default:
@@ -49,32 +49,32 @@ namespace UnityEngine.Timeline
             if (type == typeof(XAnimationTrack))
             {
                 data = new BindTrackData();
-                data.type = TrackType.Animation;
+                data.type = AssetType.Animation;
             }
             else if (type == typeof(XPostprocessTrack))
             {
                 data = new TrackData();
-                data.type = TrackType.PostProcess;
+                data.type = AssetType.PostProcess;
             }
             else if (type == typeof(XBoneFxTrack))
             {
                 data = new TrackData();
-                data.type = TrackType.BoneFx;
+                data.type = AssetType.BoneFx;
             }
             else if (type == typeof(XSceneFxTrack))
             {
                 data = new TrackData();
-                data.type = TrackType.SceneFx;
+                data.type = AssetType.SceneFx;
             }
             else if (type == typeof(XTransformTrack))
             {
                 data = new TransformTrackData();
-                data.type = TrackType.Transform;
+                data.type = AssetType.Transform;
             }
             else if (type == typeof(XLogicValueTrack))
             {
                 data = new TrackData();
-                data.type = TrackType.LogicValue;
+                data.type = AssetType.LogicValue;
             }
             else
             {
@@ -112,24 +112,24 @@ namespace UnityEngine.Timeline
             return mark;
         }
 
-        public static ClipData CreateClipData(ClipType type)
+        public static ClipData CreateClipData(AssetType type)
         {
             ClipData clip = null;
             switch (type)
             {
-                case ClipType.Animation:
+                case AssetType.Animation:
                     clip = new AnimClipData();
                     break;
-                case ClipType.BoneFx:
+                case AssetType.BoneFx:
                     clip = new BoneFxClipData();
                     break;
-                case ClipType.PostProcess:
+                case AssetType.PostProcess:
                     clip = new PostprocessData();
                     break;
-                case ClipType.SceneFx:
+                case AssetType.SceneFx:
                     clip = new SceneFxClipData();
                     break;
-                case ClipType.LogicValue:
+                case AssetType.LogicValue:
                     clip =new LogicClipData();
                     break;
                 default:
@@ -141,7 +141,7 @@ namespace UnityEngine.Timeline
 
         public static ClipData CreateClipData(BinaryReader reader)
         {
-            ClipType type = (ClipType) reader.ReadInt32();
+            AssetType type = (AssetType) reader.ReadInt32();
             var clip = CreateClipData(type);
             clip.Read(reader);
             return clip;

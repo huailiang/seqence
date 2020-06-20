@@ -5,9 +5,9 @@ namespace UnityEngine.Timeline
     [TrackFlag(TrackFlag.RootOnly)]
     public class XLogicValueTrack : XTrack
     {
-        public override TrackType trackType
+        public override AssetType AssetType
         {
-            get { return TrackType.PostProcess; }
+            get { return AssetType.PostProcess; }
         }
 
         public override XTrack Clone()

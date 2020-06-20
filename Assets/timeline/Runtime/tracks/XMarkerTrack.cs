@@ -5,9 +5,9 @@ namespace UnityEngine.Timeline
 {
     public class XMarkerTrack : XTrack
     {
-        public override TrackType trackType
+        public override AssetType AssetType
         {
-            get { return TrackType.Marker; }
+            get { return AssetType.Marker; }
         }
 
         public override bool cloneable

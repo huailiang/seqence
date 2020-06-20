@@ -25,9 +25,9 @@ namespace UnityEngine.Timeline
             get { return _data; }
         }
 
-        public override TrackType trackType
+        public override AssetType AssetType
         {
-            get { return TrackType.Transform; }
+            get { return AssetType.Transform; }
         }
 
         public override XTrack Clone()

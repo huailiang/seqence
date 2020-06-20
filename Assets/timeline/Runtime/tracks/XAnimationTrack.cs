@@ -13,9 +13,9 @@ namespace UnityEngine.Timeline
         private int idx = 0;
         private float tmp = 0;
 
-        public override TrackType trackType
+        public override AssetType AssetType
         {
-            get { return TrackType.Animation; }
+            get { return AssetType.Animation; }
         }
 
         public override XTrack Clone()

@@ -61,9 +61,9 @@ namespace UnityEngine.Timeline
     [AttributeUsage(AttributeTargets.Class)]
     public class MarkUsageAttribute : Attribute
     {
-        public TrackType type;
+        public AssetType type;
 
-        public MarkUsageAttribute(TrackType t)
+        public MarkUsageAttribute(AssetType t)
         {
             this.type = t;
         }

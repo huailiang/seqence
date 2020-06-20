@@ -4,15 +4,6 @@ using System.Xml.Serialization;
 
 namespace UnityEngine.Timeline.Data
 {
-    [Serializable]
-    public enum ClipType
-    {
-        BoneFx = 1 << 1,
-        SceneFx = 1 << 2,
-        Animation = 1 << 3,
-        PostProcess = 1 << 4,
-        LogicValue = 1 << 5,
-    }
 
     public enum LogicType
     {
@@ -34,7 +25,7 @@ namespace UnityEngine.Timeline.Data
 
         public float duration;
 
-        public abstract ClipType type { get; }
+        public abstract AssetType type { get; }
 
         public void BuildData(IClip c)
         {
@@ -63,9 +54,9 @@ namespace UnityEngine.Timeline.Data
         public uint seed;
         public Vector3 pos, rot, scale;
 
-        public override ClipType type
+        public override AssetType type
         {
-            get { return ClipType.SceneFx; }
+            get { return AssetType.SceneFx; }
         }
 
         public override void Write(BinaryWriter writer)
@@ -94,9 +85,9 @@ namespace UnityEngine.Timeline.Data
     {
         public string bone;
 
-        public override ClipType type
+        public override AssetType type
         {
-            get { return ClipType.BoneFx; }
+            get { return AssetType.BoneFx; }
         }
 
         public override void Write(BinaryWriter writer)
@@ -115,9 +106,9 @@ namespace UnityEngine.Timeline.Data
 
     public class LogicClipData : ClipData
     {
-        public override ClipType type
+        public override AssetType type
         {
-            get { return ClipType.LogicValue; }
+            get { return AssetType.LogicValue; }
         }
 
         public LogicType[] logicType;
@@ -159,9 +150,9 @@ namespace UnityEngine.Timeline.Data
 
         public bool loop;
 
-        public override ClipType type
+        public override AssetType type
         {
-            get { return ClipType.Animation; }
+            get { return AssetType.Animation; }
         }
 
         public override void Write(BinaryWriter writer)
@@ -186,9 +177,9 @@ namespace UnityEngine.Timeline.Data
     [Serializable]
     public class PostprocessData : ClipData
     {
-        public override ClipType type
+        public override AssetType type
         {
-            get { return ClipType.PostProcess; }
+            get { return AssetType.PostProcess; }
         }
     }
 }

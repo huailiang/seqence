@@ -2,7 +2,7 @@
 
 namespace UnityEngine.Timeline
 {
-    [MarkUsage(TrackType.Marker)]
+    [MarkUsage(AssetType.Marker)]
     public class XSlowMarker : XMarker
     {
         private SlowMarkData _data;

@@ -6,9 +6,9 @@ namespace UnityEngine.Timeline
     [TrackFlag(TrackFlag.RootOnly)]
     public class XPostprocessTrack : XTrack
     {
-        public override TrackType trackType
+        public override AssetType AssetType
         {
-            get { return TrackType.PostProcess; }
+            get { return AssetType.PostProcess; }
         }
 
         public override bool cloneable

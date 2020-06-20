@@ -5,9 +5,9 @@ namespace UnityEngine.Timeline
     [TrackFlag(TrackFlag.RootOnly)]
     public class XSceneFxTrack : XTrack
     {
-        public override TrackType trackType
+        public override AssetType AssetType
         {
-            get { return TrackType.SceneFx; }
+            get { return AssetType.SceneFx; }
         }
 
         public override XTrack Clone()

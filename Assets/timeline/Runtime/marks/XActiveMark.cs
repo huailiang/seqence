@@ -2,7 +2,7 @@
 
 namespace UnityEngine.Timeline
 {
-    [MarkUsage(TrackType.SceneFx | TrackType.Animation)]
+    [MarkUsage(AssetType.SceneFx | AssetType.Animation)]
     public class XActiveMark : XMarker
     {
         private ActiveMarkData _data;

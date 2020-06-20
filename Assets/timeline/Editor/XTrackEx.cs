@@ -208,7 +208,7 @@ namespace UnityEditor.Timeline
         public static TrackData BuildTrackData(this XTrack track)
         {
             TrackData data = new TrackData();
-            data.type = track.trackType;
+            data.type = track.AssetType;
 
             if (track.clips != null)
             {

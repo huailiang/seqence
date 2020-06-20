@@ -39,7 +39,7 @@ namespace UnityEngine.Timeline
             get { return true; }
         }
 
-        public abstract TrackType trackType { get; }
+        public abstract AssetType AssetType { get; }
 
         public abstract XTrack Clone();
 

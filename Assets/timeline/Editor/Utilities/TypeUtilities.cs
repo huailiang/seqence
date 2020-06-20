@@ -87,7 +87,7 @@ namespace UnityEditor.Timeline
             return list;
         }
 
-        public static List<Type> GetBelongMarks(TrackType trackType)
+        public static List<Type> GetBelongMarks(AssetType assetType)
         {
             List<Type> list = new List<Type>();
             var marks = GetAllMarkerTypes();
@@ -95,7 +95,7 @@ namespace UnityEditor.Timeline
             {
                 var usage = (MarkUsageAttribute) Attribute.GetCustomAttribute(mark, typeof(MarkUsageAttribute));
                 if (usage != null)
-                    if ((usage.type & trackType) > 0)
+                    if ((usage.type & assetType) > 0)
                     {
                         list.Add(mark);
                     }

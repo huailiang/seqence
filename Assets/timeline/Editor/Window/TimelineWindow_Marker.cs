@@ -78,7 +78,7 @@ namespace UnityEditor.Timeline
         private void GenMenu(Event e)
         {
             GenericMenu gm = new GenericMenu();
-            var marks = TypeUtilities.GetBelongMarks(TrackType.Marker);
+            var marks = TypeUtilities.GetBelongMarks(AssetType.Marker);
             foreach (var mark in marks)
             {
                 string str = mark.ToString();

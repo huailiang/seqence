@@ -18,9 +18,9 @@ namespace UnityEngine.Timeline
             }
         }
 
-        public override TrackType trackType
+        public override AssetType AssetType
         {
-            get { return TrackType.BoneFx; }
+            get { return AssetType.BoneFx; }
         }
 
         public override XTrack Clone()

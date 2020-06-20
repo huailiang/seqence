@@ -9,7 +9,7 @@ using UnityEditor;
 namespace UnityEngine.Timeline.Data
 {
     [Serializable]
-    public enum TrackType
+    public enum AssetType
     {
         Marker = 1,
         BoneFx = 1 << 1,
@@ -28,7 +28,7 @@ namespace UnityEngine.Timeline.Data
         public ClipData[] clips;
         public MarkData[] marks;
         public TrackData[] childs;
-        public TrackType type;
+        public AssetType type;
 
 
         public virtual void Write(BinaryWriter writer)
@@ -70,7 +70,7 @@ namespace UnityEngine.Timeline.Data
             for (int j = 0; j < len2; j++)
             {
                 childs[j] = new TrackData();
-                childs[j].type = (TrackType) reader.ReadInt32();
+                childs[j].type = (AssetType) reader.ReadInt32();
                 childs[j].Read(reader);
             }
             for (int i = 0; i < len3; i++)
@@ -205,7 +205,7 @@ namespace UnityEngine.Timeline.Data
                     tracks = new TrackData[cnt];
                     for (int i = 0; i < cnt; i++)
                     {
-                        var type = (TrackType) reader.ReadInt32();
+                        var type = (AssetType) reader.ReadInt32();
                         tracks[i] = new TrackData();
                         tracks[i].type = type;
                         tracks[i].Read(reader);

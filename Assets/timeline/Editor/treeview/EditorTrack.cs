@@ -165,7 +165,7 @@ namespace UnityEditor.Timeline
                 }
             }
             pm.AddSeparator("");
-            var marks = TypeUtilities.GetBelongMarks(track.trackType);
+            var marks = TypeUtilities.GetBelongMarks(track.AssetType);
             for (int i = 0; i < marks.Count; i++)
             {
                 var mark = marks[i];
