@@ -37,13 +37,16 @@ namespace UnityEditor.Timeline
         public void OnGUI(Rect r)
         {
             float x = TimelineWindow.inst.TimeToPixel(baseMarker.time);
-            rect = r;
-            rect.x = x;
-            rect.y = r.y + r.height / 4;
-            rect.width = 20;
-            GUIContent cont = TimelineWindow.inst.state.config.GetIcon(baseMarker.type);
-            GUI.Box(rect, cont, GUIStyle.none);
-            ProcessEvent();
+            if (TimelineWindow.inst.IsPiexlRange(x))
+            {
+                rect = r;
+                rect.x = x;
+                rect.y = r.y + r.height / 4;
+                rect.width = 20;
+                GUIContent cont = TimelineWindow.inst.state.config.GetIcon(baseMarker.type);
+                GUI.Box(rect, cont, GUIStyle.none);
+                ProcessEvent();
+            }
         }
 
         public void ProcessEvent()

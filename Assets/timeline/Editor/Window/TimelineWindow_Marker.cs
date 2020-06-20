@@ -37,34 +37,40 @@ namespace UnityEditor.Timeline
             {
                 DrawMarkerDrawerHeaderBackground();
                 DrawMarkerDrawerHeader();
+                ProcessEvent();
             }
+        }
+
+        private void ProcessEvent()
+        {
             if (e == null) e = Event.current;
-            if (markderRect.Contains(e.mousePosition))
+            bool inMarkRect = markderRect.Contains(e.mousePosition);
+            switch (e.type)
             {
-                switch (e.type)
-                {
-                    case (EventType.ContextClick):
-                        if (e.button == 1)
-                        {
-                            GenMenu(e);
-                        }
-                        break;
-                    case EventType.MouseDown:
+                case (EventType.ContextClick):
+                    if (e.button == 1 && inMarkRect)
+                    {
+                        GenMenu(e);
+                    }
+                    break;
+                case EventType.MouseDown:
+                    if (inMarkRect)
+                    {
                         OnMouseDown(e);
-                        break;
-                    case EventType.MouseUp:
-                        if (draging != null)
-                        {
-                            var tre = state.timeline.trackTrees;
-                            tre[0].SortMark();
-                        }
-                        draging = null;
-                        break;
-                    case EventType.MouseDrag:
-                    case EventType.ScrollWheel:
-                        OnMarkDrag(e);
-                        break;
-                }
+                    }
+                    break;
+                case EventType.MouseUp:
+                    if (draging != null)
+                    {
+                        var tre = state.timeline.trackTrees;
+                        tre[0].SortMark();
+                    }
+                    draging = null;
+                    break;
+                case EventType.MouseDrag:
+                case EventType.ScrollWheel:
+                    OnMarkDrag(e);
+                    break;
             }
         }
 
@@ -176,12 +182,15 @@ namespace UnityEditor.Timeline
 
         void DrawMarkItem(XMarker mark)
         {
-            float x = TimeToPixel(mark.time);
-            Rect rect = markderRect;
-            rect.x = x;
-            rect.width = markWidth;
-            GUIContent cont = state.config.GetIcon(mark.type);
-            GUI.Box(rect, cont, GUIStyle.none);
+            if (IsTimeRange(mark.time))
+            {
+                float x = TimeToPixel(mark.time);
+                Rect rect = markderRect;
+                rect.x = x;
+                rect.width = markWidth;
+                GUIContent cont = state.config.GetIcon(mark.type);
+                GUI.Box(rect, cont, GUIStyle.none);
+            }
         }
     }
 }

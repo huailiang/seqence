@@ -27,6 +27,9 @@ namespace UnityEditor.Timeline
             rect = track.rect;
             rect.x = TimelineWindow.inst.TimeToPixel(clip.start);
             float y = TimelineWindow.inst.TimeToPixel(clip.end);
+            var timeRect = TimelineWindow.inst.timeAreaRect;
+            rect.x = Mathf.Max(rect.x, timeRect.x);
+            y = Mathf.Min(y, timeRect.max.x);
             rect.width = y - rect.x;
             rect.height = rect.height - 2;
             EditorGUI.DrawRect(rect, Color.gray);

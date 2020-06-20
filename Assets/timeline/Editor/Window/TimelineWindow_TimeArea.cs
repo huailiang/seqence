@@ -10,6 +10,7 @@ namespace UnityEditor.Timeline
         float m_LastFrameRate;
         public Rect timeAreaRect;
         private bool time_draging;
+        private float rangeX1, rangeX2;
         public TimelineState state { get; private set; }
 
         void InitializeTimeArea()
@@ -31,6 +32,8 @@ namespace UnityEditor.Timeline
                     rect = timeAreaRect,
                 };
             }
+            rangeX1 = 0;
+            rangeX2 = 30;
         }
 
         public void TimelineTimeAreaGUI()
@@ -38,7 +41,8 @@ namespace UnityEditor.Timeline
             timeAreaRect.width = winArea.width;
             timeAreaRect.x = WindowConstants.rightAreaMargn;
             timeAreaRect.y = WindowConstants.timeAreaYPosition;
-            m_TimeArea.TimeRuler(timeAreaRect, 1, true, false, 1.0f, TimeArea.TimeFormat.Frame);
+            m_TimeArea.TimeRuler(timeAreaRect, 30, true, false, 1.0f, TimeArea.TimeFormat.TimeFrame);
+            m_TimeArea.SetShownHRange(rangeX1, rangeX2);
         }
 
         void DrawTimeOnSlider()
@@ -48,28 +52,46 @@ namespace UnityEditor.Timeline
             float time = state.timeline.Time + 0.1f;
             time = m_TimeArea.TimeToPixel(time, timeAreaRect);
             Rect rec = new Rect(time, timeAreaRect.y, 2, tree.TracksBtmY);
-            EditorGUI.DrawRect(rec, c);
-            rec.height = timeAreaRect.height;
-            rec.x -= 4;
-            rec.width = 20;
-            GUI.Box(rec, TimelineStyles.empty, TimelineStyles.timeCursor);
+            if (IsPiexlRange(time))
+            {
+                EditorGUI.DrawRect(rec, c);
+                rec.height = timeAreaRect.height;
+                rec.x -= 4;
+                rec.width = 20;
+                GUI.Box(rec, TimelineStyles.empty, TimelineStyles.timeCursor);
+            }
 
             if (e == null) e = Event.current;
             switch (e.type)
             {
                 case EventType.MouseDown:
-                    if (rec.Contains(e.mousePosition))
-                        time_draging = true;
+                    if (rec.Contains(e.mousePosition)) time_draging = true;
                     break;
                 case EventType.MouseUp:
                     time_draging = false;
                     break;
                 case EventType.ScrollWheel:
+
                 case EventType.MouseDrag:
                     if (time_draging)
                     {
                         float xtime = m_TimeArea.PixelToTime(e.mousePosition.x, timeAreaRect);
                         OnTrackHeadDrag(xtime);
+                    }
+                    else //zoom
+                    {
+                        var dt = e.delta;
+                        float delta = Mathf.Abs(dt.x) > Mathf.Abs(dt.y) ? dt.x : dt.y;
+                        if (Mathf.Abs(delta) > 1e-5)
+                        {
+                            delta = Mathf.Clamp(delta, -0.01f, 0.01f);
+                            float sc = 1 + delta;
+                            float center = PiexlToTime(e.mousePosition.x);
+                            rangeX1 = center - sc * (center - rangeX1);
+                            rangeX2 = center + sc * (rangeX2 - center);
+                            m_TimeArea.SetShownHRange(rangeX1, rangeX2);
+                            Repaint();
+                        }
                     }
                     break;
             }
@@ -88,6 +110,17 @@ namespace UnityEditor.Timeline
         public float PiexlToTime(float piexl)
         {
             return m_TimeArea.PixelToTime(piexl, timeAreaRect);
+        }
+
+        public bool IsTimeRange(float t)
+        {
+            return t >= rangeX1 && t < rangeX2;
+        }
+
+        public bool IsPiexlRange(float piexl)
+        {
+            float t = PiexlToTime(piexl);
+            return IsTimeRange(t);
         }
 
         void OnTrackHeadDrag(float newTime)
