@@ -29,6 +29,7 @@ namespace UnityEngine.Timeline
         {
             sharedPool.Clear();
             goPool.Clear();
+            SharedObjects<Asset>.Clean();
             Resources.UnloadUnusedAssets();
         }
 
@@ -42,17 +43,21 @@ namespace UnityEngine.Timeline
             else
             {
                 var obj = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-                var tmp = SharedObjects<Asset>.Get();
-                tmp.asset = obj;
-                goPool.Add(path, tmp);
-                return Object.Instantiate(obj);
+                if (obj)
+                {
+                    var tmp = SharedObjects<Asset>.Get();
+                    tmp.asset = obj;
+                    goPool.Add(path, tmp);
+                    return Object.Instantiate(obj);
+                }
+                return null;
             }
 #else
         // assetbundle implements 
 #endif
         }
 
-        public static void DestroyGameObject(string path,GameObject go)
+        public static void DestroyGameObject(string path, GameObject go)
         {
             if (Application.isPlaying)
             {

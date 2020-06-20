@@ -21,17 +21,21 @@ namespace UnityEditor.Timeline
         public static XMarker MakeMarker(Type t, float time, XTrack track)
         {
             XMarker marker = null;
+            MarkData data = null;
             if (t == typeof(XJumpMarker))
             {
-                marker = new XJumpMarker(track, new JumpMarkData() {time = time});
+                data = new JumpMarkData() {time = time};
+                marker = new XJumpMarker(track, (JumpMarkData) data);
             }
             else if (t == typeof(XSlowMarker))
             {
-                marker = new XSlowMarker(track, new SlowMarkData() {time = time});
+                data = new SlowMarkData() {time = time};
+                marker = new XSlowMarker(track, (SlowMarkData) data);
             }
             else if (t == typeof(XActiveMark))
             {
-                marker = new XActiveMark(track, new ActiveMarkData() {time = time});
+                data = new ActiveMarkData() {time = time};
+                marker = new XActiveMark(track, (ActiveMarkData) data);
             }
             else
             {
@@ -39,7 +43,7 @@ namespace UnityEditor.Timeline
             }
             if (marker != null)
             {
-                track.AddMarker(marker);
+                track.AddMarker(marker, data);
             }
             return marker;
         }

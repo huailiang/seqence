@@ -5,6 +5,7 @@ namespace UnityEngine.Timeline
     public class XBoneFxClip : XClip<XBoneFxTrack>
     {
         private GameObject fx;
+        private string path;
         ParticleSystem[] ps;
         uint seed;
 
@@ -34,10 +35,10 @@ namespace UnityEngine.Timeline
                 if (go != null)
                 {
                     var tf = go.transform.Find(data.bone);
-                    var obj = Resources.Load<GameObject>(data.prefab);
-                    if (obj)
+                    fx = XResources.LoadGameObject(data.prefab);
+                    path = data.prefab;
+                    if (fx)
                     {
-                        fx = Object.Instantiate<GameObject>(obj);
                         fx.transform.localPosition = data.pos;
                         fx.transform.localRotation = Quaternion.Euler(data.rot);
                         fx.transform.localScale = data.scale;
@@ -46,7 +47,7 @@ namespace UnityEngine.Timeline
                 }
             }
         }
-        
+
 
         protected override void OnUpdate(float time)
         {
@@ -63,14 +64,7 @@ namespace UnityEngine.Timeline
         {
             if (fx)
             {
-                if (Application.isPlaying)
-                {
-                    Object.Destroy(fx);
-                }
-                else
-                {
-                    Object.DestroyImmediate(fx);
-                }
+                XResources.DestroyGameObject(path, fx);
             }
             ps = null;
             base.OnDestroy();

@@ -72,6 +72,12 @@ namespace UnityEditor.Timeline
             GUILayout.Space(4);
         }
 
+        public void OnRebuild()
+        {
+            emarks = null;
+            markF = false;
+        }
+
         private void GUITracks()
         {
             var trees = TimelineWindow.inst.tree;

@@ -32,8 +32,7 @@ namespace UnityEditor.Timeline
             {
                 track.clips = new IClip[1];
                 track.clips[0] = clip;
-                track.data.clips = new ClipData[1];
-                track.data.clips[0] = data;
+                track.data.clips = new[] {data};
                 return true;
             }
             else
@@ -62,6 +61,12 @@ namespace UnityEditor.Timeline
             if (track.clips != null && track.clips.Length > 0)
             {
                 var list = track.clips.ToList();
+                var datas = track.data.clips.ToList();
+                if (datas.Contains(clip.data))
+                {
+                    datas.Remove(clip.data);
+                    track.data.clips = datas.ToArray();
+                }
                 if (list.Contains(clip))
                 {
                     list.Remove(clip);
@@ -72,16 +77,21 @@ namespace UnityEditor.Timeline
             return false;
         }
 
-        public static bool AddMarker(this XTrack track, XMarker marker)
+        public static bool AddMarker(this XTrack track, XMarker marker, MarkData data)
         {
             if (track.marks != null)
             {
                 var list = track.marks.ToList();
+
                 if (!list.Contains(marker))
                 {
                     list.Add(marker);
                     list.Sort((x, y) => x.time.CompareTo(y.time));
                     track.marks = list.ToArray();
+
+                    var datas = track.data.marks.ToList();
+                    datas.Add(data);
+                    track.data.marks = datas.ToArray();
                     return true;
                 }
             }
@@ -89,6 +99,7 @@ namespace UnityEditor.Timeline
             {
                 track.marks = new XMarker[1];
                 track.marks[0] = marker;
+                track.data.marks = new[] {data};
             }
             return false;
         }
@@ -98,8 +109,13 @@ namespace UnityEditor.Timeline
             if (track.marks != null)
             {
                 var list = track.marks.ToList();
+
                 if (list.Contains(marker))
                 {
+                    var datas = track.data.marks.ToList();
+                    datas.Remove(marker.MarkData);
+                    track.data.marks = datas.ToArray();
+
                     list.Remove(marker);
                     track.marks = list.ToArray();
                     return true;
@@ -115,6 +131,10 @@ namespace UnityEditor.Timeline
                 var list = track.clips.ToList();
                 list.Sort((x, y) => x.start.CompareTo(y.start));
                 track.clips = list.ToArray();
+
+                var datas = track.data.clips.ToList();
+                datas.Sort((x, y) => x.start.CompareTo(y.start));
+                track.data.clips = datas.ToArray();
             }
         }
 
@@ -125,6 +145,10 @@ namespace UnityEditor.Timeline
                 var list = track.marks.ToList();
                 list.Sort((x, y) => x.time.CompareTo(y.time));
                 track.marks = list.ToArray();
+
+                var datas = track.data.marks.ToList();
+                datas.Sort((x, y) => x.time.CompareTo(y.time));
+                track.data.marks = datas.ToArray();
             }
         }
 
