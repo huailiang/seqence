@@ -23,8 +23,6 @@ namespace UnityEngine.Timeline.Data
     [Serializable]
     [XmlInclude(typeof(BindTrackData))]
     [XmlInclude(typeof(TransformTrackData))]
-    [XmlInclude(typeof(LogicTrackData))]
-    [XmlInclude(typeof(PostprocessData))]
     public class TrackData
     {
         public ClipData[] clips;
@@ -98,10 +96,6 @@ namespace UnityEngine.Timeline.Data
             base.Read(reader);
             prefab = reader.ReadString();
         }
-    }
-
-    public class LogicTrackData : TrackData
-    {
     }
 
     public class TransformTrackData : TrackData
@@ -220,9 +214,9 @@ namespace UnityEngine.Timeline.Data
             }
         }
 
-        public TimelineConfig ReadXml(string path)
+        public static TimelineConfig ReadXml(string path)
         {
-            XmlSerializer serializer = new XmlSerializer(GetType());
+            XmlSerializer serializer = new XmlSerializer(typeof(TimelineConfig));
             using (StreamReader reader = new StreamReader(path))
             {
                 return (TimelineConfig) serializer.Deserialize(reader);

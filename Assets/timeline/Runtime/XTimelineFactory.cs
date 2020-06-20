@@ -73,7 +73,7 @@ namespace UnityEngine.Timeline
             }
             else if (type == typeof(XLogicValueTrack))
             {
-                data = new LogicTrackData();
+                data = new TrackData();
                 data.type = TrackType.LogicValue;
             }
             else

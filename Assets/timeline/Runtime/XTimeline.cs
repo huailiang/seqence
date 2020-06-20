@@ -65,8 +65,15 @@ namespace UnityEngine.Timeline
 
         public XTimeline(string path)
         {
-            config = new TimelineConfig();
-            config.Read(path);
+            if (path.EndsWith(".xml"))
+            {
+                config = TimelineConfig.ReadXml(path);
+            }
+            else
+            {
+                config = new TimelineConfig();
+                config.Read(path);
+            }
             Build();
         }
 

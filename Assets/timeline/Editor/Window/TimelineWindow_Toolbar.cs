@@ -128,7 +128,7 @@ namespace UnityEditor.Timeline
         {
             if (GUILayout.Button(TimelineStyles.openContent, EditorStyles.toolbarButton))
             {
-                string path = EditorUtility.OpenFilePanel("open", "Assets/", "bytes");
+                string path = EditorUtility.OpenFilePanel("open", "Assets/", "xml");
                 state.Open(path);
             }
         }

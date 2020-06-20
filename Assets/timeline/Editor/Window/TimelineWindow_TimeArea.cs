@@ -33,7 +33,7 @@ namespace UnityEditor.Timeline
                 };
             }
             rangeX1 = 0;
-            rangeX2 = 30;
+            rangeX2 = 60;
         }
 
         public void TimelineTimeAreaGUI()
