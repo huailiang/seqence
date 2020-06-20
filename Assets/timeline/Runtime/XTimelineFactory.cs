@@ -43,6 +43,20 @@ namespace UnityEngine.Timeline
             return xTrack;
         }
 
+        private static AssetType MapTrackType(Type type)
+        {
+            AssetType ret = AssetType.None;
+            if (type == typeof(XAnimationTrack))
+            {
+                ret = AssetType.Animation;
+            }
+            else if (type== typeof(XPostprocessTrack))
+            {
+                
+            }
+            return ret;
+        }
+
         public static TrackData CreateTrackData(Type type)
         {
             TrackData data = null;

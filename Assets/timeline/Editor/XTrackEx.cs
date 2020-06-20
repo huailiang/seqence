@@ -200,41 +200,9 @@ namespace UnityEditor.Timeline
                 timeline.config.tracks = new TrackData[len];
                 for (int i = 0; i < len; i++)
                 {
-                    timeline.config.tracks[i] = tree[i].BuildTrackData();
+                    timeline.config.tracks[i] = tree[i].data;
                 }
             }
-        }
-
-        public static TrackData BuildTrackData(this XTrack track)
-        {
-            TrackData data = new TrackData();
-            data.type = track.AssetType;
-
-            if (track.clips != null)
-            {
-                data.clips = new ClipData[track.clips.Length];
-                for (int i = 0; i < track.clips.Length; i++)
-                {
-                    data.clips[i] = track.clips[i].data;
-                }
-            }
-            if (track.marks != null)
-            {
-                data.marks = new MarkData[track.marks.Length];
-                for (int i = 0; i < track.marks.Length; i++)
-                {
-                    data.marks[i] = track.marks[i].MarkData;
-                }
-            }
-            if (track.childs != null)
-            {
-                data.childs = new TrackData[track.childs.Length];
-                for (int i = 0; i < data.childs.Length; i++)
-                {
-                    data.childs[i] = BuildTrackData(track.childs[i]);
-                }
-            }
-            return data;
         }
     }
 }

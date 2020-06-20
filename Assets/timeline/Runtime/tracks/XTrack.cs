@@ -30,7 +30,7 @@ namespace UnityEngine.Timeline
 
         public XTimeline timeline;
 
-        protected TrackData data;
+        public TrackData data;
 
         public XTrack parent { get; set; }
 

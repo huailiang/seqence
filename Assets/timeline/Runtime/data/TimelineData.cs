@@ -11,6 +11,7 @@ namespace UnityEngine.Timeline.Data
     [Serializable]
     public enum AssetType
     {
+        None = 0,
         Marker = 1,
         BoneFx = 1 << 1,
         SceneFx = 1 << 2,
