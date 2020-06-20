@@ -105,8 +105,8 @@ namespace UnityEditor.Timeline
 
         private static Type GetEditorAsset(Type at)
         {
-            // var a = Assembly.GetExecutingAssembly();
-            var types = EditorAssemblies.loadedTypes;
+            var a = Assembly.GetExecutingAssembly();
+            var types = a.GetTypes();
             foreach (var type in types)
             {
                 var usage = (TimelineEditorAttribute) Attribute.GetCustomAttribute(type,

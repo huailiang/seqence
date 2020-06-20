@@ -9,7 +9,7 @@ namespace UnityEngine.Timeline
 
     public class SharedObjects<T> where T : ISharedObject, new()
     {
-        private static Queue<T> listPool = new Queue<T>();
+        private static LinkedList<T> listPool = new LinkedList<T>();
 
         public static T Get()
         {
@@ -17,13 +17,15 @@ namespace UnityEngine.Timeline
             {
                 return new T();
             }
-            return listPool.Dequeue();
+            var t = listPool.First.Value;
+            listPool.RemoveFirst();
+            return t;
         }
 
         public static void Return(T obj)
         {
             obj.Dispose();
-            listPool.Enqueue(obj);
+            listPool.AddLast(obj);
         }
 
         public static void Clean()
