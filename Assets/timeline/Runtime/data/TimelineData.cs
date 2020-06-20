@@ -84,7 +84,7 @@ namespace UnityEngine.Timeline.Data
     [Serializable]
     public class BindTrackData : TrackData
     {
-        public string prefab;
+        public string prefab = "";
 
         public override void Write(BinaryWriter writer)
         {

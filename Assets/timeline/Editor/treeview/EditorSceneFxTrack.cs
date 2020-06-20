@@ -35,7 +35,7 @@ namespace UnityEditor.Timeline
                     data.seed = 0;
                     XSceneFxClip clip = new XSceneFxClip((XSceneFxTrack) track, data);
                     clip.SetReference((GameObject) obj);
-                    track.AddClip(clip);
+                    track.AddClip(clip, data);
                 }
             }, null);
         }

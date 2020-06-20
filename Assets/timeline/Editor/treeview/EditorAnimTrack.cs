@@ -93,7 +93,7 @@ namespace UnityEditor.Timeline
                     XAnimationClip clip = new XAnimationClip((XAnimationTrack) track, data);
                     clip.aclip = u_clip;
                     clip.port = track.clips?.Length ?? 0;
-                    track.AddClip(clip);
+                    track.AddClip(clip, data);
                 }
             }, null);
         }

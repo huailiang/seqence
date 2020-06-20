@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
+using UnityEngine.UIElements;
 
 namespace UnityEditor.Timeline
 {
@@ -26,17 +27,20 @@ namespace UnityEditor.Timeline
             return list;
         }
 
-        public static bool AddClip(this XTrack track, IClip clip)
+        public static bool AddClip(this XTrack track, IClip clip, ClipData data)
         {
             if (track.clips == null)
             {
                 track.clips = new IClip[1];
                 track.clips[0] = clip;
+                track.data.clips = new ClipData[1];
+                track.data.clips[0] = data;
                 return true;
             }
             else
             {
                 var list = track.clips.ToList();
+                var datas = track.data.clips.ToList();
                 if (list.Contains(clip))
                 {
                     return false;
@@ -44,8 +48,11 @@ namespace UnityEditor.Timeline
                 else
                 {
                     list.Add(clip);
+                    datas.Add(data);
                     list.Sort((x, y) => x.start.CompareTo(y.start));
+                    datas.Sort((x, y) => x.start.CompareTo(y.start));
                     track.clips = list.ToArray();
+                    track.data.clips = datas.ToArray();
                     return true;
                 }
             }

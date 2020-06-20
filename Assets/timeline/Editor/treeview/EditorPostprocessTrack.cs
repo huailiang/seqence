@@ -23,7 +23,7 @@ namespace UnityEditor.Timeline
             data.start = t;
             data.duration = 20;
             XPostprocessClip clip = new XPostprocessClip((XPostprocessTrack) track, data);
-            track.AddClip(clip);
+            track.AddClip(clip, data);
         }
     }
 }

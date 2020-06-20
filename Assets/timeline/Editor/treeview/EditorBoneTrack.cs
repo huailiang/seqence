@@ -30,7 +30,7 @@ namespace UnityEditor.Timeline
                     data.seed = 0;
                     XBoneFxClip clip = new XBoneFxClip((XBoneFxTrack) track, data);
                     clip.SetFx((GameObject) obj);
-                    track.AddClip(clip);
+                    track.AddClip(clip, data);
                 }
             }, null);
         }

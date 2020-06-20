@@ -28,7 +28,7 @@ namespace UnityEditor.Timeline
             clipData.duration = 16;
             folds = new bool[max];
             XLogicClip clip = new XLogicClip((XLogicValueTrack) track, clipData);
-            track.AddClip(clip);
+            track.AddClip(clip, clipData);
         }
 
         protected override void OnInspectorClip(IClip c)
