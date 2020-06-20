@@ -73,7 +73,7 @@ namespace UnityEngine.Timeline
 
         public bool parentMute
         {
-            get { return parent != null ? parent.mute : mute; }
+            get { return parent ? parent.mute : mute; }
         }
 
         public bool record
@@ -88,7 +88,7 @@ namespace UnityEngine.Timeline
 
         public bool parentLocked
         {
-            get { return parent != null ? parent.locked : locked; }
+            get { return parent ? parent.locked : locked; }
         }
 
         protected XTrack(XTimeline tl, TrackData data)

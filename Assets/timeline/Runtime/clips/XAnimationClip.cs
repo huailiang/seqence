@@ -15,11 +15,10 @@ namespace UnityEngine.Timeline
             get { return aclip != null ? aclip.name + " " + port : " anim:" + port; }
         }
 
-
         public XAnimationClip(XAnimationTrack track, ClipData data) : base(track, data)
         {
             AnimClipData anData = data as AnimClipData;
-            aclip = Resources.Load<AnimationClip>(anData.anim);
+            aclip = XResources.LoadSharedAsset<AnimationClip>(anData.anim);
             playable = AnimationClipPlayable.Create(timeline.graph, aclip);
             RebindPlayable();
         }
@@ -55,7 +54,8 @@ namespace UnityEngine.Timeline
         protected override void OnDestroy()
         {
             playable.Destroy();
-            Resources.UnloadAsset(aclip);
+            AnimClipData anData = data as AnimClipData;
+            XResources.DestroySharedAsset(anData.anim);
             base.OnDestroy();
         }
     }

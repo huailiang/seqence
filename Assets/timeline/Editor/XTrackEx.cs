@@ -2,7 +2,6 @@
 using System.Linq;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
-using UnityEngine.UIElements;
 
 namespace UnityEditor.Timeline
 {

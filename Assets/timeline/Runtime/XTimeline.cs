@@ -69,12 +69,12 @@ namespace UnityEngine.Timeline
             {
                 config = TimelineConfig.ReadXml(path);
             }
-            else
+            else if (string.IsNullOrEmpty(path))
             {
                 config = new TimelineConfig();
                 config.Read(path);
             }
-            Build();
+            if (config != null) Build();
         }
 
         public XTimeline(TimelineConfig config)
@@ -85,6 +85,7 @@ namespace UnityEngine.Timeline
 
         private void Build()
         {
+            XResources.Clean();
             delay = 1;
             graph = PlayableGraph.Create("TimelineGraph");
             var tracksData = config.tracks;

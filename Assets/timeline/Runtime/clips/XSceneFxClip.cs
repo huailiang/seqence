@@ -5,8 +5,9 @@ namespace UnityEngine.Timeline
     public class XSceneFxClip : XClip<XSceneFxTrack>
     {
         public GameObject prefabGameObject;
+        private string path;
         private ParticleSystem[] particleSystems;
-        private bool restart = false;
+        private bool restart;
 
         public override string Display
         {
@@ -31,15 +32,14 @@ namespace UnityEngine.Timeline
 
         public void Load(string path, Vector3 pos, Vector3 rot, Vector3 scale)
         {
-            var obj = Resources.Load<GameObject>(path);
-            if (obj != null)
+            this.path = path;
+            prefabGameObject = XResources.LoadGameObject(path);
+            if (prefabGameObject != null)
             {
-                prefabGameObject = Object.Instantiate(obj);
                 var tf = prefabGameObject.transform;
                 tf.position = pos;
                 tf.rotation = Quaternion.Euler(rot);
                 tf.localScale = scale;
-
                 particleSystems = tf.GetComponentsInChildren<ParticleSystem>();
             }
         }
@@ -81,14 +81,7 @@ namespace UnityEngine.Timeline
         {
             if (prefabGameObject)
             {
-                if (Application.isPlaying)
-                {
-                    Object.Destroy(prefabGameObject);
-                }
-                else
-                {
-                    Object.DestroyImmediate(prefabGameObject);
-                }
+                XResources.DestroyGameObject(path, prefabGameObject);
                 particleSystems = null;
             }
             base.OnDestroy();
