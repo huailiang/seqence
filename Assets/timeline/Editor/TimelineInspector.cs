@@ -11,6 +11,7 @@ namespace UnityEditor.Timeline
     class TimelineInspector : EditorWindow
     {
         public static TimelineInspector inst;
+        private Vector2 scroll;
 
         public static void ShowWindow()
         {
@@ -31,8 +32,10 @@ namespace UnityEditor.Timeline
                     EditorGUILayout.IntField("fps: ", state.frameRate);
                     EditorGUILayout.Toggle("playing:", state.playing);
                     EditorGUILayout.EnumPopup("wrapmode:", state.mode);
+                    scroll = EditorGUILayout.BeginVerticalScrollView(scroll);
                     GUIMark();
                     GUITracks();
+                    EditorGUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
             }

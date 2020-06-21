@@ -26,7 +26,7 @@ namespace UnityEditor.Timeline
             LogicClipData clipData = new LogicClipData();
             clipData.start = t;
             clipData.duration = 16;
-            folds = new bool[max];
+
             XLogicClip clip = new XLogicClip((XLogicValueTrack) track, clipData);
             track.AddClip(clip, clipData);
         }
@@ -37,6 +37,10 @@ namespace UnityEditor.Timeline
             XLogicClip clip = (XLogicClip) c;
             if (clip)
             {
+                if (folds == null)
+                {
+                    folds = new bool[max];
+                }
                 LogicClipData data = clip.data as LogicClipData;
                 len = data.effect?.Length ?? 0;
                 if (len > 0)

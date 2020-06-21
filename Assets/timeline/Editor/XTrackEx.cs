@@ -5,9 +5,7 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
-    /// <summary>
-    /// 之所以XTrack写在这里，是因为算法效率不高，只给editor模式下使用
-    /// </summary>
+    // 之所以XTrack写在这里，是因为算法效率不高，只给editor模式下使用
     public static class XTrackEx
     {
         public static List<XTimelineObject> TrackAssets(this XTrack track)
@@ -219,6 +217,20 @@ namespace UnityEditor.Timeline
             bool ret = true;
             track.ForeachHierachyTrack((t) => { ret = ret & t.mute; });
             return ret;
+        }
+
+        public static void AddTrackChildData(this XTrack track, TrackData data)
+        {
+            if (track.data.childs == null)
+            {
+                track.data.childs = new[] {data};
+            }
+            else
+            {
+                var list = track.data.childs.ToList();
+                list.Add(data);
+                track.data.childs = list.ToArray();
+            }
         }
 
         public static void BuildConf(this XTimeline timeline)

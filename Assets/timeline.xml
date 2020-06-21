@@ -8,22 +8,143 @@
           <reverse>false</reverse>
           <jump>0</jump>
         </MarkData>
+        <MarkData xsi:type="SlowMarkData">
+          <time>28.3492832</time>
+          <reverse>false</reverse>
+          <slowRate>0</slowRate>
+        </MarkData>
       </marks>
       <type>Marker</type>
     </TrackData>
     <TrackData xsi:type="BindTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>10.9695282</start>
-          <duration>6.33333349</duration>
+          <start>4.65373945</start>
+          <duration>12.6491184</duration>
           <anim>Assets/test/Camera_cutscene_opening.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>0</trim_end>
           <loop>false</loop>
         </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>19.6650715</start>
+          <duration>10.6172276</duration>
+          <anim>Assets/test/scale.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>true</loop>
+        </ClipData>
       </clips>
+      <childs>
+        <TrackData>
+          <clips>
+            <ClipData xsi:type="BoneFxClipData">
+              <start>21.9617233</start>
+              <duration>20</duration>
+              <prefab>Assets/test/Particle Syste_fire.prefab</prefab>
+              <seed>0</seed>
+              <pos>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </pos>
+              <rot>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rot>
+              <scale>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </scale>
+            </ClipData>
+          </clips>
+          <type>BoneFx</type>
+        </TrackData>
+      </childs>
       <type>Animation</type>
       <prefab />
+    </TrackData>
+    <TrackData>
+      <clips>
+        <ClipData xsi:type="LogicClipData">
+          <start>3.58851647</start>
+          <duration>10.9043074</duration>
+          <logicType>
+            <LogicType>HP</LogicType>
+            <LogicType>SP</LogicType>
+          </logicType>
+          <effect>
+            <float>0.5</float>
+            <float>0.1</float>
+          </effect>
+        </ClipData>
+        <ClipData xsi:type="LogicClipData">
+          <start>15.4306211</start>
+          <duration>9.61244</duration>
+          <logicType>
+            <LogicType>BeHit</LogicType>
+            <LogicType>HP</LogicType>
+          </logicType>
+          <effect>
+            <float>0.5</float>
+            <float>0.5</float>
+          </effect>
+        </ClipData>
+        <ClipData xsi:type="LogicClipData">
+          <start>25.1913853</start>
+          <duration>12.0526333</duration>
+          <logicType>
+            <LogicType>HP</LogicType>
+            <LogicType>BeHit</LogicType>
+          </logicType>
+          <effect>
+            <float>0.5</float>
+            <float>0.5</float>
+          </effect>
+        </ClipData>
+      </clips>
+      <type>LogicValue</type>
+    </TrackData>
+    <TrackData>
+      <clips>
+        <ClipData xsi:type="PostprocessData">
+          <start>9.330143</start>
+          <duration>6.076556</duration>
+        </ClipData>
+        <ClipData xsi:type="PostprocessData">
+          <start>18.4449749</start>
+          <duration>20</duration>
+        </ClipData>
+      </clips>
+      <type>PostProcess</type>
+    </TrackData>
+    <TrackData>
+      <clips>
+        <ClipData xsi:type="SceneFxClipData">
+          <start>4.162679</start>
+          <duration>26.45933</duration>
+          <prefab>Assets/test/Particle Syste_water.prefab</prefab>
+          <seed>0</seed>
+          <pos>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </pos>
+          <rot>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rot>
+          <scale>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </scale>
+        </ClipData>
+      </clips>
+      <type>SceneFx</type>
     </TrackData>
   </tracks>
 </TimelineConfig>

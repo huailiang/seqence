@@ -57,6 +57,7 @@ namespace UnityEditor.Timeline
             }
             tr.parent = this.track;
             tr.parent.AddSub(tr);
+            tr.parent.AddTrackChildData(data);
             int idx = TimelineWindow.inst.tree.IndexOfTrack(tmp);
             TimelineWindow.inst.tree.AddTrack(tr, idx + 1);
         }

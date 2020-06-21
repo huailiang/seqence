@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
@@ -120,7 +121,7 @@ namespace UnityEditor.Timeline
             AddTrack(track, hierachy.Count);
         }
 
-        public void AddTrack(XTrack track, int idx, bool repaint = true)
+        public void AddTrack(XTrack track, int idx,  bool repaint = true)
         {
             EditorTrack etrack = EditorFactory.GetTrack(track);
             float y = _y + WindowConstants.RawHeight * idx + WindowConstants.rowGap * idx;

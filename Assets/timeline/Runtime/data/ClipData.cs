@@ -104,6 +104,7 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
+    [Serializable]
     public class LogicClipData : ClipData
     {
         public override AssetType type
