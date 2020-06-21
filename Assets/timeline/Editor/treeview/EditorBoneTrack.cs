@@ -34,5 +34,14 @@ namespace UnityEditor.Timeline
                 }
             }, null);
         }
+
+        protected override void OnInspectorClip(IClip c)
+        {
+            base.OnInspectorClip(c);
+            XBoneFxClip xc = c as XBoneFxClip;
+            var data = c.data as BoneFxClipData;
+            data.bone = EditorGUILayout.TextField("bone", data.bone);
+            EditorGUILayout.ObjectField("fx", xc.fx, typeof(GameObject), true);
+        }
     }
 }

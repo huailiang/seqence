@@ -48,6 +48,15 @@ namespace UnityEditor.Timeline
             if (clip)
             {
                 EditorGUILayout.LabelField(clip.prefabGameObject.name);
+                EditorGUILayout.ObjectField("fx", clip.prefabGameObject, typeof(GameObject), true);
+                var go = clip.prefabGameObject;
+                if (go)
+                {
+                    var tf = go.transform;
+                    tf.localPosition = EditorGUILayout.Vector3Field("pos", tf.localPosition);
+                    tf.localEulerAngles = EditorGUILayout.Vector3Field("rot", tf.localEulerAngles);
+                    tf.localScale = EditorGUILayout.Vector3Field("scale", tf.localScale);
+                }
             }
         }
     }

@@ -4,7 +4,7 @@ namespace UnityEngine.Timeline
 {
     public class XBoneFxClip : XClip<XBoneFxTrack>
     {
-        private GameObject fx;
+        public GameObject fx;
         private string path;
         ParticleSystem[] ps;
         uint seed;
@@ -69,5 +69,7 @@ namespace UnityEngine.Timeline
             ps = null;
             base.OnDestroy();
         }
+        
+        
     }
 }

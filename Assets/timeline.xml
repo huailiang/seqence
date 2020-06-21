@@ -62,6 +62,71 @@
           </clips>
           <type>BoneFx</type>
         </TrackData>
+        <TrackData xsi:type="TransformTrackData">
+          <type>Transform</type>
+          <time>
+            <float>3.58851671</float>
+            <float>11.7703352</float>
+            <float>25.83732</float>
+            <float>34.30622</float>
+            <float>39.9043045</float>
+          </time>
+          <pos>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+          </pos>
+          <rot>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+          </rot>
+          <select>false</select>
+        </TrackData>
       </childs>
       <type>Animation</type>
       <prefab />
