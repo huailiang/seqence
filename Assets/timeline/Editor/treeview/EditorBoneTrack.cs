@@ -63,7 +63,15 @@ namespace UnityEditor.Timeline
             }
             else if (!string.IsNullOrEmpty(data.bone))
             {
-                bone = AssetDatabase.LoadAssetAtPath<GameObject>(data.bone);
+                var t = base.track.root;
+                if (t is XBindTrack bt)
+                {
+                    if (bt.bindObj)
+                    {
+                        Transform tmp = bt.bindObj.transform.Find(data.bone);
+                        if (tmp) bone = tmp.gameObject;
+                    }
+                }
             }
             if (!string.IsNullOrEmpty(data.bone)) EditorGUILayout.LabelField("bone: " + data.bone);
         }

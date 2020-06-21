@@ -93,7 +93,7 @@ namespace UnityEditor.Timeline
         private void OnAddTrackItem(object arg)
         {
             Type type = (Type) arg;
-            TrackData data = XTimelineFactory.CreateTrackData(type);
+            TrackData data = EditorFactory.CreateTrackData(type);
             var track = XTimelineFactory.GetTrack(data, state.timeline);
             tree.AddTrack(track);
             state.timeline.AddRootTrack(track);

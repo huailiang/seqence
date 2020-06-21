@@ -20,7 +20,7 @@ namespace UnityEngine.Timeline
 
         public override XTrack Clone()
         {
-            return new XAnimationTrack(timeline, (BindTrackData)data);
+            return new XAnimationTrack(timeline, (BindTrackData) data);
         }
 
         public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data)
@@ -86,9 +86,12 @@ namespace UnityEngine.Timeline
         public override void OnBind()
         {
             base.OnBind();
-            for (int i = 0; i < clips.Length; i++)
+            if (clips != null)
             {
-                ((XAnimationClip) clips[i]).RebindPlayable();
+                for (int i = 0; i < clips.Length; i++)
+                {
+                    ((XAnimationClip) clips[i]).RebindPlayable();
+                }
             }
         }
 

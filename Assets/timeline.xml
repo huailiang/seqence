@@ -58,6 +58,7 @@
                 <y>0</y>
                 <z>0</z>
               </scale>
+              <bone>Cube</bone>
             </ClipData>
             <ClipData xsi:type="BoneFxClipData">
               <start>21.9617233</start>

@@ -60,45 +60,7 @@ namespace UnityEngine.Timeline
             return ret;
         }
 
-        public static TrackData CreateTrackData(Type type)
-        {
-            TrackData data = null;
-            if (type == typeof(XAnimationTrack))
-            {
-                data = new BindTrackData();
-                data.type = AssetType.Animation;
-            }
-            else if (type == typeof(XPostprocessTrack))
-            {
-                data = new TrackData();
-                data.type = AssetType.PostProcess;
-            }
-            else if (type == typeof(XBoneFxTrack))
-            {
-                data = new TrackData();
-                data.type = AssetType.BoneFx;
-            }
-            else if (type == typeof(XSceneFxTrack))
-            {
-                data = new TrackData();
-                data.type = AssetType.SceneFx;
-            }
-            else if (type == typeof(XTransformTrack))
-            {
-                data = new TransformTrackData();
-                data.type = AssetType.Transform;
-            }
-            else if (type == typeof(XLogicValueTrack))
-            {
-                data = new TrackData();
-                data.type = AssetType.LogicValue;
-            }
-            else
-            {
-                throw new Exception("not implement trackdata for default");
-            }
-            return data;
-        }
+        
 
         public static MarkData CreateMarkData(MarkType type)
         {

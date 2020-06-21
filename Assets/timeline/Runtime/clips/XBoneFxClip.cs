@@ -47,10 +47,11 @@ namespace UnityEngine.Timeline
                     path = data.prefab;
                     if (fx)
                     {
+                        fx.transform.parent = tf;
                         fx.transform.localPosition = data.pos;
                         fx.transform.localRotation = Quaternion.Euler(data.rot);
                         fx.transform.localScale = data.scale;
-                        ps = tf.gameObject.GetComponentsInChildren<ParticleSystem>();
+                        ps = fx.GetComponentsInChildren<ParticleSystem>();
                     }
                 }
             }

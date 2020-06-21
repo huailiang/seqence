@@ -47,7 +47,7 @@ namespace UnityEditor.Timeline
         private void AddSubTrack(object arg)
         {
             Type type = (Type) arg;
-            TrackData data = XTimelineFactory.CreateTrackData(type);
+            TrackData data = EditorFactory.CreateTrackData(type);
             var state = TimelineWindow.inst.state;
             var tr = XTimelineFactory.GetTrack(data, state.timeline, this.track);
             var tmp = track;
