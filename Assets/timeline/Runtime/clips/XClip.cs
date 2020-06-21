@@ -17,6 +17,8 @@ namespace UnityEngine.Timeline
         void Update(float time, float prev);
 
         void Dispose();
+
+        void OnBind();
     }
 
     public class XClip<T> : XTimelineObject, IClip where T : XTrack
@@ -30,7 +32,7 @@ namespace UnityEngine.Timeline
 
         public ClipData data { get; }
 
-        public XClip(T track, ClipData data)
+        protected XClip(T track, ClipData data)
         {
             this.track = track;
             this.data = data;
@@ -78,6 +80,10 @@ namespace UnityEngine.Timeline
             {
                 OnUpdate(tick);
             }
+        }
+
+        public virtual void OnBind()
+        {
         }
 
         protected virtual void OnEnter()

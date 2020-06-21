@@ -16,12 +16,20 @@ namespace UnityEngine.Timeline
 
         public XBoneFxClip(XBoneFxTrack track, ClipData data) : base(track, data)
         {
-            Load((BoneFxClipData) data);
         }
 
         public void SetFx(GameObject obj)
         {
             fx = obj;
+        }
+
+        public override void OnBind()
+        {
+            if (fx)
+            {
+                XResources.DestroyGameObject(path, fx);
+            }
+            Load((BoneFxClipData) data);
         }
 
         private void Load(BoneFxClipData data)
@@ -32,7 +40,7 @@ namespace UnityEngine.Timeline
             if (bt)
             {
                 var go = bt.bindObj;
-                if (go != null)
+                if (go != null && !string.IsNullOrEmpty(data.bone))
                 {
                     var tf = go.transform.Find(data.bone);
                     fx = XResources.LoadGameObject(data.prefab);
@@ -69,7 +77,5 @@ namespace UnityEngine.Timeline
             ps = null;
             base.OnDestroy();
         }
-        
-        
     }
 }

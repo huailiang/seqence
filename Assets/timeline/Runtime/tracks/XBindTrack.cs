@@ -25,7 +25,8 @@ namespace UnityEngine.Timeline
                 {
                     bindObj = obj;
                     (data as BindTrackData).prefab = prefab;
-                    OnBind();
+                    //childs & self
+                    ForeachHierachyTrack(x => x.OnBind());
                 }
             }
         }
@@ -35,10 +36,6 @@ namespace UnityEngine.Timeline
         {
             XResources.DestroyGameObject(pat, bindObj);
             base.Dispose();
-        }
-
-        protected virtual void OnBind()
-        {
         }
     }
 }

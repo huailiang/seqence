@@ -83,7 +83,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-        protected override void OnBind()
+        public override void OnBind()
         {
             base.OnBind();
             for (int i = 0; i < clips.Length; i++)

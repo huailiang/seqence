@@ -125,8 +125,7 @@ namespace UnityEngine.Timeline
                     childs = new XTrack[len];
                     for (int i = 0; i < len; i++)
                     {
-                        childs[i] = XTimelineFactory.GetTrack(data.childs[i], timeline);
-                        childs[i].parent = this;
+                        childs[i] = XTimelineFactory.GetTrack(data.childs[i], timeline,this);
                     }
                 }
             }
@@ -219,6 +218,11 @@ namespace UnityEngine.Timeline
             {
                 mixs.Add(mix);
             }
+        }
+        
+        public virtual void OnBind()
+        {
+            ForeachClip(x=>x.OnBind());
         }
 
         public virtual void Process(float time, float prev)

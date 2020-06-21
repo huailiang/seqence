@@ -49,13 +49,12 @@ namespace UnityEditor.Timeline
             Type type = (Type) arg;
             TrackData data = XTimelineFactory.CreateTrackData(type);
             var state = TimelineWindow.inst.state;
-            var tr = XTimelineFactory.GetTrack(data, state.timeline);
+            var tr = XTimelineFactory.GetTrack(data, state.timeline, this.track);
             var tmp = track;
             if (track.childs?.Length > 0)
             {
                 tmp = track.childs.Last();
             }
-            tr.parent = this.track;
             tr.parent.AddSub(tr);
             tr.parent.AddTrackChildData(data);
             int idx = TimelineWindow.inst.tree.IndexOfTrack(tmp);
@@ -68,14 +67,13 @@ namespace UnityEditor.Timeline
             XBindTrack btrack = track as XBindTrack;
             if (btrack)
             {
-                var go = (GameObject) EditorGUILayout.ObjectField("",btrack.bindObj, typeof(GameObject),false,
+                var go = (GameObject) EditorGUILayout.ObjectField("", btrack.bindObj, typeof(GameObject), false,
                     GUILayout.MaxWidth(80));
                 if (go)
                 {
                     string path = AssetDatabase.GetAssetPath(go);
                     btrack.Rebind(path);
                 }
-               
             }
             EditorGUILayout.Space();
         }

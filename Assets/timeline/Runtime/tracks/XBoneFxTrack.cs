@@ -10,9 +10,9 @@ namespace UnityEngine.Timeline
         {
             get
             {
-                if (parent && parent is XBindTrack)
+                if (parent && parent is XBindTrack track)
                 {
-                    return (parent as XBindTrack).bindObj;
+                    return track.bindObj;
                 }
                 return null;
             }
@@ -36,6 +36,7 @@ namespace UnityEngine.Timeline
         {
             return new XBoneFxClip(this, data);
         }
+
 
         public override string ToString()
         {

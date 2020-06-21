@@ -6,7 +6,7 @@ namespace UnityEngine.Timeline
 {
     public class XTimelineFactory
     {
-        public static XTrack GetTrack(TrackData data, XTimeline tl)
+        public static XTrack GetTrack(TrackData data, XTimeline tl, XTrack parent = null)
         {
             XTrack xTrack = null;
             switch (data.type)
@@ -38,6 +38,10 @@ namespace UnityEngine.Timeline
             }
             if (xTrack)
             {
+                if (parent)
+                {
+                    xTrack.parent = parent;
+                }
                 xTrack.OnPostBuild();
             }
             return xTrack;

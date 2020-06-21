@@ -35,13 +35,48 @@ namespace UnityEditor.Timeline
             }, null);
         }
 
+        private Object bone, prefab;
+
         protected override void OnInspectorClip(IClip c)
         {
             base.OnInspectorClip(c);
             XBoneFxClip xc = c as XBoneFxClip;
             var data = c.data as BoneFxClipData;
-            data.bone = EditorGUILayout.TextField("bone", data.bone);
-            EditorGUILayout.ObjectField("fx", xc.fx, typeof(GameObject), true);
+            prefab = EditorGUILayout.ObjectField("prefab", xc.fx, typeof(GameObject), false);
+            if (prefab)
+            {
+                xc.fx = (GameObject) prefab;
+            }
+            else if (!string.IsNullOrEmpty(data.prefab))
+            {
+                xc.fx = AssetDatabase.LoadAssetAtPath<GameObject>(data.prefab);
+            }
+            if (!string.IsNullOrEmpty(data.prefab))
+            {
+                EditorGUILayout.LabelField("fx: " + data.prefab);
+            }
+            bone = EditorGUILayout.ObjectField("bone", bone, typeof(GameObject), true);
+            if (bone)
+            {
+                GameObject g = bone as GameObject;
+                data.bone = GetHieracyPath(g.transform);
+            }
+            else if (!string.IsNullOrEmpty(data.bone))
+            {
+                bone = AssetDatabase.LoadAssetAtPath<GameObject>(data.bone);
+            }
+            if (!string.IsNullOrEmpty(data.bone)) EditorGUILayout.LabelField("bone: " + data.bone);
+        }
+
+        private string GetHieracyPath(Transform b)
+        {
+            string p = string.Empty;
+            if (b.parent != null)
+            {
+                p = string.IsNullOrEmpty(p) ? b.name : b.name + "/" + p;
+                b = b.parent;
+            }
+            return p;
         }
     }
 }

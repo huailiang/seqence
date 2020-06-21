@@ -39,6 +39,27 @@
         <TrackData>
           <clips>
             <ClipData xsi:type="BoneFxClipData">
+              <start>6.97038746</start>
+              <duration>20</duration>
+              <prefab>Assets/test/Particle Syste_water.prefab</prefab>
+              <seed>0</seed>
+              <pos>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </pos>
+              <rot>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rot>
+              <scale>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </scale>
+            </ClipData>
+            <ClipData xsi:type="BoneFxClipData">
               <start>21.9617233</start>
               <duration>20</duration>
               <prefab>Assets/test/Particle Syste_fire.prefab</prefab>
@@ -58,6 +79,7 @@
                 <y>0</y>
                 <z>0</z>
               </scale>
+              <bone>Cube</bone>
             </ClipData>
           </clips>
           <type>BoneFx</type>
@@ -180,7 +202,7 @@
         </ClipData>
         <ClipData xsi:type="LogicClipData">
           <start>15.4306211</start>
-          <duration>9.61244</duration>
+          <duration>8.587381</duration>
           <logicType>
             <LogicType>BeHit</LogicType>
             <LogicType>HP</LogicType>
@@ -192,7 +214,7 @@
         </ClipData>
         <ClipData xsi:type="LogicClipData">
           <start>25.1913853</start>
-          <duration>12.0526333</duration>
+          <duration>9.865847</duration>
           <logicType>
             <LogicType>HP</LogicType>
             <LogicType>BeHit</LogicType>
