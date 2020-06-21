@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace UnityEngine.Timeline
 {
@@ -7,36 +7,107 @@ namespace UnityEngine.Timeline
         void Dispose();
     }
 
+
+    public class LinkNode<T> where T : new()
+    {
+        public LinkNode<T> next;
+        public T Value { get; }
+
+        public LinkNode(T t)
+        {
+            this.Value = t;
+        }
+    }
+
+
+    // 基于单向链表实现的队列，便于插入和删除，不适合查找
+    public sealed class LinkQueue<T> where T : new()
+    {
+        private LinkNode<T> _head, _tail;
+        private int cnt = 0;
+
+        public int Count
+        {
+            get { return cnt; }
+        }
+
+        public void Enqueue(T it)
+        {
+            cnt++;
+            var n = new LinkNode<T>(it);
+            if (_head == null)
+            {
+                _head = n;
+                _tail = _head;
+            }
+            else
+            {
+                _tail.next = n;
+            }
+            _tail = n;
+        }
+
+        public T Dequeue()
+        {
+            if (cnt <= 0)
+            {
+                throw new Exception("link queue is null");
+            }
+            var v = _head.Value;
+            if (_head.next != null)
+            {
+                _head = _head.next;
+            }
+            else
+            {
+                _tail = null;
+                _head = null;
+            }
+            cnt--;
+            return v;
+        }
+
+        public void For(Action<T> cb)
+        {
+            var p = _head;
+            while (p != null)
+            {
+                cb(p.Value);
+                p = p.next;
+            }
+        }
+
+        public void Clear()
+        {
+            _head = null;
+            _tail = null;
+            cnt = 0;
+        }
+    }
+
     public class SharedObjects<T> where T : ISharedObject, new()
     {
-        private static LinkedList<T> listPool = new LinkedList<T>();
+        private static LinkQueue<T> queue = new LinkQueue<T>();
 
         public static T Get()
         {
-            if (listPool.Count <= 0)
+            if (queue.Count <= 0)
             {
-                T t = new T();
-                listPool.AddLast(t);
-                return t;
+                return new T();
             }
-            var t2 = listPool.First.Value;
-            listPool.RemoveFirst();
-            return t2;
+            return queue.Dequeue();
         }
 
         public static void Return(T obj)
         {
             obj.Dispose();
-            listPool.AddLast(obj);
+            queue.Enqueue(obj);
         }
 
         public static void Clean()
         {
-            foreach (var it in listPool)
-            {
-                it.Dispose();
-            }
-            listPool.Clear();
+            queue.For(it => it.Dispose());
+            queue.Clear();
         }
     }
 }
