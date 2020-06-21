@@ -139,7 +139,7 @@ namespace UnityEditor.Timeline
             {
                 if (_titleStyle == null)
                 {
-                    _titleStyle = new GUIStyle();
+                    _titleStyle = new GUIStyle(EditorStyles.label);
                     _titleStyle.fontStyle = FontStyle.Bold;
                 }
                 return _titleStyle;

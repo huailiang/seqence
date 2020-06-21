@@ -24,7 +24,13 @@ namespace UnityEditor.Timeline
 
         public void Inspector()
         {
+            GUILayout.BeginHorizontal();
+            GUIContent cont = TimelineWindow.inst.state.config.GetIcon(baseMarker.type);
             EditorGUILayout.LabelField(baseMarker.type.ToString(), TimelineStyles.titleStyle);
+            GUILayout.Space(4);
+            GUILayout.Box(cont, GUIStyle.none, GUILayout.MaxWidth(10), GUILayout.MaxHeight(12));
+            GUILayout.EndHorizontal();
+
             baseMarker.time = EditorGUILayout.FloatField(" time", baseMarker.time);
             baseMarker.reverse = EditorGUILayout.Toggle(" reverse", baseMarker.reverse);
             OnInspector();

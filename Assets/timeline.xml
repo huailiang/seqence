@@ -267,5 +267,55 @@
       </clips>
       <type>SceneFx</type>
     </TrackData>
+    <TrackData xsi:type="BindTrackData">
+      <clips>
+        <ClipData xsi:type="AnimClipData">
+          <start>9.9539175</start>
+          <duration>12.6129026</duration>
+          <anim>Assets/test/pos.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>true</loop>
+        </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>22.81106</start>
+          <duration>11.1405525</duration>
+          <anim>Assets/test/BlackBeard_anxuedao_start.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>false</loop>
+        </ClipData>
+      </clips>
+      <childs>
+        <TrackData>
+          <clips>
+            <ClipData xsi:type="BoneFxClipData">
+              <start>19.2857151</start>
+              <duration>20</duration>
+              <prefab>Assets/test/Particle Syste_water.prefab</prefab>
+              <seed>0</seed>
+              <pos>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </pos>
+              <rot>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rot>
+              <scale>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </scale>
+            </ClipData>
+          </clips>
+          <type>BoneFx</type>
+        </TrackData>
+      </childs>
+      <type>Animation</type>
+      <prefab />
+    </TrackData>
   </tracks>
 </TimelineConfig>

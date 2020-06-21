@@ -372,7 +372,7 @@ namespace UnityEditor.Timeline
 
         public void OnInspector()
         {
-            using (GUIColorOverride color = new GUIColorOverride(Color.green))
+            using (GUIColorOverride color = new GUIColorOverride(trackColor))
             {
                 trackF = EditorGUILayout.Foldout(trackF, trackHeader);
             }
@@ -384,7 +384,7 @@ namespace UnityEditor.Timeline
                 {
                     foreach (var clip in track.clips)
                     {
-                        EditorGUILayout.LabelField(" clip" + (++i) + ": " + clip.Display, TimelineStyles.titleStyle);
+                        EditorGUILayout.LabelField(" clip" + (++i) + ": " + clip.Display,TimelineStyles.titleStyle);
                         OnInspectorClip(clip);
                     }
                 }
