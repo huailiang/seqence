@@ -195,8 +195,18 @@ namespace UnityEditor.Timeline
 
         private void StartRecd()
         {
-            go = GameObject.Find("root");
-            recoding = true;
+            if (track.parent)
+            {
+                if (track.parent is XBindTrack bind && bind.bindObj != null)
+                {
+                    go = bind.bindObj;
+                    recoding = true;
+                }
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("warn", "parent track is null or not bind", "ok");
+            }
         }
 
         private void StopRecd()

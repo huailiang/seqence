@@ -1,3 +1,4 @@
+using System;
 using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
@@ -6,15 +7,20 @@ namespace UnityEngine.Timeline
     [UseParent(typeof(XAnimationTrack))]
     public class XTransformTrack : XTrack
     {
+        private GameObject _target;
+
         public GameObject target
         {
             get
             {
-                if (parent && parent is XBindTrack track)
+                if (_target == null)
                 {
-                    return track.bindObj;
+                    if (parent && parent is XBindTrack track)
+                    {
+                        _target = track.bindObj;
+                    }
                 }
-                return null;
+                return _target;
             }
         }
 
@@ -32,7 +38,7 @@ namespace UnityEngine.Timeline
 
         public override XTrack Clone()
         {
-            throw new System.NotImplementedException();
+            return new XTransformTrack(timeline, data);
         }
 
         public XTransformTrack(XTimeline tl, TrackData data) : base(tl, data)
@@ -40,6 +46,39 @@ namespace UnityEngine.Timeline
             _data = (TransformTrackData) data;
         }
 
+        public bool Sample(float time, out Vector3 pos, out Vector3 rot)
+        {
+            if (_data == null || _data.time.Length < 1)
+            {
+                throw new Exception("transform track error");
+            }
+            int len = _data.time.Length;
+            if (time < _data.time[0])
+            {
+                pos = _data.pos[0];
+                rot = _data.rot[0];
+                return true;
+            }
+            else if (time > _data.time[len - 1])
+            {
+                pos = _data.pos[len - 1];
+                rot = _data.rot[len - 1];
+                return true;
+            }
+            for (int i = 0; i < len - 1; i++)
+            {
+                if (time >= _data.time[i] && time <= _data.time[i + 1])
+                {
+                    float dt = (time - _data.time[i]) / (_data.time[i + 1] - _data.time[i]);
+                    pos = Vector3.Lerp(_data.pos[i], _data.pos[i + 1], dt);
+                    rot = Vector3.Lerp(_data.rot[i], _data.rot[i + 1], dt);
+                    return true;
+                }
+            }
+            pos = Vector3.zero;
+            rot = Vector3.zero;
+            return false;
+        }
 
         public void AddItem(float t, Vector3 pos, Vector3 rot)
         {
@@ -100,9 +139,22 @@ namespace UnityEngine.Timeline
             return false;
         }
 
+        public override void Process(float time, float prev)
+        {
+            if (!mute)
+            {
+                if (target != null)
+                {
+                    Sample(time, out var pos, out var rot);
+                    target.transform.localPosition = pos;
+                    target.transform.localRotation = Quaternion.Euler(rot);
+                }
+            }
+        }
+
         protected override IClip BuildClip(ClipData data)
         {
-            throw new System.NotImplementedException();
+            throw new Exception("transform no clip");
         }
     }
 }
