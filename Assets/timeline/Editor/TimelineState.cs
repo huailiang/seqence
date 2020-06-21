@@ -57,7 +57,7 @@ namespace UnityEditor.Timeline
         public void CreateTimeline(string path)
         {
             this.path = path;
-            TimelineInspector.inst.OnRebuild();
+            TimelineInspector.inst?.OnRebuild();
             TimelineConfig xconf = new TimelineConfig();
             xconf.tracks = new TrackData[1];
             TrackData data = new TrackData();
@@ -72,7 +72,7 @@ namespace UnityEditor.Timeline
         public void Open(string path)
         {
             this.path = path;
-            TimelineInspector.inst.OnRebuild();
+            TimelineInspector.inst?.OnRebuild();
             timeline = new XTimeline(path);
         }
 
@@ -84,7 +84,7 @@ namespace UnityEditor.Timeline
                 timeline.config.Write(path);
                 var p = path.Replace(".bytes", ".xml");
                 timeline.config.WriteXml(p);
-                TimelineInspector.inst.OnRebuild();
+                TimelineInspector.inst?.OnRebuild();
             }
             else
             {

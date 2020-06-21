@@ -115,7 +115,7 @@ namespace UnityEngine.Timeline
                     marks = new XMarker[len];
                     for (int i = 0; i < len; i++)
                     {
-                        marks[i] = BuildMark(data.marks[i]);
+                        marks[i] = XTimelineFactory.GetMarker(this, data.marks[i]);
                     }
                 }
 
@@ -204,11 +204,6 @@ namespace UnityEngine.Timeline
         }
 
         protected abstract IClip BuildClip(ClipData data);
-
-        protected XMarker BuildMark(MarkData data)
-        {
-            return new XMarker(this, data);
-        }
 
         public virtual void OnPostBuild()
         {

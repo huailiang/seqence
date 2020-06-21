@@ -13,9 +13,9 @@ namespace UnityEngine.Timeline
             set { _data.active = value; }
         }
 
-        public XActiveMark(XTrack track, ActiveMarkData markData) : base(track, markData)
+        public XActiveMark(XTrack track, MarkData markData) : base(track, markData)
         {
-            _data = markData;
+            _data = (ActiveMarkData)markData;
         }
 
         public override void OnTriger()

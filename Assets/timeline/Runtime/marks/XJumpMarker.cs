@@ -13,9 +13,9 @@ namespace UnityEngine.Timeline
             set { _data.jump = value; }
         }
 
-        public XJumpMarker(XTrack track, JumpMarkData data) : base(track, data)
+        public XJumpMarker(XTrack track, MarkData data) : base(track, data)
         {
-            _data = data;
+            _data = (JumpMarkData) data;
         }
 
 

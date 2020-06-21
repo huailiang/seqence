@@ -13,9 +13,9 @@ namespace UnityEngine.Timeline
             set { _data.slowRate = value; }
         }
 
-        public XSlowMarker(XTrack track, SlowMarkData data) : base(track, data)
+        public XSlowMarker(XTrack track, MarkData data) : base(track, data)
         {
-            _data = data;
+            _data = (SlowMarkData) data;
         }
 
         public override void OnTriger()

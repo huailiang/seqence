@@ -2,57 +2,28 @@
 <TimelineConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <tracks>
     <TrackData>
-      <marks />
+      <marks>
+        <MarkData xsi:type="JumpMarkData">
+          <time>17.2022152</time>
+          <reverse>false</reverse>
+          <jump>0</jump>
+        </MarkData>
+      </marks>
       <type>Marker</type>
     </TrackData>
     <TrackData xsi:type="BindTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>11.4362411</start>
-          <duration>10.7449665</duration>
-          <anim>Assets/test/pos.anim</anim>
+          <start>10.9695282</start>
+          <duration>6.33333349</duration>
+          <anim>Assets/test/Camera_cutscene_opening.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>0</trim_end>
-          <loop>true</loop>
+          <loop>false</loop>
         </ClipData>
       </clips>
       <type>Animation</type>
       <prefab />
-    </TrackData>
-    <TrackData>
-      <clips>
-        <ClipData xsi:type="LogicClipData">
-          <start>12.9664431</start>
-          <duration>16</duration>
-        </ClipData>
-      </clips>
-      <type>LogicValue</type>
-    </TrackData>
-    <TrackData>
-      <clips>
-        <ClipData xsi:type="SceneFxClipData">
-          <start>14.09396</start>
-          <duration>20</duration>
-          <prefab>Assets/test/Particle Syste_water.prefab</prefab>
-          <seed>0</seed>
-          <pos>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </pos>
-          <rot>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </rot>
-          <scale>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </scale>
-        </ClipData>
-      </clips>
-      <type>SceneFx</type>
     </TrackData>
   </tracks>
 </TimelineConfig>

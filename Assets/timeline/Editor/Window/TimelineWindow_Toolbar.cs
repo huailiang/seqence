@@ -98,12 +98,9 @@ namespace UnityEditor.Timeline
         {
             if (GUILayout.Button(TimelineStyles.newContent, EditorStyles.toolbarButton))
             {
-                if (state.timeline != null)
+                if (state.timeline != null && EditorUtility.DisplayDialog("warn", "save current", "save", "cancel"))
                 {
-                    if (EditorUtility.DisplayDialog("warn", "save current", "save", "cancel"))
-                    {
-                        DoSave();
-                    }
+                    DoSave();
                 }
                 else
                 {

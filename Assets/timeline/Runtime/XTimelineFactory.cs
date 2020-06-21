@@ -50,9 +50,8 @@ namespace UnityEngine.Timeline
             {
                 ret = AssetType.Animation;
             }
-            else if (type== typeof(XPostprocessTrack))
+            else if (type == typeof(XPostprocessTrack))
             {
-                
             }
             return ret;
         }
@@ -118,6 +117,24 @@ namespace UnityEngine.Timeline
             return data;
         }
 
+        public static XMarker GetMarker(XTrack track, MarkData data)
+        {
+            XMarker marker = null;
+            switch (data.type)
+            {
+                case MarkType.Active:
+                    marker = new XActiveMark(track, data);
+                    break;
+                case MarkType.Jump:
+                    marker = new XJumpMarker(track, data);
+                    break;
+                case MarkType.Slow:
+                    marker = new XSlowMarker(track, data);
+                    break;
+            }
+            return marker;
+        }
+
         public static MarkData CreateMarkData(BinaryReader reader)
         {
             MarkType type = (MarkType) reader.ReadInt32();
@@ -144,7 +161,7 @@ namespace UnityEngine.Timeline
                     clip = new SceneFxClipData();
                     break;
                 case AssetType.LogicValue:
-                    clip =new LogicClipData();
+                    clip = new LogicClipData();
                     break;
                 default:
                     Debug.Log("unknown clip " + type);
