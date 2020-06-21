@@ -70,8 +70,26 @@
             <float>25.83732</float>
             <float>34.30622</float>
             <float>39.9043045</float>
+            <float>17.0607033</float>
+            <float>5.047923</float>
+            <float>7.02875376</float>
           </time>
           <pos>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
             <Vector3>
               <x>0</x>
               <y>0</y>
@@ -124,12 +142,27 @@
               <y>0</y>
               <z>0</z>
             </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
           </rot>
           <select>false</select>
         </TrackData>
       </childs>
       <type>Animation</type>
-      <prefab />
+      <prefab>Assets/test/root.prefab</prefab>
     </TrackData>
     <TrackData>
       <clips>

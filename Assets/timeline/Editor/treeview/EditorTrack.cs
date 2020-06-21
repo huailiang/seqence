@@ -116,10 +116,14 @@ namespace UnityEditor.Timeline
             }
 
             pm.AddSeparator("");
+            bool hasClip = track.clips != null;
             if (allowClip && !locked)
             {
                 pm.AddItem(_addclip, false, AddClip, e.mousePosition);
-                pm.AddItem(_delete, false, DeleteClip, e.mousePosition);
+                if (hasClip)
+                    pm.AddItem(_delete, false, DeleteClip, e.mousePosition);
+                else
+                    pm.AddDisabledItem(_delete, false);
             }
             else
             {
@@ -214,7 +218,6 @@ namespace UnityEditor.Timeline
                 if (GUILayout.Button(TimelineStyles.empty, TimelineStyles.locked))
                     track.SetFlag(TrackMode.Lock, false);
             var tree = TimelineWindow.inst.tree;
-            int idx = tree.IndexOfTrack(track);
             if (track.hasChilds)
             {
                 if (GUILayout.Button(TimelineStyles.sequenceSelectorIcon, TimelineStyles.bottomShadow))
@@ -275,17 +278,6 @@ namespace UnityEditor.Timeline
                 GUI.Box(rect, "", TimelineStyles.lockedBG);
             }
             OnGUIContent();
-        }
-
-        void DrawMarkItem(XMarker mark)
-        {
-            float x = TimelineWindow.inst.TimeToPixel(mark.time);
-            Rect tmp = rect;
-            tmp.x = x;
-            tmp.y = rect.y + rect.height / 4;
-            tmp.width = 20;
-            GUIContent cont = TimelineWindow.inst.state.config.GetIcon(mark.type);
-            GUI.Box(tmp, cont, GUIStyle.none);
         }
 
         protected virtual void OnGUIContent()

@@ -68,10 +68,14 @@ namespace UnityEditor.Timeline
             XBindTrack btrack = track as XBindTrack;
             if (btrack)
             {
-#pragma warning disable 618
-                btrack.bindObj =
-                    (GameObject) EditorGUILayout.ObjectField(btrack.bindObj, typeof(Animator), GUILayout.MaxWidth(80));
-#pragma warning restore 618
+                var go = (GameObject) EditorGUILayout.ObjectField("",btrack.bindObj, typeof(GameObject),false,
+                    GUILayout.MaxWidth(80));
+                if (go)
+                {
+                    string path = AssetDatabase.GetAssetPath(go);
+                    btrack.Rebind(path);
+                }
+               
             }
             EditorGUILayout.Space();
         }
