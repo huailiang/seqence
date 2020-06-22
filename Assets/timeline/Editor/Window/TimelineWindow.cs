@@ -32,7 +32,7 @@ namespace UnityEditor.Timeline
             if (inst == null) inst = this;
             state?.Update();
         }
-
+        
         void OnGUI()
         {
             TransportToolbarGUI();

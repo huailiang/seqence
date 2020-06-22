@@ -16,7 +16,7 @@ namespace UnityEditor.Timeline
 
         protected override Color trackColor
         {
-            get { return new Color(0.5f, 0.7f, 0.3f); }
+            get { return new Color(0f, 1.0f, 0.8f); }
         }
 
         protected override string trackHeader
