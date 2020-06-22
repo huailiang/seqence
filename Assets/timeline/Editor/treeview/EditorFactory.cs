@@ -81,6 +81,11 @@ namespace UnityEditor.Timeline
                 data = new TrackData();
                 data.type = AssetType.LogicValue;
             }
+            else if (type == typeof(XGroupTrack))
+            {
+                data = new TrackData();
+                data.type = AssetType.Group;
+            }
             else
             {
                 throw new Exception("not implement trackdata for default");

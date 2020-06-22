@@ -32,6 +32,9 @@ namespace UnityEngine.Timeline
                 case AssetType.LogicValue:
                     xTrack = new XLogicValueTrack(tl, data);
                     break;
+                case AssetType.Group:
+                    xTrack = new XGroupTrack(tl, data);
+                    break;
                 default:
                     Debug.LogError("unknown track " + data.type);
                     break;

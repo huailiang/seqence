@@ -27,6 +27,11 @@ namespace UnityEditor.Timeline
             get { return track.ID; }
         }
 
+        protected virtual bool ignoreDraw
+        {
+            get { return false; }
+        }
+
         protected virtual Color trackColor
         {
             get { return Color.red; }
@@ -76,17 +81,17 @@ namespace UnityEditor.Timeline
             EditorGUI.DrawRect(head, headColor);
             Rect tmp = head;
             tmp.width = 4;
-            EditorGUI.DrawRect(tmp, trackColor);
+            if (!ignoreDraw) EditorGUI.DrawRect(tmp, trackColor);
 
             EditorGUI.DrawRect(rect, backgroundColor);
             tmp = rect;
             tmp.height = 2;
             tmp.y = rect.y + rect.height - 2;
-            EditorGUI.DrawRect(tmp, trackColor * 0.9f);
+            if (!ignoreDraw) EditorGUI.DrawRect(tmp, trackColor * 0.9f);
 
             GUIHeader();
             GUIContent();
-            ProcessEvent();
+            if (!ignoreDraw) ProcessEvent();
         }
 
         protected void ProcessEvent()
@@ -335,7 +340,7 @@ namespace UnityEditor.Timeline
             }
         }
 
-        private void DeleteTrack()
+        protected void DeleteTrack()
         {
             TimelineWindow.inst.tree.RmTrack(this);
             track.Remove(TimelineWindow.inst.timeline);
@@ -372,28 +377,32 @@ namespace UnityEditor.Timeline
 
         public void OnInspector()
         {
-            using (GUIColorOverride color = new GUIColorOverride(trackColor))
+            if (ignoreDraw)
             {
-                trackF = EditorGUILayout.Foldout(trackF, trackHeader);
-            }
-            if (trackF)
-            {
-                OnInspectorTrack();
-                int i = 0;
-                if (track.clips != null)
+                using (GUIColorOverride color = new GUIColorOverride(trackColor))
                 {
-                    foreach (var clip in track.clips)
-                    {
-                        EditorGUILayout.LabelField(" clip" + (++i) + ": " + clip.Display,TimelineStyles.titleStyle);
-                        OnInspectorClip(clip);
-                    }
+                    trackF = EditorGUILayout.Foldout(trackF, trackHeader);
                 }
-                if (track.marks != null)
+                if (trackF)
                 {
-                    SetupEMarks();
-                    foreach (var mark in emarks)
+                    OnInspectorTrack();
+                    int i = 0;
+                    if (track.clips != null)
                     {
-                        mark.Inspector();
+                        foreach (var clip in track.clips)
+                        {
+                            EditorGUILayout.LabelField(" clip" + (++i) + ": " + clip.Display,
+                                TimelineStyles.titleStyle);
+                            OnInspectorClip(clip);
+                        }
+                    }
+                    if (track.marks != null)
+                    {
+                        SetupEMarks();
+                        foreach (var mark in emarks)
+                        {
+                            mark.Inspector();
+                        }
                     }
                 }
             }

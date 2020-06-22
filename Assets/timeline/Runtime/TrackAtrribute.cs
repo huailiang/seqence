@@ -18,6 +18,11 @@ namespace UnityEngine.Timeline
             get { return (flag & TrackFlag.SubOnly) > 0; }
         }
 
+        public bool isOnlyRoot
+        {
+            get { return (flag & TrackFlag.RootOnly) > 0; }
+        }
+
         public bool allowClip
         {
             get

@@ -32,7 +32,7 @@ namespace UnityEditor.Timeline
             if (inst == null) inst = this;
             state?.Update();
         }
-        
+
         void OnGUI()
         {
             TransportToolbarGUI();
@@ -56,19 +56,16 @@ namespace UnityEditor.Timeline
 
         private void EventMenuHandler()
         {
-            if (tree != null)
+            Rect rt = winArea;
+            rt.y = tree.TracksBtmY;
+            var e = Event.current;
+            if (e.type == EventType.ContextClick && rt.Contains(e.mousePosition))
             {
-                Rect rt = winArea;
-                rt.y = tree.TracksBtmY;
-                var e = Event.current;
-                if (e.type == EventType.ContextClick && rt.Contains(e.mousePosition))
-                {
-                    GenCustomMenu();
-                }
-                else if (e.type == EventType.Layout)
-                {
-                    TimelineInspector.inst?.Repaint();
-                }
+                GenCustomMenu();
+            }
+            else if (e.type == EventType.Layout)
+            {
+                TimelineInspector.inst?.Repaint();
             }
         }
 

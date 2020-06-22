@@ -30,7 +30,7 @@ namespace UnityEditor.Timeline
             }
         }
 
-        private void GenCustomMenu()
+        public void GenCustomMenu()
         {
             GenericMenu pm = new GenericMenu();
             bool cd = (state.timeline.trackTrees.Length > 1);
@@ -57,6 +57,8 @@ namespace UnityEditor.Timeline
                 pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Lock All tracks \t #l"), false);
             }
             pm.AddSeparator("");
+            pm.AddItem(EditorGUIUtility.TrTextContent("Add XGroupTrack"), false, OnAddTrackItem, typeof(XGroupTrack));
+            
             var types = TypeUtilities.AllRootTrackExcMarkers();
             for (int i = 0; i < types.Count; i++)
             {
@@ -64,10 +66,11 @@ namespace UnityEditor.Timeline
                 int idx = str.LastIndexOf('.');
                 if (idx >= 0)
                 {
-                    str = str.Substring(idx + 1);
+                    str ="Add "+ str.Substring(idx + 1);
                 }
                 pm.AddItem(EditorGUIUtility.TrTextContent(str), false, OnAddTrackItem, types[i]);
             }
+
             Rect rect = new Rect(Event.current.mousePosition, new Vector2(200, 0));
             pm.DropDown(rect);
         }

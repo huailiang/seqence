@@ -61,7 +61,7 @@ namespace UnityEditor.Timeline
             foreach (var track in tracks)
             {
                 var flag = (TrackFlagAttribute) Attribute.GetCustomAttribute(track, typeof(TrackFlagAttribute));
-                if (!flag.isOnlySub)
+                if (flag != null && flag.isOnlyRoot)
                 {
                     ret.Add(track);
                 }

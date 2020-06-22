@@ -12,13 +12,14 @@ namespace UnityEngine.Timeline.Data
     public enum AssetType
     {
         None = 0,
-        Marker = 1,
-        BoneFx = 1 << 1,
-        SceneFx = 1 << 2,
-        Animation = 1 << 3,
-        PostProcess = 1 << 4,
-        Transform = 1 << 5,
-        LogicValue = 1 << 6,
+        Group = 1,
+        Marker = 1 << 1,
+        BoneFx = 1 << 2,
+        SceneFx = 1 << 3,
+        Animation = 1 << 4,
+        PostProcess = 1 << 5,
+        Transform = 1 << 6,
+        LogicValue = 1 << 7,
     }
 
     [Serializable]
