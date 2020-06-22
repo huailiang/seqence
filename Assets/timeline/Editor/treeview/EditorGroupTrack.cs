@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -10,6 +9,10 @@ namespace UnityEditor.Timeline
     [TimelineEditor(typeof(XGroupTrack))]
     public class EditorGroupTrack : EditorTrack
     {
+        private Rect area;
+
+        private string _title = String.Empty;
+
         protected override bool ignoreDraw
         {
             get { return true; }
@@ -22,17 +25,27 @@ namespace UnityEditor.Timeline
 
         protected override string trackHeader
         {
-            get { return "Group" + ID; }
+            get
+            {
+                if (string.IsNullOrEmpty(_title))
+                {
+                    return "Group" + ID;
+                }
+                else
+                {
+                    return _title + " " + ID;
+                }
+            }
         }
 
 
         protected override void OnGUIContent()
         {
             base.OnGUIContent();
-            Rect rt = rect;
-            rt.x = head.x;
-            rt.width = TimelineWindow.inst.winArea.width;
-            EditorGUI.DrawRect(rt, trackColor);
+            area = rect;
+            area.x = head.x;
+            area.width = TimelineWindow.inst.winArea.width;
+            EditorGUI.DrawRect(area, trackColor);
 
             GroupMenu();
         }
@@ -43,7 +56,7 @@ namespace UnityEditor.Timeline
             var e = Event.current;
             if (e.type == EventType.ContextClick)
             {
-                if (triger)
+                if (area.Contains(e.mousePosition))
                 {
                     GenericMenu pm = new GenericMenu();
                     var types = TypeUtilities.AllRootTrackExcMarkers();
@@ -57,16 +70,28 @@ namespace UnityEditor.Timeline
                         }
                         pm.AddItem(EditorGUIUtility.TrTextContent(str), false, OnAddTrackItem, types[i]);
                     }
-                    if (track.childs?.Length > 0)
+                    var del = EditorGUIUtility.TrTextContent("Delete Track");
+                    if (track.childs == null || track.childs.Length <= 0)
                     {
                         pm.AddSeparator("");
-                        pm.AddItem(EditorGUIUtility.TrTextContent("Delete Track"), false, DeleteTrack);
+                        pm.AddItem(del, false, DeleteTrack);
+                    }
+                    else
+                    {
+                        pm.AddDisabledItem(del, false);
                     }
                     pm.ShowAsContext();
+                    e.Use();
                 }
             }
         }
 
+
+        protected override void OnInspectorTrack()
+        {
+            base.OnInspectorTrack();
+            _title = EditorGUILayout.TextField(" comment:", _title);
+        }
 
         private void OnAddTrackItem(object arg)
         {

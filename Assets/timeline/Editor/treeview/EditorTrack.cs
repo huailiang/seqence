@@ -377,32 +377,30 @@ namespace UnityEditor.Timeline
 
         public void OnInspector()
         {
-            if (ignoreDraw)
+            var c = trackColor;
+            c.a = 1;
+            using (new GUIColorOverride(c))
             {
-                using (GUIColorOverride color = new GUIColorOverride(trackColor))
+                trackF = EditorGUILayout.Foldout(trackF, trackHeader);
+            }
+            if (trackF)
+            {
+                OnInspectorTrack();
+                int i = 0;
+                if (track.clips != null)
                 {
-                    trackF = EditorGUILayout.Foldout(trackF, trackHeader);
-                }
-                if (trackF)
-                {
-                    OnInspectorTrack();
-                    int i = 0;
-                    if (track.clips != null)
+                    foreach (var clip in track.clips)
                     {
-                        foreach (var clip in track.clips)
-                        {
-                            EditorGUILayout.LabelField(" clip" + (++i) + ": " + clip.Display,
-                                TimelineStyles.titleStyle);
-                            OnInspectorClip(clip);
-                        }
+                        EditorGUILayout.LabelField(" clip" + (++i) + ": " + clip.Display, TimelineStyles.titleStyle);
+                        OnInspectorClip(clip);
                     }
-                    if (track.marks != null)
+                }
+                if (track.marks != null)
+                {
+                    SetupEMarks();
+                    foreach (var mark in emarks)
                     {
-                        SetupEMarks();
-                        foreach (var mark in emarks)
-                        {
-                            mark.Inspector();
-                        }
+                        mark.Inspector();
                     }
                 }
             }
