@@ -401,5 +401,53 @@
       <type>Animation</type>
       <prefab>Assets/test/root 1.prefab</prefab>
     </TrackData>
+    <TrackData>
+      <clips>
+        <ClipData xsi:type="LogicClipData">
+          <start>3.73149061</start>
+          <duration>16</duration>
+        </ClipData>
+        <ClipData xsi:type="LogicClipData">
+          <start>27.3050346</start>
+          <duration>16</duration>
+        </ClipData>
+      </clips>
+      <type>LogicValue</type>
+    </TrackData>
+    <TrackData>
+      <clips>
+        <ClipData xsi:type="PostprocessData">
+          <start>7.04837132</start>
+          <duration>16.9792652</duration>
+        </ClipData>
+      </clips>
+      <type>PostProcess</type>
+    </TrackData>
+    <TrackData>
+      <clips>
+        <ClipData xsi:type="SceneFxClipData">
+          <start>1.2438302</start>
+          <duration>20</duration>
+          <prefab>Assets/test/Particle Syste_water.prefab</prefab>
+          <seed>0</seed>
+          <pos>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </pos>
+          <rot>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rot>
+          <scale>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </scale>
+        </ClipData>
+      </clips>
+      <type>SceneFx</type>
+    </TrackData>
   </tracks>
 </TimelineConfig>

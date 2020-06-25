@@ -77,7 +77,7 @@ namespace UnityEditor.Timeline
             Color c = TimelineStyles.timeCursor.normal.textColor * 0.6f;
             float x = WindowConstants.sliderWidth + 2;
             Rect rec = new Rect(x, WindowConstants.timeAreaYPosition, 1,
-                tree.TracksBtmY - WindowConstants.timeAreaYPosition);
+                tree.TracksBtmY - WindowConstants.timeAreaYPosition - 2);
             EditorGUI.DrawRect(rec, c);
         }
 

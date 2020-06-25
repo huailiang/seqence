@@ -49,9 +49,9 @@ namespace UnityEditor.Timeline
         {
             float colorDimFactor = EditorGUIUtility.isProSkin ? 0.7f : 0.9f;
             Color c = TimelineStyles.timeCursor.normal.textColor * colorDimFactor;
-            float time = state.timeline.Time + 0.1f;
+            float time = state.timeline.Time + 1.0f;
             time = m_TimeArea.TimeToPixel(time, timeAreaRect);
-            float h = tree.TracksBtmY - timeAreaRect.y;
+            float h = tree.TracksBtmY - timeAreaRect.y - 2;
             Rect rec = new Rect(time, timeAreaRect.y, 2, h);
             if (IsPiexlRange(time))
             {

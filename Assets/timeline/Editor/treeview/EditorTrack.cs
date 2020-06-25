@@ -112,10 +112,6 @@ namespace UnityEditor.Timeline
             if (!ignoreDraw) EditorGUI.DrawRect(tmp, trackColor);
 
             EditorGUI.DrawRect(RenderRect, backgroundColor);
-            tmp = RenderRect;
-            tmp.height = 2;
-            tmp.y = tmp.y + tmp.height - 2;
-            if (!ignoreDraw) EditorGUI.DrawRect(tmp, trackColor * 0.9f);
 
             GUIHeader();
             GUIContent();
