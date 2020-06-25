@@ -74,8 +74,6 @@ namespace UnityEditor.Timeline
 
         public readonly static Color colorRecordingClipOutline = new Color(1, 0, 0, 0.9f);
 
-        public readonly static Color colorAnimEditorBinding = new Color(54.0f / 255.0f, 54.0f / 255.0f, 54.0f / 255.0f);
-
         public readonly static Color colorInlineCurveOutOfRangeOverlay = new Color(0.0f, 0.0f, 0.0f, 0.5f);
 
         public readonly static Color markerHeaderDrawerBackgroundColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);

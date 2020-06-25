@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
+using Object = UnityEngine.Object;
 
 namespace UnityEditor.Timeline
 {
@@ -57,6 +58,7 @@ namespace UnityEditor.Timeline
         public void CreateTimeline(string path)
         {
             this.path = path;
+            CleanEnv();
             TimelineInspector.inst?.OnRebuild();
             TimelineConfig xconf = new TimelineConfig();
             xconf.tracks = new TrackData[1];
@@ -72,6 +74,7 @@ namespace UnityEditor.Timeline
         public void Open(string path)
         {
             this.path = path;
+            CleanEnv();
             TimelineInspector.inst?.OnRebuild();
             timeline = new XTimeline(path);
         }
@@ -169,5 +172,15 @@ namespace UnityEditor.Timeline
                 window.Repaint();
             }
         }
+
+        public static void CleanEnv()
+        {
+            var go = GameObject.Find("timeline");
+            if (go)
+            {
+                Object.DestroyImmediate(go);
+            }
+        }
+        
     }
 }

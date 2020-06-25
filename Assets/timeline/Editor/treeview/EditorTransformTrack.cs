@@ -201,6 +201,7 @@ namespace UnityEditor.Timeline
                 {
                     go = bind.bindObj;
                     recoding = true;
+                    TimelineWindow.inst.tree?.SetRecordTrack(this);
                 }
             }
             else

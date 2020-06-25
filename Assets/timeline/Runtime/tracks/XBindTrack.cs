@@ -24,6 +24,7 @@ namespace UnityEngine.Timeline
                 if (obj)
                 {
                     bindObj = obj;
+                    timeline.BindGo(bindObj);
                     (data as BindTrackData).prefab = prefab;
                     //childs & self
                     ForeachHierachyTrack(x => x.OnBind());

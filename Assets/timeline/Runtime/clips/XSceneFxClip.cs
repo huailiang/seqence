@@ -36,6 +36,7 @@ namespace UnityEngine.Timeline
             prefabGameObject = XResources.LoadGameObject(path);
             if (prefabGameObject != null)
             {
+                timeline.BindGo(prefabGameObject);
                 var tf = prefabGameObject.transform;
                 tf.position = pos;
                 tf.rotation = Quaternion.Euler(rot);
@@ -76,6 +77,7 @@ namespace UnityEngine.Timeline
                 prefabGameObject.SetActive(false);
             }
         }
+
 
         protected override void OnDestroy()
         {

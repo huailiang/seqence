@@ -14,6 +14,7 @@ namespace UnityEditor.Timeline
 
         private Vector2 scroll;
         private Rect posRect, viewRect, winRect;
+        private EditorTrack recordTrack;
 
         private GUIStyle vStyle
         {
@@ -238,6 +239,15 @@ namespace UnityEditor.Timeline
                 }
             }
             return false;
+        }
+
+        public void SetRecordTrack(EditorTrack tck)
+        {
+            if (recordTrack)
+            {
+                recordTrack.track.SetFlag(TrackMode.Record,false);
+            }
+            recordTrack = tck;
         }
     }
 }

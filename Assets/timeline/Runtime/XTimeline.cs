@@ -23,6 +23,7 @@ namespace UnityEngine.Timeline
         public TimelineConfig config;
         public XTrack[] trackTrees;
         public TimelinePlayMode mode;
+        private GameObject timelineRoot;
 
         private float prev;
         [Range(0, 1)] public float slow = 1;
@@ -74,7 +75,11 @@ namespace UnityEngine.Timeline
                 config = new TimelineConfig();
                 config.Read(path);
             }
-            if (config != null) Build();
+            if (config != null)
+            {
+                timelineRoot = new GameObject("timeline");
+                Build();
+            }
         }
 
         public XTimeline(TimelineConfig config)
@@ -134,6 +139,10 @@ namespace UnityEngine.Timeline
                 {
                     trackTrees[i].Dispose();
                 }
+            if (timelineRoot)
+            {
+                Object.Destroy(timelineRoot);
+            }
         }
 
         public float RecalcuteDuration()
@@ -161,6 +170,14 @@ namespace UnityEngine.Timeline
                 }
             }
             return dur;
+        }
+
+        public void BindGo(GameObject go)
+        {
+            if (timelineRoot!=null)
+            {
+                go.transform.parent = timelineRoot.transform;
+            }
         }
 
         public static implicit operator bool(XTimeline timeline)

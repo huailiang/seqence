@@ -119,11 +119,15 @@ namespace UnityEditor.Timeline
         protected void ProcessEvent()
         {
             var e = Event.current;
-            if (e.type == EventType.ContextClick)
+            if (triger)
             {
-                if (triger)
+                if (e.type == EventType.ContextClick)
                 {
                     TrackContexMenu(e);
+                }
+                else if (e.type == EventType.MouseUp && e.button == 0)
+                {
+                    SelectTrack(!@select);
                 }
             }
         }
