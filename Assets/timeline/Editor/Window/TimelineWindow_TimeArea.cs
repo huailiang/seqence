@@ -51,7 +51,8 @@ namespace UnityEditor.Timeline
             Color c = TimelineStyles.timeCursor.normal.textColor * colorDimFactor;
             float time = state.timeline.Time + 0.1f;
             time = m_TimeArea.TimeToPixel(time, timeAreaRect);
-            Rect rec = new Rect(time, timeAreaRect.y, 2, tree.TracksBtmY);
+            float h = tree.TracksBtmY - timeAreaRect.y;
+            Rect rec = new Rect(time, timeAreaRect.y, 2, h);
             if (IsPiexlRange(time))
             {
                 EditorGUI.DrawRect(rec, c);

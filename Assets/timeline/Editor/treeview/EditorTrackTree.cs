@@ -13,6 +13,14 @@ namespace UnityEditor.Timeline
         private int idx = 0;
         private float x, width, _y;
 
+        private Vector2 scroll;
+        private Rect posRect, viewRect, winRect;
+
+        private GUIStyle vStyle
+        {
+            get { return GUI.skin.verticalScrollbar; }
+        }
+
         public float TracksBtmY
         {
             get
@@ -20,7 +28,7 @@ namespace UnityEditor.Timeline
                 if (hierachy != null && hierachy.Count > 0)
                 {
                     var track = hierachy.Last();
-                    return track.rect.y + track.rect.height / 2;
+                    return track.rect.y + track.rect.height;
                 }
                 return WindowConstants.markerRowYPosition;
             }
@@ -43,10 +51,10 @@ namespace UnityEditor.Timeline
             {
                 throw new Exception("timeline is null");
             }
-            var winArea = state.window.winArea;
-            x =  WindowConstants.rightAreaMargn;
+            winRect = state.window.winArea;
+            x = WindowConstants.rightAreaMargn;
             _y = WindowConstants.trackRowYPosition;
-            width = winArea.width;
+            width = winRect.width;
             idx = 0;
             var trees = state.timeline.trackTrees;
             hierachy = new List<EditorTrack>();
@@ -74,9 +82,9 @@ namespace UnityEditor.Timeline
             EditorTrack etrack = EditorFactory.GetTrack(track);
             float y = _y + WindowConstants.RawHeight * idx + WindowConstants.rowGap * idx;
             int offset = track.parent ? 10 : 0;
-            etrack.rect = new Rect(x, y, width, WindowConstants.RawHeight);
-            etrack.head = new Rect(offset, y, WindowConstants.sliderWidth - offset, WindowConstants.RawHeight);
-
+            var rect = new Rect(x, y, width, WindowConstants.RawHeight);
+            var head = new Rect(offset, y, WindowConstants.sliderWidth - offset, WindowConstants.RawHeight);
+            etrack.SetRect(head, rect);
             idx++;
             list.Add(etrack);
             if (track.childs != null)
@@ -85,21 +93,6 @@ namespace UnityEditor.Timeline
                 {
                     Add(track.childs[i], list);
                 }
-            }
-        }
-
-        public void OnTrackHeightChange(EditorTrack track, float height)
-        {
-            float delta = 0;
-            for (int i = 0; i < hierachy.Count; i++)
-            {
-                var it = hierachy[i];
-                if (it.track.ID == track.track.ID)
-                {
-                    it.SetHeight(height);
-                    delta = height - it.rect.height;
-                }
-                it.YOffset(delta);
             }
         }
 
@@ -121,13 +114,14 @@ namespace UnityEditor.Timeline
             AddTrack(track, hierachy.Count);
         }
 
-        public void AddTrack(XTrack track, int idx,  bool repaint = true)
+        public void AddTrack(XTrack track, int idx, bool repaint = true)
         {
             EditorTrack etrack = EditorFactory.GetTrack(track);
             float y = _y + WindowConstants.RawHeight * idx + WindowConstants.rowGap * idx;
             float offset = track.parent ? 10 : 0;
-            etrack.rect = new Rect(x, y, width, WindowConstants.RawHeight);
-            etrack.head = new Rect(offset, y, WindowConstants.sliderWidth - offset, WindowConstants.RawHeight);
+            var rect = new Rect(x, y, width, WindowConstants.RawHeight);
+            var head = new Rect(offset, y, WindowConstants.sliderWidth - offset, WindowConstants.RawHeight);
+            etrack.SetRect(head, rect);
             hierachy.Add(etrack);
             int last = hierachy.Count - 1;
             for (int i = last; i > idx; i--)
@@ -172,21 +166,21 @@ namespace UnityEditor.Timeline
 
         public void RmTrack(EditorTrack track, bool repaint = true)
         {
-            int idx = -1;
+            int ix = -1;
             float delta = 0;
             for (int i = 0; i < hierachy.Count; i++)
             {
                 var it = hierachy[i];
                 if (it.ID == track.track.ID)
                 {
-                    idx = i;
+                    ix = i;
                     delta = track.rect.height + WindowConstants.rowGap;
                 }
                 it.YOffset(-delta);
             }
-            if (idx >= 0)
+            if (ix >= 0)
             {
-                hierachy.RemoveAt(idx);
+                hierachy.RemoveAt(ix);
             }
             if (repaint) TimelineWindow.inst.Repaint();
         }
@@ -197,10 +191,25 @@ namespace UnityEditor.Timeline
             {
                 BuildTreeHierachy(state);
             }
+            winRect = TimelineWindow.inst.winArea;
+            posRect = winRect;
+            posRect.x = x;
+            posRect.y = _y;
+            posRect.height = winRect.height - _y;
+            posRect.width = winRect.width - x;
+            viewRect = posRect;
+            viewRect.height = TracksBtmY - _y;
+            width = winRect.width;
+            GUI.BeginClip(new Rect(0, 0, width, TracksBtmY));
             for (int i = 0; i < hierachy.Count; i++)
             {
-                hierachy[i].OnGUI();
+                hierachy[i].OnGUI(scroll);
             }
+            GUI.EndClip();
+
+            bool vshow = viewRect.height > posRect.height;
+            scroll = GUI.BeginScrollView(posRect, scroll, viewRect, false, vshow);
+            GUI.EndScrollView();
         }
 
         public void ResetSelect(object arg)

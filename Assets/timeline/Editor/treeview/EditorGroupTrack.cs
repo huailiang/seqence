@@ -42,8 +42,8 @@ namespace UnityEditor.Timeline
         protected override void OnGUIContent()
         {
             base.OnGUIContent();
-            area = rect;
-            area.x = head.x;
+            area = RenderRect;
+            area.x = RenderHead.x;
             area.width = TimelineWindow.inst.winArea.width;
             EditorGUI.DrawRect(area, trackColor);
 

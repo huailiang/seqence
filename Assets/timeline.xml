@@ -42,7 +42,7 @@
               </scale>
             </ClipData>
             <ClipData xsi:type="SceneFxClipData">
-              <start>16.7689533</start>
+              <start>22.3256664</start>
               <duration>20</duration>
               <prefab>Assets/test/Particle Syste_fire.prefab</prefab>
               <seed>0</seed>
@@ -265,8 +265,8 @@
           </effect>
         </ClipData>
         <ClipData xsi:type="LogicClipData">
-          <start>27.1991</start>
-          <duration>16</duration>
+          <start>32.8182449</start>
+          <duration>10.3808556</duration>
           <logicType>
             <LogicType>BeHit</LogicType>
           </logicType>
@@ -285,6 +285,121 @@
         </ClipData>
       </clips>
       <type>PostProcess</type>
+    </TrackData>
+    <TrackData xsi:type="BindTrackData">
+      <clips>
+        <ClipData xsi:type="AnimClipData">
+          <start>3.683663</start>
+          <duration>14.5483875</duration>
+          <anim>Assets/test/pos.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>true</loop>
+        </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>21.2903233</start>
+          <duration>12.3647251</duration>
+          <anim>Assets/test/BlackBeard_anxuedao_start.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>false</loop>
+        </ClipData>
+      </clips>
+      <childs>
+        <TrackData xsi:type="TransformTrackData">
+          <type>Transform</type>
+          <time>
+            <float>4.869927</float>
+            <float>9.490114</float>
+            <float>17.10718</float>
+            <float>28.9698238</float>
+            <float>35.58793</float>
+          </time>
+          <pos>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+          </pos>
+          <rot>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+          </rot>
+          <select>false</select>
+        </TrackData>
+        <TrackData>
+          <clips>
+            <ClipData xsi:type="BoneFxClipData">
+              <start>16.35796</start>
+              <duration>20</duration>
+              <prefab>Assets/test/Particle Syste_water.prefab</prefab>
+              <seed>0</seed>
+              <pos>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </pos>
+              <rot>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rot>
+              <scale>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </scale>
+            </ClipData>
+          </clips>
+          <type>BoneFx</type>
+        </TrackData>
+      </childs>
+      <type>Animation</type>
+      <prefab>Assets/test/root 1.prefab</prefab>
     </TrackData>
   </tracks>
 </TimelineConfig>

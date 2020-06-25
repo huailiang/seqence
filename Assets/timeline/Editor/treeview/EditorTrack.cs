@@ -21,6 +21,7 @@ namespace UnityEditor.Timeline
         public bool select, allowClip, showChild;
         private GenericMenu pm;
         private GUIContent _addclip, _unselect, _select, _delete;
+        private Vector2 scroll;
 
         public uint ID
         {
@@ -54,8 +55,34 @@ namespace UnityEditor.Timeline
             get
             {
                 var pos = Event.current.mousePosition;
-                return head.Contains(pos) || rect.Contains(pos);
+                return RenderHead.Contains(pos) || RenderRect.Contains(pos);
             }
+        }
+
+        protected Rect RenderHead
+        {
+            get
+            {
+                Rect r = head;
+                r.y -= scroll.y;
+                return r;
+            }
+        }
+
+        public Rect RenderRect
+        {
+            get
+            {
+                Rect r = rect;
+                r.y -= scroll.y;
+                return r;
+            }
+        }
+
+        public void SetRect(Rect h, Rect c)
+        {
+            this.head = h;
+            this.rect = c;
         }
 
         public override void OnInit(XTimelineObject t)
@@ -71,22 +98,23 @@ namespace UnityEditor.Timeline
             _delete = EditorGUIUtility.TrTextContent("Delete Clip\t #d");
         }
 
-        public void OnGUI()
+        public void OnGUI(Vector2 scroll)
         {
+            this.scroll = scroll;
             var backgroundColor = select
                 ? TimelineStyles.colorDuration
                 : TimelineStyles.markerHeaderDrawerBackgroundColor;
 
             var headColor = backgroundColor;
-            EditorGUI.DrawRect(head, headColor);
-            Rect tmp = head;
+            EditorGUI.DrawRect(RenderHead, headColor);
+            Rect tmp = RenderHead;
             tmp.width = 4;
             if (!ignoreDraw) EditorGUI.DrawRect(tmp, trackColor);
 
-            EditorGUI.DrawRect(rect, backgroundColor);
-            tmp = rect;
+            EditorGUI.DrawRect(RenderRect, backgroundColor);
+            tmp = RenderRect;
             tmp.height = 2;
-            tmp.y = rect.y + rect.height - 2;
+            tmp.y = tmp.y + tmp.height - 2;
             if (!ignoreDraw) EditorGUI.DrawRect(tmp, trackColor * 0.9f);
 
             GUIHeader();
@@ -201,16 +229,10 @@ namespace UnityEditor.Timeline
             rect.y += y;
         }
 
-        public void SetHeight(float height)
-        {
-            head.height = height;
-            rect.height = height;
-        }
-
         protected void GUIHeader()
         {
-            var tmp = head;
-            tmp.y += head.height / 4;
+            var tmp = RenderHead;
+            tmp.y += tmp.height / 4;
             GUILayout.BeginArea(tmp);
             GUILayout.BeginHorizontal();
             GUILayout.Space(5);
@@ -275,12 +297,12 @@ namespace UnityEditor.Timeline
             {
                 for (int i = 0; i < marks.Length; i++)
                 {
-                    emarks[i].OnGUI(rect);
+                    emarks[i].OnGUI(RenderRect);
                 }
             }
             if (track.locked)
             {
-                GUI.Box(rect, "", TimelineStyles.lockedBG);
+                GUI.Box(RenderRect, "", TimelineStyles.lockedBG);
             }
             OnGUIContent();
         }

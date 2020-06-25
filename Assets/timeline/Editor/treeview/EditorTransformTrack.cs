@@ -111,12 +111,12 @@ namespace UnityEditor.Timeline
             {
                 for (int i = 0; i < Data.time.Length; i++)
                 {
-                    Rect r = rect;
+                    Rect r = RenderRect;
                     r.x = TimelineWindow.inst.TimeToPixel(Data.time[i]);
                     if (TimelineWindow.inst.IsPiexlRange(r.x))
                     {
                         r.width = 20;
-                        r.y = rect.y + rect.height / 3;
+                        r.y = RenderRect.y + RenderRect.height / 3;
                         GUIContent gct = Data.@select ? s_KeyOn : s_KeyOff;
                         GUI.Box(r, gct, TimelineStyles.keyframe);
                     }

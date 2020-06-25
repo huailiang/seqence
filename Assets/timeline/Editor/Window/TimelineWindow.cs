@@ -50,22 +50,30 @@ namespace UnityEditor.Timeline
             {
                 CalculWindowCenter();
                 EditorGUI.LabelField(centerArea, TimelineStyles.createNewTimelineText);
+
+                // GUI.Label(new Rect(50, 50, Screen.width, 360), scrollPosition + "\n " + Screen.width);
+                // scrollPosition = GUI.BeginScrollView(new Rect(10, 10, 400, 400), scrollPosition,
+                //     new Rect(10, 10, Screen.width, 400), true, true);
+                // GUI.EndScrollView();
             }
             winArea = position;
         }
+        
+
+        private Vector2 sc;
 
         private void EventMenuHandler()
         {
             Rect rt = winArea;
             rt.y = tree.TracksBtmY;
-            var e = Event.current;
+            e = Event.current;
             if (e.type == EventType.ContextClick && rt.Contains(e.mousePosition))
             {
                 GenCustomMenu();
             }
             else if (e.type == EventType.Layout)
             {
-                TimelineInspector.inst?.Repaint();
+                if (TimelineInspector.inst != null) TimelineInspector.inst.Repaint();
             }
         }
 
@@ -73,7 +81,8 @@ namespace UnityEditor.Timeline
         {
             Color c = TimelineStyles.timeCursor.normal.textColor * 0.6f;
             float x = WindowConstants.sliderWidth + 2;
-            Rect rec = new Rect(x, WindowConstants.timeAreaYPosition, 1, tree.TracksBtmY);
+            Rect rec = new Rect(x, WindowConstants.timeAreaYPosition, 1,
+                tree.TracksBtmY - WindowConstants.timeAreaYPosition);
             EditorGUI.DrawRect(rec, c);
         }
 

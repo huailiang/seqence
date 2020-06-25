@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
+using UnityEditor.IMGUI.Controls;
 
 namespace UnityEditor.Timeline
 {

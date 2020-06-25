@@ -24,7 +24,7 @@ namespace UnityEditor.Timeline
 
         public void OnGUI()
         {
-            rect = track.rect;
+            rect = track.RenderRect;
             rect.x = TimelineWindow.inst.TimeToPixel(clip.start);
             float y = TimelineWindow.inst.TimeToPixel(clip.end);
             var timeRect = TimelineWindow.inst.timeAreaRect;
