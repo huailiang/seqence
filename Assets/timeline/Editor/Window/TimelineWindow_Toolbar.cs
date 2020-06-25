@@ -39,6 +39,9 @@ namespace UnityEditor.Timeline
             if (GUILayout.Button(TimelineStyles.gotoBeginingContent, EditorStyles.toolbarButton))
             {
                 state.FrameStart();
+                rangeX2 = rangeX2 - rangeX1;
+                rangeX1 = 0.01f;
+                Repaint();    
             }
         }
 
@@ -47,6 +50,11 @@ namespace UnityEditor.Timeline
             if (GUILayout.Button(TimelineStyles.gotoEndContent, EditorStyles.toolbarButton))
             {
                 state.FrameEnd();
+                float end = timeline.RecalcuteDuration();
+                float len = rangeX2 - rangeX1;
+                rangeX2 = end;
+                rangeX1 = rangeX2 - len;
+                Repaint();
             }
         }
 

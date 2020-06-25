@@ -29,18 +29,21 @@ namespace UnityEditor.Timeline
             float y = TimelineWindow.inst.TimeToPixel(clip.end);
             var timeRect = TimelineWindow.inst.timeAreaRect;
             rect.x = Mathf.Max(rect.x, timeRect.x);
-            y = Mathf.Min(y, timeRect.max.x);
+            y = Mathf.Min(y, timeRect.xMax);
             rect.width = y - rect.x;
             rect.height = rect.height - 2;
+            if (rect.width < 0) rect.width = 0;
             EditorGUI.DrawRect(rect, Color.gray);
             EditorGUI.DrawOutline(rect, 1, Color.white);
 
             Rect left = rect;
             left.x = rect.x - Mathf.Min(10, rect.width / 4);
+            left.x = Mathf.Max(left.x, timeRect.x);
             left.width = Mathf.Min(20, rect.width / 2);
             EditorGUIUtility.AddCursorRect(left, MouseCursor.SplitResizeLeftRight);
             Rect right = left;
             right.x = rect.x + rect.width - Mathf.Min(10, rect.width / 4);
+            right.x = Mathf.Max(right.x, timeRect.x);
             EditorGUIUtility.AddCursorRect(right, MouseCursor.SplitResizeLeftRight);
 
             Vector2 p = e.mousePosition;
@@ -129,24 +132,38 @@ namespace UnityEditor.Timeline
             return false;
         }
 
+        private bool ValidRange(Rect r)
+        {
+            var timeRect = TimelineWindow.inst.timeAreaRect;
+            return r.x >= timeRect.x && r.xMax <= timeRect.xMax;
+        }
+
         private void ProcesMixIn(Rect mixInRect)
         {
-            var clipStyle = TimelineStyles.timelineClip;
-            var texture = clipStyle.normal.background;
-            ClipRenderer.RenderTexture(mixInRect, texture, TimelineStyles.blendMixIn.normal.background, Color.black);
+            if (ValidRange(mixInRect) && mixInRect.width > 0)
+            {
+                var clipStyle = TimelineStyles.timelineClip;
+                var texture = clipStyle.normal.background;
+                ClipRenderer.RenderTexture(mixInRect, texture, TimelineStyles.blendMixIn.normal.background,
+                    Color.black);
 
-            Graphics.DrawLineAA(2.5f, new Vector3(mixInRect.xMin, mixInRect.yMax - 1f, 0),
-                new Vector3(mixInRect.xMax, mixInRect.yMin + 1f, 0), Color.white);
+                Graphics.DrawLineAA(2.5f, new Vector3(mixInRect.xMin, mixInRect.yMax - 1f, 0),
+                    new Vector3(mixInRect.xMax, mixInRect.yMin + 1f, 0), Color.white);
+            }
         }
 
         private void ProcesMixOut(Rect mixOutRect)
         {
-            var clipStyle = TimelineStyles.timelineClip;
-            var texture = clipStyle.normal.background;
-            ClipRenderer.RenderTexture(mixOutRect, texture, TimelineStyles.blendMixOut.normal.background, Color.black);
+            if (ValidRange(mixOutRect) && mixOutRect.width > 0)
+            {
+                var clipStyle = TimelineStyles.timelineClip;
+                var texture = clipStyle.normal.background;
+                ClipRenderer.RenderTexture(mixOutRect, texture, TimelineStyles.blendMixOut.normal.background,
+                    Color.black);
 
-            Graphics.DrawLineAA(2.5f, new Vector3(mixOutRect.xMin, mixOutRect.yMax - 1f, 0),
-                new Vector3(mixOutRect.xMax, mixOutRect.yMin + 1f, 0), Color.white);
+                Graphics.DrawLineAA(2.5f, new Vector3(mixOutRect.xMin, mixOutRect.yMax - 1f, 0),
+                    new Vector3(mixOutRect.xMax, mixOutRect.yMin + 1f, 0), Color.white);
+            }
         }
 
         private void DragStart(Event e)

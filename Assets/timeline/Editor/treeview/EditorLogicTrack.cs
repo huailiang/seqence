@@ -73,7 +73,6 @@ namespace UnityEditor.Timeline
                         {
                             data.effect = TimelineUtil.Remv(data.effect, i);
                             data.logicType = TimelineUtil.Remv(data.logicType, i);
-
                             GUIUtility.ExitGUI();
                         }
                         EditorGUILayout.EndHorizontal();

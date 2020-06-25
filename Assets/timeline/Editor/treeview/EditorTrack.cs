@@ -110,11 +110,9 @@ namespace UnityEditor.Timeline
             Rect tmp = RenderHead;
             tmp.width = 4;
             if (!ignoreDraw) EditorGUI.DrawRect(tmp, trackColor);
-
             EditorGUI.DrawRect(RenderRect, backgroundColor);
-
-            GUIHeader();
             GUIContent();
+            GUIHeader();
             if (!ignoreDraw) ProcessEvent();
         }
 
