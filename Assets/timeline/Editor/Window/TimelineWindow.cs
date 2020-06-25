@@ -50,15 +50,10 @@ namespace UnityEditor.Timeline
             {
                 CalculWindowCenter();
                 EditorGUI.LabelField(centerArea, TimelineStyles.createNewTimelineText);
-
-                // GUI.Label(new Rect(50, 50, Screen.width, 360), scrollPosition + "\n " + Screen.width);
-                // scrollPosition = GUI.BeginScrollView(new Rect(10, 10, 400, 400), scrollPosition,
-                //     new Rect(10, 10, Screen.width, 400), true, true);
-                // GUI.EndScrollView();
             }
             winArea = position;
         }
-        
+
 
         private Vector2 sc;
 

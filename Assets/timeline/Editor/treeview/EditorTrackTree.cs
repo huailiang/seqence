@@ -199,14 +199,17 @@ namespace UnityEditor.Timeline
             posRect.width = winRect.width - x;
             viewRect = posRect;
             viewRect.height = TracksBtmY - _y;
+            viewRect.width -= 20;
             width = winRect.width;
-            GUI.BeginClip(new Rect(0, 0, width, TracksBtmY));
+            
+            float y = WindowConstants.trackRowYPosition;
+            Rect clip = new Rect(0, y, winRect.width, winRect.height);
+            GUI.BeginClip(clip);
             for (int i = 0; i < hierachy.Count; i++)
             {
                 hierachy[i].OnGUI(scroll);
             }
             GUI.EndClip();
-
             bool vshow = viewRect.height > posRect.height;
             scroll = GUI.BeginScrollView(posRect, scroll, viewRect, false, vshow);
             GUI.EndScrollView();

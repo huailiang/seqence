@@ -64,7 +64,7 @@ namespace UnityEditor.Timeline
             get
             {
                 Rect r = head;
-                r.y -= scroll.y;
+                r.y -= scroll.y + WindowConstants.trackRowYPosition;
                 return r;
             }
         }
@@ -74,7 +74,7 @@ namespace UnityEditor.Timeline
             get
             {
                 Rect r = rect;
-                r.y -= scroll.y;
+                r.y -= scroll.y + WindowConstants.trackRowYPosition;
                 return r;
             }
         }
