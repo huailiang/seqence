@@ -131,9 +131,17 @@ namespace UnityEditor.Timeline
                 {
                     TrackContexMenu(e);
                 }
-                else if (e.type == EventType.MouseUp && e.button == 0)
+                else if (e.type == EventType.MouseDown && e.button == 0)
                 {
-                    SelectTrack(!@select);
+                    if (e.shift)
+                    {
+                        TimelineWindow.inst.tree?.ShiftSelects(this);
+                    }
+                    else
+                    {
+                        UnSelectAll(false);
+                        SelectTrack(true);
+                    }
                 }
             }
         }
@@ -167,7 +175,6 @@ namespace UnityEditor.Timeline
                 pm.AddDisabledItem(_addclip, false);
                 pm.AddDisabledItem(_delete, false);
             }
-
             pm.AddItem(EditorGUIUtility.TrTextContent("Delete Track\t #t"), false, DeleteTrack);
             if (track.mute)
             {
@@ -368,11 +375,23 @@ namespace UnityEditor.Timeline
 
         protected void DeleteTrack()
         {
-            if (track.childs != null)
+            var tree = TimelineWindow.inst.tree;
+            if (tree.AnySelect())
             {
-                if (EditorUtility.DisplayDialog("warn", "The track contains childs, that will be deleted!", "ok", "cancel"))
+                if (EditorUtility.DisplayDialog("tip", "The selected track would be deleted!", "ok", "cancel"))
                 {
-                    var tree = TimelineWindow.inst.tree;
+                    var tracks = tree.AllSelectTracks();
+                    foreach (var track in tracks)
+                    {
+                        DeleteTrack(track);
+                    }
+                }
+            }
+            else if (track.childs != null)
+            {
+                if (EditorUtility.DisplayDialog("warn", "The track contains childs, that will be deleted!", "ok",
+                    "cancel"))
+                {
                     var childs = tree.GetAllChilds(track);
                     foreach (var child in childs)
                     {

@@ -255,6 +255,48 @@ namespace UnityEditor.Timeline
             return false;
         }
 
+        public List<EditorTrack> AllSelectTracks()
+        {
+            var ret = new List<EditorTrack>();
+            if (hierachy != null)
+            {
+                for (int i = hierachy.Count - 1; i >= 0; i--)
+                {
+                    var it = hierachy[i];
+                    if (it.@select) ret.Add(it);
+                }
+            }
+            return ret;
+        }
+
+        public void ShiftSelects(EditorTrack track)
+        {
+            int ix2 = -1;
+            for (int i = 0; i < hierachy.Count; i++)
+            {
+                if (hierachy[i].@select)
+                {
+                    ix2 = i;
+                    break;
+                }
+            }
+            ResetSelect(false);
+            if (ix2 < 0)
+            {
+                track.@select = true;
+            }
+            else
+            {
+                var ix1 = IndexOfTrack(track.track);
+                int min = Mathf.Min(ix1, ix2);
+                int len = Mathf.Abs(ix1 - ix2) + 1;
+                for (int i = 0; i < len; i++)
+                {
+                    hierachy[min + i].@select = true;
+                }
+            }
+        }
+
         public void SetRecordTrack(EditorTrack tck)
         {
             if (recordTrack)
