@@ -22,6 +22,7 @@ namespace UnityEditor.Timeline
         private GenericMenu pm;
         private GUIContent _addclip, _unselect, _select, _delete;
         private Vector2 scroll;
+        protected Color addtiveColor;
 
         public uint ID
         {
@@ -89,6 +90,7 @@ namespace UnityEditor.Timeline
         {
             @select = false;
             showChild = true;
+            addtiveColor = Color.white;
             track = (XTrack) t;
             var flag = (TrackFlagAttribute) Attribute.GetCustomAttribute(t.GetType(), typeof(TrackFlagAttribute));
             allowClip = flag.allowClip;
@@ -103,7 +105,8 @@ namespace UnityEditor.Timeline
             this.scroll = scroll;
             var backgroundColor = select
                 ? TimelineStyles.colorDuration
-                : TimelineStyles.markerHeaderDrawerBackgroundColor;
+                : TimelineStyles.BackgroundColor;
+            backgroundColor *= addtiveColor;
 
             var headColor = backgroundColor;
             EditorGUI.DrawRect(RenderHead, headColor);

@@ -59,7 +59,19 @@ namespace UnityEditor.Timeline
             {
                 float remainder = Time.realtimeSinceStartup % 1;
                 TimelineWindow.inst.Repaint();
-                if (remainder < 0.3f) content = TimelineStyles.empty;
+                if (remainder < 0.3f)
+                {
+                    content = TimelineStyles.empty;
+                    addtiveColor = Color.white;
+                }
+                else
+                {
+                    addtiveColor = Color.red;
+                }
+            }
+            else
+            {
+                addtiveColor = Color.white;
             }
 
             if (GUILayout.Button(content, TimelineStyles.autoKey, GUILayout.MaxWidth(16)))

@@ -70,13 +70,9 @@ namespace UnityEditor.Timeline
         public static readonly GUIContent empty = new GUIContent();
 
 
-        public readonly static Color colorDuration = new Color(0.66f, 0.66f, 0.66f, 1.0f);
+        public readonly static Color colorDuration = new Color(0.66f, 0.66f, 0.66f, 0.4f);
 
-        public readonly static Color colorRecordingClipOutline = new Color(1, 0, 0, 0.9f);
-
-        public readonly static Color colorInlineCurveOutOfRangeOverlay = new Color(0.0f, 0.0f, 0.0f, 0.5f);
-
-        public readonly static Color markerHeaderDrawerBackgroundColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
+        public readonly static Color BackgroundColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
 
         public readonly static Color colorTooltipBackground = new Color(29.0f / 255.0f, 32.0f / 255.0f, 33.0f / 255.0f);
 
