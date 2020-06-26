@@ -110,7 +110,13 @@ namespace UnityEditor.Timeline
             Rect tmp = RenderHead;
             tmp.width = 4;
             if (!ignoreDraw) EditorGUI.DrawRect(tmp, trackColor);
+
             EditorGUI.DrawRect(RenderRect, backgroundColor);
+            tmp = RenderRect;
+            tmp.y += tmp.height - 2;
+            tmp.height = 1;
+            if (!ignoreDraw) EditorGUI.DrawRect(tmp, trackColor);
+
             GUIContent();
             GUIHeader();
             if (!ignoreDraw) ProcessEvent();
@@ -362,8 +368,29 @@ namespace UnityEditor.Timeline
 
         protected void DeleteTrack()
         {
-            TimelineWindow.inst.tree.RmTrack(this);
-            track.Remove(TimelineWindow.inst.timeline);
+            if (track.childs != null)
+            {
+                if (EditorUtility.DisplayDialog("warn", "The track contains childs, that will be deleted!", "ok", "cancel"))
+                {
+                    var tree = TimelineWindow.inst.tree;
+                    var childs = tree.GetAllChilds(track);
+                    foreach (var child in childs)
+                    {
+                        DeleteTrack(child);
+                    }
+                    DeleteTrack(this);
+                }
+            }
+            else
+            {
+                DeleteTrack(this);
+            }
+        }
+
+        private void DeleteTrack(EditorTrack etrack)
+        {
+            TimelineWindow.inst.tree.RmTrack(etrack);
+            etrack.track.Remove(TimelineWindow.inst.timeline);
         }
 
         private void MuteClip()

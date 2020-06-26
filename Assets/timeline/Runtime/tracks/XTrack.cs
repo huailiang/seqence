@@ -125,7 +125,7 @@ namespace UnityEngine.Timeline
                     childs = new XTrack[len];
                     for (int i = 0; i < len; i++)
                     {
-                        childs[i] = XTimelineFactory.GetTrack(data.childs[i], timeline,this);
+                        childs[i] = XTimelineFactory.GetTrack(data.childs[i], timeline, this);
                     }
                 }
             }
@@ -146,6 +146,37 @@ namespace UnityEngine.Timeline
             {
                 this.mode &= ~(mode);
             }
+        }
+
+        public bool IsChild(XTrack p,bool gradsonContains)
+        {
+            XTrack tmp = this;
+            if (gradsonContains)
+            {
+                while (tmp)
+                {
+                    if (tmp.parent != null)
+                    {
+                        if (tmp.parent.Equals(p))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            tmp = tmp.parent;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                return p != null && this.parent.Equals(p);
+            }
+            return false;
         }
 
         protected void Foreach(Action<XTrack> track, Action<IClip> clip)
@@ -219,10 +250,10 @@ namespace UnityEngine.Timeline
                 mixs.Add(mix);
             }
         }
-        
+
         public virtual void OnBind()
         {
-            ForeachClip(x=>x.OnBind());
+            ForeachClip(x => x.OnBind());
         }
 
         public virtual void Process(float time, float prev)

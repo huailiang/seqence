@@ -71,14 +71,17 @@ namespace UnityEditor.Timeline
                         pm.AddItem(EditorGUIUtility.TrTextContent(str), false, OnAddTrackItem, types[i]);
                     }
                     var del = EditorGUIUtility.TrTextContent("Delete Track");
+                    var dels = EditorGUIUtility.TrTextContent("Delete Tracks (Childs Include)");
+                    pm.AddSeparator("");
                     if (track.childs == null || track.childs.Length <= 0)
                     {
-                        pm.AddSeparator("");
                         pm.AddItem(del, false, DeleteTrack);
+                        pm.AddDisabledItem(dels, false);
                     }
                     else
                     {
                         pm.AddDisabledItem(del, false);
+                        pm.AddItem(dels, false, DeleteTrack);
                     }
                     pm.ShowAsContext();
                     e.Use();

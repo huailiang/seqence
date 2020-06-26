@@ -96,6 +96,20 @@ namespace UnityEditor.Timeline
             }
         }
 
+        public List<EditorTrack> GetAllChilds(XTrack track, bool grandsonContains = true)
+        {
+            List<EditorTrack> list = new List<EditorTrack>();
+            for (int i = 0; i < hierachy.Count; i++)
+            {
+                var it = hierachy[i];
+                if (it.track.IsChild(track, grandsonContains))
+                {
+                    list.Add(it);
+                }
+            }
+            return list;
+        }
+
         public int IndexOfTrack(XTrack track)
         {
             for (int i = 0; i < hierachy.Count; i++)
@@ -201,7 +215,7 @@ namespace UnityEditor.Timeline
             viewRect.height = TracksBtmY - _y;
             viewRect.width -= 20;
             width = winRect.width;
-            
+
             float y = WindowConstants.trackRowYPosition;
             Rect clip = new Rect(0, y, winRect.width, winRect.height);
             GUI.BeginClip(clip);
@@ -245,7 +259,7 @@ namespace UnityEditor.Timeline
         {
             if (recordTrack)
             {
-                recordTrack.track.SetFlag(TrackMode.Record,false);
+                recordTrack.track.SetFlag(TrackMode.Record, false);
             }
             recordTrack = tck;
         }
