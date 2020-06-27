@@ -77,7 +77,6 @@ namespace UnityEngine.Timeline
             }
             if (config != null)
             {
-                timelineRoot = new GameObject("timeline");
                 Build();
             }
         }
@@ -90,6 +89,7 @@ namespace UnityEngine.Timeline
 
         private void Build()
         {
+            timelineRoot = new GameObject("timeline");
             XResources.Clean();
             delay = 1;
             graph = PlayableGraph.Create("TimelineGraph");
@@ -174,7 +174,7 @@ namespace UnityEngine.Timeline
 
         public void BindGo(GameObject go)
         {
-            if (timelineRoot!=null)
+            if (timelineRoot != null)
             {
                 go.transform.parent = timelineRoot.transform;
             }

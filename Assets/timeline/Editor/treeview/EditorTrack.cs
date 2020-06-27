@@ -23,6 +23,7 @@ namespace UnityEditor.Timeline
         private GUIContent _addclip, _unselect, _select, _delete;
         private Vector2 scroll;
         protected Color addtiveColor;
+        public object trackArg = null;
 
         public uint ID
         {
@@ -41,7 +42,7 @@ namespace UnityEditor.Timeline
 
         protected virtual string trackHeader
         {
-            get { return track + " " + ID; }
+            get { return track.ToString(); }
         }
 
         protected bool locked
@@ -103,9 +104,7 @@ namespace UnityEditor.Timeline
         public void OnGUI(Vector2 scroll)
         {
             this.scroll = scroll;
-            var backgroundColor = select
-                ? TimelineStyles.colorDuration
-                : TimelineStyles.BackgroundColor;
+            var backgroundColor = select ? TimelineStyles.colorDuration : TimelineStyles.BackgroundColor;
             backgroundColor *= addtiveColor;
 
             var headColor = backgroundColor;

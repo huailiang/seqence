@@ -25,6 +25,7 @@ namespace UnityEngine.Timeline.Data
     [Serializable]
     [XmlInclude(typeof(BindTrackData))]
     [XmlInclude(typeof(TransformTrackData))]
+    [XmlInclude(typeof(GroupTrackData))]
     public class TrackData
     {
         public ClipData[] clips;
@@ -100,6 +101,25 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
+    [Serializable]
+    public class GroupTrackData : TrackData
+    {
+        public string comment = "";
+
+        public override void Write(BinaryWriter writer)
+        {
+            base.Write(writer);
+            writer.Write(comment);
+        }
+
+        public override void Read(BinaryReader reader)
+        {
+            base.Read(reader);
+            comment = reader.ReadString();
+        }
+    }
+
+    [Serializable]
     public class TransformTrackData : TrackData
     {
         public float[] time;

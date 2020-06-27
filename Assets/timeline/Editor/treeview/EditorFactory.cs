@@ -47,8 +47,39 @@ namespace UnityEditor.Timeline
             }
             return marker;
         }
-        
-        public static TrackData CreateTrackData(Type type)
+
+
+        public static void GetTrackByDataType(Type type, XTimeline timeline, Action<XTrack, TrackData, object> cb)
+        {
+            TrackData data = CreateTrackData(type);
+            if (data != null)
+            {
+                if (type == typeof(XAnimationTrack))
+                {
+                    CharacterWindow.ShowWindow(ch =>
+                    {
+                        if (ch != null)
+                        {
+                            var bd = data as BindTrackData;
+                            bd.prefab = ch.prefab;
+                            cb(XTimelineFactory.GetTrack(data, timeline), data, ch);
+                        }
+                        else
+                        {
+                            cb(null, data, null);
+                        }
+                    });
+                }
+                else
+                {
+                    cb(XTimelineFactory.GetTrack(data, timeline), data, null);
+                }
+            }
+            else
+                cb(null, null, null);
+        }
+
+        private static TrackData CreateTrackData(Type type)
         {
             TrackData data = null;
             if (type == typeof(XAnimationTrack))
@@ -83,7 +114,7 @@ namespace UnityEditor.Timeline
             }
             else if (type == typeof(XGroupTrack))
             {
-                data = new TrackData();
+                data = new GroupTrackData();
                 data.type = AssetType.Group;
             }
             else

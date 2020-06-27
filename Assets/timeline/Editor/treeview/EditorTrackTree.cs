@@ -57,10 +57,13 @@ namespace UnityEditor.Timeline
             width = winRect.width;
             idx = 0;
             var trees = state.timeline.trackTrees;
-            hierachy = new List<EditorTrack>();
-            for (int i = 1; i < trees.Length; i++) // 0 is marker track
+            if (trees != null)
             {
-                Add(trees[i], hierachy);
+                hierachy = new List<EditorTrack>();
+                for (int i = 1; i < trees.Length; i++) // 0 is marker track
+                {
+                    Add(trees[i], hierachy);
+                }
             }
         }
 
@@ -123,14 +126,15 @@ namespace UnityEditor.Timeline
             return 0;
         }
 
-        public void AddTrack(XTrack track)
+        public void AddTrack(XTrack track, object arg = null)
         {
-            AddTrack(track, hierachy.Count);
+            AddTrack(track, hierachy.Count, arg);
         }
 
-        public void AddTrack(XTrack track, int idx, bool repaint = true)
+        public void AddTrack(XTrack track, int idx, object arg = null, bool repaint = true)
         {
             EditorTrack etrack = EditorFactory.GetTrack(track);
+            etrack.trackArg = arg;
             float y = _y + WindowConstants.RawHeight * idx + WindowConstants.rowGap * idx;
             float offset = track.parent ? 10 : 0;
             var rect = new Rect(x, y, width, WindowConstants.RawHeight);

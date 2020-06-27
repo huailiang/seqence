@@ -15,9 +15,17 @@ namespace UnityEngine.Timeline
             }
         }
 
+        public void Load()
+        {
+            if (data is BindTrackData bd && !string.IsNullOrEmpty(bd.prefab))
+            {
+                Rebind(bd.prefab);
+            }
+        }
+
         public void Rebind(string prefab)
         {
-            if (pat == null || pat != prefab)
+            if (!string.IsNullOrEmpty(prefab) && bindObj == null)
             {
                 pat = prefab;
                 var obj = XResources.LoadGameObject(prefab);

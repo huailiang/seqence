@@ -58,7 +58,7 @@ namespace UnityEditor.Timeline
             }
             pm.AddSeparator("");
             pm.AddItem(EditorGUIUtility.TrTextContent("Add XGroupTrack"), false, OnAddTrackItem, typeof(XGroupTrack));
-            
+
             var types = TypeUtilities.AllRootTrackExcMarkers();
             for (int i = 0; i < types.Count; i++)
             {
@@ -66,7 +66,7 @@ namespace UnityEditor.Timeline
                 int idx = str.LastIndexOf('.');
                 if (idx >= 0)
                 {
-                    str ="Add "+ str.Substring(idx + 1);
+                    str = "Add " + str.Substring(idx + 1);
                 }
                 pm.AddItem(EditorGUIUtility.TrTextContent(str), false, OnAddTrackItem, types[i]);
             }
@@ -96,10 +96,11 @@ namespace UnityEditor.Timeline
         private void OnAddTrackItem(object arg)
         {
             Type type = (Type) arg;
-            TrackData data = EditorFactory.CreateTrackData(type);
-            var track = XTimelineFactory.GetTrack(data, state.timeline);
-            tree.AddTrack(track);
-            state.timeline.AddRootTrack(track);
+            EditorFactory.GetTrackByDataType(type, state.timeline, (track, data, param) =>
+            {
+                tree.AddTrack(track, param);
+                state.timeline.AddRootTrack(track);
+            });
         }
 
         void ShowMarkersButton()

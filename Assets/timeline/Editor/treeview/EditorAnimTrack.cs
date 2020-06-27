@@ -18,7 +18,14 @@ namespace UnityEditor.Timeline
 
         protected override string trackHeader
         {
-            get { return "角色" + ID; }
+            get
+            {
+                if (trackArg is Character c)
+                {
+                    return c.name + " " + ID;
+                }
+                return "角色" + ID;
+            }
         }
 
         protected override List<TrackMenuAction> actions
@@ -48,18 +55,19 @@ namespace UnityEditor.Timeline
         private void AddSubTrack(object arg)
         {
             Type type = (Type) arg;
-            TrackData data = EditorFactory.CreateTrackData(type);
             var state = TimelineWindow.inst.state;
-            var tr = XTimelineFactory.GetTrack(data, state.timeline, this.track);
-            var tmp = track;
-            if (track.childs?.Length > 0)
+            EditorFactory.GetTrackByDataType(type, state.timeline, (tr, data, param) =>
             {
-                tmp = track.childs.Last();
-            }
-            tr.parent.AddSub(tr);
-            tr.parent.AddTrackChildData(data);
-            int idx = TimelineWindow.inst.tree.IndexOfTrack(tmp);
-            TimelineWindow.inst.tree.AddTrack(tr, idx + 1);
+                var tmp = track;
+                if (track.childs?.Length > 0)
+                {
+                    tmp = track.childs.Last();
+                }
+                tr.parent.AddSub(tr);
+                tr.parent.AddTrackChildData(data);
+                int idx = TimelineWindow.inst.tree.IndexOfTrack(tmp);
+                TimelineWindow.inst.tree.AddTrack(tr, idx + 1, param);
+            });
         }
 
 
@@ -68,13 +76,11 @@ namespace UnityEditor.Timeline
             XBindTrack btrack = track as XBindTrack;
             if (btrack)
             {
-                var go = (GameObject) EditorGUILayout.ObjectField("", btrack.bindObj, typeof(GameObject), false,
-                    GUILayout.MaxWidth(80));
-                if (go)
+                if (btrack.bindObj == null)
                 {
-                    string path = AssetDatabase.GetAssetPath(go);
-                    btrack.Rebind(path);
+                    btrack.Load();
                 }
+                EditorGUILayout.ObjectField("", btrack.bindObj, typeof(GameObject), false, GUILayout.MaxWidth(80));
             }
             EditorGUILayout.Space();
         }

@@ -92,6 +92,7 @@
           <type>SceneFx</type>
         </TrackData>
       </childs>
+      <comment>fx</comment>
       <type>Group</type>
     </TrackData>
     <TrackData xsi:type="BindTrackData">
