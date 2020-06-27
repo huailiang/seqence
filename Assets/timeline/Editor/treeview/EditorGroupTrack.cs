@@ -105,7 +105,7 @@ namespace UnityEditor.Timeline
         {
             Type type = (Type) arg;
             var state = TimelineWindow.inst.state;
-            EditorFactory.GetTrackByDataType(type, state.timeline, (tr, data, param) =>
+            EditorFactory.GetTrackByDataType(type, state.timeline, track, (tr, data, param) =>
             {
                 var tmp = track;
                 if (track.childs?.Length > 0)

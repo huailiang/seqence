@@ -3,16 +3,15 @@ using UnityEngine.Timeline;
 
 namespace UnityEditor.Timeline
 {
+    public enum DragMode { None, Drag, Left, Right }
     public struct EditorClip
     {
         public EditorTrack track;
         public IClip clip;
         public Rect rect;
-        private DragMode mode;
+        public DragMode mode;
         Event e;
-
-        enum DragMode { None, Drag, Left, Right }
-
+        
         public EditorClip(EditorTrack tr, IClip c)
         {
             this.track = tr;

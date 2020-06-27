@@ -81,11 +81,27 @@ namespace UnityEditor.Timeline
             }
         }
 
+        private bool dragingClip
+        {
+            get
+            {
+                if (eClips != null)
+                {
+                    foreach (var clip in eClips)
+                    {
+                        if (clip.mode != DragMode.None) return true;
+                    }
+                }
+                return false;
+            }
+        }
+
         public void SetRect(Rect h, Rect c)
         {
             this.head = h;
             this.rect = c;
         }
+
 
         public override void OnInit(XTimelineObject t)
         {
@@ -133,7 +149,7 @@ namespace UnityEditor.Timeline
                 {
                     TrackContexMenu(e);
                 }
-                else if (e.type == EventType.MouseDown && e.button == 0)
+                else if (e.type == EventType.MouseDown && e.button == 0 && !dragingClip)
                 {
                     if (e.shift)
                     {

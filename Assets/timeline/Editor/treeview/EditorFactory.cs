@@ -49,7 +49,8 @@ namespace UnityEditor.Timeline
         }
 
 
-        public static void GetTrackByDataType(Type type, XTimeline timeline, Action<XTrack, TrackData, object> cb)
+        public static void GetTrackByDataType(Type type, XTimeline timeline, XTrack parent,
+            Action<XTrack, TrackData, object> cb)
         {
             TrackData data = CreateTrackData(type);
             if (data != null)
@@ -62,7 +63,7 @@ namespace UnityEditor.Timeline
                         {
                             var bd = data as BindTrackData;
                             bd.prefab = ch.prefab;
-                            cb(XTimelineFactory.GetTrack(data, timeline), data, ch);
+                            cb(XTimelineFactory.GetTrack(data, timeline, parent), data, ch);
                         }
                         else
                         {
@@ -72,7 +73,7 @@ namespace UnityEditor.Timeline
                 }
                 else
                 {
-                    cb(XTimelineFactory.GetTrack(data, timeline), data, null);
+                    cb(XTimelineFactory.GetTrack(data, timeline, parent), data, null);
                 }
             }
             else

@@ -96,7 +96,7 @@ namespace UnityEditor.Timeline
         private void OnAddTrackItem(object arg)
         {
             Type type = (Type) arg;
-            EditorFactory.GetTrackByDataType(type, state.timeline, (track, data, param) =>
+            EditorFactory.GetTrackByDataType(type, state.timeline, null,(track, data, param) =>
             {
                 tree.AddTrack(track, param);
                 state.timeline.AddRootTrack(track);
