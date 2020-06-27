@@ -61,11 +61,14 @@ namespace UnityEngine.Timeline
         protected override void OnUpdate(float time)
         {
             base.OnUpdate(time);
-            int len = ps.Length;
-            for (int i = 0; i < len; i++)
+            if (ps != null)
             {
-                ps[i].randomSeed = seed;
-                ps[i].Play();
+                int len = ps.Length;
+                for (int i = 0; i < len; i++)
+                {
+                    ps[i].randomSeed = seed;
+                    ps[i].Play();
+                }
             }
         }
 

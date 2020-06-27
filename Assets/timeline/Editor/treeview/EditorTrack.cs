@@ -56,8 +56,13 @@ namespace UnityEditor.Timeline
         {
             get
             {
-                var pos = Event.current.mousePosition;
-                return RenderHead.Contains(pos) || RenderRect.Contains(pos);
+                var e = Event.current;
+                if (e != null)
+                {
+                    var pos = e.mousePosition;
+                    return RenderHead.Contains(pos) || RenderRect.Contains(pos);
+                }
+                return false;
             }
         }
 
@@ -394,11 +399,11 @@ namespace UnityEditor.Timeline
         protected void DeleteTrack()
         {
             var tree = TimelineWindow.inst.tree;
-            if (tree.AnySelect())
+            var tracks = tree.AllSelectTracks();
+            if (tracks.Count > 1)
             {
                 if (EditorUtility.DisplayDialog("tip", "The selected track would be deleted!", "ok", "cancel"))
                 {
-                    var tracks = tree.AllSelectTracks();
                     foreach (var track in tracks)
                     {
                         DeleteTrack(track);

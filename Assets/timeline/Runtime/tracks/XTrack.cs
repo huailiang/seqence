@@ -148,7 +148,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-        public bool IsChild(XTrack p,bool gradsonContains)
+        public bool IsChild(XTrack p, bool gradsonContains)
         {
             XTrack tmp = this;
             if (gradsonContains)
@@ -263,10 +263,30 @@ namespace UnityEngine.Timeline
                 bool mix = MixTriger(time, out var mixClip);
                 Foreach((track) => track.Process(time, prev), (clip) =>
                 {
-                    if (mix) clip.Update(time, prev);
+                    clip.Update(time, prev, mix);
                 });
                 MarkTriger(time, prev);
                 if (mix) OnMixer(time, mixClip);
+            }
+        }
+
+        public void RebuildMix()
+        {
+            mixs?.Clear();
+            if (clips != null)
+            {
+                float tmp = clips[0].end;
+                for (int i = 1; i < clips.Length; i++)
+                {
+                    if (clips[i].start > tmp)
+                    {
+                        float start = tmp;
+                        float duration = clips[i].start - tmp;
+                        var mix = new XMixClip<XAnimationTrack>(start, duration, clips[i - 1], clips[i]);
+                        AddMix(mix);
+                    }
+                    tmp = clips[i].end;
+                }
             }
         }
 

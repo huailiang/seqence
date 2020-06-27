@@ -101,7 +101,10 @@ namespace UnityEngine.Timeline
                 trackTrees[i] = XTimelineFactory.GetTrack(tracksData[i], this);
             }
             prev = 0;
-            if (isRunning) graph.Play();
+            if (graph.IsValid())
+            {
+                graph.Play();
+            }
         }
 
         public void Process(float time)
@@ -142,6 +145,10 @@ namespace UnityEngine.Timeline
             if (timelineRoot)
             {
                 Object.Destroy(timelineRoot);
+            }
+            if (graph.IsValid())
+            {
+                graph.Destroy();
             }
         }
 

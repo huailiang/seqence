@@ -70,6 +70,7 @@ namespace UnityEditor.Timeline
                     if (mode != DragMode.None)
                     {
                         track?.track?.SortClip();
+                        track?.track?.RebuildMix();
                     }
                     mode = DragMode.None;
                     break;
@@ -189,8 +190,7 @@ namespace UnityEditor.Timeline
                 e.Use();
             }
         }
-
-
+        
         private void OnDrag(Event e)
         {
             rect.x += e.delta.x;

@@ -9,7 +9,7 @@ namespace UnityEngine.Timeline
     public class XAnimationTrack : XBindTrack
     {
         public AnimationPlayableOutput playableOutput;
-        private AnimationMixerPlayable mixPlayable;
+        public AnimationMixerPlayable mixPlayable;
         private int idx = 0;
         private float tmp = 0;
 
@@ -25,20 +25,6 @@ namespace UnityEngine.Timeline
 
         public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data)
         {
-            if (bindObj)
-            {
-                var amtor = bindObj.GetComponent<Animator>();
-                playableOutput = AnimationPlayableOutput.Create(timeline.graph, "AnimationOutput", amtor);
-            }
-        }
-
-        public override void OnPostBuild()
-        {
-            base.OnPostBuild();
-            if (hasMix)
-            {
-                mixPlayable = AnimationMixerPlayable.Create(timeline.graph, 2);
-            }
         }
 
         protected override IClip BuildClip(ClipData data)
@@ -63,7 +49,6 @@ namespace UnityEngine.Timeline
         {
             if (mixPlayable.IsValid())
             {
-                var graph = timeline.graph;
                 if (!mix.connect)
                 {
                     XAnimationClip clipA = (XAnimationClip) mix.blendA;
@@ -72,26 +57,24 @@ namespace UnityEngine.Timeline
                     {
                         playA = clipA.playable;
                         playB = clipB.playable;
-                        graph.Connect(playA, 0, mixPlayable, clipA.port);
-                        graph.Connect(playB, 0, mixPlayable, clipB.port);
                     }
                 }
                 mix.connect = true;
                 float weight = (time - mix.start) / mix.duration;
-                mixPlayable.SetInputWeight(playA, 1 - weight);
-                mixPlayable.SetInputWeight(playB, weight);
+                if (playA.IsValid()) mixPlayable.SetInputWeight(playA, 1 - weight);
+                if (playB.IsValid()) mixPlayable.SetInputWeight(playB, weight);
             }
         }
 
         public override void OnBind()
         {
             base.OnBind();
-            if (clips != null)
+            if (bindObj)
             {
-                for (int i = 0; i < clips.Length; i++)
-                {
-                    ((XAnimationClip) clips[i]).RebindPlayable();
-                }
+                var amtor = bindObj.GetComponent<Animator>();
+                playableOutput = AnimationPlayableOutput.Create(timeline.graph, "AnimationOutput", amtor);
+                mixPlayable = AnimationMixerPlayable.Create(timeline.graph);
+                playableOutput.SetSourcePlayable(mixPlayable);
             }
         }
 

@@ -14,7 +14,7 @@ namespace UnityEngine.Timeline
 
         string Display { get; }
 
-        void Update(float time, float prev);
+        void Update(float time, float prev, bool mix);
 
         void Dispose();
 
@@ -65,20 +65,20 @@ namespace UnityEngine.Timeline
             OnDestroy();
         }
 
-        public void Update(float time, float prev)
+        public void Update(float time, float prev, bool mix)
         {
             float tick = time - start;
             if ((time >= start && prev < start) || (time <= end && prev > end))
             {
                 OnEnter();
             }
-            if ((time > end && prev <= time) || (time < start || prev >= start))
-            {
-                OnExit();
-            }
-            if (tick >= 0)
+            if (tick >= 0 && !mix)
             {
                 OnUpdate(tick);
+            }
+            if ((time > end && prev <= end) || (time < start && prev >= start))
+            {
+                OnExit();
             }
         }
 

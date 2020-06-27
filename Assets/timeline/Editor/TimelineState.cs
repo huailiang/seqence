@@ -59,7 +59,7 @@ namespace UnityEditor.Timeline
         {
             this.path = path;
             CleanEnv();
-            TimelineInspector.inst?.OnRebuild();
+            RebuildInspector();
             TimelineConfig xconf = new TimelineConfig();
             xconf.tracks = new TrackData[1];
             TrackData data = new TrackData();
@@ -75,7 +75,7 @@ namespace UnityEditor.Timeline
         {
             this.path = path;
             CleanEnv();
-            TimelineInspector.inst?.OnRebuild();
+            RebuildInspector();
             timeline = new XTimeline(path);
         }
 
@@ -87,11 +87,20 @@ namespace UnityEditor.Timeline
                 timeline.config.Write(path);
                 var p = path.Replace(".bytes", ".xml");
                 timeline.config.WriteXml(p);
-                TimelineInspector.inst?.OnRebuild();
+                RebuildInspector();
             }
             else
             {
                 EditorUtility.DisplayDialog("warn", "save path is null", "ok");
+            }
+        }
+
+        private void RebuildInspector()
+        {
+            var insp = TimelineInspector.inst;
+            if (insp)
+            {
+                insp.OnRebuild();
             }
         }
 

@@ -176,6 +176,19 @@ namespace UnityEditor.Timeline
             }
         }
 
+        public static void RemoveChild(this XTrack track, int idx)
+        {
+            if (track.childs != null && track.childs.Length > idx)
+            {
+                var list = track.childs.ToList();
+                list.RemoveAt(idx);
+                track.childs = list.ToArray();
+                var list2 = track.data.childs.ToList();
+                list2.RemoveAt(idx);
+                track.data.childs = list2.ToArray();
+            }
+        }
+
         public static void Remove(this XTrack track, XTimeline timeline)
         {
             if (track.parent)
@@ -192,13 +205,7 @@ namespace UnityEditor.Timeline
                 }
                 if (idx >= 0)
                 {
-                    int len = chs.Length - 1;
-                    var tmp = new XTrack[len];
-                    for (int i = 0; i < len; i++)
-                    {
-                        tmp[i] = i < idx ? chs[i] : chs[i + 1];
-                    }
-                    track.parent.childs = tmp;
+                    track.parent.RemoveChild(idx);
                 }
             }
             else

@@ -19,15 +19,19 @@ namespace UnityEngine.Timeline
         {
             AnimClipData anData = data as AnimClipData;
             aclip = XResources.LoadSharedAsset<AnimationClip>(anData.anim);
-            playable = AnimationClipPlayable.Create(timeline.graph, aclip);
-            RebindPlayable();
         }
 
-        public void RebindPlayable()
+
+        protected override void OnEnter()
         {
-            if (track.playableOutput.IsOutputValid())
+            base.OnEnter();
+            if (track.mixPlayable.IsValid())
             {
-                track.playableOutput.SetSourcePlayable(playable, port);
+                int cnt = track.mixPlayable.GetInputCount();
+                track.mixPlayable.SetInputCount(++cnt);
+                playable = AnimationClipPlayable.Create(timeline.graph, aclip);
+                timeline.graph.Connect(playable, 0, track.mixPlayable, port);
+                track.mixPlayable.SetInputWeight(port, 1);
             }
         }
 
@@ -47,7 +51,11 @@ namespace UnityEngine.Timeline
 
         protected override void OnExit()
         {
-            port = 0;
+            if (playable.IsValid())
+            {
+                track.mixPlayable.DisconnectInput(port);
+                playable.Destroy();
+            }
             base.OnExit();
         }
 
