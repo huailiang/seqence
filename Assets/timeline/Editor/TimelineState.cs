@@ -124,6 +124,7 @@ namespace UnityEditor.Timeline
 
         public void FrameStart()
         {
+            playing = false;
             timeline?.ProcessImmediately(0);
         }
 
@@ -131,6 +132,7 @@ namespace UnityEditor.Timeline
         {
             if (timeline)
             {
+                playing = false;
                 float end = timeline.RecalcuteDuration();
                 timeline.ProcessImmediately(end);
             }

@@ -15,7 +15,7 @@ MonoBehaviour:
   characters:
   - id: 1001
     name: "\u8DEF\u98DE"
-    prefab: Assets/test/root1.prefab
+    prefab: Assets/test/root 1.prefab
   - id: 1002
     name: "\u5A1C\u7F8E"
     prefab: Assets/test/root.prefab
