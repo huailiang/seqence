@@ -171,7 +171,7 @@ namespace UnityEditor.Timeline
             {
                 _duration = timeline.RecalcuteDuration();
                 _time = timeline.Time;
-                _last = Environment.TickCount;
+                _last = Time.realtimeSinceStartup;
             }
         }
 
