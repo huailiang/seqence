@@ -16,6 +16,36 @@ namespace UnityEditor.Timeline
             get { return Color.yellow; }
         }
 
+
+        private AnimationTrackData data;
+
+        private AnimationTrackData Data
+        {
+            get
+            {
+                if (data == null)
+                {
+                    data = track.data as AnimationTrackData;
+                }
+                return data;
+            }
+        }
+
+        private Character ch;
+
+        private Character Character
+        {
+            get
+            {
+                if (ch == null && Data != null)
+                {
+                    int id = Data.roleid;
+                    ch = CharacterWindow.Find(id);
+                }
+                return ch;
+            }
+        }
+
         protected override string trackHeader
         {
             get
@@ -23,6 +53,10 @@ namespace UnityEditor.Timeline
                 if (trackArg is Character c)
                 {
                     return c.name + " " + ID;
+                }
+                else if (Character != null)
+                {
+                    return Character.name + " " + ID;
                 }
                 return "角色" + ID;
             }

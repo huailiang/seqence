@@ -19,14 +19,34 @@ namespace UnityEditor.Timeline
             window.Show();
         }
 
-
-        private void OnEnable()
+        public static void Load()
         {
             if (chInfo == null)
             {
                 var p = "Assets/timeline/Editor/StyleSheets/CharacterInfo.asset";
                 chInfo = AssetDatabase.LoadAssetAtPath<CharacterInfo>(p);
             }
+        }
+
+        public static Character Find(int id)
+        {
+            Load();
+            if (chInfo != null)
+            {
+                for (int i = 0; i < chInfo.characters.Length; i++)
+                {
+                    if (chInfo.characters[i].id == id)
+                    {
+                        return chInfo.characters[i];
+                    }
+                }
+            }
+            return null;
+        }
+
+        private void OnEnable()
+        {
+            Load();
             character = null;
         }
 

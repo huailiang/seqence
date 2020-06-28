@@ -26,6 +26,7 @@ namespace UnityEngine.Timeline.Data
     [XmlInclude(typeof(BindTrackData))]
     [XmlInclude(typeof(TransformTrackData))]
     [XmlInclude(typeof(GroupTrackData))]
+    [XmlInclude(typeof(AnimationTrackData))]
     public class TrackData
     {
         public ClipData[] clips;
@@ -116,6 +117,24 @@ namespace UnityEngine.Timeline.Data
         {
             base.Read(reader);
             comment = reader.ReadString();
+        }
+    }
+    
+    [Serializable]
+    public class AnimationTrackData : BindTrackData
+    {
+        public int roleid = 0;
+
+        public override void Write(BinaryWriter writer)
+        {
+            base.Write(writer);
+            writer.Write(roleid);
+        }
+
+        public override void Read(BinaryReader reader)
+        {
+            base.Read(reader);
+            roleid = reader.ReadInt32();
         }
     }
 

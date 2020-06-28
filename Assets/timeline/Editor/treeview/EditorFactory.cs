@@ -61,8 +61,9 @@ namespace UnityEditor.Timeline
                     {
                         if (ch != null)
                         {
-                            var bd = data as BindTrackData;
+                            var bd = data as AnimationTrackData;
                             bd.prefab = ch.prefab;
+                            bd.roleid = ch.id;
                             cb(XTimelineFactory.GetTrack(data, timeline, parent), data, ch);
                         }
                         else
@@ -85,7 +86,7 @@ namespace UnityEditor.Timeline
             TrackData data = null;
             if (type == typeof(XAnimationTrack))
             {
-                data = new BindTrackData();
+                data = new AnimationTrackData();
                 data.type = AssetType.Animation;
             }
             else if (type == typeof(XPostprocessTrack))

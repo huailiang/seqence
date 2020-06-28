@@ -16,29 +16,6 @@
       </marks>
       <type>Marker</type>
     </TrackData>
-    <TrackData xsi:type="BindTrackData">
-      <clips>
-        <ClipData xsi:type="AnimClipData">
-          <start>0.0241205487</start>
-          <duration>17.9096775</duration>
-          <anim>Assets/test/pos.anim</anim>
-          <trim_start>0</trim_start>
-          <trim_end>0</trim_end>
-          <loop>true</loop>
-        </ClipData>
-        <ClipData xsi:type="AnimClipData">
-          <start>12.5165567</start>
-          <duration>27.4900646</duration>
-          <anim>Assets/test/scale.anim</anim>
-          <trim_start>0</trim_start>
-          <trim_end>0</trim_end>
-          <loop>true</loop>
-        </ClipData>
-      </clips>
-      <childs />
-      <type>Animation</type>
-      <prefab>Assets/test/root.prefab</prefab>
-    </TrackData>
     <TrackData>
       <clips>
         <ClipData xsi:type="SceneFxClipData">
@@ -64,6 +41,21 @@
         </ClipData>
       </clips>
       <type>SceneFx</type>
+    </TrackData>
+    <TrackData xsi:type="AnimationTrackData">
+      <clips>
+        <ClipData xsi:type="AnimClipData">
+          <start>15.0663719</start>
+          <duration>17.8156357</duration>
+          <anim>Assets/test/Camera_cutscene_opening.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>false</loop>
+        </ClipData>
+      </clips>
+      <type>Animation</type>
+      <prefab>Assets/test/root 1.prefab</prefab>
+      <roleid>1001</roleid>
     </TrackData>
   </tracks>
 </TimelineConfig>

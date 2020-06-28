@@ -44,6 +44,7 @@ namespace UnityEngine.Timeline
             }
             else
             {
+                timeline.graph.Stop();
                 timeline.graph.Evaluate(tick);
             }
         }
