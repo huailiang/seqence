@@ -45,12 +45,20 @@
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>15.0663719</start>
-          <duration>17.8156357</duration>
-          <anim>Assets/test/Camera_cutscene_opening.anim</anim>
+          <start>4.52252245</start>
+          <duration>12.8785458</duration>
+          <anim>Assets/test/pos.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>0</trim_end>
-          <loop>false</loop>
+          <loop>true</loop>
+        </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>14.343894</start>
+          <duration>18.7182846</duration>
+          <anim>Assets/test/scale.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>true</loop>
         </ClipData>
       </clips>
       <type>Animation</type>

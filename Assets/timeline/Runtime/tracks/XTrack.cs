@@ -337,8 +337,11 @@ namespace UnityEngine.Timeline
             ForeachMark(mark => mark.Dispose());
             childs = null;
             parent = null;
-            mixs.Clear();
-            mixs = null;
+            if (mixs != null)
+            {
+                mixs.Clear();
+                mixs = null;
+            }
             marks = null;
         }
 

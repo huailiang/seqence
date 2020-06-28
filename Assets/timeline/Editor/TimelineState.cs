@@ -57,9 +57,8 @@ namespace UnityEditor.Timeline
 
         public void CreateTimeline(string path)
         {
+            Dispose();
             this.path = path;
-            CleanEnv();
-            RebuildInspector();
             TimelineConfig xconf = new TimelineConfig();
             xconf.tracks = new TrackData[1];
             TrackData data = new TrackData();
@@ -73,11 +72,22 @@ namespace UnityEditor.Timeline
 
         public void Open(string path)
         {
+            Dispose();
             this.path = path;
-            CleanEnv();
-            RebuildInspector();
             timeline = new XTimeline(path);
         }
+
+        private void Dispose()
+        {
+            CleanEnv();
+            RebuildInspector();
+            timeline?.Dispose();
+            if (window != null)
+            {
+                window.Dispose();
+            }
+        }
+
 
         public void Save()
         {
@@ -192,6 +202,5 @@ namespace UnityEditor.Timeline
                 Object.DestroyImmediate(go);
             }
         }
-        
     }
 }

@@ -44,7 +44,6 @@ namespace UnityEngine.Timeline
             }
             else
             {
-                timeline.graph.Stop();
                 timeline.graph.Evaluate(tick);
             }
         }
@@ -62,7 +61,7 @@ namespace UnityEngine.Timeline
 
         protected override void OnDestroy()
         {
-            playable.Destroy();
+            if(playable.IsValid()) playable.Destroy();
             AnimClipData anData = data as AnimClipData;
             XResources.DestroySharedAsset(anData.anim);
             base.OnDestroy();

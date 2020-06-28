@@ -104,6 +104,18 @@ namespace UnityEngine.Timeline
             if (graph.IsValid() && graph.GetOutputCount() > 0)
             {
                 graph.Play();
+                if (!isRunning)
+                {
+                    Stop();
+                }
+            }
+        }
+
+        public void Stop()
+        {
+            if (graph.IsPlaying())
+            {
+                graph.Stop();
             }
         }
 
@@ -138,13 +150,20 @@ namespace UnityEngine.Timeline
         public void Dispose()
         {
             if (trackTrees != null)
+            {
                 for (int i = 0; i < trackTrees.Length; i++)
                 {
                     trackTrees[i].Dispose();
                 }
+                trackTrees = null;
+            }
             if (timelineRoot)
             {
+#if UNITY_EDITOR
+                Object.DestroyImmediate(timelineRoot);
+#else
                 Object.Destroy(timelineRoot);
+#endif
             }
             if (graph.IsValid())
             {

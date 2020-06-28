@@ -9,7 +9,7 @@ namespace UnityEditor.Timeline
     public class EditorTrackTree
     {
         public List<EditorTrack> hierachy;
-        private int idx = 0;
+        private int track_idx = 0;
         private float x, width, _y;
 
         private Vector2 scroll;
@@ -45,6 +45,14 @@ namespace UnityEditor.Timeline
             return null;
         }
 
+        public void Dispose()
+        {
+            hierachy?.Clear();
+            track_idx = 0;
+            recordTrack = null;
+            hierachy = null;
+        }
+
         public void BuildTreeHierachy(TimelineState state)
         {
             if (state.timeline == null)
@@ -55,7 +63,7 @@ namespace UnityEditor.Timeline
             x = WindowConstants.rightAreaMargn;
             _y = WindowConstants.trackRowYPosition;
             width = winRect.width;
-            idx = 0;
+            track_idx = 0;
             var trees = state.timeline.trackTrees;
             if (trees != null)
             {
@@ -83,12 +91,12 @@ namespace UnityEditor.Timeline
         private void Add(XTrack track, IList<EditorTrack> list)
         {
             EditorTrack etrack = EditorFactory.GetTrack(track);
-            float y = _y + WindowConstants.RawHeight * idx + WindowConstants.rowGap * idx;
+            float y = _y + WindowConstants.RawHeight * track_idx + WindowConstants.rowGap * track_idx;
             int offset = track.parent ? 10 : 0;
             var rect = new Rect(x, y, width, WindowConstants.RawHeight);
             var head = new Rect(offset, y, WindowConstants.sliderWidth - offset, WindowConstants.RawHeight);
             etrack.SetRect(head, rect);
-            idx++;
+            track_idx++;
             list.Add(etrack);
             if (track.childs != null)
             {

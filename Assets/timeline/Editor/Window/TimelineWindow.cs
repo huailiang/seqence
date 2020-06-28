@@ -60,6 +60,11 @@ namespace UnityEditor.Timeline
             winArea = position;
         }
 
+        public void Dispose()
+        {
+            tree?.Dispose();
+        }
+
 
         private Vector2 sc;
 
