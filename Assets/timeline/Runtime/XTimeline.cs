@@ -101,7 +101,7 @@ namespace UnityEngine.Timeline
                 trackTrees[i] = XTimelineFactory.GetTrack(tracksData[i], this);
             }
             prev = 0;
-            if (graph.IsValid())
+            if (graph.IsValid() && graph.GetOutputCount() > 0)
             {
                 graph.Play();
             }
