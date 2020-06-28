@@ -17,6 +17,11 @@ namespace UnityEditor.Timeline
             get { return "后处理" + ID; }
         }
 
+        protected override bool warn
+        {
+            get { return track.clips == null; }
+        }
+
         protected override void OnAddClip(float t)
         {
             PostprocessData data = new PostprocessData();

@@ -45,6 +45,11 @@ namespace UnityEditor.Timeline
             get { return track.ToString(); }
         }
 
+        protected virtual bool warn
+        {
+            get { return track.clips == null; }
+        }
+
         protected bool locked
         {
             get { return track.locked; }
@@ -169,6 +174,11 @@ namespace UnityEditor.Timeline
             }
         }
 
+
+        protected virtual void OnSelect()
+        {
+        }
+
         private void TrackContexMenu(Event e)
         {
             pm = new GenericMenu();
@@ -254,6 +264,7 @@ namespace UnityEditor.Timeline
         {
             bool sele = (bool) arg;
             this.@select = sele;
+            OnSelect();
             TimelineWindow.inst.Repaint();
         }
 
@@ -278,9 +289,9 @@ namespace UnityEditor.Timeline
             if (track.locked)
                 if (GUILayout.Button(TimelineStyles.empty, TimelineStyles.locked))
                     track.SetFlag(TrackMode.Lock, false);
+            if (warn) GUILayout.Label(TimelineStyles.warn_ico, GUILayout.MaxWidth(20));
             var tree = TimelineWindow.inst.tree;
             if (track.hasChilds)
-            {
                 if (GUILayout.Button(TimelineStyles.sequenceSelectorIcon, TimelineStyles.bottomShadow))
                 {
                     if (showChild)
@@ -289,7 +300,7 @@ namespace UnityEditor.Timeline
                         tree.AddChildTracks(track);
                     showChild = !showChild;
                 }
-            }
+
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }

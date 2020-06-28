@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
-using UnityEditor.IMGUI.Controls;
 
 namespace UnityEditor.Timeline
 {
@@ -44,6 +43,11 @@ namespace UnityEditor.Timeline
                 }
                 return ch;
             }
+        }
+
+        protected override bool warn
+        {
+            get { return ch == null && trackArg == null; }
         }
 
         protected override string trackHeader
@@ -142,6 +146,11 @@ namespace UnityEditor.Timeline
             }, null);
         }
 
+        protected override void OnSelect()
+        {
+            base.OnSelect();
+            Selection.activeGameObject = (track as XBindTrack).bindObj;
+        }
 
         protected override void OnInspectorClip(IClip c)
         {

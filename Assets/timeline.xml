@@ -39,6 +39,27 @@
             <z>0</z>
           </scale>
         </ClipData>
+        <ClipData xsi:type="SceneFxClipData">
+          <start>18.783186</start>
+          <duration>20</duration>
+          <prefab>Assets/test/Particle Syste_fire.prefab</prefab>
+          <seed>0</seed>
+          <pos>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </pos>
+          <rot>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rot>
+          <scale>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </scale>
+        </ClipData>
       </clips>
       <type>SceneFx</type>
     </TrackData>
@@ -61,9 +82,40 @@
           <loop>true</loop>
         </ClipData>
       </clips>
+      <childs>
+        <TrackData>
+          <clips>
+            <ClipData xsi:type="BoneFxClipData">
+              <start>9.424779</start>
+              <duration>20</duration>
+              <prefab>Assets/test/Particle Syste_fire.prefab</prefab>
+              <seed>0</seed>
+              <pos>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </pos>
+              <rot>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rot>
+              <scale>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </scale>
+            </ClipData>
+          </clips>
+          <type>BoneFx</type>
+        </TrackData>
+      </childs>
       <type>Animation</type>
       <prefab>Assets/test/root 1.prefab</prefab>
       <roleid>1001</roleid>
+    </TrackData>
+    <TrackData>
+      <type>PostProcess</type>
     </TrackData>
   </tracks>
 </TimelineConfig>

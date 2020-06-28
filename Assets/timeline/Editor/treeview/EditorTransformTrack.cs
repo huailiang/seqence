@@ -19,6 +19,11 @@ namespace UnityEditor.Timeline
             get { return new Color(0f, 1.0f, 0.8f); }
         }
 
+        protected override bool warn
+        {
+            get { return track.parent == null || Data.time == null; }
+        }
+
         protected override string trackHeader
         {
             get { return "位移" + ID; }

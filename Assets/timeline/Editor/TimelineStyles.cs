@@ -83,7 +83,7 @@ namespace UnityEditor.Timeline
 
         private static readonly string _edit_img = @"Assets/timeline/Editor/StyleSheets/Images/";
 
-        private static Texture2D _new_ico, _save_ico, _open_ico;
+        private static Texture2D _new_ico, _save_ico, _open_ico,_warn_ico;
 
         public static Texture2D new_ico
         {
@@ -120,10 +120,24 @@ namespace UnityEditor.Timeline
                 return _save_ico;
             }
         }
+        
+        public static Texture2D warn_ico
+        {
+            get
+            {
+                if (_warn_ico == null)
+                {
+                    _warn_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_edit_img + "Warning-Overlay.png");
+                }
+                return _warn_ico;
+            }
+        }
+        
 
         public static readonly GUIContent newContent = new GUIContent(new_ico, "new.");
         public static readonly GUIContent openContent = new GUIContent(open_ico, "open.");
         public static readonly GUIContent saveContent = new GUIContent(save_ico, "save.");
+        public static readonly GUIContent warnContent = new GUIContent(save_ico, "warn.");
 
         private static GUIStyle _titleStyle;
 

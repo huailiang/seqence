@@ -17,6 +17,11 @@ namespace UnityEditor.Timeline
             get { return "骨骼特效" + ID; }
         }
 
+        protected override bool warn
+        {
+            get { return bone == null || prefab == null; }
+        }
+
         protected override void OnAddClip(float t)
         {
             ObjectSelector.get.Show(null, typeof(GameObject), null, false, null, obj =>
@@ -74,6 +79,22 @@ namespace UnityEditor.Timeline
                 }
             }
             if (!string.IsNullOrEmpty(data.bone)) EditorGUILayout.LabelField("bone: " + data.bone);
+        }
+
+        protected override void OnSelect()
+        {
+            base.OnSelect();
+            if (track.clips != null)
+            {
+                Selection.activeGameObject = null;
+                foreach (var clip in track.clips)
+                {
+                    if (clip is XBoneFxClip xc)
+                    {
+                        Selection.Add(xc.fx);
+                    }
+                }
+            }
         }
 
         private string GetHieracyPath(Transform b)

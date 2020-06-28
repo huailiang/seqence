@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
@@ -40,6 +41,22 @@ namespace UnityEditor.Timeline
             }, null);
         }
 
+        protected override void OnSelect()
+        {
+            base.OnSelect();
+            if (track.clips != null)
+            {
+                Selection.activeGameObject = null;
+                foreach (var clip in track.clips)
+                {
+                    XSceneFxClip fxClip = clip as XSceneFxClip;
+                    if (fxClip)
+                    {
+                        Selection.Add(fxClip.prefabGameObject);
+                    }
+                }
+            }
+        }
 
         protected override void OnInspectorClip(IClip c)
         {
