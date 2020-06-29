@@ -9,8 +9,6 @@ namespace UnityEngine.Timeline
         public AnimationClipPlayable playable;
         public AnimationClip aclip;
         public int port = 0;
-        private bool loop = false;
-        private float clipLen = 0;
 
         public override string Display
         {
@@ -21,8 +19,6 @@ namespace UnityEngine.Timeline
         {
             AnimClipData anData = data as AnimClipData;
             aclip = XResources.LoadSharedAsset<AnimationClip>(anData.anim);
-            loop = anData.loop;
-            clipLen = aclip?.length ?? 0;
         }
 
 
@@ -42,7 +38,7 @@ namespace UnityEngine.Timeline
 
         protected override void OnUpdate(float tick)
         {
-            if (timeline.isRunning)
+            if (playable.IsValid())
             {
                 playable.SetTime(tick);
             }
@@ -61,7 +57,7 @@ namespace UnityEngine.Timeline
 
         protected override void OnDestroy()
         {
-            if(playable.IsValid()) playable.Destroy();
+            if (playable.IsValid()) playable.Destroy();
             AnimClipData anData = data as AnimClipData;
             XResources.DestroySharedAsset(anData.anim);
             base.OnDestroy();

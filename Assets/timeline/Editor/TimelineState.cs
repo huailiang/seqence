@@ -68,6 +68,8 @@ namespace UnityEditor.Timeline
             timeline = new XTimeline(xconf);
             timeline.Time = 2.0f;
             timeline.mode = TimelinePlayMode.EditorRun;
+            float dur = timeline.RecalcuteDuration();
+            window.SetTimeRange(0, dur + 1);
         }
 
         public void Open(string path)
@@ -75,6 +77,8 @@ namespace UnityEditor.Timeline
             Dispose();
             this.path = path;
             timeline = new XTimeline(path);
+            float dur = timeline.RecalcuteDuration();
+            window.SetTimeRange(0, dur + 1);
         }
 
         private void Dispose()

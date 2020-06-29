@@ -93,6 +93,7 @@ namespace UnityEngine.Timeline
             XResources.Clean();
             delay = 1;
             graph = PlayableGraph.Create("TimelineGraph");
+
             var tracksData = config.tracks;
             int len = tracksData.Length;
             trackTrees = new XTrack[len];
@@ -103,6 +104,7 @@ namespace UnityEngine.Timeline
             prev = 0;
             if (graph.IsValid() && graph.GetOutputCount() > 0)
             {
+                graph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
                 graph.Play();
                 if (!isRunning)
                 {
@@ -113,6 +115,7 @@ namespace UnityEngine.Timeline
 
         public void Stop()
         {
+            graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
             if (graph.IsPlaying())
             {
                 graph.Stop();
@@ -134,10 +137,6 @@ namespace UnityEngine.Timeline
                 ProcessImmediately(time);
                 delay = 0;
             }
-            if (graph.IsValid() && !isRunning)
-            {
-                graph.Evaluate(time);
-            }
         }
 
 
@@ -149,6 +148,11 @@ namespace UnityEngine.Timeline
                     trackTrees[i].Process(time, prev);
                 }
             prev = time;
+            if (graph.IsValid() && !isRunning)
+            {
+                graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
+                graph.Evaluate(time);
+            }
         }
 
         public void Dispose()
