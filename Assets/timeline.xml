@@ -24,7 +24,40 @@
           <loop>true</loop>
         </ClipData>
       </clips>
-      <childs />
+      <childs>
+        <TrackData xsi:type="TransformTrackData">
+          <type>Transform</type>
+          <time>
+            <float>0.415783077</float>
+            <float>1.80449867</float>
+          </time>
+          <pos>
+            <Vector3>
+              <x>1.12</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>1.12</x>
+              <y>1.38</y>
+              <z>0</z>
+            </Vector3>
+          </pos>
+          <rot>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>0</y>
+              <z>0</z>
+            </Vector3>
+          </rot>
+          <select>false</select>
+        </TrackData>
+      </childs>
       <type>Animation</type>
       <prefab>Assets/test/root 1.prefab</prefab>
       <roleid>1001</roleid>

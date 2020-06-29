@@ -48,9 +48,11 @@ namespace UnityEngine.Timeline
 
         public bool Sample(float time, out Vector3 pos, out Vector3 rot)
         {
-            if (_data == null || _data.time.Length < 1)
+            if (_data?.time == null || _data.time?.Length < 1)
             {
-                throw new Exception("transform track error");
+                pos = Vector3.zero;
+                rot = Vector3.zero;
+                return false;
             }
             int len = _data.time.Length;
             if (time < _data.time[0])

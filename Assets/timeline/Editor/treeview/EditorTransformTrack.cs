@@ -199,7 +199,7 @@ namespace UnityEditor.Timeline
             {
                 for (int j = 0; j < time.Length; j++)
                 {
-                    if (Mathf.Abs(time[j] - t) < 1f)
+                    if (Mathf.Abs(time[j] - t) < 0.1f)
                     {
                         i = j;
                         return true;

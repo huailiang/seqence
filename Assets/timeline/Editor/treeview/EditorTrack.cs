@@ -276,7 +276,7 @@ namespace UnityEditor.Timeline
 
         private void SelectTrack(object arg)
         {
-            bool sele = (bool)arg;
+            bool sele = (bool) arg;
             this.@select = sele;
             TimelineWindow.inst.tree?.SetSelect(this);
             TimelineWindow.inst.Repaint();
@@ -298,14 +298,24 @@ namespace UnityEditor.Timeline
             GUILayout.Label(trackHeader);
             OnGUIHeader();
             if (track.mute)
-                if (GUILayout.Button(TimelineStyles.empty, TimelineStyles.mute))
-                    track.SetFlag(TrackMode.Mute, false);
+            {
+                GUILayout.Space(2);
+                if (GUILayout.Button(TimelineStyles.empty, TimelineStyles.mute)) track.SetFlag(TrackMode.Mute, false);
+            }
             if (track.locked)
-                if (GUILayout.Button(TimelineStyles.empty, TimelineStyles.locked))
-                    track.SetFlag(TrackMode.Lock, false);
-            if (warn) GUILayout.Label(TimelineStyles.warn_ico, GUILayout.MaxWidth(20));
+            {
+                GUILayout.Space(2);
+                if (GUILayout.Button(TimelineStyles.empty, TimelineStyles.locked)) track.SetFlag(TrackMode.Lock, false);
+            }
+            if (warn)
+            {
+                GUILayout.Space(2);
+                GUILayout.Label(TimelineStyles.warn_ico, GUILayout.MaxWidth(20));
+            }
             var tree = TimelineWindow.inst.tree;
             if (track.hasChilds)
+            {
+                GUILayout.Space(4);
                 if (GUILayout.Button(TimelineStyles.sequenceSelectorIcon, TimelineStyles.bottomShadow))
                 {
                     if (showChild)
@@ -314,6 +324,7 @@ namespace UnityEditor.Timeline
                         tree.AddChildTracks(track);
                     showChild = !showChild;
                 }
+            }
 
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
@@ -496,9 +507,7 @@ namespace UnityEditor.Timeline
             GUILayout.BeginHorizontal();
             using (new GUIColorOverride(c))
             {
-               
                 trackF = EditorGUILayout.Foldout(trackF, trackHeader);
-               
             }
             if (warn)
             {

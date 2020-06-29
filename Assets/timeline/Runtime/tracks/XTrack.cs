@@ -265,13 +265,11 @@ namespace UnityEngine.Timeline
 
         public virtual void Process(float time, float prev)
         {
+            ForeachTrack(track => track.Process(time, prev));
             if (!mute)
             {
                 bool mix = MixTriger(time, out var mixClip);
-                Foreach((track) => track.Process(time, prev), (clip) =>
-                {
-                    clip.Update(time, prev, mix);
-                });
+                ForeachClip(clip => clip.Update(time, prev, mix));
                 MarkTriger(time, prev);
                 if (mix) OnMixer(time, mixClip);
             }
