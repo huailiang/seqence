@@ -9,6 +9,8 @@ namespace UnityEngine.Timeline
         public AnimationClipPlayable playable;
         public AnimationClip aclip;
         public int port = 0;
+        private bool loop = false;
+        private float clipLen = 0;
 
         public override string Display
         {
@@ -19,6 +21,8 @@ namespace UnityEngine.Timeline
         {
             AnimClipData anData = data as AnimClipData;
             aclip = XResources.LoadSharedAsset<AnimationClip>(anData.anim);
+            loop = anData.loop;
+            clipLen = aclip?.length ?? 0;
         }
 
 
@@ -41,10 +45,6 @@ namespace UnityEngine.Timeline
             if (timeline.isRunning)
             {
                 playable.SetTime(tick);
-            }
-            else
-            {
-                timeline.graph.Evaluate(tick);
             }
         }
 

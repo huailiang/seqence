@@ -7,7 +7,6 @@ namespace UnityEngine.Timeline
         public GameObject fx;
         private string path;
         ParticleSystem[] ps;
-        uint seed;
 
         public override string Display
         {
@@ -36,7 +35,7 @@ namespace UnityEngine.Timeline
         {
             var root = track.root;
             XBindTrack bt = root as XBindTrack;
-            seed = data.seed;
+            var seed = data.seed;
             if (bt)
             {
                 var go = bt.bindObj;
@@ -52,6 +51,11 @@ namespace UnityEngine.Timeline
                         fx.transform.localRotation = Quaternion.Euler(data.rot);
                         fx.transform.localScale = data.scale;
                         ps = fx.GetComponentsInChildren<ParticleSystem>();
+                        for (int i = 0; i < ps.Length; i++)
+                        {
+                            ps[i].randomSeed = seed;
+                            ps[i].Stop();
+                        }
                     }
                 }
             }
@@ -66,7 +70,6 @@ namespace UnityEngine.Timeline
                 int len = ps.Length;
                 for (int i = 0; i < len; i++)
                 {
-                    ps[i].randomSeed = seed;
                     ps[i].Play();
                 }
             }

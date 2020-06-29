@@ -134,6 +134,10 @@ namespace UnityEngine.Timeline
                 ProcessImmediately(time);
                 delay = 0;
             }
+            if (graph.IsValid() && !isRunning)
+            {
+                graph.Evaluate(time);
+            }
         }
 
 

@@ -8,62 +8,21 @@
           <reverse>false</reverse>
           <slowRate>1</slowRate>
         </MarkData>
-        <MarkData xsi:type="JumpMarkData">
-          <time>23.3762913</time>
-          <reverse>false</reverse>
-          <jump>1</jump>
-        </MarkData>
       </marks>
       <type>Marker</type>
     </TrackData>
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>4.52252245</start>
+          <start>0.5798103</start>
           <duration>12.8785458</duration>
           <anim>Assets/test/pos.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>0</trim_end>
           <loop>true</loop>
         </ClipData>
-        <ClipData xsi:type="AnimClipData">
-          <start>14.343894</start>
-          <duration>18.7182846</duration>
-          <anim>Assets/test/scale.anim</anim>
-          <trim_start>0</trim_start>
-          <trim_end>0</trim_end>
-          <loop>true</loop>
-        </ClipData>
       </clips>
-      <childs>
-        <TrackData>
-          <clips>
-            <ClipData xsi:type="BoneFxClipData">
-              <start>9.424779</start>
-              <duration>20</duration>
-              <prefab>Assets/test/Particle Syste_fire.prefab</prefab>
-              <seed>0</seed>
-              <pos>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </pos>
-              <rot>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </rot>
-              <scale>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </scale>
-              <bone>Cube</bone>
-            </ClipData>
-          </clips>
-          <type>BoneFx</type>
-        </TrackData>
-      </childs>
+      <childs />
       <type>Animation</type>
       <prefab>Assets/test/root 1.prefab</prefab>
       <roleid>1001</roleid>
