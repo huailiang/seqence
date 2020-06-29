@@ -137,9 +137,8 @@ namespace UnityEditor.Timeline
         public static readonly GUIContent newContent = new GUIContent(new_ico, "new.");
         public static readonly GUIContent openContent = new GUIContent(open_ico, "open.");
         public static readonly GUIContent saveContent = new GUIContent(save_ico, "save.");
-        public static readonly GUIContent warnContent = new GUIContent(save_ico, "warn.");
 
-        private static GUIStyle _titleStyle;
+        private static GUIStyle _titleStyle, _labelStyle;
 
         public static GUIStyle titleStyle
         {
@@ -151,6 +150,21 @@ namespace UnityEditor.Timeline
                     _titleStyle.fontStyle = FontStyle.Bold;
                 }
                 return _titleStyle;
+            }
+        }
+
+        public static GUIStyle btnLableStyle
+        {
+            get
+            {
+                if (_labelStyle == null)
+                {
+                    _labelStyle = new GUIStyle(EditorStyles.label);
+                    _labelStyle.alignment = TextAnchor.MiddleLeft;
+                    _labelStyle.fixedHeight = 18;
+                    _labelStyle.padding.left = 10;
+                }
+                return _labelStyle;
             }
         }
     }

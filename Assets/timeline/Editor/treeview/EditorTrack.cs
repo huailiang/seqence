@@ -479,10 +479,19 @@ namespace UnityEditor.Timeline
         {
             var c = trackColor;
             c.a = 1;
+            GUILayout.BeginHorizontal();
             using (new GUIColorOverride(c))
             {
+               
                 trackF = EditorGUILayout.Foldout(trackF, trackHeader);
+               
             }
+            if (warn)
+            {
+                GUILayout.FlexibleSpace();
+                GUILayout.Label(TimelineStyles.warn_ico);
+            }
+            GUILayout.EndHorizontal();
             if (trackF)
             {
                 OnInspectorTrack();
@@ -491,7 +500,7 @@ namespace UnityEditor.Timeline
                 {
                     foreach (var clip in track.clips)
                     {
-                        EditorGUILayout.LabelField(" clip" + (++i) + ": " + clip.Display, TimelineStyles.titleStyle);
+                        EditorGUILayout.LabelField("clip" + (++i) + ": " + clip.Display, TimelineStyles.titleStyle);
                         OnInspectorClip(clip);
                     }
                 }
@@ -512,8 +521,8 @@ namespace UnityEditor.Timeline
 
         protected virtual void OnInspectorClip(IClip clip)
         {
-            clip.start = EditorGUILayout.FloatField(" start", clip.start);
-            float d = EditorGUILayout.FloatField(" duration", clip.duration);
+            clip.start = EditorGUILayout.FloatField("start", clip.start);
+            float d = EditorGUILayout.FloatField("duration", clip.duration);
             if (d > 0) clip.duration = d;
         }
     }

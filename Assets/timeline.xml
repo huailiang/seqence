@@ -105,6 +105,7 @@
                 <y>0</y>
                 <z>0</z>
               </scale>
+              <bone>Cube</bone>
             </ClipData>
           </clips>
           <type>BoneFx</type>
@@ -115,7 +116,33 @@
       <roleid>1001</roleid>
     </TrackData>
     <TrackData>
+      <clips>
+        <ClipData xsi:type="PostprocessData">
+          <start>11.5384617</start>
+          <duration>20</duration>
+        </ClipData>
+      </clips>
       <type>PostProcess</type>
+    </TrackData>
+    <TrackData xsi:type="AnimationTrackData">
+      <clips>
+        <ClipData xsi:type="AnimClipData">
+          <start>17.0270271</start>
+          <duration>16.1254311</duration>
+          <anim>Assets/test/Camera_cutscene_opening.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>false</loop>
+        </ClipData>
+      </clips>
+      <type>Animation</type>
+      <prefab>Assets/test/root 1.prefab</prefab>
+      <roleid>1001</roleid>
+    </TrackData>
+    <TrackData xsi:type="AnimationTrackData">
+      <type>Animation</type>
+      <prefab>Assets/test/root.prefab</prefab>
+      <roleid>1003</roleid>
     </TrackData>
   </tracks>
 </TimelineConfig>

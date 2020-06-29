@@ -145,6 +145,8 @@ namespace UnityEditor.Timeline
         protected override void OnInspectorTrack()
         {
             EditorGUILayout.LabelField("recoding: " + recoding);
+            if (track.parent == null)
+                EditorGUILayout.HelpBox("no parent bind", MessageType.Warning);
             if (Data?.time != null)
             {
                 if (go) EditorGUILayout.LabelField("target: " + go.name);
@@ -155,6 +157,10 @@ namespace UnityEditor.Timeline
                     Data.rot[i] = EditorGUILayout.Vector3Field("rot", Data.rot[i]);
                     EditorGUILayout.Space();
                 }
+            }
+            else
+            {
+                EditorGUILayout.HelpBox("not config time frame", MessageType.Warning);
             }
         }
 

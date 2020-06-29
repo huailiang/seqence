@@ -30,5 +30,14 @@ namespace UnityEditor.Timeline
             XPostprocessClip clip = new XPostprocessClip((XPostprocessTrack) track, data);
             track.AddClip(clip, data);
         }
+
+        protected override void OnInspectorTrack()
+        {
+            base.OnInspectorTrack();
+            if(track.clips==null)
+            {
+                EditorGUILayout.HelpBox("There is no clip in track", MessageType.Warning);
+            }
+        }
     }
 }

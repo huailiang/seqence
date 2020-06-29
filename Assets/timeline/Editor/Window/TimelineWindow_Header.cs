@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Timeline;
-using UnityEngine.Timeline.Data;
 
 namespace UnityEditor.Timeline
 {
@@ -95,12 +94,15 @@ namespace UnityEditor.Timeline
 
         private void OnAddTrackItem(object arg)
         {
-            Type type = (Type) arg;
-            EditorFactory.GetTrackByDataType(type, state.timeline, null,(track, data, param) =>
-            {
-                tree.AddTrack(track, param);
-                state.timeline.AddRootTrack(track);
-            });
+            Type type = (Type)arg;
+            EditorFactory.GetTrackByDataType(type, state.timeline, null, (track, data, param) =>
+             {
+                 if (track != null && data != null)
+                 {
+                     tree.AddTrack(track, param);
+                     state.timeline.AddRootTrack(track);
+                 }
+             });
         }
 
         void ShowMarkersButton()

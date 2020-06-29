@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Timeline.Data;
 using CharacterInfo = UnityEngine.Timeline.Data.CharacterInfo;
@@ -44,6 +45,9 @@ namespace UnityEditor.Timeline
             return null;
         }
 
+
+        protected string search;
+
         private void OnEnable()
         {
             Load();
@@ -65,18 +69,64 @@ namespace UnityEditor.Timeline
 
         private void OnGUI()
         {
+            GUILayout.Label("Select a character", TimelineStyles.titleStyle);
+            GUILayout.Space(4);
+            search = GuiSearch(search);
             var chars = chInfo.characters;
             GUILayout.BeginVertical(GUI.skin.label);
             for (int i = 0; i < chars.Length; i++)
             {
-                string desc = chars[i].name + " " + chars[i].id;
-                if (GUILayout.Button(desc))
+                string desc = (i + 1) + ". " + Desc(chars[i]);
+                if (MatchSearch(chars[i]))
                 {
-                    character = chars[i];
-                    Close();
+                    if (GUILayout.Button(desc, TimelineStyles.btnLableStyle))
+                    {
+                        character = chars[i];
+                        Close();
+                    }
                 }
             }
             GUILayout.EndVertical();
+        }
+
+
+        private string Desc(Character ch)
+        {
+            string prefab = ch.prefab;
+            if (!string.IsNullOrEmpty(prefab))
+            {
+                prefab = prefab.Replace(".prefab", "");
+                int idx = prefab.LastIndexOf('/') + 1;
+                if (idx >= 0) prefab = prefab.Substring(idx);
+            }
+            return ch.id + "\t" + ch.name + "\t" + prefab;
+        }
+
+
+        private bool MatchSearch(Character ch)
+        {
+            if (string.IsNullOrEmpty(search))
+            {
+                return true;
+            }
+            else
+            {
+                return ch.name.Contains(search) ||
+                    ch.id.ToString().Contains(search);
+            }
+        }
+
+
+        private string GuiSearch(string value, params GUILayoutOption[] options)
+        {
+            MethodInfo info = typeof(EditorGUILayout).GetMethod("ToolbarSearchField",
+                BindingFlags.NonPublic | BindingFlags.Static, null,
+                new System.Type[] { typeof(string), typeof(GUILayoutOption[]) }, null);
+            if (info != null)
+            {
+                value = (string)info.Invoke(null, new object[] { value, options });
+            }
+            return value;
         }
     }
 }

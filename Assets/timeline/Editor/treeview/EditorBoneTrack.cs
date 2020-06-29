@@ -56,6 +56,10 @@ namespace UnityEditor.Timeline
             {
                 xc.fx = AssetDatabase.LoadAssetAtPath<GameObject>(data.prefab);
             }
+            if(prefab==null)
+            {
+                EditorGUILayout.HelpBox("fx prefab is null", MessageType.Warning);
+            }
             if (!string.IsNullOrEmpty(data.prefab))
             {
                 EditorGUILayout.LabelField("fx: " + data.prefab);
@@ -77,6 +81,10 @@ namespace UnityEditor.Timeline
                         if (tmp) bone = tmp.gameObject;
                     }
                 }
+            }
+            if (bone == null)
+            {
+                EditorGUILayout.HelpBox("bind bone is null", MessageType.Warning);
             }
             if (!string.IsNullOrEmpty(data.bone)) EditorGUILayout.LabelField("bone: " + data.bone);
         }

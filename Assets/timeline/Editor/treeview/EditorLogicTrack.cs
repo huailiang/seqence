@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
+using System.Linq;
 
 namespace UnityEditor.Timeline
 {
@@ -21,8 +22,7 @@ namespace UnityEditor.Timeline
         {
             get { return "打击点" + ID; }
         }
-
-
+        
         protected override List<TrackMenuAction> actions
         {
             get

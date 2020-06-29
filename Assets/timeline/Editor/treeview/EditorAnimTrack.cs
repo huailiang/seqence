@@ -82,7 +82,10 @@ namespace UnityEditor.Timeline
                     }
                     var act = new TrackMenuAction()
                     {
-                        desc = "Add " + str, on = false, fun = AddSubTrack, arg = types[i]
+                        desc = "Add " + str,
+                        on = false,
+                        fun = AddSubTrack,
+                        arg = types[i]
                     };
                     ret.Add(act);
                 }
@@ -92,19 +95,22 @@ namespace UnityEditor.Timeline
 
         private void AddSubTrack(object arg)
         {
-            Type type = (Type) arg;
+            Type type = (Type)arg;
             var state = TimelineWindow.inst.state;
             EditorFactory.GetTrackByDataType(type, state.timeline, track, (tr, data, param) =>
             {
-                var tmp = track;
-                if (track.childs?.Length > 0)
+                if (tr != null && data != null)
                 {
-                    tmp = track.childs.Last();
+                    var tmp = track;
+                    if (track.childs?.Length > 0)
+                    {
+                        tmp = track.childs.Last();
+                    }
+                    tr.parent.AddSub(tr);
+                    tr.parent.AddTrackChildData(data);
+                    int idx = TimelineWindow.inst.tree.IndexOfTrack(tmp);
+                    TimelineWindow.inst.tree.AddTrack(tr, idx + 1, param);
                 }
-                tr.parent.AddSub(tr);
-                tr.parent.AddTrackChildData(data);
-                int idx = TimelineWindow.inst.tree.IndexOfTrack(tmp);
-                TimelineWindow.inst.tree.AddTrack(tr, idx + 1, param);
             });
         }
 
@@ -128,7 +134,7 @@ namespace UnityEditor.Timeline
         {
             ObjectSelector.get.Show(null, typeof(AnimationClip), null, false, null, obj =>
             {
-                AnimationClip u_clip = (AnimationClip) obj;
+                AnimationClip u_clip = (AnimationClip)obj;
                 if (u_clip != null)
                 {
                     AnimClipData data = new AnimClipData();
@@ -137,8 +143,8 @@ namespace UnityEditor.Timeline
                     data.anim = AssetDatabase.GetAssetPath(u_clip);
                     data.trim_start = 0;
                     data.loop = u_clip.isLooping;
-                    XAnimationTrack atr = (XAnimationTrack) track;
-                    XAnimationClip clip = new XAnimationClip((XAnimationTrack) track, data);
+                    XAnimationTrack atr = (XAnimationTrack)track;
+                    XAnimationClip clip = new XAnimationClip((XAnimationTrack)track, data);
                     clip.aclip = u_clip;
                     clip.port = track.clips?.Length ?? 0;
                     track.AddClip(clip, data);
@@ -152,6 +158,13 @@ namespace UnityEditor.Timeline
             Selection.activeGameObject = (track as XBindTrack).bindObj;
         }
 
+        protected override void OnInspectorTrack()
+        {
+            if (ch == null && trackArg == null)
+                EditorGUILayout.HelpBox("bind character is none", MessageType.Warning);
+
+        }
+
         protected override void OnInspectorClip(IClip c)
         {
             base.OnInspectorClip(c);
@@ -159,7 +172,8 @@ namespace UnityEditor.Timeline
             var data = c.data as AnimClipData;
             data.loop = EditorGUILayout.Toggle("loop", data.loop);
             data.trim_start = EditorGUILayout.FloatField("start trim", data.trim_start);
-            xc.aclip = (AnimationClip) EditorGUILayout.ObjectField("clip", xc.aclip, typeof(AnimationClip), false);
+            xc.aclip = (AnimationClip)EditorGUILayout.ObjectField("clip", xc.aclip, typeof(AnimationClip), false);
         }
     }
+
 }

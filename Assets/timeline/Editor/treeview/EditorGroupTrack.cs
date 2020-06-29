@@ -23,6 +23,8 @@ namespace UnityEditor.Timeline
             get { return new Color(0.3f, 0.7f, 0.8f, 0.3f); }
         }
 
+        protected override bool warn { get { return false; } }
+
         protected override string trackHeader
         {
             get
@@ -44,7 +46,7 @@ namespace UnityEditor.Timeline
             if (Data == null)
             {
                 var tt = (track as XGroupTrack);
-                Data = (GroupTrackData) tt?.data;
+                Data = (GroupTrackData)tt?.data;
             }
             base.OnGUIContent();
             area = RenderRect;
@@ -97,25 +99,28 @@ namespace UnityEditor.Timeline
         protected override void OnInspectorTrack()
         {
             base.OnInspectorTrack();
-            _title = EditorGUILayout.TextField(" comment:", _title);
+            _title = EditorGUILayout.TextField("name:", _title);
             Data.comment = _title;
         }
 
         private void OnAddTrackItem(object arg)
         {
-            Type type = (Type) arg;
+            Type type = (Type)arg;
             var state = TimelineWindow.inst.state;
             EditorFactory.GetTrackByDataType(type, state.timeline, track, (tr, data, param) =>
             {
-                var tmp = track;
-                if (track.childs?.Length > 0)
+                if (tr != null && data != null)
                 {
-                    tmp = track.childs.Last();
+                    var tmp = track;
+                    if (track.childs?.Length > 0)
+                    {
+                        tmp = track.childs.Last();
+                    }
+                    tr.parent.AddSub(tr);
+                    tr.parent.AddTrackChildData(data);
+                    int idx = TimelineWindow.inst.tree.IndexOfTrack(tmp);
+                    TimelineWindow.inst.tree.AddTrack(tr, idx + 1, param);
                 }
-                tr.parent.AddSub(tr);
-                tr.parent.AddTrackChildData(data);
-                int idx = TimelineWindow.inst.tree.IndexOfTrack(tmp);
-                TimelineWindow.inst.tree.AddTrack(tr, idx + 1, param);
             });
         }
     }
