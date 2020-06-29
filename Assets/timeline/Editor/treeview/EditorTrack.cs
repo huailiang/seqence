@@ -262,9 +262,9 @@ namespace UnityEditor.Timeline
 
         private void SelectTrack(object arg)
         {
-            bool sele = (bool) arg;
+            bool sele = (bool)arg;
             this.@select = sele;
-            OnSelect();
+            TimelineWindow.inst.tree?.SetSelect(this);
             TimelineWindow.inst.Repaint();
         }
 
@@ -459,7 +459,7 @@ namespace UnityEditor.Timeline
         }
 
 
-        private bool trackF;
+        public bool trackF;
         private EditorMark[] emarks;
 
         private void SetupEMarks()

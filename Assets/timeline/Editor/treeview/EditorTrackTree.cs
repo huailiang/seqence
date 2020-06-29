@@ -328,5 +328,17 @@ namespace UnityEditor.Timeline
             }
             recordTrack = tck;
         }
+
+        public void SetSelect(EditorTrack track)
+        {
+            if(hierachy!=null)
+            {
+                foreach(var it in hierachy)
+                {
+                    bool s = it.Equals(track);
+                    it.trackF = s;
+                }
+            }
+        }
     }
 }

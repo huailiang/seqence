@@ -139,10 +139,5 @@
       <prefab>Assets/test/root 1.prefab</prefab>
       <roleid>1001</roleid>
     </TrackData>
-    <TrackData xsi:type="AnimationTrackData">
-      <type>Animation</type>
-      <prefab>Assets/test/root.prefab</prefab>
-      <roleid>1003</roleid>
-    </TrackData>
   </tracks>
 </TimelineConfig>

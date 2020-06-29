@@ -22,23 +22,6 @@ namespace UnityEditor.Timeline
         {
             get { return "打击点" + ID; }
         }
-        
-        protected override List<TrackMenuAction> actions
-        {
-            get
-            {
-                var types = TypeUtilities.GetRootChilds(typeof(XAnimationTrack));
-                List<TrackMenuAction> ret = new List<TrackMenuAction>();
-                var act = new TrackMenuAction() {desc = "Delete Item", on = false, fun = DeleteItem, arg = null};
-                ret.Add(act);
-                return ret;
-            }
-        }
-
-        private void DeleteItem(object arg)
-        {
-            Debug.Log("delete");
-        }
 
         protected override void OnAddClip(float t)
         {

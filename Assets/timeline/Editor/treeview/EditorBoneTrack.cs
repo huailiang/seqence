@@ -19,7 +19,24 @@ namespace UnityEditor.Timeline
 
         protected override bool warn
         {
-            get { return bone == null || prefab == null; }
+            get
+            {
+                var clips = track.data.clips;
+                if (clips != null)
+                {
+                    foreach (var clip in clips)
+                    {
+                        var data = clip as BoneFxClipData;
+                        if (data == null ||
+                            string.IsNullOrEmpty(data.prefab) ||
+                            string.IsNullOrEmpty(data.bone))
+                            return true;
+                    }
+                    return false;
+                }
+                else
+                    return false;
+            }
         }
 
         protected override void OnAddClip(float t)
@@ -50,13 +67,13 @@ namespace UnityEditor.Timeline
             prefab = EditorGUILayout.ObjectField("prefab", xc.fx, typeof(GameObject), false);
             if (prefab)
             {
-                xc.fx = (GameObject) prefab;
+                xc.fx = (GameObject)prefab;
             }
             else if (!string.IsNullOrEmpty(data.prefab))
             {
                 xc.fx = AssetDatabase.LoadAssetAtPath<GameObject>(data.prefab);
             }
-            if(prefab==null)
+            else
             {
                 EditorGUILayout.HelpBox("fx prefab is null", MessageType.Warning);
             }
@@ -82,7 +99,7 @@ namespace UnityEditor.Timeline
                     }
                 }
             }
-            if (bone == null)
+            else
             {
                 EditorGUILayout.HelpBox("bind bone is null", MessageType.Warning);
             }
