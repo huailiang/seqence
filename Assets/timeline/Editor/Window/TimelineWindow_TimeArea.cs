@@ -125,6 +125,7 @@ namespace UnityEditor.Timeline
 
         void OnTrackHeadDrag(float newTime)
         {
+            state.playing = false;
             state.timeline.Time = Mathf.Max(0.0f, newTime);
             TimelineWindow.inst.Repaint();
         }

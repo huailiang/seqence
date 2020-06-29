@@ -81,9 +81,9 @@ namespace UnityEngine.Timeline
             }
         }
 
-        public XTimeline(TimelineConfig config)
+        public XTimeline(TimelineConfig conf)
         {
-            this.config = config;
+            config = conf;
             Build();
         }
 

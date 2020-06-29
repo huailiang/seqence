@@ -3,7 +3,6 @@ using System.IO;
 using System.Xml.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace UnityEngine.Timeline.Data
