@@ -30,7 +30,7 @@ namespace UnityEngine.Timeline
                     xTrack = new XTransformTrack(tl, data);
                     break;
                 case AssetType.LogicValue:
-                    xTrack = new XLogicValueTrack(tl, data);
+                    xTrack = new XLogicTrack(tl, data);
                     break;
                 case AssetType.Group:
                     xTrack = new XGroupTrack(tl, data);

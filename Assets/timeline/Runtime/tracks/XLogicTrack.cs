@@ -3,7 +3,7 @@ using UnityEngine.Timeline.Data;
 namespace UnityEngine.Timeline
 {
     [TrackFlag(TrackFlag.RootOnly)]
-    public class XLogicValueTrack : XTrack
+    public class XLogicTrack : XTrack
     {
         public override AssetType AssetType
         {
@@ -12,7 +12,7 @@ namespace UnityEngine.Timeline
 
         public override XTrack Clone()
         {
-            return new XLogicValueTrack(timeline, data);
+            return new XLogicTrack(timeline, data);
         }
 
         protected override IClip BuildClip(ClipData data)
@@ -20,7 +20,7 @@ namespace UnityEngine.Timeline
             return new XLogicClip(this, data);
         }
         
-        public XLogicValueTrack(XTimeline tl, TrackData data) : base(tl, data)
+        public XLogicTrack(XTimeline tl, TrackData data) : base(tl, data)
         {
         }
     }

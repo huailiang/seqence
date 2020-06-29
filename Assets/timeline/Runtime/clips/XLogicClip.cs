@@ -2,16 +2,33 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    public class XLogicClip : XClip<XLogicValueTrack>
+    public class XLogicClip : XClip<XLogicTrack>
     {
-        public XLogicClip(XLogicValueTrack track, ClipData data) : base(track, data)
+        public XLogicClip(XLogicTrack track, ClipData data) : base(track, data)
         {
         }
 
         public override string Display
         {
-            get { return "打击点"; }
+            get
+            {
+                LogicClipData dta = data as LogicClipData;
+                string d = "打击点 ";
+                if (dta.logicType?.Length > 0)
+                {
+                    foreach (var it in dta.logicType)
+                    {
+                        d += it + ",";
+                    }
+                    if (d.EndsWith(","))
+                    {
+                        d = d.Remove(d.Length - 1);
+                    }
+                }
+                return d;
+            }
         }
+        
 
         protected override void OnEnter()
         {

@@ -109,7 +109,7 @@ namespace UnityEditor.Timeline
                 data = new TransformTrackData();
                 data.type = AssetType.Transform;
             }
-            else if (type == typeof(XLogicValueTrack))
+            else if (type == typeof(XLogicTrack))
             {
                 data = new TrackData();
                 data.type = AssetType.LogicValue;

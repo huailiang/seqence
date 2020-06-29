@@ -43,11 +43,6 @@ namespace UnityEngine.Timeline
 
         public abstract XTrack Clone();
 
-        protected bool hasMix
-        {
-            get { return mixs != null; }
-        }
-
         public bool hasChilds
         {
             get { return childs != null && childs.Length > 0; }
@@ -84,6 +79,18 @@ namespace UnityEngine.Timeline
         public bool locked
         {
             get { return GetFlag(TrackMode.Lock); }
+        }
+
+        public bool lockedHirachy
+        {
+            get
+            {
+                if (!locked)
+                {
+                    return parentLocked;
+                }
+                return true;
+            }
         }
 
         public bool parentLocked

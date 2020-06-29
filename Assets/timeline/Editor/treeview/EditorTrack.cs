@@ -179,6 +179,21 @@ namespace UnityEditor.Timeline
         {
         }
 
+        private bool HitClip(Event e)
+        {
+            if (eClips != null)
+            {
+                foreach (var c in eClips)
+                {
+                    if (c.rect.Contains(e.mousePosition))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         private void TrackContexMenu(Event e)
         {
             pm = new GenericMenu();
@@ -194,11 +209,10 @@ namespace UnityEditor.Timeline
             }
 
             pm.AddSeparator("");
-            bool hasClip = track.clips != null;
             if (allowClip && !locked)
             {
                 pm.AddItem(_addclip, false, AddClip, e.mousePosition);
-                if (hasClip)
+                if (HitClip(e))
                     pm.AddItem(_delete, false, DeleteClip, e.mousePosition);
                 else
                     pm.AddDisabledItem(_delete, false);

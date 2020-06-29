@@ -44,43 +44,49 @@ namespace UnityEditor.Timeline
             right.x = rect.x + rect.width - Mathf.Min(10, rect.width / 4);
             right.x = Mathf.Max(right.x, timeRect.x);
             EditorGUIUtility.AddCursorRect(right, MouseCursor.SplitResizeLeftRight);
-
-            Vector2 p = e.mousePosition;
-            switch (e.type)
-            {
-                case EventType.MouseDown:
-                    if (left.Contains(p))
-                    {
-                        mode = DragMode.Left;
-                    }
-                    else if (right.Contains(p))
-                    {
-                        mode = DragMode.Right;
-                    }
-                    else if (rect.Contains(e.mousePosition))
-                    {
-                        mode = DragMode.Drag;
-                    }
-                    else
-                    {
-                        mode = DragMode.None;
-                    }
-                    break;
-                case EventType.MouseUp:
-                    if (mode != DragMode.None)
-                    {
-                        track?.track?.SortClip();
-                        track?.track?.RebuildMix();
-                    }
-                    mode = DragMode.None;
-                    break;
-                case EventType.MouseDrag:
-                case EventType.ScrollWheel:
-                    Drag(e);
-                    break;
-            }
+            ProcessEvent(left, right);
             EditorGUI.LabelField(rect, clip.Display, TimelineStyles.fontClip);
             MixProcessor();
+        }
+
+
+        private void ProcessEvent(Rect left, Rect right)
+        {
+            Vector2 p = e.mousePosition;
+            if (!track.track.locked)
+                switch (e.type)
+                {
+                    case EventType.MouseDown:
+                        if (left.Contains(p))
+                        {
+                            mode = DragMode.Left;
+                        }
+                        else if (right.Contains(p))
+                        {
+                            mode = DragMode.Right;
+                        }
+                        else if (rect.Contains(e.mousePosition))
+                        {
+                            mode = DragMode.Drag;
+                        }
+                        else
+                        {
+                            mode = DragMode.None;
+                        }
+                        break;
+                    case EventType.MouseUp:
+                        if (mode != DragMode.None)
+                        {
+                            track?.track?.SortClip();
+                            track?.track?.RebuildMix();
+                        }
+                        mode = DragMode.None;
+                        break;
+                    case EventType.MouseDrag:
+                    case EventType.ScrollWheel:
+                        Drag(e);
+                        break;
+                }
         }
 
         private void Drag(Event e)

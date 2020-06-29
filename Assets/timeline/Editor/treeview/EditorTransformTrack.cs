@@ -91,28 +91,9 @@ namespace UnityEditor.Timeline
                 }
                 track.SetFlag(TrackMode.Record, !recd);
             }
-            if (go)
+            if (go && !track.locked)
             {
-                var e = Event.current;
-                if (recoding)
-                {
-                    if (e.type == EventType.KeyDown)
-                    {
-                        if (e.keyCode == KeyCode.F)
-                        {
-                            PrepareOperation(e.mousePosition);
-                        }
-                    }
-                    if (e.type == EventType.MouseDown)
-                    {
-                        var t = TimelineWindow.inst.PiexlToTime(e.mousePosition.x);
-                        if (ContainsT(t, out var i))
-                        {
-                            Data.@select = !Data.@select;
-                            e.Use();
-                        }
-                    }
-                }
+                ProcessTansfEvent();
             }
         }
 
@@ -141,6 +122,31 @@ namespace UnityEditor.Timeline
             }
         }
 
+
+
+        private void ProcessTansfEvent()
+        {
+            var e = Event.current;
+            if (recoding)
+            {
+                if (e.type == EventType.KeyDown)
+                {
+                    if (e.keyCode == KeyCode.F)
+                    {
+                        PrepareOperation(e.mousePosition);
+                    }
+                }
+                if (e.type == EventType.MouseDown)
+                {
+                    var t = TimelineWindow.inst.PiexlToTime(e.mousePosition.x);
+                    if (ContainsT(t, out var i))
+                    {
+                        Data.@select = !Data.@select;
+                        e.Use();
+                    }
+                }
+            }
+        }
 
         protected override void OnInspectorTrack()
         {

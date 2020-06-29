@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace UnityEditor.Timeline
 {
-    [TimelineEditor(typeof(XLogicValueTrack))]
+    [TimelineEditor(typeof(XLogicTrack))]
     public class EditorLogicTrack : EditorTrack
     {
         private int len;
@@ -29,9 +29,10 @@ namespace UnityEditor.Timeline
             clipData.start = t;
             clipData.duration = 16;
 
-            XLogicClip clip = new XLogicClip((XLogicValueTrack) track, clipData);
+            XLogicClip clip = new XLogicClip((XLogicTrack) track, clipData);
             track.AddClip(clip, clipData);
         }
+
 
         protected override void OnInspectorClip(IClip c)
         {
