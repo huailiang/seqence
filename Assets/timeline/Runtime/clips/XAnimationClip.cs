@@ -10,6 +10,8 @@ namespace UnityEngine.Timeline
         public AnimationClip aclip;
         public int port = 0;
 
+        private AnimClipData anData;
+
         public override string Display
         {
             get { return aclip != null ? aclip.name + " " + port : " anim:" + port; }
@@ -17,7 +19,7 @@ namespace UnityEngine.Timeline
 
         public XAnimationClip(XAnimationTrack track, ClipData data) : base(track, data)
         {
-            AnimClipData anData = data as AnimClipData;
+            anData = data as AnimClipData;
             aclip = XResources.LoadSharedAsset<AnimationClip>(anData.anim);
         }
 
@@ -40,6 +42,10 @@ namespace UnityEngine.Timeline
         {
             if (playable.IsValid())
             {
+                if (tick >= aclip.length && !anData.loop)
+                {
+                    tick = aclip.length - 0.01f;
+                }
                 playable.SetTime(tick);
             }
         }

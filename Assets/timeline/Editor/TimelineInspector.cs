@@ -28,9 +28,9 @@ namespace UnityEditor.Timeline
                 {
                     GUILayout.BeginVertical();
                     EditorGUILayout.LabelField(state.Name);
-                    EditorGUILayout.IntField("fps: ", state.frameRate);
-                    EditorGUILayout.Toggle("playing:", state.playing);
-                    EditorGUILayout.EnumPopup("wrapmode:", state.mode);
+                    EditorGUILayout.LabelField("frame rate: \t" + state.frameRate);
+                    EditorGUILayout.LabelField("play status:\t" + state.playing);
+                    state.mode = (WrapMode) EditorGUILayout.EnumPopup("wrapmode:", state.mode);
                     scroll = EditorGUILayout.BeginVerticalScrollView(scroll);
                     GUIMark();
                     GUITracks();
@@ -54,7 +54,7 @@ namespace UnityEditor.Timeline
                 emarks = new EditorMark[len];
                 for (int i = 0; i < len; i++)
                 {
-                    emarks[i] = (EditorMark)TypeUtilities.InitEObject(marks[i]);
+                    emarks[i] = (EditorMark) TypeUtilities.InitEObject(marks[i]);
                 }
             }
             if (emarks != null)

@@ -41,7 +41,7 @@ namespace UnityEditor.Timeline
                 state.FrameStart();
                 rangeX2 = rangeX2 - rangeX1;
                 rangeX1 = 0.01f;
-                Repaint();    
+                Repaint();
             }
         }
 

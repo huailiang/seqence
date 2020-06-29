@@ -126,7 +126,7 @@ namespace UnityEditor.Timeline
 
         public bool IsTimeRange(float t)
         {
-            return t >= rangeX1 && t < rangeX2;
+            return t >= rangeX1 && t <= rangeX2;
         }
 
         public bool IsPiexlRange(float piexl)
