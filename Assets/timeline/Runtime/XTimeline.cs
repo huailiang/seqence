@@ -122,7 +122,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-        public void Process(float time)
+        public bool Process(float time)
         {
             if (slow < 1e-5)
             {
@@ -136,7 +136,9 @@ namespace UnityEngine.Timeline
             {
                 ProcessImmediately(time);
                 delay = 0;
+                return true;
             }
+            return false;
         }
 
 

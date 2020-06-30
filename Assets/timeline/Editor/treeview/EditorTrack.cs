@@ -71,12 +71,24 @@ namespace UnityEditor.Timeline
             }
         }
 
+        private float Offset
+        {
+            get
+            {
+                if(TimelineWindow.inst.state.showMarkerHeader)
+                {
+                    return WindowConstants.trackRowYPosition;
+                }
+                return WindowConstants.markerRowYPosition;
+            }
+        }
+
         protected Rect RenderHead
         {
             get
             {
                 Rect r = head;
-                r.y -= scroll.y + WindowConstants.trackRowYPosition;
+                r.y -= scroll.y + Offset;
                 return r;
             }
         }
@@ -86,7 +98,7 @@ namespace UnityEditor.Timeline
             get
             {
                 Rect r = rect;
-                r.y -= scroll.y + WindowConstants.trackRowYPosition;
+                r.y -= scroll.y + Offset;
                 return r;
             }
         }

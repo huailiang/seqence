@@ -48,6 +48,7 @@ namespace UnityEditor.Timeline
         {
             mode = WrapMode.Hold;
             playing = false;
+            _simSucc = true;
             showMarkerHeader = true;
             if (config == null)
             {
@@ -75,6 +76,7 @@ namespace UnityEditor.Timeline
         public void Open(string path)
         {
             Dispose();
+            _simSucc = true;
             this.path = path;
             timeline = new XTimeline(path);
             float dur = timeline.RecalcuteDuration();
@@ -124,6 +126,7 @@ namespace UnityEditor.Timeline
             {
                 float time = timeline.Time + 1.0f / frameRate;
                 timeline.ProcessImmediately(time);
+                _simSucc = true;
             }
         }
 
@@ -132,6 +135,7 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 float time = timeline.Time - 1.0f / frameRate;
+                _simSucc = true;
                 timeline.ProcessImmediately(time);
             }
         }
@@ -139,6 +143,7 @@ namespace UnityEditor.Timeline
         public void FrameStart()
         {
             playing = false;
+            _simSucc = true;
             timeline?.ProcessImmediately(0);
         }
 
@@ -147,6 +152,7 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 playing = false;
+                _simSucc = true;
                 float end = timeline.RecalcuteDuration();
                 timeline.ProcessImmediately(end);
             }
@@ -155,6 +161,7 @@ namespace UnityEditor.Timeline
         private float _last = 0;
         private float _time = 0;
         private float _duration = 0;
+        private bool _simSucc = false;
 
         public void Update()
         {
@@ -164,15 +171,18 @@ namespace UnityEditor.Timeline
                 float delta = 1.0f / frameRate;
                 if (t - _last > delta)
                 {
-                    _time += delta;
-                    if (_time >= _duration)
+                    if (_simSucc)
                     {
-                        if (mode == WrapMode.Hold)
-                            SetPlaying(false);
-                        else
-                            _time = 0;
+                        _time += delta;
+                        if (_time >= _duration)
+                        {
+                            if (mode == WrapMode.Hold)
+                                SetPlaying(false);
+                            else
+                                _time = 0;
+                        }
+                        _simSucc = SimRun();
                     }
-                    SimRun();
                     _last = t;
                 }
             }
@@ -186,16 +196,23 @@ namespace UnityEditor.Timeline
                 _duration = timeline.RecalcuteDuration();
                 _time = timeline.Time;
                 _last = Time.realtimeSinceStartup;
+                timeline.slow = 1.0f;
+                if (_time > _duration)
+                {
+                    _time = 0;
+                }
             }
         }
 
-        private void SimRun()
+        private bool SimRun()
         {
             if (timeline)
             {
-                timeline.Process(_time);
+                bool rt = timeline.Process(_time);
                 window.Repaint();
+                return rt;
             }
+            return true;
         }
 
         public static void CleanEnv()

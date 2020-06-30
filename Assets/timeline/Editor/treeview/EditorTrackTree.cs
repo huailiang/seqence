@@ -15,6 +15,7 @@ namespace UnityEditor.Timeline
         private Vector2 scroll;
         private Rect posRect, viewRect, winRect;
         private EditorTrack recordTrack;
+        
 
         private GUIStyle vStyle
         {
@@ -238,8 +239,10 @@ namespace UnityEditor.Timeline
             width = winRect.width;
             SyncTreeWidth();
 
-            float y = WindowConstants.trackRowYPosition;
-            Rect clip = new Rect(0, y, winRect.width, winRect.height);
+            float y = state.showMarkerHeader ? WindowConstants.trackRowYPosition
+                : WindowConstants.markerRowYPosition;
+            Rect clip = new Rect(0, y, winRect.width, winRect.height - y);
+
             GUI.BeginClip(clip);
             if (hierachy != null)
                 for (int i = 0; i < hierachy.Count; i++)
@@ -248,8 +251,11 @@ namespace UnityEditor.Timeline
                 }
             GUI.EndClip();
             bool vshow = viewRect.height > posRect.height;
-            scroll = GUI.BeginScrollView(posRect, scroll, viewRect, false, vshow);
-            GUI.EndScrollView();
+            if (vshow)
+            {
+                scroll = GUI.BeginScrollView(posRect, scroll, viewRect, false, vshow);
+                GUI.EndScrollView();
+            }
         }
 
         public void ResetSelect(object arg)

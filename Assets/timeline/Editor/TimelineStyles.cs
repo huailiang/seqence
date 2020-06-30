@@ -79,7 +79,7 @@ namespace UnityEditor.Timeline
         public readonly static Color colorSubSequenceBackground = new Color(0.129f, 0.176f, 0.176f, 1.0f);
 
         public readonly static Color colorSequenceBackground = new Color(0.16f, 0.16f, 0.16f, 1.0f);
-
+        
 
         private static readonly string _edit_img = @"Assets/timeline/Editor/StyleSheets/Images/";
 
