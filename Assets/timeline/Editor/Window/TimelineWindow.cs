@@ -92,6 +92,7 @@ namespace UnityEditor.Timeline
             EditorGUI.DrawRect(rec, c);
         }
 
+
         private void CalculWindowCenter()
         {
             float x = position.width / 2 - 100;

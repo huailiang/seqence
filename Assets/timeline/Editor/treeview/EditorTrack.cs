@@ -111,7 +111,7 @@ namespace UnityEditor.Timeline
                 {
                     foreach (var clip in eClips)
                     {
-                        if (clip.mode != DragMode.None) return true;
+                        if (clip.dragMode != DragMode.None) return true;
                     }
                 }
                 return false;
@@ -337,7 +337,6 @@ namespace UnityEditor.Timeline
                     showChild = !showChild;
                 }
             }
-
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
@@ -559,6 +558,12 @@ namespace UnityEditor.Timeline
             clip.start = EditorGUILayout.FloatField("start", clip.start);
             float d = EditorGUILayout.FloatField("duration", clip.duration);
             if (d > 0) clip.duration = d;
+        }
+
+        public virtual bool CalcuteClipMode(DragMode dm, float v, IClip c, out ClipMode cm)
+        {
+            cm = ClipMode.None;
+            return true;
         }
     }
 }

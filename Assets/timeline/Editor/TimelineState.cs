@@ -67,6 +67,7 @@ namespace UnityEditor.Timeline
             xconf.tracks[0] = data;
             xconf.Write(path);
             timeline = new XTimeline(xconf);
+            AddRuntime();
             timeline.Time = 2.0f;
             timeline.mode = TimelinePlayMode.EditorRun;
             float dur = timeline.RecalcuteDuration();
@@ -79,6 +80,7 @@ namespace UnityEditor.Timeline
             _simSucc = true;
             this.path = path;
             timeline = new XTimeline(path);
+            AddRuntime();
             float dur = timeline.RecalcuteDuration();
             window.SetTimeRange(0, dur + 1);
         }
@@ -91,6 +93,20 @@ namespace UnityEditor.Timeline
             if (window != null)
             {
                 window.Dispose();
+            }
+        }
+
+        private void AddRuntime()
+        {
+            var go = GameObject.Find("timeline");
+            RuntimeTimeline runtime;
+            if (go)
+            {
+                runtime = go.GetComponent<RuntimeTimeline>();
+                if (runtime == null)
+                    runtime = go.AddComponent<RuntimeTimeline>();
+                runtime.path = this.path;
+                runtime.timeline = timeline;
             }
         }
 

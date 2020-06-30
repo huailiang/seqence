@@ -49,10 +49,10 @@ namespace UnityEngine.Timeline
         {
             if (mixPlayable.IsValid())
             {
-                if (!mix.connect)
+                if (!mix.connect || !Application.isPlaying)
                 {
-                    XAnimationClip clipA = (XAnimationClip) mix.blendA;
-                    XAnimationClip clipB = (XAnimationClip) mix.blendB;
+                    XAnimationClip clipA = (XAnimationClip)mix.blendA;
+                    XAnimationClip clipB = (XAnimationClip)mix.blendB;
                     if (clipA && clipB)
                     {
                         playA = clipA.playable;
@@ -61,8 +61,15 @@ namespace UnityEngine.Timeline
                 }
                 mix.connect = true;
                 float weight = (time - mix.start) / mix.duration;
-                if (playA.IsValid()) mixPlayable.SetInputWeight(playA, 1 - weight);
-                if (playB.IsValid()) mixPlayable.SetInputWeight(playB, weight);
+                if (playA.IsValid() && playB.IsValid())
+                {
+                    mixPlayable.SetInputWeight(playA, 1 - weight);
+                    mixPlayable.SetInputWeight(playB, weight);
+                }
+                else
+                {
+                    Debug.LogError("playable invalid while animating mix");
+                }
             }
         }
 
@@ -76,6 +83,15 @@ namespace UnityEngine.Timeline
                 mixPlayable = AnimationMixerPlayable.Create(timeline.graph);
                 playableOutput.SetSourcePlayable(mixPlayable);
             }
+        }
+
+        public override void Dispose()
+        {
+            if(mixPlayable.IsValid())
+            {
+                mixPlayable.Destroy();
+            }
+            base.Dispose();
         }
 
         public override string ToString()

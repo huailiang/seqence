@@ -208,6 +208,17 @@ namespace UnityEngine.Timeline
             return dur;
         }
 
+        public void ForTrackHierachy(System.Action<XTrack> cb)
+        {
+            if (trackTrees != null)
+            {
+                for (int i = 0; i < trackTrees.Length; i++)
+                {
+                    trackTrees[i].ForeachHierachyTrack(cb);
+                }
+            }
+        }
+
         public void BindGo(GameObject go)
         {
             if (timelineRoot != null)

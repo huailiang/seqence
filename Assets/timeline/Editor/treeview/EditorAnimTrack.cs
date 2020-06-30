@@ -174,6 +174,16 @@ namespace UnityEditor.Timeline
             data.trim_start = EditorGUILayout.FloatField("start trim", data.trim_start);
             xc.aclip = (AnimationClip)EditorGUILayout.ObjectField("clip", xc.aclip, typeof(AnimationClip), false);
         }
-    }
 
+        public override bool CalcuteClipMode(DragMode dm, float v, IClip c, out ClipMode cm)
+        {
+            var d = c.data as AnimClipData;
+            if (dm == DragMode.Left)
+            {
+                float delta = d.duration - d.trim_end;
+
+            }
+            return base.CalcuteClipMode(dm, v, c, out cm);
+        }
+    }
 }

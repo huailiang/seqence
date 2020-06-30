@@ -1,25 +1,40 @@
 using UnityEngine;
 using UnityEngine.Timeline;
+using System;
 
 namespace UnityEditor.Timeline
 {
+
+    public enum ClipMode
+    {
+        None = 0,
+        Left = 1,
+        Right = 2,
+    }
+
     public enum DragMode { None, Drag, Left, Right }
+
     public struct EditorClip
     {
         public EditorTrack track;
         public IClip clip;
         public Rect rect;
-        public DragMode mode;
+        public DragMode dragMode;
         Event e;
-        
+
+        private ClipMode clipMode;
+
         public EditorClip(EditorTrack tr, IClip c)
         {
             this.track = tr;
             this.clip = c;
             rect = Rect.zero;
-            mode = DragMode.None;
+            dragMode = DragMode.None;
             e = Event.current;
+            clipMode = ClipMode.None;
         }
+
+
 
         public void OnGUI()
         {
@@ -45,6 +60,22 @@ namespace UnityEditor.Timeline
             right.x = Mathf.Max(right.x, timeRect.x);
             EditorGUIUtility.AddCursorRect(right, MouseCursor.SplitResizeLeftRight);
             ProcessEvent(left, right);
+            if ((clipMode & ClipMode.Left) > 0)
+            {
+                left.x = rect.x + 2;
+                left.width = 10;
+                left.y = rect.y + rect.height / 3;
+                left.height = rect.height / 2;
+                GUI.Label(left, GUIContent.none, TimelineStyles.clipIn);
+            }
+            if ((clipMode & ClipMode.Right) > 0)
+            {
+                right.x = rect.xMax - 8;
+                right.width = 8;
+                right.y = rect.y + rect.height / 3;
+                right.height = rect.height / 2;
+                GUI.Label(right, GUIContent.none, TimelineStyles.clipOut);
+            }
             EditorGUI.LabelField(rect, clip.Display, TimelineStyles.fontClip);
             MixProcessor();
         }
@@ -59,28 +90,28 @@ namespace UnityEditor.Timeline
                     case EventType.MouseDown:
                         if (left.Contains(p))
                         {
-                            mode = DragMode.Left;
+                            dragMode = DragMode.Left;
                         }
                         else if (right.Contains(p))
                         {
-                            mode = DragMode.Right;
+                            dragMode = DragMode.Right;
                         }
                         else if (rect.Contains(e.mousePosition))
                         {
-                            mode = DragMode.Drag;
+                            dragMode = DragMode.Drag;
                         }
                         else
                         {
-                            mode = DragMode.None;
+                            dragMode = DragMode.None;
                         }
                         break;
                     case EventType.MouseUp:
-                        if (mode != DragMode.None)
+                        if (dragMode != DragMode.None)
                         {
                             track?.track?.SortClip();
                             track?.track?.RebuildMix();
                         }
-                        mode = DragMode.None;
+                        dragMode = DragMode.None;
                         break;
                     case EventType.MouseDrag:
                     case EventType.ScrollWheel:
@@ -91,15 +122,15 @@ namespace UnityEditor.Timeline
 
         private void Drag(Event e)
         {
-            if (mode == DragMode.Left)
+            if (dragMode == DragMode.Left)
             {
                 DragStart(e);
             }
-            else if (mode == DragMode.Right)
+            else if (dragMode == DragMode.Right)
             {
                 DragEnd(e);
             }
-            else if (mode == DragMode.Drag)
+            else if (dragMode == DragMode.Drag)
             {
                 OnDrag(e);
             }
@@ -183,6 +214,8 @@ namespace UnityEditor.Timeline
                 clip.start = start2;
                 e.Use();
             }
+            if (track.CalcuteClipMode(DragMode.Left, start2, clip, out var m))
+                clipMode = (clipMode & (~ClipMode.Left)) | m;
         }
 
         private void DragEnd(Event e)
@@ -195,6 +228,8 @@ namespace UnityEditor.Timeline
                 clip.duration += (end - clip.end);
                 e.Use();
             }
+            if (track.CalcuteClipMode(DragMode.Right, end, clip, out var m))
+                clipMode = (clipMode & (~ClipMode.Right)) | m;
         }
         
         private void OnDrag(Event e)

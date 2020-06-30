@@ -340,6 +340,7 @@ namespace UnityEngine.Timeline
         {
             Foreach(track => track.Dispose(), clip => clip.Dispose());
             ForeachMark(mark => mark.Dispose());
+            
             childs = null;
             parent = null;
             if (mixs != null)
