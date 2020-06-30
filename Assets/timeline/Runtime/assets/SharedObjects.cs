@@ -2,28 +2,24 @@
 
 namespace UnityEngine.Timeline
 {
-    public interface ISharedObject
+
+    // next 加在这里，主要是为了避免像LinkList一样 每个节点都要new一个LinkedListNode
+    public class SharedObject
     {
-        void Dispose();
-    }
+        public SharedObject next;
 
-
-    public class LinkNode<T> where T : new()
-    {
-        public LinkNode<T> next;
-        public T Value { get; }
-
-        public LinkNode(T t)
+        public virtual void Dispose()
         {
-            this.Value = t;
+            next = null;
         }
     }
 
 
-    // 基于单向链表实现的队列，便于插入和删除，不适合查找
-    public sealed class LinkQueue<T> where T : new()
+    // 基于单向链表实现的队列，便于插入和删除，不适合查找， 比较适合缓冲池
+    // 类似于list的为了效率， 插入和删除都必须在末端效率比较高， 这里实现了先进先出的特性
+    public sealed class LinkQueue<T> where T : SharedObject
     {
-        private LinkNode<T> _head, _tail;
+        private T _head, _tail;
         private int cnt = 0;
 
         public int Count
@@ -34,17 +30,16 @@ namespace UnityEngine.Timeline
         public void Enqueue(T it)
         {
             cnt++;
-            var n = new LinkNode<T>(it);
             if (_head == null)
             {
-                _head = n;
+                _head = it;
                 _tail = _head;
             }
             else
             {
-                _tail.next = n;
+                _tail.next = it;
             }
-            _tail = n;
+            _tail = it;
         }
 
         public T Dequeue()
@@ -53,10 +48,10 @@ namespace UnityEngine.Timeline
             {
                 throw new Exception("link queue is null");
             }
-            var v = _head.Value;
+            var v = _head;
             if (_head.next != null)
             {
-                _head = _head.next;
+                _head = _head.next as T;
             }
             else
             {
@@ -67,13 +62,13 @@ namespace UnityEngine.Timeline
             return v;
         }
 
-        public void For(Action<T> cb)
+        public void For(Action<SharedObject> cb)
         {
             var p = _head;
             while (p != null)
             {
-                cb(p.Value);
-                p = p.next;
+                cb(p);
+                p = p.next as T;
             }
         }
 
@@ -85,29 +80,31 @@ namespace UnityEngine.Timeline
         }
     }
 
-    public class SharedObjects<T> where T : ISharedObject, new()
+    public class SharedPool<T> where T : SharedObject, new()
     {
-        private static LinkQueue<T> queue = new LinkQueue<T>();
+        private static LinkQueue<T> pool = new LinkQueue<T>();
 
         public static T Get()
         {
-            if (queue.Count <= 0)
+            if (pool.Count <= 0)
             {
                 return new T();
             }
-            return queue.Dequeue();
+            return pool.Dequeue();
         }
 
         public static void Return(T obj)
         {
             obj.Dispose();
-            queue.Enqueue(obj);
+            pool.Enqueue(obj);
         }
 
         public static void Clean()
         {
-            queue.For(it => it.Dispose());
-            queue.Clear();
+            pool.For(it => it.Dispose());
+            pool.Clear();
         }
+
     }
+
 }

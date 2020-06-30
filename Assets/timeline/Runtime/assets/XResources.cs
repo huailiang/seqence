@@ -6,7 +6,7 @@ namespace UnityEngine.Timeline
 {
     public class XResources
     {
-        class Asset : ISharedObject
+        class Asset : SharedObject
         {
             public Object asset;
             public uint refence;
@@ -16,9 +16,10 @@ namespace UnityEngine.Timeline
                 this.refence = 1;
             }
 
-            public void Dispose()
+            public override void Dispose()
             {
                 refence = 0;
+                base.Dispose();
             }
         }
 
@@ -29,7 +30,7 @@ namespace UnityEngine.Timeline
         {
             sharedPool.Clear();
             goPool.Clear();
-            SharedObjects<Asset>.Clean();
+            SharedPool<Asset>.Clean();
             Resources.UnloadUnusedAssets();
         }
 
@@ -45,7 +46,7 @@ namespace UnityEngine.Timeline
                 var obj = AssetDatabase.LoadAssetAtPath<GameObject>(path);
                 if (obj)
                 {
-                    var tmp = SharedObjects<Asset>.Get();
+                    var tmp = SharedPool<Asset>.Get();
                     tmp.asset = obj;
                     goPool.Add(path, tmp);
                     return Object.Instantiate(obj);
@@ -74,7 +75,7 @@ namespace UnityEngine.Timeline
                 if (it.refence <= 0)
                 {
                     goPool.Remove(path);
-                    SharedObjects<Asset>.Return(it);
+                    SharedPool<Asset>.Return(it);
                 }
             }
         }
@@ -90,7 +91,7 @@ namespace UnityEngine.Timeline
             else
             {
                 var asset = AssetDatabase.LoadAssetAtPath<T>(path);
-                var tmp = SharedObjects<Asset>.Get();
+                var tmp = SharedPool<Asset>.Get();
                 tmp.asset = asset;
                 sharedPool.Add(path, tmp);
                 return asset;
@@ -111,7 +112,7 @@ namespace UnityEngine.Timeline
 #if !UNITY_EDITOR
                      Resources.UnloadAsset(asset.asset);
 #endif
-                    SharedObjects<Asset>.Return(asset);
+                    SharedPool<Asset>.Return(asset);
                 }
             }
         }
