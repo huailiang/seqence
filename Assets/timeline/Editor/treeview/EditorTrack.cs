@@ -458,7 +458,7 @@ namespace UnityEditor.Timeline
                     }
                 }
             }
-            else if (track.childs != null)
+            else if (track.hasChilds)
             {
                 if (EditorUtility.DisplayDialog("warn", "The track contains childs, that will be deleted!", "ok",
                     "cancel"))

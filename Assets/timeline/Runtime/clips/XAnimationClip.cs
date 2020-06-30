@@ -38,7 +38,7 @@ namespace UnityEngine.Timeline
         }
 
 
-        protected override void OnUpdate(float tick)
+        protected override void OnUpdate(float tick, bool mix)
         {
             if (playable.IsValid())
             {

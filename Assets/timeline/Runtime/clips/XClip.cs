@@ -72,9 +72,9 @@ namespace UnityEngine.Timeline
             {
                 OnEnter();
             }
-            if (tick >= 0 && !mix)
+            if (tick >= 0 && time < end)
             {
-                OnUpdate(tick);
+                OnUpdate(tick, mix);
             }
             if ((time > end && prev <= end) || (time < start && prev >= start))
             {
@@ -90,7 +90,7 @@ namespace UnityEngine.Timeline
         {
         }
 
-        protected virtual void OnUpdate(float tick)
+        protected virtual void OnUpdate(float tick,bool mix)
         {
         }
 

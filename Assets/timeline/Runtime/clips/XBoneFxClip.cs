@@ -62,15 +62,28 @@ namespace UnityEngine.Timeline
         }
 
 
-        protected override void OnUpdate(float time)
+        protected override void OnEnter()
         {
-            base.OnUpdate(time);
+            base.OnEnter();
             if (ps != null)
             {
                 int len = ps.Length;
                 for (int i = 0; i < len; i++)
                 {
                     ps[i].Play();
+                }
+            }
+        }
+
+        protected override void OnExit()
+        {
+            base.OnExit();
+            if (ps != null)
+            {
+                int len = ps.Length;
+                for (int i = 0; i < len; i++)
+                {
+                    ps[i].Stop();
                 }
             }
         }

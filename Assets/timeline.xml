@@ -8,59 +8,25 @@
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>0.01</start>
-          <duration>1.35143828</duration>
-          <anim>Assets/test/pos.anim</anim>
+          <start>0.617392957</start>
+          <duration>14.4661474</duration>
+          <anim>Assets/test/Clips/ROM.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>0</trim_end>
-          <loop>false</loop>
+          <loop>true</loop>
         </ClipData>
         <ClipData xsi:type="AnimClipData">
-          <start>1.020856</start>
-          <duration>1.638035</duration>
-          <anim>Assets/test/scale.anim</anim>
+          <start>12.073513</start>
+          <duration>10.0333338</duration>
+          <anim>Assets/test/Clips/Idle.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>0</trim_end>
           <loop>true</loop>
         </ClipData>
       </clips>
-      <childs>
-        <TrackData xsi:type="TransformTrackData">
-          <type>Transform</type>
-          <time>
-            <float>0.415783077</float>
-            <float>1.80449867</float>
-          </time>
-          <pos>
-            <Vector3>
-              <x>1.12</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>1.12</x>
-              <y>1.38</y>
-              <z>0</z>
-            </Vector3>
-          </pos>
-          <rot>
-            <Vector3>
-              <x>-0</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
-          </rot>
-          <select>false</select>
-        </TrackData>
-      </childs>
       <type>Animation</type>
-      <prefab>Assets/test/root 1.prefab</prefab>
-      <roleid>1001</roleid>
+      <prefab>Assets/test/DefaultMale.prefab</prefab>
+      <roleid>1003</roleid>
     </TrackData>
   </tracks>
 </TimelineConfig>

@@ -43,7 +43,7 @@ namespace UnityEngine.Timeline
             return clip;
         }
 
-        private AnimationClipPlayable playA, playB;
+        public AnimationClipPlayable playA, playB;
 
         protected override void OnMixer(float time, IMixClip mix)
         {

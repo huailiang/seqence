@@ -16,7 +16,7 @@ namespace UnityEngine.Timeline
 
         public XSceneFxClip(XSceneFxTrack track, ClipData data) : base(track, data)
         {
-            SceneFxClipData fxdata = (SceneFxClipData) data;
+            SceneFxClipData fxdata = (SceneFxClipData)data;
             Load(fxdata.prefab, fxdata.pos, fxdata.rot, fxdata.scale);
         }
 
@@ -55,7 +55,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-        protected override void OnUpdate(float tick)
+        protected override void OnUpdate(float tick, bool mix)
         {
             if (particleSystems != null)
             {
