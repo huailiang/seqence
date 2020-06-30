@@ -70,8 +70,6 @@ namespace UnityEditor.Timeline
             AddRuntime();
             timeline.Time = 2.0f;
             timeline.mode = TimelinePlayMode.EditorRun;
-            float dur = timeline.RecalcuteDuration();
-            window.SetTimeRange(0, dur + 1);
         }
 
         public void Open(string path)
@@ -82,7 +80,7 @@ namespace UnityEditor.Timeline
             timeline = new XTimeline(path);
             AddRuntime();
             float dur = timeline.RecalcuteDuration();
-            window.SetTimeRange(0, dur + 1);
+            window.SetTimeRange(0, dur * 1.5f);
         }
 
         private void Dispose()
@@ -103,8 +101,7 @@ namespace UnityEditor.Timeline
             if (go)
             {
                 runtime = go.GetComponent<RuntimeTimeline>();
-                if (runtime == null)
-                    runtime = go.AddComponent<RuntimeTimeline>();
+                if (runtime == null) runtime = go.AddComponent<RuntimeTimeline>();
                 runtime.path = this.path;
                 runtime.timeline = timeline;
             }

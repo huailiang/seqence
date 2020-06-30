@@ -560,7 +560,7 @@ namespace UnityEditor.Timeline
             if (d > 0) clip.duration = d;
         }
 
-        public virtual bool CalcuteClipMode(DragMode dm, float v, IClip c, out ClipMode cm)
+        public virtual bool CalcuteClipMode(DragMode dm, float delta, IClip c, out ClipMode cm)
         {
             cm = ClipMode.None;
             return true;

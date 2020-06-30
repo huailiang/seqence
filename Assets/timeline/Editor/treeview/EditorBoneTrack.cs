@@ -50,6 +50,7 @@ namespace UnityEditor.Timeline
                     data.duration = 20;
                     data.prefab = AssetDatabase.GetAssetPath(obj);
                     data.seed = 0;
+                    data.scale=Vector3.one;
                     XBoneFxClip clip = new XBoneFxClip((XBoneFxTrack) track, data);
                     clip.SetFx((GameObject) obj);
                     track.AddClip(clip, data);

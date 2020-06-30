@@ -4,7 +4,7 @@ using System;
 
 namespace UnityEditor.Timeline
 {
-
+    [Flags]
     public enum ClipMode
     {
         None = 0,
@@ -33,7 +33,6 @@ namespace UnityEditor.Timeline
             e = Event.current;
             clipMode = ClipMode.None;
         }
-
 
 
         public void OnGUI()
@@ -206,32 +205,36 @@ namespace UnityEditor.Timeline
         private void DragStart(Event e)
         {
             rect.x = TimelineWindow.inst.TimeToPixel(clip.start);
-            rect.x += e.delta.x;
-            var start2 = TimelineWindow.inst.PiexlToTime(rect.x);
-            if (start2 >= 0 && start2 <= clip.end)
+            if (track.CalcuteClipMode(DragMode.Left, e.delta.x, clip, out var m))
             {
-                clip.duration -= (start2 - clip.start);
-                clip.start = start2;
-                e.Use();
+                rect.x += e.delta.x;
+                var start2 = TimelineWindow.inst.PiexlToTime(rect.x);
+                if (start2 >= 0 && start2 <= clip.end)
+                {
+                    clip.duration -= (start2 - clip.start);
+                    clip.start = start2;
+                    e.Use();
+                }
             }
-            if (track.CalcuteClipMode(DragMode.Left, start2, clip, out var m))
-                clipMode = (clipMode & (~ClipMode.Left)) | m;
+            clipMode = (clipMode & (~ClipMode.Left)) | m;
         }
 
         private void DragEnd(Event e)
         {
             rect.x = TimelineWindow.inst.TimeToPixel(clip.end);
-            rect.x += e.delta.x;
-            var end = TimelineWindow.inst.PiexlToTime(rect.x);
-            if (end > clip.start)
+            if (track.CalcuteClipMode(DragMode.Right, e.delta.x, clip, out var m))
             {
-                clip.duration += (end - clip.end);
-                e.Use();
+                rect.x += e.delta.x;
+                var end = TimelineWindow.inst.PiexlToTime(rect.x);
+                if (end > clip.start)
+                {
+                    clip.duration += (end - clip.end);
+                    e.Use();
+                }
             }
-            if (track.CalcuteClipMode(DragMode.Right, end, clip, out var m))
-                clipMode = (clipMode & (~ClipMode.Right)) | m;
+            clipMode = (clipMode & (~ClipMode.Right)) | m;
         }
-        
+
         private void OnDrag(Event e)
         {
             rect.x += e.delta.x;

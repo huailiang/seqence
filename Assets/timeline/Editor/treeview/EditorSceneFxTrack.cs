@@ -33,6 +33,7 @@ namespace UnityEditor.Timeline
                     data.duration = 20;
                     data.prefab = AssetDatabase.GetAssetPath(obj);
                     data.seed = 0;
+                    data.scale=Vector3.one;
                     XSceneFxClip clip = new XSceneFxClip((XSceneFxTrack) track, data);
                     clip.SetReference((GameObject) obj);
                     track.AddClip(clip, data);
@@ -61,6 +62,7 @@ namespace UnityEditor.Timeline
         {
             base.OnInspectorClip(c);
             XSceneFxClip clip = (XSceneFxClip) c;
+            var data = clip.data as SceneFxClipData;
             if (clip)
             {
                 EditorGUILayout.LabelField(clip.prefabGameObject.name);
@@ -72,6 +74,9 @@ namespace UnityEditor.Timeline
                     tf.localPosition = EditorGUILayout.Vector3Field("pos", tf.localPosition);
                     tf.localEulerAngles = EditorGUILayout.Vector3Field("rot", tf.localEulerAngles);
                     tf.localScale = EditorGUILayout.Vector3Field("scale", tf.localScale);
+                    data.pos = tf.localPosition;
+                    data.rot = tf.localEulerAngles;
+                    data.scale = tf.localScale;
                 }
             }
         }

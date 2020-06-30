@@ -78,7 +78,7 @@ namespace UnityEditor.Timeline
                         float xtime = m_TimeArea.PixelToTime(e.mousePosition.x, timeAreaRect);
                         OnTrackHeadDrag(xtime);
                     }
-                    else //zoom
+                    else if(timeAreaRect.Contains(e.mousePosition)) //zoom
                     {
                         var dt = e.delta;
                         float delta = Mathf.Abs(dt.x) > Mathf.Abs(dt.y) ? dt.x : dt.y;
@@ -97,16 +97,12 @@ namespace UnityEditor.Timeline
             }
         }
 
-        public void SetTimeRange(Vector2 range)
-        {
-            SetTimeRange(range.x, range.y);
-        }
-
         public void SetTimeRange(float x1, float x2)
         {
             rangeX1 = x1;
             rangeX2 = x2;
             m_TimeArea.SetShownHRange(rangeX1, rangeX2);
+            Repaint();
         }
 
         public float GetSnappedTimeAtMousePosition(Vector2 pos)
