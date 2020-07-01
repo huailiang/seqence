@@ -7,6 +7,7 @@ namespace UnityEngine.Timeline
         public GameObject fx;
         private string path;
         ParticleSystem[] ps;
+        private bool restart;
 
         public override string Display
         {
@@ -28,7 +29,7 @@ namespace UnityEngine.Timeline
             {
                 XResources.DestroyGameObject(path, fx);
             }
-            Load((BoneFxClipData) data);
+            Load((BoneFxClipData)data);
         }
 
         private void Load(BoneFxClipData data)
@@ -43,6 +44,7 @@ namespace UnityEngine.Timeline
                 {
                     var tf = go.transform.Find(data.bone);
                     fx = XResources.LoadGameObject(data.prefab);
+                    fx.SetActive(false);
                     path = data.prefab;
                     if (fx)
                     {
@@ -65,12 +67,21 @@ namespace UnityEngine.Timeline
         protected override void OnEnter()
         {
             base.OnEnter();
+            restart = true;
+            if (fx) fx.SetActive(true);
+
+        }
+
+        protected override void OnUpdate(float tick, bool mix)
+        {
+            base.OnUpdate(tick, mix);
             if (ps != null)
             {
                 int len = ps.Length;
                 for (int i = 0; i < len; i++)
                 {
-                    ps[i].Play();
+                    ps[i].Simulate(tick, true, restart);
+                    restart = false;
                 }
             }
         }
@@ -78,14 +89,8 @@ namespace UnityEngine.Timeline
         protected override void OnExit()
         {
             base.OnExit();
-            if (ps != null)
-            {
-                int len = ps.Length;
-                for (int i = 0; i < len; i++)
-                {
-                    ps[i].Stop();
-                }
-            }
+            if (fx) fx.SetActive(false);
+            restart = false;
         }
 
         protected override void OnDestroy()
@@ -93,6 +98,7 @@ namespace UnityEngine.Timeline
             if (fx)
             {
                 XResources.DestroyGameObject(path, fx);
+                fx = null;
             }
             ps = null;
             base.OnDestroy();

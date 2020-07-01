@@ -16,7 +16,7 @@
         public const float minTimeCodeWidth = 28; // Enough space to display up to 9999 without clipping
 
         public const float shadowUnderTimelineHeight = 15;
-        public const float RawHeight = 36;
+        public const float RawHeight = 30;
         
     }
 }
