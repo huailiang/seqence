@@ -86,7 +86,7 @@ namespace UnityEditor.Timeline
 
         private static readonly string _edit_img = @"Assets/timeline/Editor/StyleSheets/Images/";
 
-        private static Texture2D _new_ico, _save_ico, _open_ico,_warn_ico;
+        private static Texture2D _new_ico, _save_ico, _open_ico, _warn_ico, _refresh_ico;
 
         public static Texture2D new_ico
         {
@@ -135,11 +135,24 @@ namespace UnityEditor.Timeline
                 return _warn_ico;
             }
         }
-        
+
+        public static Texture2D refresh_ico
+        {
+            get
+            {
+                if (_refresh_ico == null)
+                {
+                    _refresh_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_edit_img + "btn_editor_refresh.png");
+                }
+                return _refresh_ico;
+            }
+        }
+
 
         public static readonly GUIContent newContent = new GUIContent(new_ico, "new.");
         public static readonly GUIContent openContent = new GUIContent(open_ico, "open.");
         public static readonly GUIContent saveContent = new GUIContent(save_ico, "save.");
+        public static readonly GUIContent refreshContent = new GUIContent(refresh_ico, "refresh.");
 
         private static GUIStyle _titleStyle, _labelStyle;
 

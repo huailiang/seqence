@@ -156,6 +156,10 @@ namespace UnityEditor.Timeline
 
         void InspectGUI()
         {
+            if (GUILayout.Button(TimelineStyles.refreshContent, EditorStyles.toolbarButton, GUILayout.MaxWidth(24)))
+            {
+                Repaint();
+            }
             if (GUILayout.Button(TimelineStyles.inspectBtn, EditorStyles.toolbarButton))
             {
                 TimelineInspector.ShowWindow();
