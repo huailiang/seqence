@@ -46,7 +46,7 @@ namespace UnityEngine.Timeline
                 {
                     tick = aclip.length - 0.01f;
                 }
-                playable.SetTime(tick);
+                playable.SetTime(tick + anData.trim_start);
             }
         }
 

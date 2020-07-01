@@ -98,10 +98,10 @@
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>10.6726809</start>
-          <duration>6.19056368</duration>
+          <start>12.8844013</start>
+          <duration>3.97884321</duration>
           <anim>Assets/test/Clips/Camera_cutscene_opening.anim</anim>
-          <trim_start>0</trim_start>
+          <trim_start>46</trim_start>
           <trim_end>0</trim_end>
           <loop>false</loop>
         </ClipData>
@@ -240,7 +240,7 @@
     <TrackData>
       <clips>
         <ClipData xsi:type="SceneFxClipData">
-          <start>0</start>
+          <start>3.28274083</start>
           <duration>10.6404591</duration>
           <prefab>Assets/test/Particle Syste_fire.prefab</prefab>
           <seed>0</seed>

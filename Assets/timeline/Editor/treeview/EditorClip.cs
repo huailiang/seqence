@@ -59,6 +59,7 @@ namespace UnityEditor.Timeline
             right.x = Mathf.Max(right.x, timeRect.x);
             EditorGUIUtility.AddCursorRect(right, MouseCursor.SplitResizeLeftRight);
             ProcessEvent(left, right);
+            clipMode = track.CalcuteClipMode(clip);
             if ((clipMode & ClipMode.Left) > 0)
             {
                 left.x = rect.x + 2;
@@ -205,7 +206,7 @@ namespace UnityEditor.Timeline
         private void DragStart(Event e)
         {
             rect.x = TimelineWindow.inst.TimeToPixel(clip.start);
-            if (track.CalcuteClipMode(DragMode.Left, e.delta.x, clip, out var m))
+            if (track.AllowClipDrag(DragMode.Left, e.delta.x, clip))
             {
                 rect.x += e.delta.x;
                 var start2 = TimelineWindow.inst.PiexlToTime(rect.x);
@@ -216,13 +217,12 @@ namespace UnityEditor.Timeline
                     e.Use();
                 }
             }
-            clipMode = (clipMode & (~ClipMode.Left)) | m;
         }
 
         private void DragEnd(Event e)
         {
             rect.x = TimelineWindow.inst.TimeToPixel(clip.end);
-            if (track.CalcuteClipMode(DragMode.Right, e.delta.x, clip, out var m))
+            if (track.AllowClipDrag(DragMode.Right, e.delta.x, clip))
             {
                 rect.x += e.delta.x;
                 var end = TimelineWindow.inst.PiexlToTime(rect.x);
@@ -232,7 +232,6 @@ namespace UnityEditor.Timeline
                     e.Use();
                 }
             }
-            clipMode = (clipMode & (~ClipMode.Right)) | m;
         }
 
         private void OnDrag(Event e)
