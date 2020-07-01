@@ -19,7 +19,7 @@ namespace UnityEditor.Timeline
             get { return inst.state.timeline; }
         }
 
-        [UnityEditor.Callbacks.DidReloadScripts]
+        [Callbacks.DidReloadScripts]
         static void OnEditorReload()
         {
             TimelineState.CleanEnv();

@@ -61,12 +61,20 @@ namespace UnityEditor.Timeline
                 rec.width = 20;
                 GUI.Box(rec, TimelineStyles.empty, TimelineStyles.timeCursor);
             }
-
             if (e == null) e = Event.current;
             switch (e.type)
             {
                 case EventType.MouseDown:
-                    if (rec.Contains(e.mousePosition)) time_draging = true;
+                    if (rec.Contains(e.mousePosition))
+                    {
+                        time_draging = true;
+                    }
+                    else if (timeAreaRect.Contains(e.mousePosition))
+                    {
+                        float t = PiexlToTime(e.mousePosition.x);
+                        timeline.Time = t;
+                        Repaint();
+                    }
                     break;
                 case EventType.MouseUp:
                     time_draging = false;
@@ -78,7 +86,7 @@ namespace UnityEditor.Timeline
                         float xtime = m_TimeArea.PixelToTime(e.mousePosition.x, timeAreaRect);
                         OnTrackHeadDrag(xtime);
                     }
-                    else if(timeAreaRect.Contains(e.mousePosition)) //zoom
+                    else if (timeAreaRect.Contains(e.mousePosition)) //zoom
                     {
                         var dt = e.delta;
                         float delta = Mathf.Abs(dt.x) > Mathf.Abs(dt.y) ? dt.x : dt.y;
