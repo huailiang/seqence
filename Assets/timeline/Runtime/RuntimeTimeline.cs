@@ -16,7 +16,10 @@ namespace UnityEngine.Timeline
         {
 
             if (Application.isPlaying)
+            {
                 timeline = new XTimeline(path);
+                timeline.mode = TimelinePlayMode.RealRunning;
+            }
             play = true;
             time = 0;
         }
@@ -34,16 +37,13 @@ namespace UnityEngine.Timeline
         public void OnDrawGizmos()
         {
 #if UNITY_EDITOR
-            if (timeline != null)
+            timeline?.ForTrackHierachy(track=>
             {
-                 timeline.ForTrackHierachy(track=>
+                if(track is XTransformTrack transformTrack)
                 {
-                    if(track is XTransformTrack)
-                    {
-                        DrawPath(track as XTransformTrack);
-                    }
-                });
-            }
+                    DrawPath(transformTrack);
+                }
+            });
 #endif
         }
 
