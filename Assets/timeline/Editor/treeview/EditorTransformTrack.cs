@@ -123,7 +123,6 @@ namespace UnityEditor.Timeline
         }
 
 
-
         private void ProcessTansfEvent()
         {
             var e = Event.current;
@@ -134,6 +133,10 @@ namespace UnityEditor.Timeline
                     if (e.keyCode == KeyCode.F)
                     {
                         PrepareOperation(e.mousePosition);
+                    }
+                    if(e.keyCode == KeyCode.D || e.keyCode== KeyCode.Delete)
+                    {
+                        DeleteItem(e.mousePosition);
                     }
                 }
                 if (e.type == EventType.MouseDown)
@@ -147,7 +150,7 @@ namespace UnityEditor.Timeline
                 }
             }
         }
-
+        
         protected override void OnInspectorTrack()
         {
             EditorGUILayout.LabelField("recoding: " + recoding);
@@ -158,7 +161,15 @@ namespace UnityEditor.Timeline
                 if (go) EditorGUILayout.LabelField("target: " + go.name);
                 for (int i = 0; i < Data.time.Length; i++)
                 {
-                    Data.time[i] = EditorGUILayout.FloatField("time", Data.time[i]);
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("time: " + Data.time[i]);
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button("x", GUI.skin.label, GUILayout.MaxWidth(20)))
+                    {
+                        (track as XTransformTrack).RmItemAt(i);
+                        EditorGUIUtility.ExitGUI();
+                    }
+                    EditorGUILayout.EndHorizontal();
                     Data.pos[i] = EditorGUILayout.Vector3Field("pos", Data.pos[i]);
                     Data.rot[i] = EditorGUILayout.Vector3Field("rot", Data.rot[i]);
                     EditorGUILayout.Space();
@@ -191,7 +202,16 @@ namespace UnityEditor.Timeline
             }
         }
 
-        private bool ContainsT(float t, out int i)
+        private void DeleteItem(Vector2 pos)
+        {
+            float t = TimelineWindow.inst.PiexlToTime(pos.x);
+            if (ContainsT(t, out var i, 0.4f))
+            {
+                RmItem(i);
+            }
+        }
+
+        private bool ContainsT(float t,  out int i, float max=0.1f)
         {
             i = 0;
             var time = Data.time;
@@ -199,7 +219,7 @@ namespace UnityEditor.Timeline
             {
                 for (int j = 0; j < time.Length; j++)
                 {
-                    if (Mathf.Abs(time[j] - t) < 0.1f)
+                    if (Mathf.Abs(time[j] - t) < max)
                     {
                         i = j;
                         return true;

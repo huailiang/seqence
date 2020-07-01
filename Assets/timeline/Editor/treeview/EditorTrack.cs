@@ -187,14 +187,20 @@ namespace UnityEditor.Timeline
                 {
                     if (HitClip(e)) DeleteClip(e.mousePosition);
                     else DeleteTrack(this);
+                    e.Use();
                 }
             }
         }
 
 
-        protected virtual void OnSelect()
-        {
-        }
+        protected virtual void OnSelect() { }
+
+        protected virtual void OnGUIHeader() { }
+
+        protected virtual void OnGUIContent() { }
+
+        protected virtual void OnAddClip(float time) { }
+
 
         private bool HitClip(Event e)
         {
@@ -344,10 +350,6 @@ namespace UnityEditor.Timeline
             GUILayout.EndArea();
         }
 
-        protected virtual void OnGUIHeader()
-        {
-        }
-
 
         protected void GUIContent()
         {
@@ -391,10 +393,7 @@ namespace UnityEditor.Timeline
             OnGUIContent();
         }
 
-        protected virtual void OnGUIContent()
-        {
-        }
-
+        
         public void UnSelectAll(object arg)
         {
             bool selet = (bool)arg;
@@ -416,8 +415,7 @@ namespace UnityEditor.Timeline
             OnAddClip(start);
             TimelineWindow.inst.Repaint();
         }
-
-        protected virtual void OnAddClip(float time) { }
+        
 
         private void DeleteClip(object mpos)
         {

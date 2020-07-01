@@ -90,6 +90,33 @@
           </rot>
           <select>false</select>
         </TrackData>
+        <TrackData>
+          <clips>
+            <ClipData xsi:type="BoneFxClipData">
+              <start>3.18578076</start>
+              <duration>20</duration>
+              <prefab>Assets/test/Particle Syste_fire.prefab</prefab>
+              <seed>0</seed>
+              <pos>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </pos>
+              <rot>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rot>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+              <bone>Skeleton/Root/Hips</bone>
+            </ClipData>
+          </clips>
+          <type>BoneFx</type>
+        </TrackData>
       </childs>
       <type>Animation</type>
       <prefab>Assets/test/DefaultMale.prefab</prefab>
@@ -114,8 +141,6 @@
             <float>1.892565</float>
             <float>4.3621664</float>
             <float>8.370208</float>
-            <float>11.7392416</float>
-            <float>11.5775766</float>
             <float>13.5218573</float>
             <float>17.1598282</float>
           </time>
@@ -126,52 +151,32 @@
               <z>3.5</z>
             </Vector3>
             <Vector3>
-              <x>1</x>
+              <x>2</x>
               <y>0</y>
-              <z>0.99</z>
+              <z>1</z>
             </Vector3>
             <Vector3>
-              <x>-0.545</x>
+              <x>2</x>
               <y>0</y>
-              <z>0.99</z>
+              <z>1</z>
             </Vector3>
             <Vector3>
-              <x>-0.545</x>
+              <x>4</x>
               <y>0</y>
-              <z>-0.782</z>
+              <z>2</z>
             </Vector3>
             <Vector3>
-              <x>-0.545</x>
+              <x>4</x>
               <y>0</y>
-              <z>-0.782</z>
+              <z>1</z>
             </Vector3>
             <Vector3>
-              <x>-0.545</x>
+              <x>5</x>
               <y>0</y>
-              <z>-0.782</z>
-            </Vector3>
-            <Vector3>
-              <x>-0.545</x>
-              <y>0</y>
-              <z>-0.782</z>
-            </Vector3>
-            <Vector3>
-              <x>-0.545</x>
-              <y>0</y>
-              <z>-0.782</z>
+              <z>0</z>
             </Vector3>
           </pos>
           <rot>
-            <Vector3>
-              <x>-0</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
             <Vector3>
               <x>-0</x>
               <y>0</y>
@@ -240,7 +245,7 @@
     <TrackData>
       <clips>
         <ClipData xsi:type="SceneFxClipData">
-          <start>3.28274083</start>
+          <start>0.3043919</start>
           <duration>10.6404591</duration>
           <prefab>Assets/test/Particle Syste_fire.prefab</prefab>
           <seed>0</seed>
@@ -261,7 +266,7 @@
           </scale>
         </ClipData>
         <ClipData xsi:type="SceneFxClipData">
-          <start>9.506935</start>
+          <start>6.84769535</start>
           <duration>16.6836281</duration>
           <prefab>Assets/test/Particle Syste_water.prefab</prefab>
           <seed>0</seed>

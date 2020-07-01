@@ -50,9 +50,9 @@ namespace UnityEditor.Timeline
                     data.duration = 20;
                     data.prefab = AssetDatabase.GetAssetPath(obj);
                     data.seed = 0;
-                    data.scale=Vector3.one;
-                    XBoneFxClip clip = new XBoneFxClip((XBoneFxTrack) track, data);
-                    clip.SetFx((GameObject) obj);
+                    data.scale = Vector3.one;
+                    XBoneFxClip clip = new XBoneFxClip((XBoneFxTrack)track, data);
+                    clip.SetFx((GameObject)obj);
                     track.AddClip(clip, data);
                 }
             }, null);
@@ -96,7 +96,11 @@ namespace UnityEditor.Timeline
                     if (bt.bindObj)
                     {
                         Transform tmp = bt.bindObj.transform.Find(data.bone);
-                        if (tmp) bone = tmp.gameObject;
+                        if (tmp)
+                        {
+                            bone = tmp.gameObject;
+                            xc.fx.transform.parent = tmp;
+                        }
                     }
                 }
             }
@@ -105,28 +109,34 @@ namespace UnityEditor.Timeline
                 EditorGUILayout.HelpBox("bind bone is null", MessageType.Warning);
             }
             if (!string.IsNullOrEmpty(data.bone)) EditorGUILayout.LabelField("bone: " + data.bone);
+
+            data.pos = EditorGUILayout.Vector3Field("pos", data.pos);
+            data.rot = EditorGUILayout.Vector3Field("rot", data.rot);
+            data.scale = EditorGUILayout.Vector3Field("scale", data.scale);
+            if (xc.fx != null && bone != null)
+            {
+                var tf = xc.fx.transform;
+                tf.localPosition = data.pos;
+                tf.localEulerAngles = data.rot;
+                tf.localScale = data.scale;
+            }
         }
 
         protected override void OnSelect()
         {
             base.OnSelect();
-            if (track.clips != null)
+            var bind = (track.parent as XBindTrack).bindObj;
+            if (bind)
             {
-                Selection.activeGameObject = null;
-                foreach (var clip in track.clips)
-                {
-                    if (clip is XBoneFxClip xc)
-                    {
-                        Selection.Add(xc.fx);
-                    }
-                }
+                Selection.activeGameObject = bind.gameObject;
             }
         }
 
         private string GetHieracyPath(Transform b)
         {
             string p = string.Empty;
-            if (b.parent != null)
+            var bind = (track.parent as XBindTrack).bindObj;
+            while (b.parent != null && b.name != bind.name)
             {
                 p = string.IsNullOrEmpty(p) ? b.name : b.name + "/" + p;
                 b = b.parent;
