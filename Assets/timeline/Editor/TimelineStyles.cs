@@ -17,6 +17,7 @@ namespace UnityEditor.Timeline
         public static readonly GUIStyle timelineClip = "Icon.Clip";
         public static readonly GUIStyle clipIn = "Icon.ClipIn";
         public static readonly GUIStyle clipOut = "Icon.ClipOut";
+        public static readonly GUIStyle displayBackground = "sequenceClip";
 
         public static readonly GUIContent sequenceSelectorIcon = EditorGUIUtility.IconContent("TimelineSelector");
 

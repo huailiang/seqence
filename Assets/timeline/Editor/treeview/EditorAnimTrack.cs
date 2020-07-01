@@ -184,19 +184,22 @@ namespace UnityEditor.Timeline
             }
             if (dm == DragMode.Right)
             {
-                d.trim_end -= delta;
-                d.trim_end = Mathf.Max(0, d.trim_end);
-                return d.trim_end > 1e-2;
+                d.trim_end += delta;
+                if (Mathf.Abs(d.trim_end) < 1e-1)
+                    d.trim_end = 0;
+                return true;
             }
             return base.AllowClipDrag(dm, delta, c);
         }
 
-        public override ClipMode CalcuteClipMode(IClip c)
+        public override ClipMode CalcuteClipMode(IClip c, out float loopLen)
         {
             var d = c.data as AnimClipData;
             ClipMode mode = ClipMode.None;
-            if (d.trim_start > 0) mode |= ClipMode.Left;
-            if (d.trim_end > 0) mode |= ClipMode.Right;
+            if (d.trim_start > 1e-2) mode |= ClipMode.Left;
+            if (d.trim_end < -1e-2) mode |= ClipMode.Right;
+            else if (d.trim_end > 1e-2) mode |= ClipMode.Loop;
+            loopLen = d.trim_end;
             return mode;
         }
 

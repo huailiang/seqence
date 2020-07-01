@@ -10,6 +10,7 @@ namespace UnityEditor.Timeline
         None = 0,
         Left = 1,
         Right = 2,
+        Loop = 4,
     }
 
     public enum DragMode { None, Drag, Left, Right }
@@ -59,7 +60,8 @@ namespace UnityEditor.Timeline
             right.x = Mathf.Max(right.x, timeRect.x);
             EditorGUIUtility.AddCursorRect(right, MouseCursor.SplitResizeLeftRight);
             ProcessEvent(left, right);
-            clipMode = track.CalcuteClipMode(clip);
+            clipMode = track.CalcuteClipMode(clip, out var loop);
+            if (loop > 1e-2) DrawLoops(loop);
             if ((clipMode & ClipMode.Left) > 0)
             {
                 left.x = rect.x + 2;
@@ -76,8 +78,20 @@ namespace UnityEditor.Timeline
                 right.height = rect.height / 2;
                 GUI.Label(right, GUIContent.none, TimelineStyles.clipOut);
             }
-            EditorGUI.LabelField(rect, clip.Display, TimelineStyles.fontClip);
             MixProcessor();
+            EditorGUI.LabelField(rect, clip.Display, TimelineStyles.fontClip);
+        }
+
+
+        private void DrawLoops(float piexlDuration)
+        {
+            using (new GUIColorOverride(new Color(0, 0, 0, 0.2f)))
+            {
+                Rect tmp = rect;
+                tmp.x = tmp.xMax - piexlDuration;
+                tmp.width = rect.xMax - tmp.x;
+                GUI.Label(tmp, GUIContent.none, TimelineStyles.displayBackground);
+            }
         }
 
 

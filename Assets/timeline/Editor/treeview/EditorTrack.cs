@@ -183,6 +183,11 @@ namespace UnityEditor.Timeline
                         SelectTrack(true);
                     }
                 }
+                else if (e.type == EventType.KeyUp && e.keyCode == KeyCode.Delete)
+                {
+                    if (HitClip(e)) DeleteClip(e.mousePosition);
+                    else DeleteTrack(this);
+                }
             }
         }
 
@@ -565,8 +570,9 @@ namespace UnityEditor.Timeline
             return true;
         }
 
-        public virtual ClipMode CalcuteClipMode(IClip c)
+        public virtual ClipMode CalcuteClipMode(IClip c,out float loopLen)
         {
+            loopLen = 0;
             return ClipMode.None;
         }
     }
