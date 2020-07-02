@@ -150,7 +150,20 @@ namespace UnityEditor.Timeline
                 }
             }
         }
-        
+
+        protected override void OnSelect()
+        {
+            base.OnSelect();
+            if (track.root != null)
+            {
+                var t = track.root as XBindTrack;
+                if (t?.bindObj != null)
+                {
+                    Selection.activeGameObject = t.bindObj;
+                }
+            }
+        }
+
         protected override void OnInspectorTrack()
         {
             EditorGUILayout.LabelField("recoding: " + recoding);

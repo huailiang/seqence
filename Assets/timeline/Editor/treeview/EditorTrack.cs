@@ -201,6 +201,8 @@ namespace UnityEditor.Timeline
 
         protected virtual void OnAddClip(float time) { }
 
+        protected virtual void OnInspectorTrack() { }
+
 
         private bool HitClip(Event e)
         {
@@ -299,6 +301,7 @@ namespace UnityEditor.Timeline
         {
             bool sele = (bool)arg;
             this.@select = sele;
+            OnSelect();
             TimelineWindow.inst.tree?.SetSelect(this);
             TimelineWindow.inst.Repaint();
         }
@@ -550,9 +553,7 @@ namespace UnityEditor.Timeline
             }
         }
 
-        protected virtual void OnInspectorTrack()
-        {
-        }
+       
 
         protected virtual void OnInspectorClip(IClip clip)
         {
