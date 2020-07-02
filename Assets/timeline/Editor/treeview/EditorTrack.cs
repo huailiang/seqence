@@ -304,7 +304,6 @@ namespace UnityEditor.Timeline
             {
                 pm.AddDisabledItem(_paste, false);
             }
-
             if (actions != null)
             {
                 pm.AddSeparator("");
@@ -415,7 +414,7 @@ namespace UnityEditor.Timeline
                 if (GUILayout.Button(TimelineStyles.sequenceSelectorIcon, TimelineStyles.bottomShadow))
                 {
                     if (showChild)
-                        tree.RmChildTrack(this);
+                        tree.RmChildTrack(track);
                     else
                         tree.AddChildTracks(track);
                     showChild = !showChild;

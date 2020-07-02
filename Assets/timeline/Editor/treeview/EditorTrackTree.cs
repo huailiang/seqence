@@ -169,7 +169,7 @@ namespace UnityEditor.Timeline
             }
         }
 
-        public void RmChildTrack(EditorTrack track)
+        public void RmChildTrack(XTrack track)
         {
             List<EditorTrack> list = new List<EditorTrack>();
             for (int i = 0; i < hierachy.Count; i++)

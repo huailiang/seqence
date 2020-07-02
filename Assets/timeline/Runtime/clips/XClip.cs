@@ -23,6 +23,9 @@ namespace UnityEngine.Timeline
 
     public class XClip<T> : XTimelineObject, IClip where T : XTrack
     {
+
+        private bool enterd = false;
+
         protected XTimeline timeline
         {
             get { return track.timeline; }
@@ -70,15 +73,16 @@ namespace UnityEngine.Timeline
             float tick = time - start;
             if ((time >= start && (time == 0 || prev < start)) || (time <= end && prev > end))
             {
-                OnEnter();
+                if (!enterd) OnEnter();
             }
             if (tick >= 0 && time < end)
             {
+                if (!enterd) OnEnter();// editor mode can jump when drag time area
                 OnUpdate(tick, mix);
             }
             if ((time > end && prev <= end) || (time < start && prev >= start))
             {
-                OnExit();
+                if (enterd) OnExit();
             }
         }
 
@@ -88,6 +92,7 @@ namespace UnityEngine.Timeline
 
         protected virtual void OnEnter()
         {
+            enterd = true;
         }
 
         protected virtual void OnUpdate(float tick,bool mix)
@@ -97,6 +102,7 @@ namespace UnityEngine.Timeline
 
         protected virtual void OnExit()
         {
+            enterd = false;
         }
 
         protected virtual void OnDestroy()

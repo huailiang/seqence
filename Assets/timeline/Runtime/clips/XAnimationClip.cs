@@ -9,7 +9,6 @@ namespace UnityEngine.Timeline
         public AnimationClipPlayable playable;
         public AnimationClip aclip;
         public int port = 0;
-
         private AnimClipData anData;
 
         public override string Display
