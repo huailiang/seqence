@@ -16,7 +16,6 @@ namespace UnityEngine.Timeline
             {
                 timeline = new XTimeline(path);
                 timeline.SetPlaying(true);
-                timeline.mode = TimelinePlayMode.RealRunning;
             }
             play = true;
         }

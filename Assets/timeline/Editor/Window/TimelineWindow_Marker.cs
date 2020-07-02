@@ -152,10 +152,9 @@ namespace UnityEditor.Timeline
         void DrawMarkerDrawerHeader()
         {
             var tre = state.timeline.markerTrack;
-            var marks = tre.marks;
-            if (marks != null)
+            if (tre?.marks != null)
             {
-                foreach (var mark in marks)
+                foreach (var mark in tre.marks)
                 {
                     DrawMarkItem(mark);
                 }

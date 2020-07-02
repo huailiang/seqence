@@ -62,6 +62,15 @@ namespace UnityEditor.Timeline
             }
         }
 
+        public void CheckExist()
+        {
+            if (timeline == null && Application.isPlaying)
+            {
+                var run = GameObject.FindObjectOfType<RuntimeTimeline>();
+                if (run) timeline = run.timeline;
+            }
+        }
+
         public void CreateTimeline(string path)
         {
             Dispose();

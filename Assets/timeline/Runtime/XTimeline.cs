@@ -62,7 +62,13 @@ namespace UnityEngine.Timeline
 
         public XMarkerTrack markerTrack
         {
-            get { return trackTrees[0] as XMarkerTrack; }
+            get
+            {
+                if (trackTrees != null && trackTrees.Length > 0)
+                    return trackTrees[0] as XMarkerTrack;
+                else
+                    return null;
+            }
         }
 
         public bool isRunningMode
@@ -113,7 +119,11 @@ namespace UnityEngine.Timeline
             {
                 graph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
                 graph.Play();
-                if (!isRunningMode)
+                if (Application.isPlaying)
+                {
+                    mode = TimelinePlayMode.RealRunning;
+                }
+                else if (!isRunningMode)
                 {
                     ManualMode();
                 }

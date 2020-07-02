@@ -76,7 +76,7 @@ namespace UnityEngine.Timeline
         public override void OnBind()
         {
             base.OnBind();
-            if (bindObj)
+            if (bindObj && XTimeline.graph.IsValid())
             {
                 var amtor = bindObj.GetComponent<Animator>();
                 playableOutput = AnimationPlayableOutput.Create(XTimeline.graph, "AnimationOutput", amtor);

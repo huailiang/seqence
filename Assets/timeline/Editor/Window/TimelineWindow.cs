@@ -35,13 +35,14 @@ namespace UnityEditor.Timeline
 
         private void Update()
         {
-            if (inst == null) inst = this;
             state?.Update();
         }
 
         void OnGUI()
         {
+            if (inst == null) inst = this;
             TransportToolbarGUI();
+            state?.CheckExist();
             if (state.timeline)
             {
                 TimelineTimeAreaGUI();
