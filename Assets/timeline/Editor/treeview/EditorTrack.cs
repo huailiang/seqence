@@ -16,12 +16,14 @@ namespace UnityEditor.Timeline
 
     public class EditorTrack : EditorObject, ITimelineInspector
     {
+        private static XTrack clipboardTrack;
         public XTrack track;
         public Rect rect, head;
         public EditorClip[] eClips;
         public bool select, allowClip, showChild;
         private GenericMenu pm;
-        private GUIContent _addclip, _unselect, _select, _delete;
+        private GUIContent _addclip, _unselect, _select;
+        private GUIContent _copy, _paste, _delete;
         private Vector2 scroll;
         protected Color addtiveColor;
         public object trackArg = null;
@@ -139,6 +141,8 @@ namespace UnityEditor.Timeline
             _unselect = EditorGUIUtility.TrTextContent("UnSelect All  \t #u");
             _select = EditorGUIUtility.TrTextContent("Select All Tracks \t %#s");
             _delete = EditorGUIUtility.TrTextContent("Delete Clip\t #d");
+            _copy = EditorGUIUtility.TrTextContent("Copy Track\t #c");
+            _paste = EditorGUIUtility.TrTextContent("Paste Track\t #p");
         }
 
         public void OnGUI(Vector2 scroll)
@@ -291,9 +295,19 @@ namespace UnityEditor.Timeline
             {
                 pm.AddItem(EditorGUIUtility.TrTextContent("Select Track \t #s"), false, SelectTrack, true);
             }
-            pm.AddSeparator("");
+            pm.AddItem(_copy, false, CopyTrack);
+            if(clipboardTrack!=null)
+            {
+                pm.AddItem(_paste, false, PasteTrack);
+            }
+            else
+            {
+                pm.AddDisabledItem(_paste, false);
+            }
+
             if (actions != null)
             {
+                pm.AddSeparator("");
                 for (int i = 0; i < actions.Count; i++)
                 {
                     var at = actions[i];
@@ -324,6 +338,45 @@ namespace UnityEditor.Timeline
             TimelineWindow.inst.tree?.SetSelect(this);
             TimelineWindow.inst.Repaint();
         }
+
+        private void CopyTrack()
+        {
+            clipboardTrack = this.track;
+        }
+
+        private void PasteTrack()
+        {
+            var tree = TimelineWindow.inst.tree;
+            XTrack copyed = clipboardTrack.Clone();
+            bool match = false;
+            if (clipboardTrack.parent != null)
+            {
+                // type match
+                if (clipboardTrack.parent.AssetType == track.AssetType)
+                {
+                    copyed.parent = track;
+                    track.AddSub(copyed);
+                    track.AddTrackChildData(copyed.data);
+                    match = true;
+                }
+                else
+                {
+                    string tip = "The paste track need type: " + clipboardTrack.parent.AssetType;
+                    EditorUtility.DisplayDialog("Notice", tip, "OK");
+                }
+            }
+            else
+            {
+                match = true;
+                TimelineWindow.inst.timeline.AddRootTrack(copyed);
+            }
+            if (match)
+            {
+                tree.AddTrack(copyed, tree.IndexOfTrack(track) + 1, null, true);
+                clipboardTrack = null;
+            }
+        }
+        
 
         public void YOffset(float y)
         {

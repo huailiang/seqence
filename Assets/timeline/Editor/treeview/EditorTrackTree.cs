@@ -17,11 +17,6 @@ namespace UnityEditor.Timeline
         private EditorTrack recordTrack;
         
 
-        private GUIStyle vStyle
-        {
-            get { return GUI.skin.verticalScrollbar; }
-        }
-
         public float TracksBtmY
         {
             get

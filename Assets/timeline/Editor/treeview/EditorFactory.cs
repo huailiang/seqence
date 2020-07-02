@@ -24,18 +24,18 @@ namespace UnityEditor.Timeline
             MarkData data = null;
             if (t == typeof(XJumpMarker))
             {
-                data = new JumpMarkData() {time = time};
-                marker = new XJumpMarker(track, (JumpMarkData) data);
+                data = new JumpMarkData() { time = time };
+                marker = new XJumpMarker(track, (JumpMarkData)data);
             }
             else if (t == typeof(XSlowMarker))
             {
-                data = new SlowMarkData() {time = time};
-                marker = new XSlowMarker(track, (SlowMarkData) data);
+                data = new SlowMarkData() { time = time, slowRate = 0.5f };
+                marker = new XSlowMarker(track, (SlowMarkData)data);
             }
             else if (t == typeof(XActiveMark))
             {
-                data = new ActiveMarkData() {time = time};
-                marker = new XActiveMark(track, (ActiveMarkData) data);
+                data = new ActiveMarkData() { time = time };
+                marker = new XActiveMark(track, (ActiveMarkData)data);
             }
             else
             {
