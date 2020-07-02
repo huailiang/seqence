@@ -51,7 +51,8 @@ namespace UnityEditor.Timeline
                 tree.OnGUI(state);
                 DrawTimeOnSlider();
                 DrawSptLine();
-                EventMenuHandler();
+                DrawEndLine();
+                EventHandler();
             }
             else
             {
@@ -69,7 +70,7 @@ namespace UnityEditor.Timeline
 
         private Vector2 sc;
 
-        private void EventMenuHandler()
+        private void EventHandler()
         {
             Rect rt = winArea;
             rt.y = tree.TracksBtmY;
@@ -82,6 +83,11 @@ namespace UnityEditor.Timeline
             {
                 if (TimelineInspector.inst != null) TimelineInspector.inst.Repaint();
             }
+            else if (e.type == EventType.MouseUp)
+            {
+                timeline.RecalcuteDuration();
+                Repaint();
+            }
         }
 
         private void DrawSptLine()
@@ -91,6 +97,18 @@ namespace UnityEditor.Timeline
             Rect rec = new Rect(x, WindowConstants.timeAreaYPosition, 1,
                 tree.TracksBtmY - WindowConstants.timeAreaYPosition - 2);
             EditorGUI.DrawRect(rec, c);
+        }
+
+        private void DrawEndLine()
+        {
+            if (timeline)
+            {
+                Color c = TimelineStyles.colorEndLine;
+                float x = TimeToPixel(timeline.Duration);
+                Rect rec = new Rect(x, WindowConstants.timeAreaYPosition, 1,
+                    tree.TracksBtmY - WindowConstants.timeAreaYPosition - 2);
+                EditorGUI.DrawRect(rec, c);
+            }
         }
 
 

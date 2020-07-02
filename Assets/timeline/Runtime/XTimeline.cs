@@ -76,6 +76,11 @@ namespace UnityEngine.Timeline
             get { return mode != TimelinePlayMode.EditorPause; }
         }
 
+        public float Duration
+        {
+            get { return _duration; }
+        }
+
         public XTimeline(string path)
         {
             if (path.EndsWith(".xml"))
@@ -128,6 +133,7 @@ namespace UnityEngine.Timeline
                     ManualMode();
                 }
             }
+            _duration = RecalcuteDuration();
         }
 
         public void ManualMode()
@@ -264,6 +270,7 @@ namespace UnityEngine.Timeline
                     });
                 }
             }
+            _duration = dur;
             return dur;
         }
 
