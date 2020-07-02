@@ -31,10 +31,10 @@ namespace UnityEngine.Timeline
             {
                 int cnt = track.mixPlayable.GetInputCount();
                 track.mixPlayable.SetInputCount(++cnt);
-                playable = AnimationClipPlayable.Create(timeline.graph, aclip);
+                playable = AnimationClipPlayable.Create(XTimeline.graph, aclip);
                 if (playable.IsValid())
                 {
-                    timeline.graph.Connect(playable, 0, track.mixPlayable, port);
+                    XTimeline.graph.Connect(playable, 0, track.mixPlayable, port);
                     track.mixPlayable.SetInputWeight(port, 1);
                 }
                 else

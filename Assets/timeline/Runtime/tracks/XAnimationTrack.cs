@@ -79,8 +79,8 @@ namespace UnityEngine.Timeline
             if (bindObj)
             {
                 var amtor = bindObj.GetComponent<Animator>();
-                playableOutput = AnimationPlayableOutput.Create(timeline.graph, "AnimationOutput", amtor);
-                mixPlayable = AnimationMixerPlayable.Create(timeline.graph);
+                playableOutput = AnimationPlayableOutput.Create(XTimeline.graph, "AnimationOutput", amtor);
+                mixPlayable = AnimationMixerPlayable.Create(XTimeline.graph);
                 playableOutput.SetSourcePlayable(mixPlayable);
             }
         }

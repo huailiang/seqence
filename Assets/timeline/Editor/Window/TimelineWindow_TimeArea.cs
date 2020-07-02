@@ -73,6 +73,7 @@ namespace UnityEditor.Timeline
                     {
                         float t = PiexlToTime(e.mousePosition.x);
                         timeline.Time = t;
+                        state.SetPlaying(false);
                         Repaint();
                     }
                     break;
@@ -141,7 +142,7 @@ namespace UnityEditor.Timeline
 
         void OnTrackHeadDrag(float newTime)
         {
-            state.playing = false;
+            timeline.SetPlaying(false);
             state.timeline.Time = Mathf.Max(0.0f, newTime);
             TimelineWindow.inst.Repaint();
         }

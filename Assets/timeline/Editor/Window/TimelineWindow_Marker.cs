@@ -111,8 +111,7 @@ namespace UnityEditor.Timeline
         private XMarker TrigerMark(Event e)
         {
             float x = e.mousePosition.x;
-            var tre = state.timeline.trackTrees;
-            var marks = tre[0].marks;
+            var marks = state.timeline.markerTrack.marks;
             if (marks != null)
             {
                 foreach (var mark in marks)
@@ -152,16 +151,13 @@ namespace UnityEditor.Timeline
 
         void DrawMarkerDrawerHeader()
         {
-            var tre = state.timeline.trackTrees;
-            if (tre != null && tre.Length > 0)
+            var tre = state.timeline.markerTrack;
+            var marks = tre.marks;
+            if (marks != null)
             {
-                var marks = tre[0].marks;
-                if (marks != null)
+                foreach (var mark in marks)
                 {
-                    foreach (var mark in marks)
-                    {
-                        DrawMarkItem(mark);
-                    }
+                    DrawMarkItem(mark);
                 }
             }
         }
@@ -176,7 +172,7 @@ namespace UnityEditor.Timeline
         void DeleteRectMark(object arg)
         {
             XMarker select = (XMarker) arg;
-            var track = state.timeline.trackTrees[0];
+            var track = state.timeline.markerTrack;
             track.RmMarker(select);
         }
 

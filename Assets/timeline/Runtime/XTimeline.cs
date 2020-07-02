@@ -26,12 +26,18 @@ namespace UnityEngine.Timeline
         private GameObject timelineRoot;
 
         private float prev;
-        [Range(0, 1)] public float slow = 1;
+        [Range(0, 1)]
+        public float slow = 1;
         private float delay;
+        
+        public const int frameRate = 30;
+        private float _last = 0;
+
+        public bool playing { get; set; }
 
         private static uint id = 0;
 
-        public PlayableGraph graph { get; set; }
+        public static PlayableGraph graph { get; set; }
 
         public static uint IncID
         {
@@ -59,7 +65,7 @@ namespace UnityEngine.Timeline
             get { return trackTrees[0] as XMarkerTrack; }
         }
 
-        public bool isRunning
+        public bool isRunningMode
         {
             get { return mode != TimelinePlayMode.EditorPause; }
         }
@@ -77,6 +83,7 @@ namespace UnityEngine.Timeline
             }
             if (config != null)
             {
+                _time = 0;
                 Build();
             }
         }
@@ -106,14 +113,14 @@ namespace UnityEngine.Timeline
             {
                 graph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
                 graph.Play();
-                if (!isRunning)
+                if (!isRunningMode)
                 {
-                    Stop();
+                    ManualMode();
                 }
             }
         }
 
-        public void Stop()
+        public void ManualMode()
         {
             graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
             if (graph.IsPlaying())
@@ -122,10 +129,46 @@ namespace UnityEngine.Timeline
             }
         }
 
+        private float _time = 0;
+        private float _duration = 0;
+        public System.Action Finish;
 
         public void Update()
         {
-            
+            if (playing)
+            {
+                float t = UnityEngine.Time.realtimeSinceStartup;
+                float delta = 1.0f / frameRate;
+                if (t - _last > delta)
+                {
+                    if (Process(_time))
+                    {
+                        _time += delta;
+                        if (_time >= _duration)
+                        {
+                            playing = false;
+                            Finish?.Invoke();
+                        }
+                    }
+                    _last = t;
+                }
+            }
+        }
+
+        public void SetPlaying(bool play)
+        {
+            playing = play;
+            if (play)
+            {
+                _duration = RecalcuteDuration();
+                _time = Time;
+                _last = UnityEngine.Time.realtimeSinceStartup;
+                slow = 1.0f;
+                if (Mathf.Abs(_time - _duration) < 1e-1)
+                {
+                    _time = 0;
+                }
+            }
         }
 
         public bool Process(float time)
@@ -156,7 +199,7 @@ namespace UnityEngine.Timeline
                     trackTrees[i].Process(time, prev);
                 }
             prev = time;
-            if (graph.IsValid() && !isRunning)
+            if (graph.IsValid() && !isRunningMode)
             {
                 graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
                 graph.Evaluate(time);

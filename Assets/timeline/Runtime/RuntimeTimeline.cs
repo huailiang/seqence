@@ -7,21 +7,18 @@ namespace UnityEngine.Timeline
     public class RuntimeTimeline : MonoBehaviour
     {
         public string path;
-
         public XTimeline timeline;
         private bool play;
-        private float time;
 
         public void Start()
         {
-
             if (Application.isPlaying)
             {
                 timeline = new XTimeline(path);
+                timeline.SetPlaying(true);
                 timeline.mode = TimelinePlayMode.RealRunning;
             }
             play = true;
-            time = 0;
         }
 
 
@@ -29,32 +26,36 @@ namespace UnityEngine.Timeline
         {
             if (play)
             {
-                time += Time.deltaTime;
-                timeline?.Process(time);
+                timeline?.Update();
             }
         }
 
+
+        private void OnDestroy()
+        {
+            timeline?.Dispose();
+        }
+
+#if UNITY_EDITOR
+
         public void OnDrawGizmos()
         {
-#if UNITY_EDITOR
-            timeline?.ForTrackHierachy(track=>
+            timeline?.ForTrackHierachy(track =>
             {
-                if(track is XTransformTrack transformTrack)
+                if (track is XTransformTrack transformTrack)
                 {
                     DrawPath(transformTrack);
                 }
             });
-#endif
         }
 
-#if UNITY_EDITOR
         private void DrawPath(XTransformTrack track)
         {
             var ps = track.Data?.pos;
             if (ps != null)
             {
                 Gizmos.color = Color.gray;
-                for (int i = 0; i < ps.Length-1; i++)
+                for (int i = 0; i < ps.Length - 1; i++)
                 {
                     Gizmos.DrawLine(ps[i], ps[i + 1]);
                 }
