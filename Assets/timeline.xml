@@ -125,12 +125,12 @@
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>11.7164431</start>
-          <duration>11.1635542</duration>
-          <anim>Assets/test/Clips/Camera_cutscene_opening.anim</anim>
+          <start>4.667898</start>
+          <duration>3</duration>
+          <anim>Assets/test/Clips/pos.anim</anim>
           <trim_start>0</trim_start>
-          <trim_end>170</trim_end>
-          <loop>false</loop>
+          <trim_end>0</trim_end>
+          <loop>true</loop>
         </ClipData>
       </clips>
       <childs>

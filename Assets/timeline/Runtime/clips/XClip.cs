@@ -68,7 +68,7 @@ namespace UnityEngine.Timeline
         public void Update(float time, float prev, bool mix)
         {
             float tick = time - start;
-            if ((time >= start && prev < start) || (time <= end && prev > end))
+            if ((time >= start && (time == 0 || prev < start)) || (time <= end && prev > end))
             {
                 OnEnter();
             }

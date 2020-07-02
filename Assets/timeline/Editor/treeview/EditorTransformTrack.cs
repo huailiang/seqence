@@ -180,6 +180,7 @@ namespace UnityEditor.Timeline
                     if (GUILayout.Button("x", GUI.skin.label, GUILayout.MaxWidth(20)))
                     {
                         (track as XTransformTrack).RmItemAt(i);
+                        TimelineWindow.inst.Repaint();
                         EditorGUIUtility.ExitGUI();
                     }
                     EditorGUILayout.EndHorizontal();

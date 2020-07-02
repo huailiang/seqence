@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
@@ -28,17 +29,43 @@ namespace UnityEditor.Timeline
             {
                 if (obj != null)
                 {
-                    SceneFxClipData data = new SceneFxClipData();
-                    data.start = t;
-                    data.duration = 20;
-                    data.prefab = AssetDatabase.GetAssetPath(obj);
-                    data.seed = 0;
-                    data.scale=Vector3.one;
-                    XSceneFxClip clip = new XSceneFxClip((XSceneFxTrack) track, data);
-                    clip.SetReference((GameObject) obj);
-                    track.AddClip(clip, data);
+                    AddClip(obj, t);
                 }
             }, null);
+        }
+
+
+        protected override void OnDragDrop(Object[] objs)
+        {
+            var selectedObjects = from go in objs
+                                  where go as GameObject != null
+                                  select go as GameObject;
+            if (selectedObjects.Count() > 0)
+            {
+                DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+                if (e.type == EventType.DragPerform)
+                {
+                    var obj = selectedObjects.First();
+                    float t = TimelineWindow.inst.PiexlToTime(e.mousePosition.x);
+                    AddClip(obj, t);
+                    DragAndDrop.AcceptDrag();
+                    e.Use();
+                }
+            }
+        }
+
+
+        private void AddClip(Object obj, float t)
+        {
+            SceneFxClipData data = new SceneFxClipData();
+            data.start = t;
+            data.duration = 10;
+            data.prefab = AssetDatabase.GetAssetPath(obj);
+            data.seed = 0;
+            data.scale = Vector3.one;
+            XSceneFxClip clip = new XSceneFxClip((XSceneFxTrack)track, data);
+            clip.SetReference((GameObject)obj);
+            track.AddClip(clip, data);
         }
 
         protected override void OnSelect()

@@ -15,7 +15,6 @@ namespace UnityEditor.Timeline
             get { return Color.yellow; }
         }
 
-
         private AnimationTrackData data;
 
         private AnimationTrackData Data
@@ -129,6 +128,25 @@ namespace UnityEditor.Timeline
             EditorGUILayout.Space();
         }
 
+        protected override void OnDragDrop(UnityEngine.Object[] objs)
+        {
+            var selectedObjects = from go in objs
+                                  where go as AnimationClip != null
+                                  select go as AnimationClip;
+            if (selectedObjects.Count() > 0)
+            {
+                DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+                if (e.type == EventType.DragPerform)
+                {
+                    var clip = selectedObjects.First();
+                    float t = TimelineWindow.inst.PiexlToTime(e.mousePosition.x);
+                    AddClip(clip, t);
+                    DragAndDrop.AcceptDrag();
+                    e.Use();
+                }
+            }
+        }
+
 
         protected override void OnAddClip(float t)
         {
@@ -137,19 +155,24 @@ namespace UnityEditor.Timeline
                 AnimationClip u_clip = (AnimationClip)obj;
                 if (u_clip != null)
                 {
-                    AnimClipData data = new AnimClipData();
-                    data.start = t;
-                    data.duration = u_clip.averageDuration;
-                    data.anim = AssetDatabase.GetAssetPath(u_clip);
-                    data.trim_start = 0;
-                    data.loop = u_clip.isLooping;
-                    XAnimationTrack atr = (XAnimationTrack)track;
-                    XAnimationClip clip = new XAnimationClip((XAnimationTrack)track, data);
-                    clip.aclip = u_clip;
-                    clip.port = track.clips?.Length ?? 0;
-                    track.AddClip(clip, data);
+                    AddClip(u_clip, t);
                 }
             }, null);
+        }
+
+        private void AddClip(AnimationClip u_clip, float t)
+        {
+            AnimClipData data = new AnimClipData();
+            data.start = t;
+            data.duration = u_clip.averageDuration;
+            data.anim = AssetDatabase.GetAssetPath(u_clip);
+            data.trim_start = 0;
+            data.loop = u_clip.isLooping;
+            XAnimationTrack atr = (XAnimationTrack)track;
+            XAnimationClip clip = new XAnimationClip((XAnimationTrack)track, data);
+            clip.aclip = u_clip;
+            clip.port = track.clips?.Length ?? 0;
+            track.AddClip(clip, data);
         }
 
         protected override void OnSelect()

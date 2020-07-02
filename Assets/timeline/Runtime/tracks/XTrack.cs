@@ -80,19 +80,7 @@ namespace UnityEngine.Timeline
         {
             get { return GetFlag(TrackMode.Lock); }
         }
-
-        public bool lockedHirachy
-        {
-            get
-            {
-                if (!locked)
-                {
-                    return parentLocked;
-                }
-                return true;
-            }
-        }
-
+        
         public bool parentLocked
         {
             get { return parent ? parent.locked : locked; }
@@ -242,9 +230,9 @@ namespace UnityEngine.Timeline
 
         protected abstract IClip BuildClip(ClipData data);
 
-        public virtual void OnPostBuild()
-        {
-        }
+        public virtual void OnPostBuild() { }
+
+        protected virtual void OnMixer(float time, IMixClip mix) { }
 
         protected void AddMix(IMixClip mix)
         {
@@ -295,10 +283,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-        protected virtual void OnMixer(float time, IMixClip mix)
-        {
-        }
-
+       
         private bool MixTriger(float time, out IMixClip mixClip)
         {
             if (mixs != null)

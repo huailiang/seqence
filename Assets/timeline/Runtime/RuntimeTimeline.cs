@@ -58,8 +58,8 @@ namespace UnityEngine.Timeline
                 {
                     Gizmos.DrawLine(ps[i], ps[i + 1]);
                 }
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere(ps[0], 0.1f);
+                Gizmos.color = Color.gray;
+                Gizmos.DrawSphere(ps[0], 0.04f);
             }
         }
 #endif

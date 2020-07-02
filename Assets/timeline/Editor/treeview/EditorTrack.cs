@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -24,6 +25,7 @@ namespace UnityEditor.Timeline
         private Vector2 scroll;
         protected Color addtiveColor;
         public object trackArg = null;
+        protected Event e;
 
         public uint ID
         {
@@ -141,6 +143,7 @@ namespace UnityEditor.Timeline
 
         public void OnGUI(Vector2 scroll)
         {
+            e = Event.current;
             this.scroll = scroll;
             var backgroundColor = select ? TimelineStyles.colorDuration : TimelineStyles.BackgroundColor;
             backgroundColor *= addtiveColor;
@@ -164,30 +167,44 @@ namespace UnityEditor.Timeline
 
         protected void ProcessEvent()
         {
-            var e = Event.current;
             if (triger)
             {
-                if (e.type == EventType.ContextClick)
+                switch (e.type)
                 {
-                    TrackContexMenu(e);
-                }
-                else if (e.type == EventType.MouseDown && e.button == 0 && !dragingClip)
-                {
-                    if (e.shift)
-                    {
-                        TimelineWindow.inst.tree?.ShiftSelects(this);
-                    }
-                    else
-                    {
-                        UnSelectAll(false);
-                        SelectTrack(true);
-                    }
-                }
-                else if (e.type == EventType.KeyUp && e.keyCode == KeyCode.Delete)
-                {
-                    if (HitClip(e)) DeleteClip(e.mousePosition);
-                    else DeleteTrack(this);
-                    e.Use();
+                    case EventType.ContextClick:
+                        TrackContexMenu(e);
+                        break;
+                    case EventType.MouseDown:
+                        if (e.button == 0 && !dragingClip)
+                        {
+                            if (e.shift)
+                            {
+                                TimelineWindow.inst.tree?.ShiftSelects(this);
+                            }
+                            else
+                            {
+                                UnSelectAll(false);
+                                SelectTrack(true);
+                            }
+                        }
+                        break;
+                    case EventType.KeyUp:
+                        if (e.keyCode == KeyCode.Delete)
+                        {
+                            if (HitClip(e)) DeleteClip(e.mousePosition);
+                            else DeleteTrack(this);
+                            e.Use();
+                        }
+                        break;
+                    case EventType.DragExited:
+                        e.Use();
+                        break;
+                    case EventType.DragPerform:
+                    case EventType.DragUpdated:
+                        if (DragAndDrop.objectReferences.Count() > 0 &&
+                            RenderRect.Contains(e.mousePosition))
+                            OnDragDrop(DragAndDrop.objectReferences);
+                        break;
                 }
             }
         }
@@ -202,6 +219,8 @@ namespace UnityEditor.Timeline
         protected virtual void OnAddClip(float time) { }
 
         protected virtual void OnInspectorTrack() { }
+
+        protected virtual void OnDragDrop(UnityEngine.Object[] objs) { }
 
 
         private bool HitClip(Event e)

@@ -122,6 +122,12 @@ namespace UnityEngine.Timeline
             }
         }
 
+
+        public void Update()
+        {
+            
+        }
+
         public bool Process(float time)
         {
             if (slow < 1e-5)

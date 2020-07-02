@@ -32,8 +32,15 @@ namespace UnityEngine.Timeline
                 int cnt = track.mixPlayable.GetInputCount();
                 track.mixPlayable.SetInputCount(++cnt);
                 playable = AnimationClipPlayable.Create(timeline.graph, aclip);
-                timeline.graph.Connect(playable, 0, track.mixPlayable, port);
-                track.mixPlayable.SetInputWeight(port, 1);
+                if (playable.IsValid())
+                {
+                    timeline.graph.Connect(playable, 0, track.mixPlayable, port);
+                    track.mixPlayable.SetInputWeight(port, 1);
+                }
+                else
+                {
+                    Debug.LogError("aclip: " + (aclip == null) + " " + track.mixPlayable.GetInputCount());
+                }
             }
         }
 

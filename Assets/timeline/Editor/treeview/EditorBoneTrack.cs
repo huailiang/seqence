@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
@@ -45,17 +46,42 @@ namespace UnityEditor.Timeline
             {
                 if (obj != null)
                 {
-                    BoneFxClipData data = new BoneFxClipData();
-                    data.start = t;
-                    data.duration = 20;
-                    data.prefab = AssetDatabase.GetAssetPath(obj);
-                    data.seed = 0;
-                    data.scale = Vector3.one;
-                    XBoneFxClip clip = new XBoneFxClip((XBoneFxTrack)track, data);
-                    clip.SetFx((GameObject)obj);
-                    track.AddClip(clip, data);
+                    AddClip(obj, t);
                 }
             }, null);
+        }
+
+        protected override void OnDragDrop(UnityEngine.Object[] objs)
+        {
+            var selectedObjects = from go in objs
+                                  where go as GameObject != null
+                                  select go as GameObject;
+            if (selectedObjects.Count() > 0)
+            {
+                DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+                if (e.type == EventType.DragPerform)
+                {
+                    var obj = selectedObjects.First();
+                    float t = TimelineWindow.inst.PiexlToTime(e.mousePosition.x);
+                    AddClip(obj, t);
+                    DragAndDrop.AcceptDrag();
+                    e.Use();
+                }
+            }
+        }
+
+
+        private void AddClip(Object obj, float t)
+        {
+            BoneFxClipData data = new BoneFxClipData();
+            data.start = t;
+            data.duration = 10;
+            data.prefab = AssetDatabase.GetAssetPath(obj);
+            data.seed = 0;
+            data.scale = Vector3.one;
+            XBoneFxClip clip = new XBoneFxClip((XBoneFxTrack)track, data);
+            clip.SetFx((GameObject)obj);
+            track.AddClip(clip, data);
         }
 
         private Object bone, prefab;
