@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace UnityEngine.Timeline.Data
@@ -118,7 +119,7 @@ namespace UnityEngine.Timeline.Data
             comment = reader.ReadString();
         }
     }
-    
+
     [Serializable]
     public class AnimationTrackData : BindTrackData
     {
@@ -196,12 +197,14 @@ namespace UnityEngine.Timeline.Data
     public class TimelineConfig
     {
         public TrackData[] tracks;
+        public ushort skillHostTrack;
 
         public void Write(string path)
         {
             using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write))
             using (BinaryWriter writer = new BinaryWriter(fs))
             {
+                writer.Write(skillHostTrack);
                 int cnt = tracks.Length;
                 writer.Write(cnt);
                 for (int i = 0; i < cnt; i++)
@@ -241,6 +244,7 @@ namespace UnityEngine.Timeline.Data
                 using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                 using (BinaryReader reader = new BinaryReader(fs))
                 {
+                    skillHostTrack=reader.ReadUInt16();
                     int cnt = reader.ReadInt32();
                     tracks = new TrackData[cnt];
                     for (int i = 0; i < cnt; i++)

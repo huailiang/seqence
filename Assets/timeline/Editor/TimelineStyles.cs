@@ -124,7 +124,7 @@ namespace UnityEditor.Timeline
                 return _save_ico;
             }
         }
-        
+
         public static Texture2D warn_ico
         {
             get

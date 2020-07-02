@@ -85,7 +85,7 @@ namespace UnityEditor.Timeline
             timeline.Finish = OnPlayFinish;
             AddRuntime();
             timeline.Time = 2.0f;
-            timeline.mode = TimelinePlayMode.EditorRun;
+            timeline.editMode = TimelinePlayMode.EditorRun;
         }
 
         public void Open(string path)

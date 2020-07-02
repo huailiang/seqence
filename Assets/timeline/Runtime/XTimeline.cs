@@ -10,6 +10,8 @@ namespace UnityEngine.Timeline
         RealRunning,
     }
 
+    public enum PlayMode { Plot, Skill }
+
     public class XTimelineObject
     {
         public static implicit operator bool(XTimelineObject obj)
@@ -22,18 +24,20 @@ namespace UnityEngine.Timeline
     {
         public TimelineConfig config;
         public XTrack[] trackTrees;
-        public TimelinePlayMode mode;
+        public TimelinePlayMode editMode;
+        public PlayMode playMode;
         private GameObject timelineRoot;
 
         private float prev;
-        [Range(0, 1)]
-        public float slow = 1;
+        [Range(0, 1)] public float slow = 1;
         private float delay;
-        
+
         public const int frameRate = 30;
         private float _last = 0;
 
         public bool playing { get; set; }
+
+        public XTrack SkillHostTrack;
 
         private static uint id = 0;
 
@@ -73,7 +77,12 @@ namespace UnityEngine.Timeline
 
         public bool isRunningMode
         {
-            get { return mode != TimelinePlayMode.EditorPause; }
+            get { return editMode != TimelinePlayMode.EditorPause; }
+        }
+
+        public bool isSkillMode
+        {
+            get { return playMode == PlayMode.Skill; }
         }
 
         public float Duration
@@ -81,8 +90,9 @@ namespace UnityEngine.Timeline
             get { return _duration; }
         }
 
-        public XTimeline(string path)
+        public XTimeline(string path, PlayMode mode = PlayMode.Plot)
         {
+            playMode = mode;
             if (path.EndsWith(".xml"))
             {
                 config = TimelineConfig.ReadXml(path);
@@ -94,13 +104,19 @@ namespace UnityEngine.Timeline
             }
             if (config != null)
             {
-                _time = 0;
-                Build();
+                Initial(config, mode);
             }
         }
 
-        public XTimeline(TimelineConfig conf)
+        public XTimeline(TimelineConfig conf, PlayMode mode = PlayMode.Plot)
         {
+            Initial(conf, mode);
+        }
+
+        private void Initial(TimelineConfig conf, PlayMode mode)
+        {
+            _time = 0;
+            playMode = mode;
             config = conf;
             Build();
         }
@@ -118,6 +134,10 @@ namespace UnityEngine.Timeline
             for (int i = 0; i < len; i++)
             {
                 trackTrees[i] = XTimelineFactory.GetTrack(tracksData[i], this);
+                if (i == config.skillHostTrack)
+                {
+                    SkillHostTrack = trackTrees[i];
+                }
             }
             prev = 0;
             if (graph.IsValid() && graph.GetOutputCount() > 0)
@@ -126,7 +146,7 @@ namespace UnityEngine.Timeline
                 graph.Play();
                 if (Application.isPlaying)
                 {
-                    mode = TimelinePlayMode.RealRunning;
+                    editMode = TimelinePlayMode.RealRunning;
                 }
                 else if (!isRunningMode)
                 {

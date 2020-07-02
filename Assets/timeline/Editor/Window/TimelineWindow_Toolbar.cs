@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using PlayMode = UnityEngine.Timeline.PlayMode;
 
 namespace UnityEditor.Timeline
 {
@@ -8,6 +9,12 @@ namespace UnityEditor.Timeline
         void TransportToolbarGUI()
         {
             GUILayout.BeginHorizontal();
+            GUILayout.BeginHorizontal(GUILayout.Width(WindowConstants.playmodeWidth));
+            {
+                PlayModeGUI();
+            }
+            GUILayout.EndHorizontal();
+
             GUILayout.BeginHorizontal(GUILayout.Width(WindowConstants.sliderWidth));
             {
                 GotoBeginingSequenceGUI();
@@ -32,6 +39,15 @@ namespace UnityEditor.Timeline
             }
             GUILayout.EndHorizontal();
             GUILayout.EndHorizontal();
+        }
+
+        void PlayModeGUI()
+        {
+            playMode = (PlayMode) EditorGUILayout.EnumPopup(playMode, EditorStyles.toolbarPopup);
+            if (timeline)
+            {
+                timeline.playMode = playMode;
+            }
         }
 
         void GotoBeginingSequenceGUI()

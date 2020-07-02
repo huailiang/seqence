@@ -6,6 +6,7 @@
         public const float timeAreaYPosition = 18.0f;
         public const float timeAreaHeight = 20.0f;
 
+        public const float playmodeWidth = 80f;
         public const float sliderWidth = 200.0f;
         public const float rightAreaMargn = 202.0f;
 

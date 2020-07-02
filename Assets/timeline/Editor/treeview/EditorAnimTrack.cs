@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
+using PlayMode = UnityEngine.Timeline.PlayMode;
 
 namespace UnityEditor.Timeline
 {
@@ -81,10 +82,7 @@ namespace UnityEditor.Timeline
                     }
                     var act = new TrackMenuAction()
                     {
-                        desc = "Add " + str,
-                        on = false,
-                        fun = AddSubTrack,
-                        arg = types[i]
+                        desc = "Add " + str, on = false, fun = AddSubTrack, arg = types[i]
                     };
                     ret.Add(act);
                 }
@@ -94,7 +92,7 @@ namespace UnityEditor.Timeline
 
         private void AddSubTrack(object arg)
         {
-            Type type = (Type)arg;
+            Type type = (Type) arg;
             var state = TimelineWindow.inst.state;
             EditorFactory.GetTrackByDataType(type, state.timeline, track, (tr, data, param) =>
             {
@@ -130,9 +128,7 @@ namespace UnityEditor.Timeline
 
         protected override void OnDragDrop(UnityEngine.Object[] objs)
         {
-            var selectedObjects = from go in objs
-                                  where go as AnimationClip != null
-                                  select go as AnimationClip;
+            var selectedObjects = from go in objs where go as AnimationClip != null select go as AnimationClip;
             if (selectedObjects.Count() > 0)
             {
                 DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
@@ -152,7 +148,7 @@ namespace UnityEditor.Timeline
         {
             ObjectSelector.get.Show(null, typeof(AnimationClip), null, false, null, obj =>
             {
-                AnimationClip u_clip = (AnimationClip)obj;
+                AnimationClip u_clip = (AnimationClip) obj;
                 if (u_clip != null)
                 {
                     AddClip(u_clip, t);
@@ -168,8 +164,8 @@ namespace UnityEditor.Timeline
             data.anim = AssetDatabase.GetAssetPath(u_clip);
             data.trim_start = 0;
             data.loop = u_clip.isLooping;
-            XAnimationTrack atr = (XAnimationTrack)track;
-            XAnimationClip clip = new XAnimationClip((XAnimationTrack)track, data);
+            XAnimationTrack atr = (XAnimationTrack) track;
+            XAnimationClip clip = new XAnimationClip((XAnimationTrack) track, data);
             clip.aclip = u_clip;
             clip.port = track.clips?.Length ?? 0;
             track.AddClip(clip, data);
@@ -183,6 +179,19 @@ namespace UnityEditor.Timeline
 
         protected override void OnInspectorTrack()
         {
+            if (TimelineWindow.inst.playMode == PlayMode.Skill)
+            {
+                var timeline = TimelineWindow.inst.timeline;
+                if (timeline.config.skillHostTrack == 0)
+                {
+                    var root = track.root;
+                    int idx = Array.IndexOf(timeline.trackTrees, root);
+                    if (idx > 0)
+                    {
+                        timeline.config.skillHostTrack = (ushort) idx;
+                    }
+                }
+            }
             if (ch == null && trackArg == null) EditorGUILayout.HelpBox("bind character is none", MessageType.Warning);
         }
 
@@ -193,7 +202,7 @@ namespace UnityEditor.Timeline
             var data = c.data as AnimClipData;
             data.loop = EditorGUILayout.Toggle("loop", data.loop);
             data.trim_start = EditorGUILayout.FloatField("start trim", data.trim_start);
-            xc.aclip = (AnimationClip)EditorGUILayout.ObjectField("clip", xc.aclip, typeof(AnimationClip), false);
+            xc.aclip = (AnimationClip) EditorGUILayout.ObjectField("clip", xc.aclip, typeof(AnimationClip), false);
         }
 
         public override bool AllowClipDrag(DragMode dm, float delta, IClip c)
@@ -208,8 +217,7 @@ namespace UnityEditor.Timeline
             if (dm == DragMode.Right)
             {
                 d.trim_end += delta;
-                if (Mathf.Abs(d.trim_end) < 1e-1)
-                    d.trim_end = 0;
+                if (Mathf.Abs(d.trim_end) < 1e-1) d.trim_end = 0;
                 return true;
             }
             return base.AllowClipDrag(dm, delta, c);
@@ -220,12 +228,11 @@ namespace UnityEditor.Timeline
             var d = c.data as AnimClipData;
             ClipMode mode = ClipMode.None;
             if (d.trim_start > 1e-2) mode |= ClipMode.Left;
-            if (d.trim_end < -1e-2) mode |= ClipMode.Right;
+            if (d.trim_end < -1e-2)
+                mode |= ClipMode.Right;
             else if (d.trim_end > 1e-2) mode |= ClipMode.Loop;
             loopLen = d.trim_end;
             return mode;
         }
-
     }
-
 }

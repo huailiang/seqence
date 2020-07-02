@@ -51,8 +51,8 @@ namespace UnityEngine.Timeline
             {
                 if (!mix.connect || !Application.isPlaying)
                 {
-                    XAnimationClip clipA = (XAnimationClip)mix.blendA;
-                    XAnimationClip clipB = (XAnimationClip)mix.blendB;
+                    XAnimationClip clipA = (XAnimationClip) mix.blendA;
+                    XAnimationClip clipB = (XAnimationClip) mix.blendB;
                     if (clipA && clipB)
                     {
                         playA = clipA.playable;
@@ -87,9 +87,16 @@ namespace UnityEngine.Timeline
 
         public override void Dispose()
         {
-            if(mixPlayable.IsValid())
+            if (ID != timeline.config.skillHostTrack)
             {
-                mixPlayable.Destroy();
+                if (mixPlayable.IsValid())
+                {
+                    mixPlayable.Destroy();
+                }
+                if (playableOutput.IsOutputValid())
+                {
+                    XTimeline.graph.DestroyOutput(playableOutput);
+                }
             }
             base.Dispose();
         }

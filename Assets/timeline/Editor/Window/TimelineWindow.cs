@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Timeline;
+using PlayMode = UnityEngine.Timeline.PlayMode;
 
 namespace UnityEditor.Timeline
 {
@@ -13,6 +14,8 @@ namespace UnityEditor.Timeline
         public Rect winArea { get; set; }
 
         public Rect centerArea { get; set; }
+
+        public PlayMode playMode;
 
         public XTimeline timeline
         {
@@ -126,7 +129,7 @@ namespace UnityEditor.Timeline
         {
             inst = GetWindow<TimelineWindow>(typeof(SceneView));
             inst.titleContent = EditorGUIUtility.IconContent("TimelineAsset Icon", "Timeline");
-            inst.titleContent.text = "  Timeline";
+            inst.titleContent.text = "  Seqence Editor";
         }
     }
 }
