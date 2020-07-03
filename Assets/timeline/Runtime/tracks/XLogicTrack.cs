@@ -6,6 +6,8 @@ namespace UnityEngine.Timeline
     [UseParent(typeof(XAnimationTrack))]
     public class XLogicTrack : XTrack
     {
+        public TimelineDraw draw;
+
         public override AssetType AssetType
         {
             get { return AssetType.LogicValue; }
@@ -23,6 +25,23 @@ namespace UnityEngine.Timeline
         
         public XLogicTrack(XTimeline tl, TrackData data) : base(tl, data)
         {
+        }
+
+        public void InitDraw()
+        {
+            draw = new TimelineDraw();
+        }
+
+        public void Clean()
+        {
+             draw?.Clean();
+        }
+
+
+        public override void Dispose()
+        {
+            draw?.Destroy();
+            base.Dispose();
         }
     }
 }

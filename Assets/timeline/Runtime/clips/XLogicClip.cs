@@ -6,6 +6,8 @@ namespace UnityEngine.Timeline
     {
         private GameObject bindObj;
 
+        private LogicClipData Data;
+
         public XLogicClip(XLogicTrack track, ClipData data) : base(track, data)
         {
         }
@@ -36,24 +38,31 @@ namespace UnityEngine.Timeline
         {
             base.OnEnter();
             var bindTrack = track.root as XBindTrack;
-            LogicClipData dta = data as LogicClipData;
-            if (dta.showShape && bindTrack?.bindObj)
+            Data = data as LogicClipData;
+            if (Data.showShape && bindTrack?.bindObj)
             {
                 bindObj = bindTrack.bindObj;
-                DrawAttackArea(dta);
+                if (Data.showShape)
+                {
+                    track.InitDraw();
+                    DrawAttackArea();
+                }
             }
         }
 
         protected override void OnExit()
         {
             base.OnExit();
-            TimelineDraw.Clean();
+            if (Data.showShape)
+            {
+                track?.Clean();
+            }
         }
 
 
-        private void DrawAttackArea(LogicClipData dta)
+        private void DrawAttackArea()
         {
-           
+            var dta = Data;
             if (dta.attackShape == AttackShape.Rect)
             {
                 DrawRect(dta.attackArg, dta.attackArg2);
@@ -71,19 +80,19 @@ namespace UnityEngine.Timeline
 
         private void DrawRect(float len, float width)
         {
-            var obj = TimelineDraw.DrawRectangleSolid(bindObj.transform, len, width);
+            var obj = track.draw?.DrawRectangleSolid(bindObj.transform, len, width);
             timeline.BindGo(obj);
         }
 
         private void DrawRing(float radius)
         {
-            var obj = TimelineDraw.DrawCircleSolid(bindObj.transform, radius);
+            var obj = track.draw?.DrawCircleSolid(bindObj.transform, radius);
             timeline.BindGo(obj);
         }
 
         private void DrawSector(float radius, float angle)
         {
-            var obj = TimelineDraw.DrawSectorSolid(bindObj.transform, angle, radius);
+            var obj = track.draw?.DrawSectorSolid(bindObj.transform, angle, radius);
             timeline.BindGo(obj);
         }
     }
