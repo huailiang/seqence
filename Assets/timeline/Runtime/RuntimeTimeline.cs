@@ -45,6 +45,10 @@ namespace UnityEngine.Timeline
                 {
                     DrawPath(transformTrack);
                 }
+                if (track is XLogicTrack logicTrack)
+                {
+                    DrawAttackShape(logicTrack);
+                }
             });
         }
 
@@ -61,6 +65,12 @@ namespace UnityEngine.Timeline
                 Gizmos.color = Color.gray;
                 Gizmos.DrawSphere(ps[0], 0.04f);
             }
+        }
+
+
+        private void DrawAttackShape(XLogicTrack track)
+        {
+
         }
 #endif
     }

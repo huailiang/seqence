@@ -2,12 +2,13 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    [TrackFlag(TrackFlag.RootOnly)]
+    [TrackFlag(TrackFlag.SubOnly)]
+    [UseParent(typeof(XAnimationTrack))]
     public class XLogicTrack : XTrack
     {
         public override AssetType AssetType
         {
-            get { return AssetType.PostProcess; }
+            get { return AssetType.LogicValue; }
         }
 
         public override XTrack Clone()

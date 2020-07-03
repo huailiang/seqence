@@ -117,6 +117,54 @@
           </clips>
           <type>BoneFx</type>
         </TrackData>
+        <TrackData>
+          <clips>
+            <ClipData xsi:type="LogicClipData">
+              <start>1.18069541</start>
+              <duration>3.60096836</duration>
+              <logicType>
+                <LogicType>HP</LogicType>
+                <LogicType>SP</LogicType>
+              </logicType>
+              <attackShape>Ring</attackShape>
+              <effect>
+                <float>0.5</float>
+                <float>0.2</float>
+              </effect>
+              <attackArg>4</attackArg>
+              <attackArg2>0</attackArg2>
+            </ClipData>
+            <ClipData xsi:type="LogicClipData">
+              <start>7.954703</start>
+              <duration>4.53492355</duration>
+              <logicType>
+                <LogicType>BeHit</LogicType>
+              </logicType>
+              <attackShape>Sector</attackShape>
+              <effect>
+                <float>0.5</float>
+              </effect>
+              <attackArg>4</attackArg>
+              <attackArg2>45</attackArg2>
+            </ClipData>
+            <ClipData xsi:type="LogicClipData">
+              <start>17.1098328</start>
+              <duration>5.2756443</duration>
+              <logicType>
+                <LogicType>HP</LogicType>
+                <LogicType>Attack</LogicType>
+              </logicType>
+              <attackShape>Rect</attackShape>
+              <effect>
+                <float>0.5</float>
+                <float>0.5</float>
+              </effect>
+              <attackArg>5</attackArg>
+              <attackArg2>1</attackArg2>
+            </ClipData>
+          </clips>
+          <type>LogicValue</type>
+        </TrackData>
       </childs>
       <type>Animation</type>
       <prefab>Assets/test/DefaultMale.prefab</prefab>
@@ -217,33 +265,6 @@
     </TrackData>
     <TrackData>
       <clips>
-        <ClipData xsi:type="LogicClipData">
-          <start>4.375233</start>
-          <duration>7.96871853</duration>
-          <logicType>
-            <LogicType>HP</LogicType>
-            <LogicType>Attack</LogicType>
-          </logicType>
-          <effect>
-            <float>0.5</float>
-            <float>0.2</float>
-          </effect>
-        </ClipData>
-        <ClipData xsi:type="LogicClipData">
-          <start>13.4563417</start>
-          <duration>7.830078</duration>
-          <logicType>
-            <LogicType>BeHit</LogicType>
-          </logicType>
-          <effect>
-            <float>0.2</float>
-          </effect>
-        </ClipData>
-      </clips>
-      <type>LogicValue</type>
-    </TrackData>
-    <TrackData>
-      <clips>
         <ClipData xsi:type="SceneFxClipData">
           <start>-0.0400646776</start>
           <duration>10.6404591</duration>
@@ -290,4 +311,5 @@
       <type>SceneFx</type>
     </TrackData>
   </tracks>
+  <skillHostTrack>0</skillHostTrack>
 </TimelineConfig>

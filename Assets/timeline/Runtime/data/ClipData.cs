@@ -14,6 +14,13 @@ namespace UnityEngine.Timeline.Data
         MAX  //put MAX at last
     }
 
+    public enum AttackShape
+    {
+        Ring,
+        Sector,
+        Rect,
+    }
+
     [XmlInclude(typeof(AnimClipData))]
     [XmlInclude(typeof(SceneFxClipData))]
     [XmlInclude(typeof(BoneFxClipData))]
@@ -114,17 +121,26 @@ namespace UnityEngine.Timeline.Data
 
         public LogicType[] logicType;
 
+        public AttackShape attackShape;
+
         public float[] effect;
+
+        public float attackArg;
+
+        public float attackArg2;
 
         public override void Read(BinaryReader reader)
         {
             base.Read(reader);
+            attackShape = (AttackShape)reader.ReadInt32();
+            attackArg = reader.ReadSingle();
+            attackArg2 = reader.ReadSingle();
             int len = reader.ReadInt32();
             logicType = new LogicType[len];
             effect = new float[len];
             for (int i = 0; i < len; i++)
             {
-                logicType[i] = (LogicType) reader.ReadInt32();
+                logicType[i] = (LogicType)reader.ReadInt32();
                 effect[i] = reader.ReadSingle();
             }
         }
@@ -133,10 +149,13 @@ namespace UnityEngine.Timeline.Data
         {
             base.Write(writer);
             int len = effect?.Length ?? 0;
+            writer.Write((int)attackShape);
+            writer.Write(attackArg);
+            writer.Write(attackArg2);
             writer.Write(len);
             for (int i = 0; i < len; i++)
             {
-                writer.Write((int) logicType[i]);
+                writer.Write((int)logicType[i]);
                 writer.Write(effect[i]);
             }
         }

@@ -9,7 +9,7 @@ namespace UnityEditor.Timeline
     {
         private int len;
         private bool[] folds;
-        private const int max = (int) LogicType.MAX;
+        private const int max = (int)LogicType.MAX;
 
         protected override Color trackColor
         {
@@ -27,7 +27,7 @@ namespace UnityEditor.Timeline
             clipData.start = t;
             clipData.duration = 16;
 
-            XLogicClip clip = new XLogicClip((XLogicTrack) track, clipData);
+            XLogicClip clip = new XLogicClip((XLogicTrack)track, clipData);
             track.AddClip(clip, clipData);
         }
 
@@ -35,7 +35,7 @@ namespace UnityEditor.Timeline
         protected override void OnInspectorClip(IClip c)
         {
             base.OnInspectorClip(c);
-            XLogicClip clip = (XLogicClip) c;
+            XLogicClip clip = (XLogicClip)c;
             if (clip)
             {
                 if (folds == null)
@@ -46,6 +46,21 @@ namespace UnityEditor.Timeline
                 len = data.effect?.Length ?? 0;
                 if (len > 0)
                 {
+                    data.attackShape = (AttackShape)EditorGUILayout.EnumPopup("Shape", data.attackShape);
+                    if (data.attackShape == AttackShape.Rect)
+                    {
+                        data.attackArg = EditorGUILayout.FloatField("length: ", data.attackArg);
+                        data.attackArg2 = EditorGUILayout.FloatField("width: ", data.attackArg2);
+                    }
+                    else if (data.attackShape == AttackShape.Ring)
+                    {
+                        data.attackArg = EditorGUILayout.FloatField("radius: ", data.attackArg);
+                    }
+                    else if (data.attackShape == AttackShape.Sector)
+                    {
+                        data.attackArg = EditorGUILayout.FloatField("radius: ", data.attackArg);
+                        data.attackArg2 = EditorGUILayout.FloatField("angle: ", data.attackArg2);
+                    }
                     for (int i = 0; i < len; i++)
                     {
                         EditorGUILayout.BeginHorizontal();
@@ -60,7 +75,7 @@ namespace UnityEditor.Timeline
                         EditorGUILayout.EndHorizontal();
                         if (folds[i])
                         {
-                            data.logicType[i] = (LogicType) EditorGUILayout.EnumPopup(" type", data.logicType[i]);
+                            data.logicType[i] = (LogicType)EditorGUILayout.EnumPopup(" type", data.logicType[i]);
                             data.effect[i] = EditorGUILayout.FloatField(" effect", data.effect[i]);
                             if (data.logicType[i] == LogicType.MAX)
                             {
