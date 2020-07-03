@@ -129,12 +129,15 @@ namespace UnityEngine.Timeline.Data
 
         public float attackArg2;
 
+        public bool showShape;
+
         public override void Read(BinaryReader reader)
         {
             base.Read(reader);
             attackShape = (AttackShape)reader.ReadInt32();
             attackArg = reader.ReadSingle();
             attackArg2 = reader.ReadSingle();
+            showShape = reader.ReadBoolean();
             int len = reader.ReadInt32();
             logicType = new LogicType[len];
             effect = new float[len];
@@ -152,6 +155,7 @@ namespace UnityEngine.Timeline.Data
             writer.Write((int)attackShape);
             writer.Write(attackArg);
             writer.Write(attackArg2);
+            writer.Write(showShape);
             writer.Write(len);
             for (int i = 0; i < len; i++)
             {

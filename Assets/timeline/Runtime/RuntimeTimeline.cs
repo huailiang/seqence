@@ -45,10 +45,6 @@ namespace UnityEngine.Timeline
                 {
                     DrawPath(transformTrack);
                 }
-                if (track is XLogicTrack logicTrack)
-                {
-                    DrawAttackShape(logicTrack);
-                }
             });
         }
 
@@ -67,11 +63,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-
-        private void DrawAttackShape(XLogicTrack track)
-        {
-
-        }
+        
 #endif
     }
 }

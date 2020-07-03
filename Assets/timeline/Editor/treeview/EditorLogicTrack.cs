@@ -46,20 +46,24 @@ namespace UnityEditor.Timeline
                 len = data.effect?.Length ?? 0;
                 if (len > 0)
                 {
-                    data.attackShape = (AttackShape)EditorGUILayout.EnumPopup("Shape", data.attackShape);
-                    if (data.attackShape == AttackShape.Rect)
+                    data.showShape = EditorGUILayout.Toggle("Show Attack Atea", data.showShape);
+                    if (data.showShape)
                     {
-                        data.attackArg = EditorGUILayout.FloatField("length: ", data.attackArg);
-                        data.attackArg2 = EditorGUILayout.FloatField("width: ", data.attackArg2);
-                    }
-                    else if (data.attackShape == AttackShape.Ring)
-                    {
-                        data.attackArg = EditorGUILayout.FloatField("radius: ", data.attackArg);
-                    }
-                    else if (data.attackShape == AttackShape.Sector)
-                    {
-                        data.attackArg = EditorGUILayout.FloatField("radius: ", data.attackArg);
-                        data.attackArg2 = EditorGUILayout.FloatField("angle: ", data.attackArg2);
+                        data.attackShape = (AttackShape)EditorGUILayout.EnumPopup("Shape", data.attackShape);
+                        if (data.attackShape == AttackShape.Rect)
+                        {
+                            data.attackArg = EditorGUILayout.FloatField("length: ", data.attackArg);
+                            data.attackArg2 = EditorGUILayout.FloatField("width: ", data.attackArg2);
+                        }
+                        else if (data.attackShape == AttackShape.Ring)
+                        {
+                            data.attackArg = EditorGUILayout.FloatField("radius: ", data.attackArg);
+                        }
+                        else if (data.attackShape == AttackShape.Sector)
+                        {
+                            data.attackArg = EditorGUILayout.FloatField("radius: ", data.attackArg);
+                            data.attackArg2 = EditorGUILayout.FloatField("angle: ", data.attackArg2);
+                        }
                     }
                     for (int i = 0; i < len; i++)
                     {

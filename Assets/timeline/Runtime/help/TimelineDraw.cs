@@ -26,16 +26,17 @@ public class TimelineDraw
 
     public static void Clean()
     {
-        if (sharedFilter.sharedMesh != null)
+        if (sharedFilter?.sharedMesh != null)
         {
 #if UNITY_EDITOR
             Object.DestroyImmediate(sharedFilter.sharedMesh);
 #else
             Object.Destroy(sharedFilter.sharedMesh);
 #endif
+            sharedFilter.sharedMesh = null;
         }
-        sharedRender.sharedMaterial = null;
-        sharedFilter.mesh = null;
+        if (sharedRender)
+            sharedRender.sharedMaterial = null;
     }
 
     /// <summary>

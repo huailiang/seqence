@@ -36,10 +36,11 @@ namespace UnityEngine.Timeline
         {
             base.OnEnter();
             var bindTrack = track.root as XBindTrack;
-            if (bindTrack?.bindObj)
+            LogicClipData dta = data as LogicClipData;
+            if (dta.showShape && bindTrack?.bindObj)
             {
                 bindObj = bindTrack.bindObj;
-                DrawAttackArea();
+                DrawAttackArea(dta);
             }
         }
 
@@ -50,9 +51,9 @@ namespace UnityEngine.Timeline
         }
 
 
-        private void DrawAttackArea()
+        private void DrawAttackArea(LogicClipData dta)
         {
-            LogicClipData dta = data as LogicClipData;
+           
             if (dta.attackShape == AttackShape.Rect)
             {
                 DrawRect(dta.attackArg, dta.attackArg2);

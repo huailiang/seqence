@@ -133,34 +133,21 @@
               </effect>
               <attackArg>4</attackArg>
               <attackArg2>0</attackArg2>
+              <showShape>false</showShape>
             </ClipData>
             <ClipData xsi:type="LogicClipData">
-              <start>7.954703</start>
-              <duration>4.53492355</duration>
+              <start>10.1402349</start>
+              <duration>6.24121666</duration>
               <logicType>
                 <LogicType>BeHit</LogicType>
               </logicType>
-              <attackShape>Sector</attackShape>
+              <attackShape>Ring</attackShape>
               <effect>
-                <float>0.5</float>
+                <float>0.2</float>
               </effect>
-              <attackArg>4</attackArg>
-              <attackArg2>45</attackArg2>
-            </ClipData>
-            <ClipData xsi:type="LogicClipData">
-              <start>17.1098328</start>
-              <duration>5.2756443</duration>
-              <logicType>
-                <LogicType>HP</LogicType>
-                <LogicType>Attack</LogicType>
-              </logicType>
-              <attackShape>Rect</attackShape>
-              <effect>
-                <float>0.5</float>
-                <float>0.5</float>
-              </effect>
-              <attackArg>5</attackArg>
-              <attackArg2>1</attackArg2>
+              <attackArg>0</attackArg>
+              <attackArg2>0</attackArg2>
+              <showShape>false</showShape>
             </ClipData>
           </clips>
           <type>LogicValue</type>
@@ -168,99 +155,6 @@
       </childs>
       <type>Animation</type>
       <prefab>Assets/test/DefaultMale.prefab</prefab>
-      <roleid>1003</roleid>
-    </TrackData>
-    <TrackData xsi:type="AnimationTrackData">
-      <clips>
-        <ClipData xsi:type="AnimClipData">
-          <start>6.650442</start>
-          <duration>7.04872036</duration>
-          <anim>Assets/test/Clips/scale.anim</anim>
-          <trim_start>0</trim_start>
-          <trim_end>184</trim_end>
-          <loop>true</loop>
-        </ClipData>
-      </clips>
-      <childs>
-        <TrackData xsi:type="TransformTrackData">
-          <type>Transform</type>
-          <time>
-            <float>0.394610047</float>
-            <float>1.892565</float>
-            <float>4.3621664</float>
-            <float>8.370208</float>
-            <float>13.5218573</float>
-            <float>17.1598282</float>
-          </time>
-          <pos>
-            <Vector3>
-              <x>1</x>
-              <y>0</y>
-              <z>3.5</z>
-            </Vector3>
-            <Vector3>
-              <x>2</x>
-              <y>0</y>
-              <z>1</z>
-            </Vector3>
-            <Vector3>
-              <x>2</x>
-              <y>0</y>
-              <z>1</z>
-            </Vector3>
-            <Vector3>
-              <x>4</x>
-              <y>0</y>
-              <z>2</z>
-            </Vector3>
-            <Vector3>
-              <x>4</x>
-              <y>0</y>
-              <z>1</z>
-            </Vector3>
-            <Vector3>
-              <x>5</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
-          </pos>
-          <rot>
-            <Vector3>
-              <x>-0</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>0</y>
-              <z>0</z>
-            </Vector3>
-          </rot>
-          <select>false</select>
-        </TrackData>
-      </childs>
-      <type>Animation</type>
-      <prefab>Assets/test/root 1.prefab</prefab>
       <roleid>1001</roleid>
     </TrackData>
     <TrackData>
@@ -309,6 +203,166 @@
         </ClipData>
       </clips>
       <type>SceneFx</type>
+    </TrackData>
+    <TrackData xsi:type="AnimationTrackData">
+      <clips>
+        <ClipData xsi:type="AnimClipData">
+          <start>-0.101331048</start>
+          <duration>6.46876431</duration>
+          <anim>Assets/test/Chomper/Animations/ChomperWalkForward.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>171</trim_end>
+          <loop>true</loop>
+        </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>6.089284</start>
+          <duration>1.54340076</duration>
+          <anim>Assets/test/Chomper/Animations/ChomperRunForward.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>45</trim_end>
+          <loop>true</loop>
+        </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>7.6025753</start>
+          <duration>16.0100517</duration>
+          <anim>Assets/test/Chomper/Animations/ChomperIdle.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>-145</trim_end>
+          <loop>true</loop>
+        </ClipData>
+      </clips>
+      <childs>
+        <TrackData xsi:type="TransformTrackData">
+          <type>Transform</type>
+          <time>
+            <float>0.270216137</float>
+            <float>3.17503953</float>
+            <float>8.545585</float>
+            <float>10.5722065</float>
+            <float>15.0307722</float>
+            <float>20.2324333</float>
+          </time>
+          <pos>
+            <Vector3>
+              <x>-3</x>
+              <y>0</y>
+              <z>-5</z>
+            </Vector3>
+            <Vector3>
+              <x>-2</x>
+              <y>0</y>
+              <z>-5</z>
+            </Vector3>
+            <Vector3>
+              <x>-2</x>
+              <y>0</y>
+              <z>-5</z>
+            </Vector3>
+            <Vector3>
+              <x>-2</x>
+              <y>0</y>
+              <z>-5</z>
+            </Vector3>
+            <Vector3>
+              <x>-0.97</x>
+              <y>0</y>
+              <z>-5</z>
+            </Vector3>
+            <Vector3>
+              <x>-0.97</x>
+              <y>0</y>
+              <z>-5</z>
+            </Vector3>
+          </pos>
+          <rot>
+            <Vector3>
+              <x>-0</x>
+              <y>120.000008</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>72.44</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>72.44</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>22.9999924</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>22.9999924</y>
+              <z>0</z>
+            </Vector3>
+            <Vector3>
+              <x>-0</x>
+              <y>22.9999924</y>
+              <z>0</z>
+            </Vector3>
+          </rot>
+          <select>false</select>
+        </TrackData>
+        <TrackData>
+          <clips>
+            <ClipData xsi:type="LogicClipData">
+              <start>3.26975322</start>
+              <duration>2.64486885</duration>
+              <logicType>
+                <LogicType>HP</LogicType>
+                <LogicType>SP</LogicType>
+              </logicType>
+              <attackShape>Ring</attackShape>
+              <effect>
+                <float>0.5</float>
+                <float>0.2</float>
+              </effect>
+              <attackArg>2</attackArg>
+              <attackArg2>0</attackArg2>
+              <showShape>true</showShape>
+            </ClipData>
+            <ClipData xsi:type="LogicClipData">
+              <start>10.7931252</start>
+              <duration>2.97343349</duration>
+              <logicType>
+                <LogicType>BeHit</LogicType>
+              </logicType>
+              <attackShape>Sector</attackShape>
+              <effect>
+                <float>0.5</float>
+              </effect>
+              <attackArg>4</attackArg>
+              <attackArg2>110</attackArg2>
+              <showShape>true</showShape>
+            </ClipData>
+            <ClipData xsi:type="LogicClipData">
+              <start>20.57587</start>
+              <duration>2.94569016</duration>
+              <logicType>
+                <LogicType>HP</LogicType>
+                <LogicType>Attack</LogicType>
+              </logicType>
+              <attackShape>Rect</attackShape>
+              <effect>
+                <float>0.5</float>
+                <float>0.5</float>
+              </effect>
+              <attackArg>8</attackArg>
+              <attackArg2>1</attackArg2>
+              <showShape>true</showShape>
+            </ClipData>
+          </clips>
+          <type>LogicValue</type>
+        </TrackData>
+      </childs>
+      <type>Animation</type>
+      <prefab>Assets/test/Chomper.prefab</prefab>
+      <roleid>1003</roleid>
     </TrackData>
   </tracks>
   <skillHostTrack>0</skillHostTrack>

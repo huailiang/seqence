@@ -20,5 +20,5 @@ MonoBehaviour:
     name: "\u5A1C\u7F8E"
     prefab: Assets/test/root.prefab
   - id: 1003
-    name: "\u7D22\u9686"
-    prefab: Assets/test/DefaultMale.prefab
+    name: "\u9C7C\u5C3E\u602A"
+    prefab: Assets/test/Chomper.prefab

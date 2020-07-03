@@ -74,6 +74,7 @@ namespace UnityEditor.Timeline
                         float t = PiexlToTime(e.mousePosition.x);
                         timeline.Time = t;
                         state.SetPlaying(false);
+                        time_draging = true;
                         Repaint();
                     }
                     break;
