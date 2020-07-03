@@ -16,14 +16,15 @@ namespace UnityEditor.Timeline
 
     public class EditorTrack : EditorObject, ITimelineInspector
     {
-        private static XTrack clipboardTrack;
+        public static XTrack clipboardTrack;
+        public static GUIContent _addclip, _unselect, _select;
+        public static GUIContent copy, paste, delete;
+
         public XTrack track;
         public Rect rect, head;
         public EditorClip[] eClips;
         public bool select, allowClip, showChild;
         private GenericMenu pm;
-        private GUIContent _addclip, _unselect, _select;
-        private GUIContent _copy, _paste, _delete;
         private Vector2 scroll;
         protected Color addtiveColor;
         public object trackArg = null;
@@ -137,12 +138,15 @@ namespace UnityEditor.Timeline
             track = (XTrack)t;
             var flag = (TrackFlagAttribute)Attribute.GetCustomAttribute(t.GetType(), typeof(TrackFlagAttribute));
             allowClip = flag.allowClip;
-            _addclip = EditorGUIUtility.TrTextContent("Add Clip \t #a");
-            _unselect = EditorGUIUtility.TrTextContent("UnSelect All  \t #u");
-            _select = EditorGUIUtility.TrTextContent("Select All Tracks \t %#s");
-            _delete = EditorGUIUtility.TrTextContent("Delete Clip\t #d");
-            _copy = EditorGUIUtility.TrTextContent("Copy Track\t #c");
-            _paste = EditorGUIUtility.TrTextContent("Paste Track\t #p");
+            if (_addclip == null)
+            {
+                _addclip = EditorGUIUtility.TrTextContent("Add Clip \t #a");
+                _unselect = EditorGUIUtility.TrTextContent("UnSelect All  \t #u");
+                _select = EditorGUIUtility.TrTextContent("Select All Tracks \t %#s");
+                delete = EditorGUIUtility.TrTextContent("Delete Clip\t #d");
+                copy = EditorGUIUtility.TrTextContent("Copy Track\t #c");
+                paste = EditorGUIUtility.TrTextContent("Paste Track\t #p");
+            }
         }
 
         public void OnGUI(Vector2 scroll)
@@ -261,14 +265,14 @@ namespace UnityEditor.Timeline
             {
                 pm.AddItem(_addclip, false, AddClip, e.mousePosition);
                 if (HitClip(e))
-                    pm.AddItem(_delete, false, DeleteClip, e.mousePosition);
+                    pm.AddItem(delete, false, DeleteClip, e.mousePosition);
                 else
-                    pm.AddDisabledItem(_delete, false);
+                    pm.AddDisabledItem(delete, false);
             }
             else
             {
                 pm.AddDisabledItem(_addclip, false);
-                pm.AddDisabledItem(_delete, false);
+                pm.AddDisabledItem(delete, false);
             }
             pm.AddItem(EditorGUIUtility.TrTextContent("Delete Track\t #t"), false, DeleteTrack);
             if (track.mute)
@@ -296,16 +300,16 @@ namespace UnityEditor.Timeline
                 pm.AddItem(EditorGUIUtility.TrTextContent("Select Track \t #s"), false, SelectTrack, true);
             }
             if (track.cloneable)
-                pm.AddItem(_copy, false, CopyTrack);
+                pm.AddItem(copy, false, CopyTrack);
             else
-                pm.AddDisabledItem(_copy, false);
+                pm.AddDisabledItem(copy, false);
             if(clipboardTrack!=null)
             {
-                pm.AddItem(_paste, false, PasteTrack);
+                pm.AddItem(paste, false, PasteTrack);
             }
             else
             {
-                pm.AddDisabledItem(_paste, false);
+                pm.AddDisabledItem(paste, false);
             }
             if (actions != null)
             {

@@ -55,6 +55,14 @@ namespace UnityEditor.Timeline
                 pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Mute All  tracks \t #m"), false);
                 pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Lock All tracks \t #l"), false);
             }
+            if (EditorTrack.clipboardTrack != null)
+            {
+                pm.AddItem(EditorTrack.paste, false, PasteTrack);
+            }
+            else
+            {
+                pm.AddDisabledItem(EditorTrack.paste, false);
+            }
             pm.AddSeparator("");
             pm.AddItem(EditorGUIUtility.TrTextContent("Add XGroupTrack"), false, OnAddTrackItem, typeof(XGroupTrack));
 
@@ -72,6 +80,24 @@ namespace UnityEditor.Timeline
 
             Rect rect = new Rect(Event.current.mousePosition, new Vector2(200, 0));
             pm.DropDown(rect);
+        }
+
+        private void PasteTrack()
+        {
+            var clipboard = EditorTrack.clipboardTrack;
+            XTrack copyed = clipboard.Clone();
+            if (clipboard.parent != null)
+            {
+                string tip = "select a parent track with type: " + clipboard.parent.AssetType;
+                EditorUtility.DisplayDialog("Notice", tip, "OK");
+            }
+            else
+            {
+                TimelineWindow.inst.timeline.AddRootTrack(copyed);
+                int idx = tree.hierachy.Count;
+                tree.AddTrack(copyed, idx, null, true);
+                clipboard = null;
+            }
         }
 
         private void MuteAll()
