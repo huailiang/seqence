@@ -208,10 +208,18 @@
       <clips>
         <ClipData xsi:type="AnimClipData">
           <start>-0.101331048</start>
-          <duration>6.46876431</duration>
+          <duration>3.61447263</duration>
           <anim>Assets/test/Chomper/Animations/ChomperWalkForward.anim</anim>
           <trim_start>0</trim_start>
-          <trim_end>171</trim_end>
+          <trim_end>83</trim_end>
+          <loop>true</loop>
+        </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>3.38325381</start>
+          <duration>2.69261217</duration>
+          <anim>Assets/test/Chomper/Animations/ChomperIdle.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>-567</trim_end>
           <loop>true</loop>
         </ClipData>
         <ClipData xsi:type="AnimClipData">
@@ -327,8 +335,8 @@
               <showShape>true</showShape>
             </ClipData>
             <ClipData xsi:type="LogicClipData">
-              <start>10.7931252</start>
-              <duration>2.97343349</duration>
+              <start>11.3117933</start>
+              <duration>2.38993263</duration>
               <logicType>
                 <LogicType>BeHit</LogicType>
               </logicType>
@@ -341,8 +349,8 @@
               <showShape>true</showShape>
             </ClipData>
             <ClipData xsi:type="LogicClipData">
-              <start>20.57587</start>
-              <duration>2.94569016</duration>
+              <start>21.8148232</start>
+              <duration>1.70673752</duration>
               <logicType>
                 <LogicType>HP</LogicType>
                 <LogicType>Attack</LogicType>
