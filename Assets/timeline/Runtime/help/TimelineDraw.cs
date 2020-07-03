@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace UnityEngine.Timeline
 {
@@ -35,7 +34,7 @@ namespace UnityEngine.Timeline
 #if UNITY_EDITOR
                 Object.DestroyImmediate(sharedObj);
 #else
-            Object.Destroy(sharedObj);
+                Object.Destroy(sharedObj);
 #endif
             }
         }
@@ -47,7 +46,7 @@ namespace UnityEngine.Timeline
 #if UNITY_EDITOR
                 Object.DestroyImmediate(sharedFilter.sharedMesh);
 #else
-            Object.Destroy(sharedFilter.sharedMesh);
+                Object.Destroy(sharedFilter.sharedMesh);
 #endif
                 sharedFilter.sharedMesh = null;
             }

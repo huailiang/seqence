@@ -44,7 +44,6 @@ namespace UnityEngine.Timeline
                 bindObj = bindTrack.bindObj;
                 if (Data.showShape)
                 {
-                    track.InitDraw();
                     DrawAttackArea();
                 }
             }

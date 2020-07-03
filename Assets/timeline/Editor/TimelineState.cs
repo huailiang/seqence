@@ -60,6 +60,22 @@ namespace UnityEditor.Timeline
             {
                 config = AssetDatabase.LoadAssetAtPath<AssetConfig>(AssetConfigEditor.path);
             }
+            EditorApplication.playModeStateChanged -= OnPlayChanged;
+            EditorApplication.playModeStateChanged += OnPlayChanged;
+        }
+
+        private void OnPlayChanged(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.ExitingEditMode ||
+                state == PlayModeStateChange.ExitingPlayMode ||
+                state == PlayModeStateChange.EnteredEditMode)
+            {
+                window?.Dispose();
+                timeline?.Dispose();
+                timeline = null;
+                CleanEnv();
+                window?.Repaint();
+            }
         }
 
         public void CheckExist()

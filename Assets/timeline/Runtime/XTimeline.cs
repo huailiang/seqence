@@ -27,11 +27,15 @@ namespace UnityEngine.Timeline
         public TimelinePlayMode editMode;
         public PlayMode playMode;
         private GameObject timelineRoot;
+        private float _time = 0;
+        private float _duration = 0;
+        public System.Action Finish;
 
         private float prev;
-        [Range(0, 1)] public float slow = 1;
+        [Range(0, 1)]
+        public float slow = 1;
         private float delay;
-
+        
         public const int frameRate = 30;
         private float _last = 0;
 
@@ -80,11 +84,6 @@ namespace UnityEngine.Timeline
             get { return editMode != TimelinePlayMode.EditorPause; }
         }
 
-        public bool isSkillMode
-        {
-            get { return playMode == PlayMode.Skill; }
-        }
-
         public float Duration
         {
             get { return _duration; }
@@ -92,7 +91,6 @@ namespace UnityEngine.Timeline
 
         public XTimeline(string path, PlayMode mode = PlayMode.Plot)
         {
-            playMode = mode;
             if (path.EndsWith(".xml"))
             {
                 config = TimelineConfig.ReadXml(path);
@@ -164,10 +162,7 @@ namespace UnityEngine.Timeline
                 graph.Stop();
             }
         }
-
-        private float _time = 0;
-        private float _duration = 0;
-        public System.Action Finish;
+        
 
         public void Update()
         {

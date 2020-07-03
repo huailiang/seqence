@@ -25,9 +25,10 @@ namespace UnityEngine.Timeline
         
         public XLogicTrack(XTimeline tl, TrackData data) : base(tl, data)
         {
+            InitDraw();
         }
 
-        public void InitDraw()
+        private void InitDraw()
         {
             draw = new TimelineDraw();
         }
