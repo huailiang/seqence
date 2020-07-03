@@ -28,8 +28,7 @@ namespace UnityEngine.Timeline
                     playableOutput = track.playableOutput;
                     mixPlayable = track.mixPlayable;
                 }
-                timeline = new XTimeline("Assets/timeline2.xml");
-                timeline.SetPlaying(true);
+                timeline.BlendTo("Assets/timeline.xml2");
             }
         }
 
@@ -65,7 +64,6 @@ namespace UnityEngine.Timeline
                 Gizmos.DrawSphere(ps[0], 0.04f);
             }
         }
-
 
 #endif
     }

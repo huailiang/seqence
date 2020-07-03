@@ -91,6 +91,15 @@ namespace UnityEngine.Timeline
 
         public XTimeline(string path, PlayMode mode = PlayMode.Plot)
         {
+            ReadConf(path);
+            if (config != null)
+            {
+                Initial(config, mode);
+            }
+        }
+
+        private void ReadConf(string path)
+        {
             if (path.EndsWith(".xml"))
             {
                 config = TimelineConfig.ReadXml(path);
@@ -99,10 +108,6 @@ namespace UnityEngine.Timeline
             {
                 config = new TimelineConfig();
                 config.Read(path);
-            }
-            if (config != null)
-            {
-                Initial(config, mode);
             }
         }
 
@@ -152,6 +157,17 @@ namespace UnityEngine.Timeline
                 }
             }
             _duration = RecalcuteDuration();
+        }
+
+        public void BlendTo(string path)
+        {
+            Dispose();
+            ReadConf(path);
+            if (config != null)
+            {
+                Initial(config, PlayMode.Skill);
+            }
+            SetPlaying(true);
         }
 
         public void ManualMode()
