@@ -36,7 +36,7 @@ namespace UnityEngine.Timeline.Data
 
         public virtual void Write(BinaryWriter writer)
         {
-            writer.Write((int) type);
+            writer.Write((int)type);
             int len = clips?.Length ?? 0;
             int len2 = childs?.Length ?? 0;
             int len3 = marks?.Length ?? 0;
@@ -73,13 +73,27 @@ namespace UnityEngine.Timeline.Data
             for (int j = 0; j < len2; j++)
             {
                 childs[j] = new TrackData();
-                childs[j].type = (AssetType) reader.ReadInt32();
+                childs[j].type = (AssetType)reader.ReadInt32();
                 childs[j].Read(reader);
             }
             for (int i = 0; i < len3; i++)
             {
                 marks[i] = XTimelineFactory.CreateMarkData(reader);
             }
+        }
+
+        public static T DeepCopyByXml<T>(T obj) where T : TrackData
+        {
+            object retval;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                XmlSerializer xml = new XmlSerializer(typeof(T));
+                xml.Serialize(ms, obj);
+                ms.Seek(0, SeekOrigin.Begin);
+                retval = xml.Deserialize(ms);
+                ms.Close();
+            }
+            return (T)retval;
         }
     }
 

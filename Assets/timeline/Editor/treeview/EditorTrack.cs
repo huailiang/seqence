@@ -295,7 +295,10 @@ namespace UnityEditor.Timeline
             {
                 pm.AddItem(EditorGUIUtility.TrTextContent("Select Track \t #s"), false, SelectTrack, true);
             }
-            pm.AddItem(_copy, false, CopyTrack);
+            if (track.cloneable)
+                pm.AddItem(_copy, false, CopyTrack);
+            else
+                pm.AddDisabledItem(_copy, false);
             if(clipboardTrack!=null)
             {
                 pm.AddItem(_paste, false, PasteTrack);
@@ -371,9 +374,26 @@ namespace UnityEditor.Timeline
             }
             if (match)
             {
-                tree.AddTrack(copyed, tree.IndexOfTrack(track) + 1, null, true);
-                clipboardTrack = null;
+                int idx = 0;
+                if (track.childs != null && track.childs.Length > 0)
+                {
+                    var t = track.childs.Last();
+                    if (clipboardTrack.parent != null)
+                    {
+                        if (track.childs.Length >= 2)
+                            t = track.childs[track.childs.Length - 2];
+                        else
+                            t = track;
+                    }
+                    idx = tree.IndexOfTrack(t) + 1;
+                }
+                else
+                {
+                    idx = tree.IndexOfTrack(track) + 1;
+                }
+                tree.AddTrack(copyed, idx, null, true);
             }
+            clipboardTrack = null;
         }
         
 

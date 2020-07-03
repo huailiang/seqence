@@ -1,4 +1,5 @@
-﻿using UnityEngine.Timeline.Data;
+﻿using System;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
@@ -10,9 +11,14 @@ namespace UnityEngine.Timeline
             get { return AssetType.SceneFx; }
         }
 
+        public override bool cloneable
+        {
+            get { return false; }
+        }
+
         public override XTrack Clone()
         {
-            return new XSceneFxTrack(timeline, data);
+            throw new Exception("scenefx track is uncloneable");
         }
 
         public XSceneFxTrack(XTimeline tl, TrackData data) : base(tl, data)

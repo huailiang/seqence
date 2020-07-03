@@ -1,4 +1,5 @@
-﻿using UnityEngine.Animations;
+﻿using System;
+using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline.Data;
 
@@ -18,9 +19,9 @@ namespace UnityEngine.Timeline
             get { return AssetType.Animation; }
         }
 
-        public override XTrack Clone()
+        public override bool cloneable
         {
-            return new XAnimationTrack(timeline, (BindTrackData) data);
+            get { return false; }
         }
 
         public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data)
@@ -41,6 +42,11 @@ namespace UnityEngine.Timeline
             tmp = clip.end;
             idx++;
             return clip;
+        }
+
+        public override XTrack Clone()
+        {
+            throw new Exception("animation track is uncloneable");
         }
 
         public AnimationClipPlayable playA, playB;

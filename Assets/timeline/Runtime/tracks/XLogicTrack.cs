@@ -1,4 +1,6 @@
 using UnityEngine.Timeline.Data;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace UnityEngine.Timeline
 {
@@ -15,6 +17,7 @@ namespace UnityEngine.Timeline
 
         public override XTrack Clone()
         {
+            TrackData data = CloneData();
             return new XLogicTrack(timeline, data);
         }
 

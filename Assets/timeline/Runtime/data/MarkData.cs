@@ -12,6 +12,7 @@ namespace UnityEngine.Timeline.Data
         Slow = 1 << 2,
     }
 
+    [Serializable]
     [XmlInclude(typeof(JumpMarkData))]
     [XmlInclude(typeof(SlowMarkData))]
     [XmlInclude(typeof(ActiveMarkData))]

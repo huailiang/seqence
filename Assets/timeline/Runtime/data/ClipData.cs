@@ -21,6 +21,7 @@ namespace UnityEngine.Timeline.Data
         Rect,
     }
 
+    [Serializable]
     [XmlInclude(typeof(AnimClipData))]
     [XmlInclude(typeof(SceneFxClipData))]
     [XmlInclude(typeof(BoneFxClipData))]

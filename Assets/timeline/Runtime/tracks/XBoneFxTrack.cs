@@ -1,4 +1,5 @@
-﻿using UnityEngine.Timeline.Data;
+﻿using System;
+using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
@@ -23,9 +24,14 @@ namespace UnityEngine.Timeline
             get { return AssetType.BoneFx; }
         }
 
+        public override bool cloneable
+        {
+            get { return false; }
+        }
+
         public override XTrack Clone()
         {
-            return new XBoneFxTrack(timeline, data);
+            throw new Exception("bonefx track is uncloneable");
         }
 
         public XBoneFxTrack(XTimeline tl, TrackData data) : base(tl, data)

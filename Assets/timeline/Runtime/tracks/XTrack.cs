@@ -321,6 +321,11 @@ namespace UnityEngine.Timeline
             }
         }
 
+        public TrackData CloneData() //深clone
+        {
+            return TrackData.DeepCopyByXml(data);
+        }
+   
         public virtual void Dispose()
         {
             Foreach(track => track.Dispose(), clip => clip.Dispose());
