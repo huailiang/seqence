@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
 using Object = UnityEngine.Object;
+using PlayMode = UnityEngine.Timeline.PlayMode;
 
 namespace UnityEditor.Timeline
 {
@@ -25,10 +26,10 @@ namespace UnityEditor.Timeline
         private string name;
         public TimelineWindow window;
         public AssetConfig config;
-        private string path;
-
-     
+        public string path;
+        
         public bool showMarkerHeader { get; set; }
+
         public int frameRate
         {
             get { return XTimeline.frameRate; }
@@ -45,10 +46,10 @@ namespace UnityEditor.Timeline
             {
                 if (!string.IsNullOrEmpty(path))
                 {
-                    var p = path.Replace(".bytes", String.Empty).Replace(".xml", string.Empty);
-                    return p.Substring(p.IndexOf("Assets/", StringComparison.Ordinal) + 7);
+                    var p = path.Replace(".bytes", "").Replace(".xml", "");
+                    return p.Substring(p.LastIndexOf("/", StringComparison.Ordinal) + 1);
                 }
-                return "timeline";
+                return "***";
             }
         }
 
@@ -66,15 +67,17 @@ namespace UnityEditor.Timeline
 
         private void OnPlayChanged(PlayModeStateChange state)
         {
-            if (state == PlayModeStateChange.ExitingEditMode ||
-                state == PlayModeStateChange.ExitingPlayMode ||
+            if (state == PlayModeStateChange.ExitingEditMode || state == PlayModeStateChange.ExitingPlayMode ||
                 state == PlayModeStateChange.EnteredEditMode)
             {
-                window?.Dispose();
                 timeline?.Dispose();
                 timeline = null;
                 CleanEnv();
-                window?.Repaint();
+                if (window != null)
+                {
+                    window.Dispose();
+                    window.Repaint();
+                }
             }
         }
 
@@ -82,7 +85,7 @@ namespace UnityEditor.Timeline
         {
             if (timeline == null && Application.isPlaying)
             {
-                var run = GameObject.FindObjectOfType<RuntimeTimeline>();
+                var run = Object.FindObjectOfType<RuntimeTimeline>();
                 if (run) timeline = run.timeline;
             }
         }
@@ -115,8 +118,9 @@ namespace UnityEditor.Timeline
             window.SetTimeRange(0, dur * 1.5f);
         }
 
-        private void Dispose()
+        public void Dispose()
         {
+            path = string.Empty;
             CleanEnv();
             RebuildInspector();
             timeline?.Dispose();
@@ -129,10 +133,9 @@ namespace UnityEditor.Timeline
         private void AddRuntime()
         {
             var go = GameObject.Find("timeline");
-            RuntimeTimeline runtime;
             if (go)
             {
-                runtime = go.GetComponent<RuntimeTimeline>();
+                var runtime = go.GetComponent<RuntimeTimeline>();
                 if (runtime == null) runtime = go.AddComponent<RuntimeTimeline>();
                 runtime.path = this.path;
                 runtime.timeline = timeline;
@@ -170,6 +173,7 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 float time = timeline.Time + 1.0f / frameRate;
+                timeline.EditorCheckPlay();
                 timeline.ProcessImmediately(time);
             }
         }
@@ -179,6 +183,7 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 float time = timeline.Time - 1.0f / frameRate;
+                timeline.EditorCheckPlay();
                 timeline.ProcessImmediately(time);
             }
         }
@@ -217,6 +222,10 @@ namespace UnityEditor.Timeline
         public void SetPlaying(bool play)
         {
             timeline.SetPlaying(play);
+            if (play)
+            {
+                timeline.EditorCheckPlay();
+            }
         }
 
         public static void CleanEnv()

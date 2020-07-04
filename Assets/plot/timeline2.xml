@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TimelineConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <tracks>
+    <TrackData>
+      <type>Marker</type>
+    </TrackData>
+    <TrackData xsi:type="AnimationTrackData">
+      <clips>
+        <ClipData xsi:type="AnimClipData">
+          <start>4.565358</start>
+          <duration>28.46667</duration>
+          <anim>Assets/test/Clips/ROM.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>false</loop>
+        </ClipData>
+      </clips>
+      <type>Animation</type>
+      <prefab>Assets/test/DefaultMale.prefab</prefab>
+      <roleid>1001</roleid>
+    </TrackData>
+  </tracks>
+  <skillHostTrack>0</skillHostTrack>
+</TimelineConfig>

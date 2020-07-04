@@ -18,6 +18,8 @@
 
         public const float shadowUnderTimelineHeight = 15;
         public const float RawHeight = 30;
-        
+
+        public const string skillPath = "Assets/skill";
+        public const string plotPath = "Assets/plot";
     }
 }

@@ -28,7 +28,15 @@ namespace UnityEngine.Timeline
             if (!string.IsNullOrEmpty(prefab) && bindObj == null)
             {
                 pat = prefab;
-                var obj = XResources.LoadGameObject(prefab);
+                GameObject obj = null;
+                if (timeline.IsHostTrack(this))
+                {
+                    obj = timeline.blendPlayableOutput.GetTarget().gameObject;
+                }
+                else
+                {
+                    obj = XResources.LoadGameObject(prefab);
+                }
                 if (obj)
                 {
                     bindObj = obj;
@@ -50,5 +58,4 @@ namespace UnityEngine.Timeline
             base.Dispose();
         }
     }
-
 }

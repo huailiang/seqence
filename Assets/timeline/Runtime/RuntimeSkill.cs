@@ -5,16 +5,10 @@ namespace UnityEngine.Timeline
     public class RuntimeSkill : MonoBehaviour
     {
         public XTimeline timeline;
-        public AnimationPlayableOutput playableOutput;
-        public AnimationMixerPlayable mixPlayable;
-
 
         public void Update()
         {
-            if (timeline != null)
-            {
-                timeline.Update();
-            }
+            timeline?.Update();
             if (Input.GetKey(KeyCode.A))
             {
                 timeline = new XTimeline("Assets/timeline.xml");
@@ -22,12 +16,7 @@ namespace UnityEngine.Timeline
             }
             if (Input.GetKey(KeyCode.B))
             {
-                var track = timeline.SkillHostTrack as XAnimationTrack;
-                if (track)
-                {
-                    playableOutput = track.playableOutput;
-                    mixPlayable = track.mixPlayable;
-                }
+                
                 timeline.BlendTo("Assets/timeline.xml2");
             }
         }
@@ -67,5 +56,4 @@ namespace UnityEngine.Timeline
 
 #endif
     }
-
 }

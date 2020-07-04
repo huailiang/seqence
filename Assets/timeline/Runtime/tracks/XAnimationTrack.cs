@@ -11,8 +11,8 @@ namespace UnityEngine.Timeline
     {
         public AnimationPlayableOutput playableOutput;
         public AnimationMixerPlayable mixPlayable;
-        private int idx = 0;
-        private float tmp = 0;
+        private int idx;
+        private float tmp;
 
         public override AssetType AssetType
         {
@@ -85,8 +85,16 @@ namespace UnityEngine.Timeline
             if (bindObj && XTimeline.graph.IsValid())
             {
                 var amtor = bindObj.GetComponent<Animator>();
-                playableOutput = AnimationPlayableOutput.Create(XTimeline.graph, "AnimationOutput", amtor);
-                mixPlayable = AnimationMixerPlayable.Create(XTimeline.graph);
+                if (timeline.IsHostTrack(this))
+                {
+                    playableOutput = timeline.blendPlayableOutput;
+                    mixPlayable = timeline.blendMixPlayable;
+                }
+                else
+                {
+                    playableOutput = AnimationPlayableOutput.Create(XTimeline.graph, "AnimationOutput", amtor);
+                    mixPlayable = AnimationMixerPlayable.Create(XTimeline.graph);
+                }
                 playableOutput.SetSourcePlayable(mixPlayable);
             }
         }

@@ -55,13 +55,14 @@ namespace UnityEditor.Timeline
                 pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Mute All  tracks \t #m"), false);
                 pm.AddDisabledItem(EditorGUIUtility.TrTextContent("Lock All tracks \t #l"), false);
             }
+            var paste = EditorGUIUtility.TrTextContent("Paste Track\t #p");
             if (EditorTrack.clipboardTrack != null)
             {
-                pm.AddItem(EditorTrack.paste, false, PasteTrack);
+                pm.AddItem(paste, false, PasteTrack);
             }
             else
             {
-                pm.AddDisabledItem(EditorTrack.paste, false);
+                pm.AddDisabledItem(paste, false);
             }
             pm.AddSeparator("");
             pm.AddItem(EditorGUIUtility.TrTextContent("Add XGroupTrack"), false, OnAddTrackItem, typeof(XGroupTrack));
@@ -120,15 +121,15 @@ namespace UnityEditor.Timeline
 
         private void OnAddTrackItem(object arg)
         {
-            Type type = (Type)arg;
+            Type type = (Type) arg;
             EditorFactory.GetTrackByDataType(type, state.timeline, null, (track, data, param) =>
-             {
-                 if (track != null && data != null)
-                 {
-                     tree.AddTrack(track, param);
-                     state.timeline.AddRootTrack(track);
-                 }
-             });
+            {
+                if (track != null && data != null)
+                {
+                    tree.AddTrack(track, param);
+                    state.timeline.AddRootTrack(track);
+                }
+            });
         }
 
         void ShowMarkersButton()

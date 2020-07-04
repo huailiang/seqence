@@ -2,7 +2,7 @@
 {
     Properties
     {
-        _TintColor ("Tint Color", Color) = (1.0, 0.0, 0.0)
+        _TintColor ("Tint Color", Color) = (1.0, 0.0, 0.0,0.9)
     }
     SubShader
     {
@@ -30,7 +30,7 @@
                 float4 vertex : SV_POSITION;
             };
 
-			fixed3 _TintColor;
+			fixed4 _TintColor;
 
             v2f vert (appdata v)
             {
@@ -40,10 +40,9 @@
                 return o;
             }
 
-            fixed3 frag (v2f i) : SV_Target
+            fixed4 frag (v2f i) : SV_Target
             {
-                // sample the texture
-                fixed3 col = _TintColor;
+                fixed4 col = _TintColor;
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;

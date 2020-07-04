@@ -46,7 +46,19 @@ namespace UnityEditor.Timeline
             playMode = (PlayMode) EditorGUILayout.EnumPopup(playMode, EditorStyles.toolbarPopup);
             if (timeline)
             {
-                timeline.playMode = playMode;
+                if (!string.IsNullOrEmpty(state.path) && playMode != timeline.playMode)
+                {
+                    string tip = "current is editing, Are you sure change playmode?";
+                    if (EditorUtility.DisplayDialog("warn", tip, "ok", "cancel"))
+                    {
+                        state.Dispose();
+                        timeline.playMode = playMode;
+                    }
+                }
+                else
+                {
+                    timeline.playMode = playMode;
+                }
             }
         }
 
@@ -122,19 +134,25 @@ namespace UnityEditor.Timeline
         {
             if (GUILayout.Button(TimelineStyles.newContent, EditorStyles.toolbarButton))
             {
-                if (state.timeline != null && EditorUtility.DisplayDialog("warn", "save current", "save", "cancel"))
+                if (state.timeline != null)
                 {
-                    DoSave();
-                }
-                else
-                {
-                    string path = EditorUtility.SaveFilePanel("open", "Assets/", "timeline", "bytes");
-                    if (!string.IsNullOrEmpty(path))
+                    if (EditorUtility.DisplayDialog("warn", "save current?", "save", "cancel"))
                     {
-                        path = path.Substring(path.IndexOf("Assets/", StringComparison.Ordinal));
-                        CreateTimeline(path);
+                        DoSave();
+                    }
+                    else
+                    {
+                        state.Dispose();
                     }
                 }
+                string dir = playMode == PlayMode.Plot ? WindowConstants.plotPath : WindowConstants.skillPath;
+                string path = EditorUtility.SaveFilePanel("create timeline", dir, "timeline", "bytes");
+                if (!string.IsNullOrEmpty(path))
+                {
+                    path = path.Substring(path.IndexOf("Assets/", StringComparison.Ordinal));
+                    CreateTimeline(path);
+                }
+                GUIUtility.ExitGUI();
             }
         }
 
@@ -149,9 +167,14 @@ namespace UnityEditor.Timeline
         {
             if (GUILayout.Button(TimelineStyles.openContent, EditorStyles.toolbarButton))
             {
-                string path = EditorUtility.OpenFilePanel("open", "Assets/", "xml");
-                path = "Assets" + path.Replace(Application.dataPath, "");
-                state.Open(path);
+                string dir = playMode == PlayMode.Plot ? WindowConstants.plotPath : WindowConstants.skillPath;
+                string path = EditorUtility.OpenFilePanel("open", dir, "xml");
+                if (!string.IsNullOrEmpty(path))
+                {
+                    path = "Assets" + path.Replace(Application.dataPath, "");
+                    state.Open(path);
+                }
+                GUIUtility.ExitGUI();
             }
         }
 
@@ -167,6 +190,7 @@ namespace UnityEditor.Timeline
                 {
                     DoSave();
                 }
+                GUIUtility.ExitGUI();
             }
         }
 

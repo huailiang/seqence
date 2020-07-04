@@ -1,4 +1,5 @@
-﻿using UnityEngine.Playables;
+﻿using UnityEngine.Animations;
+using UnityEngine.Playables;
 using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
@@ -32,14 +33,15 @@ namespace UnityEngine.Timeline
         public System.Action Finish;
 
         private float prev;
-        [Range(0, 1)]
-        public float slow = 1;
+        [Range(0, 1)] public float slow = 1;
         private float delay;
-        
+
         public const int frameRate = 30;
         private float _last = 0;
 
         public bool playing { get; set; }
+
+        public bool blending { get; set; }
 
         public XTrack SkillHostTrack;
 
@@ -94,7 +96,7 @@ namespace UnityEngine.Timeline
             ReadConf(path);
             if (config != null)
             {
-                Initial(config, mode);
+                Initial(config, mode, false);
             }
         }
 
@@ -113,37 +115,51 @@ namespace UnityEngine.Timeline
 
         public XTimeline(TimelineConfig conf, PlayMode mode = PlayMode.Plot)
         {
-            Initial(conf, mode);
+            Initial(conf, mode, false);
         }
 
-        private void Initial(TimelineConfig conf, PlayMode mode)
+        private void Initial(TimelineConfig conf, PlayMode mode, bool blend)
         {
             _time = 0;
+            blending = blend;
             playMode = mode;
             config = conf;
+            if (blend == false)
+            {
+                if (blendMixPlayable.IsValid())
+                {
+                    blendMixPlayable.Destroy();
+                }
+                if (blendPlayableOutput.IsOutputValid())
+                {
+                    graph.DestroyOutput(blendPlayableOutput);
+                }
+            }
             Build();
         }
 
         private void Build()
         {
-            timelineRoot = new GameObject("timeline");
             XResources.Clean();
             delay = 1;
-            graph = PlayableGraph.Create("TimelineGraph");
-
+            if (!graph.IsValid())
+            {
+                timelineRoot = new GameObject("timeline");
+                graph = PlayableGraph.Create("TimelineGraph");
+            }
             var tracksData = config.tracks;
             int len = tracksData.Length;
             trackTrees = new XTrack[len];
             for (int i = 0; i < len; i++)
             {
                 trackTrees[i] = XTimelineFactory.GetTrack(tracksData[i], this);
-                if (i == config.skillHostTrack)
+                if (i == config.skillHostTrack && i > 0)
                 {
                     SkillHostTrack = trackTrees[i];
                 }
             }
             prev = 0;
-            if (graph.IsValid() && graph.GetOutputCount() > 0)
+            if (graph.IsValid())
             {
                 graph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
                 graph.Play();
@@ -159,13 +175,19 @@ namespace UnityEngine.Timeline
             _duration = RecalcuteDuration();
         }
 
+        public AnimationPlayableOutput blendPlayableOutput { get; set; }
+        public AnimationMixerPlayable blendMixPlayable { get; set; }
+
         public void BlendTo(string path)
         {
-            Dispose();
+            var track = SkillHostTrack as XAnimationTrack;
+            blendPlayableOutput = track.playableOutput;
+            blendMixPlayable = track.mixPlayable;
+            Dispose(true);
             ReadConf(path);
             if (config != null)
             {
-                Initial(config, PlayMode.Skill);
+                Initial(config, PlayMode.Skill, true);
             }
             SetPlaying(true);
         }
@@ -178,7 +200,22 @@ namespace UnityEngine.Timeline
                 graph.Stop();
             }
         }
-        
+
+#if UNITY_EDITOR
+        public void EditorCheckPlay()
+        {
+            graph.Play();
+            if (!isRunningMode)
+            {
+                ManualMode();
+            }
+        }
+#endif
+
+        public bool IsHostTrack(XTrack track)
+        {
+            return blending && track.ID == config.skillHostTrack;
+        }
 
         public void Update()
         {
@@ -253,7 +290,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-        public void Dispose()
+        public void Dispose(bool blend = false)
         {
             if (trackTrees != null)
             {
@@ -271,7 +308,7 @@ namespace UnityEngine.Timeline
                 Object.Destroy(timelineRoot);
 #endif
             }
-            if (graph.IsValid())
+            if (!blend && graph.IsValid())
             {
                 graph.Destroy();
             }
