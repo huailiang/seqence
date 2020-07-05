@@ -52,9 +52,7 @@ namespace UnityEngine.Timeline
                     if (!anData.loop)
                         tick = aclip.length - 0.01f;
                     else
-                    {
                         tick = tick % aclip.length;
-                    }
                 }
                 playable.SetTime(tick + anData.trim_start);
             }

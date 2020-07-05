@@ -175,7 +175,6 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 float time = timeline.Time + 1.0f / frameRate;
-                timeline.EditorCheckPlay();
                 timeline.ProcessImmediately(time);
             }
         }
@@ -185,7 +184,6 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 float time = timeline.Time - 1.0f / frameRate;
-                timeline.EditorCheckPlay();
                 timeline.ProcessImmediately(time);
             }
         }
@@ -225,10 +223,6 @@ namespace UnityEditor.Timeline
         public void SetPlaying(bool play)
         {
             timeline.SetPlaying(play);
-            if (play)
-            {
-                timeline.EditorCheckPlay();
-            }
         }
 
         public static void CleanEnv()

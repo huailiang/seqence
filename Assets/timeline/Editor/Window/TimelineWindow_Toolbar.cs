@@ -219,7 +219,8 @@ namespace UnityEditor.Timeline
         {
             if (GUILayout.Button(TimelineStyles.refreshContent, EditorStyles.toolbarButton, GUILayout.MaxWidth(24)))
             {
-                Repaint();
+                float d = timeline.RecalcuteDuration();
+                SetTimeRange(0, d * 1.5f);
             }
             if (GUILayout.Button(TimelineStyles.inspectBtn, EditorStyles.toolbarButton))
             {

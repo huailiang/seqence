@@ -167,10 +167,6 @@ namespace UnityEngine.Timeline
                 {
                     editMode = TimelinePlayMode.RealRunning;
                 }
-                else //if (!isRunningMode)
-                {
-                    ManualMode();
-                }
             }
             _duration = RecalcuteDuration();
         }
@@ -191,26 +187,6 @@ namespace UnityEngine.Timeline
             }
             SetPlaying(true);
         }
-
-        public void ManualMode()
-        {
-            graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
-            if (graph.IsPlaying())
-            {
-                graph.Stop();
-            }
-        }
-
-#if UNITY_EDITOR
-        public void EditorCheckPlay()
-        {
-            graph.Play();
-            if (!isRunningMode)
-            {
-                ManualMode();
-            }
-        }
-#endif
 
         public bool IsHostTrack(XTrack track)
         {
@@ -287,10 +263,14 @@ namespace UnityEngine.Timeline
                     trackTrees[i].Process(time, prev);
                 }
             prev = time;
-            if (graph.IsValid() && !isRunningMode)
+            if (graph.IsValid() && !Application.isPlaying)
             {
+                if (graph.IsPlaying()) graph.Stop();
                 graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
-                graph.Evaluate(time);
+                if (graph.GetOutputCount() > 0)
+                {
+                    graph.Evaluate(time);
+                }
             }
         }
 
