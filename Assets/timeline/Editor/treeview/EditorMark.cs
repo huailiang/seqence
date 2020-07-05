@@ -46,7 +46,7 @@ namespace UnityEditor.Timeline
             if (TimelineWindow.inst.IsPiexlRange(x))
             {
                 rect = r;
-                rect.x = x;
+                rect.x = x - 8;
                 rect.y = r.y + r.height / 4;
                 rect.width = 20;
                 GUIContent cont = TimelineWindow.inst.state.config.GetIcon(baseMarker.type);

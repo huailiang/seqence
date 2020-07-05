@@ -2,7 +2,23 @@
 <TimelineConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <tracks>
     <TrackData>
-      <marks />
+      <marks>
+        <MarkData xsi:type="SlowMarkData">
+          <time>6.961952</time>
+          <reverse>false</reverse>
+          <slowRate>0.1</slowRate>
+        </MarkData>
+        <MarkData xsi:type="SlowMarkData">
+          <time>9.866981</time>
+          <reverse>false</reverse>
+          <slowRate>1</slowRate>
+        </MarkData>
+        <MarkData xsi:type="JumpMarkData">
+          <time>18.7746716</time>
+          <reverse>false</reverse>
+          <jump>0</jump>
+        </MarkData>
+      </marks>
       <type>Marker</type>
     </TrackData>
     <TrackData xsi:type="AnimationTrackData">

@@ -131,7 +131,7 @@ namespace UnityEditor.Timeline
 
             if (EditorGUI.EndChangeCheck())
             {
-                state.timeline?.ProcessImmediately(float.Parse(newCurrentTime));
+                state.timeline?.ProcessTo(float.Parse(newCurrentTime));
             }
         }
 

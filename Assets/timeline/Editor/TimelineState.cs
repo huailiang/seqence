@@ -175,7 +175,7 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 float time = timeline.Time + 1.0f / frameRate;
-                timeline.ProcessImmediately(time);
+                timeline.ProcessTo(time);
             }
         }
 
@@ -184,14 +184,14 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 float time = timeline.Time - 1.0f / frameRate;
-                timeline.ProcessImmediately(time);
+                timeline.ProcessTo(time);
             }
         }
 
         public void FrameStart()
         {
             timeline.SetPlaying(false);
-            timeline?.ProcessImmediately(0);
+            timeline?.ProcessTo(0);
         }
 
         public void FrameEnd()
@@ -200,7 +200,7 @@ namespace UnityEditor.Timeline
             {
                 timeline.SetPlaying(false);
                 float end = timeline.RecalcuteDuration();
-                timeline.ProcessImmediately(end);
+                timeline.ProcessTo(end);
             }
         }
 

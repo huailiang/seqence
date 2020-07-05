@@ -24,7 +24,7 @@ namespace UnityEngine.Timeline
             base.OnTriger();
             if (jump != timeline.Time)
             {
-                timeline.ProcessImmediately(jump);
+                timeline.JumpTo(jump);
             }
         }
     }

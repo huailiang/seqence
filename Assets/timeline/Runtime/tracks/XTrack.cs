@@ -330,7 +330,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-        protected TrackData CloneData() //深clone
+        protected TrackData CloneData() //deep clone
         {
             return TrackData.DeepCopyByXml(data);
         }

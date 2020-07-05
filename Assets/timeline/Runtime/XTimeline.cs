@@ -35,7 +35,6 @@ namespace UnityEngine.Timeline
 
         private float prev;
         [Range(0, 1)] public float slow = 1;
-        private float delay;
 
         public const int frameRate = 30;
         private float _last = 0;
@@ -66,7 +65,7 @@ namespace UnityEngine.Timeline
             {
                 if (Mathf.Abs(value - prev) > 1e-4)
                 {
-                    ProcessImmediately(value);
+                    ProcessTo(value);
                 }
             }
         }
@@ -141,7 +140,6 @@ namespace UnityEngine.Timeline
 
         private void Build()
         {
-            delay = 1;
             if (!graph.IsValid())
             {
                 timelineRoot = new GameObject("timeline");
@@ -198,7 +196,7 @@ namespace UnityEngine.Timeline
             if (playing)
             {
                 float t = UnityEngine.Time.realtimeSinceStartup;
-                float delta = 1.0f / frameRate;
+                float delta = 1.0f / frameRate * slow;
                 if (t - _last > delta)
                 {
                     _time += delta;
@@ -207,7 +205,7 @@ namespace UnityEngine.Timeline
                         playing = false;
                         _time = _duration;
                     }
-                    if (Process(_time))
+                    ProcessTo(_time);
                     {
                         if (_time >= _duration)
                         {
@@ -234,28 +232,8 @@ namespace UnityEngine.Timeline
                 }
             }
         }
-
-        public bool Process(float time)
-        {
-            if (slow < 1e-5)
-            {
-                //pause
-            }
-            else if (delay < 1)
-            {
-                delay += slow;
-            }
-            if (delay >= 1)
-            {
-                ProcessImmediately(time);
-                delay = 0;
-                return true;
-            }
-            return false;
-        }
-
-
-        public void ProcessImmediately(float time)
+        
+        public void ProcessTo(float time)
         {
             if (trackTrees != null)
                 for (int i = 0; i < trackTrees.Length; i++)
@@ -272,6 +250,12 @@ namespace UnityEngine.Timeline
                     graph.Evaluate(time);
                 }
             }
+        }
+
+        public void JumpTo(float t)
+        {
+            _time = t;
+            ProcessTo(t);
         }
 
         public void Dispose(bool blend = false)

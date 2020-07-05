@@ -181,7 +181,7 @@ namespace UnityEditor.Timeline
             {
                 float x = TimeToPixel(mark.time);
                 Rect rect = markderRect;
-                rect.x = x;
+                rect.x = x - 8;
                 rect.width = markWidth;
                 GUIContent cont = state.config.GetIcon(mark.type);
                 GUI.Box(rect, cont, GUIStyle.none);
