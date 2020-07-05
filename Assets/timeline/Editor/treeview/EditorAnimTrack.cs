@@ -192,7 +192,12 @@ namespace UnityEditor.Timeline
                     }
                 }
             }
-            if (ch == null && trackArg == null) EditorGUILayout.HelpBox("bind character is none", MessageType.Warning);
+            if (ch == null && trackArg == null)
+            {
+                EditorGUILayout.HelpBox("bind character is none", MessageType.Warning);
+            }
+            Data.pos = EditorGUILayout.Vector3Field("Init pos:", Data.pos);
+            Data.rotY = EditorGUILayout.FloatField("Init posY:", Data.rotY);
         }
 
         protected override void OnInspectorClip(IClip c)

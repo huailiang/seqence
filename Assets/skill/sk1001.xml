@@ -7,7 +7,7 @@
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>1.954443</start>
+          <start>0.259140223</start>
           <duration>28.46667</duration>
           <anim>Assets/test/Clips/ROM.anim</anim>
           <trim_start>0</trim_start>
@@ -16,8 +16,14 @@
         </ClipData>
       </clips>
       <type>Animation</type>
-      <prefab>Assets/test/DefaultMale.prefab</prefab>
-      <roleid>1001</roleid>
+      <prefab>Assets/test/Chomper.prefab</prefab>
+      <roleid>1003</roleid>
+      <pos>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </pos>
+      <rotY>0</rotY>
     </TrackData>
   </tracks>
   <skillHostTrack>0</skillHostTrack>

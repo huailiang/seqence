@@ -156,6 +156,12 @@
       <type>Animation</type>
       <prefab>Assets/test/DefaultMale.prefab</prefab>
       <roleid>1001</roleid>
+      <pos>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </pos>
+      <rotY>81</rotY>
     </TrackData>
     <TrackData>
       <clips>
@@ -215,7 +221,7 @@
           <loop>true</loop>
         </ClipData>
         <ClipData xsi:type="AnimClipData">
-          <start>3.543126</start>
+          <start>3.903708</start>
           <duration>2.82126427</duration>
           <anim>Assets/test/Chomper/Animations/ChomperCutsceneTOIdle.anim</anim>
           <trim_start>0</trim_start>
@@ -223,19 +229,11 @@
           <loop>false</loop>
         </ClipData>
         <ClipData xsi:type="AnimClipData">
-          <start>6.12178946</start>
+          <start>7.283665</start>
           <duration>1.54340076</duration>
           <anim>Assets/test/Chomper/Animations/ChomperRunForward.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>45</trim_end>
-          <loop>true</loop>
-        </ClipData>
-        <ClipData xsi:type="AnimClipData">
-          <start>7.67135572</start>
-          <duration>15.855751</duration>
-          <anim>Assets/test/Chomper/Animations/ChomperIdle.anim</anim>
-          <trim_start>0</trim_start>
-          <trim_end>-150</trim_end>
           <loop>true</loop>
         </ClipData>
       </clips>
@@ -371,6 +369,12 @@
       <type>Animation</type>
       <prefab>Assets/test/Chomper.prefab</prefab>
       <roleid>1003</roleid>
+      <pos>
+        <x>-3</x>
+        <y>0</y>
+        <z>-5</z>
+      </pos>
+      <rotY>120</rotY>
     </TrackData>
   </tracks>
   <skillHostTrack>0</skillHostTrack>

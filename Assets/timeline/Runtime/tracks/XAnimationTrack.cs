@@ -96,6 +96,9 @@ namespace UnityEngine.Timeline
                     mixPlayable = AnimationMixerPlayable.Create(XTimeline.graph);
                 }
                 playableOutput.SetSourcePlayable(mixPlayable);
+                AnimationTrackData Data = data as AnimationTrackData;
+                bindObj.transform.position = Data.pos;
+                bindObj.transform.rotation = Quaternion.Euler(0, Data.rotY, 0);
             }
         }
 

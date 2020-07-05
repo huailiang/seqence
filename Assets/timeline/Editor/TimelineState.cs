@@ -27,7 +27,7 @@ namespace UnityEditor.Timeline
         public TimelineWindow window;
         public AssetConfig config;
         public string path;
-        
+
         public bool showMarkerHeader { get; set; }
 
         public int frameRate
@@ -90,7 +90,7 @@ namespace UnityEditor.Timeline
             }
         }
 
-        public void CreateTimeline(string path)
+        public void CreateTimeline(string path, PlayMode mode)
         {
             Dispose();
             this.path = path;
@@ -100,18 +100,18 @@ namespace UnityEditor.Timeline
             data.type = AssetType.Marker;
             xconf.tracks[0] = data;
             xconf.Write(path);
-            timeline = new XTimeline(xconf);
+            timeline = new XTimeline(xconf, mode);
             timeline.Finish = OnPlayFinish;
             AddRuntime();
             timeline.Time = 2.0f;
             timeline.editMode = TimelinePlayMode.EditorRun;
         }
 
-        public void Open(string path)
+        public void Open(string path, PlayMode mode)
         {
             Dispose();
             this.path = path;
-            timeline = new XTimeline(path);
+            timeline = new XTimeline(path, mode);
             timeline.Finish = OnPlayFinish;
             AddRuntime();
             float dur = timeline.RecalcuteDuration();

@@ -48,6 +48,11 @@ namespace UnityEngine.Timeline
             get { return childs != null && childs.Length > 0; }
         }
 
+        public bool hasMix
+        {
+            get { return mixs != null && mixs.Count > 0; }
+        }
+
         public XTrack root
         {
             get
@@ -80,7 +85,7 @@ namespace UnityEngine.Timeline
         {
             get { return GetFlag(TrackMode.Lock); }
         }
-        
+
         public bool parentLocked
         {
             get { return parent ? parent.locked : locked; }
@@ -230,9 +235,13 @@ namespace UnityEngine.Timeline
 
         protected abstract IClip BuildClip(ClipData data);
 
-        public virtual void OnPostBuild() { }
+        public virtual void OnPostBuild()
+        {
+        }
 
-        protected virtual void OnMixer(float time, IMixClip mix) { }
+        protected virtual void OnMixer(float time, IMixClip mix)
+        {
+        }
 
         protected void AddMix(IMixClip mix)
         {
@@ -283,7 +292,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-       
+
         private bool MixTriger(float time, out IMixClip mixClip)
         {
             if (mixs != null)
@@ -325,12 +334,12 @@ namespace UnityEngine.Timeline
         {
             return TrackData.DeepCopyByXml(data);
         }
-   
+
         public virtual void Dispose()
         {
             Foreach(track => track.Dispose(), clip => clip.Dispose());
             ForeachMark(mark => mark.Dispose());
-            
+
             childs = null;
             parent = null;
             if (mixs != null)

@@ -22,14 +22,14 @@ namespace UnityEngine.Timeline
             aclip = XResources.LoadSharedAsset<AnimationClip>(anData.anim);
         }
 
-
         protected override void OnEnter()
         {
             base.OnEnter();
             if (track.mixPlayable.IsValid())
             {
-                int cnt = track.mixPlayable.GetInputCount();
-                track.mixPlayable.SetInputCount(++cnt);
+                int cnt = track.mixPlayable.GetInputCount() + 1;
+                // cnt = Mathf.Min(track.hasMix ? 2 : 1, cnt);
+                track.mixPlayable.SetInputCount(cnt);
                 playable = AnimationClipPlayable.Create(XTimeline.graph, aclip);
                 if (playable.IsValid())
                 {

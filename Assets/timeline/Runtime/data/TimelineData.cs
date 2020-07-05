@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace UnityEngine.Timeline.Data
@@ -36,7 +37,7 @@ namespace UnityEngine.Timeline.Data
 
         public virtual void Write(BinaryWriter writer)
         {
-            writer.Write((int)type);
+            writer.Write((int) type);
             int len = clips?.Length ?? 0;
             int len2 = childs?.Length ?? 0;
             int len3 = marks?.Length ?? 0;
@@ -73,7 +74,7 @@ namespace UnityEngine.Timeline.Data
             for (int j = 0; j < len2; j++)
             {
                 childs[j] = new TrackData();
-                childs[j].type = (AssetType)reader.ReadInt32();
+                childs[j].type = (AssetType) reader.ReadInt32();
                 childs[j].Read(reader);
             }
             for (int i = 0; i < len3; i++)
@@ -93,7 +94,7 @@ namespace UnityEngine.Timeline.Data
                 retval = xml.Deserialize(ms);
                 ms.Close();
             }
-            return (T)retval;
+            return (T) retval;
         }
     }
 
@@ -137,17 +138,23 @@ namespace UnityEngine.Timeline.Data
     public class AnimationTrackData : BindTrackData
     {
         public int roleid = 0;
+        public Vector3 pos;
+        public float rotY;
 
         public override void Write(BinaryWriter writer)
         {
             base.Write(writer);
             writer.Write(roleid);
+            writer.Write(pos);
+            writer.Write(rotY);
         }
 
         public override void Read(BinaryReader reader)
         {
             base.Read(reader);
             roleid = reader.ReadInt32();
+            pos = reader.ReadV3();
+            rotY = reader.ReadSingle();
         }
     }
 
@@ -257,7 +264,7 @@ namespace UnityEngine.Timeline.Data
                 using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                 using (BinaryReader reader = new BinaryReader(fs))
                 {
-                    skillHostTrack=reader.ReadUInt16();
+                    skillHostTrack = reader.ReadUInt16();
                     int cnt = reader.ReadInt32();
                     tracks = new TrackData[cnt];
                     for (int i = 0; i < cnt; i++)

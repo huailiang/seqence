@@ -43,17 +43,19 @@ namespace UnityEditor.Timeline
 
         void PlayModeGUI()
         {
+            var pmde = playMode;
             playMode = (PlayMode) EditorGUILayout.EnumPopup(playMode, EditorStyles.toolbarPopup);
             if (timeline)
             {
-                if (!string.IsNullOrEmpty(state.path) && playMode != timeline.playMode)
+                if (!string.IsNullOrEmpty(state.path) && playMode != pmde && playMode != timeline.playMode)
                 {
-                    string tip = "current is editing, Are you sure change playmode?";
+                    string tip = "current is editing" + state.path.Substring(7) + ", Are you sure change playmode?";
                     if (EditorUtility.DisplayDialog("warn", tip, "ok", "cancel"))
                     {
                         state.Dispose();
                         timeline.playMode = playMode;
                     }
+                    GUIUtility.ExitGUI();
                 }
                 else
                 {
@@ -158,7 +160,15 @@ namespace UnityEditor.Timeline
 
         void CreateTimeline(string path)
         {
-            state.CreateTimeline(path);
+            if (path.Contains(WindowConstants.plotPath))
+            {
+                playMode = PlayMode.Plot;
+            }
+            if (path.Contains(WindowConstants.skillPath))
+            {
+                playMode = PlayMode.Skill;
+            }
+            state.CreateTimeline(path, playMode);
             AssetDatabase.ImportAsset(path);
             AssetDatabase.Refresh();
         }
@@ -171,8 +181,16 @@ namespace UnityEditor.Timeline
                 string path = EditorUtility.OpenFilePanel("open", dir, "xml");
                 if (!string.IsNullOrEmpty(path))
                 {
+                    if (path.Contains(WindowConstants.plotPath))
+                    {
+                        playMode = PlayMode.Plot;
+                    }
+                    if (path.Contains(WindowConstants.skillPath))
+                    {
+                        playMode = PlayMode.Skill;
+                    }
                     path = "Assets" + path.Replace(Application.dataPath, "");
-                    state.Open(path);
+                    state.Open(path, playMode);
                 }
                 GUIUtility.ExitGUI();
             }
