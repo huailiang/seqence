@@ -503,6 +503,7 @@ namespace UnityEditor.Timeline
             MarkAction t = (MarkAction)m;
             float time = TimelineWindow.inst.PiexlToTime(t.posX);
             EditorFactory.MakeMarker(t.type, time, track);
+            TimelineWindow.inst.timeline.RecalcuteDuration();
         }
 
 
@@ -511,6 +512,7 @@ namespace UnityEditor.Timeline
             Vector2 v2 = (Vector2)mpos;
             float start = TimelineWindow.inst.PiexlToTime(v2.x);
             OnAddClip(start);
+            TimelineWindow.inst.timeline.RecalcuteDuration();
             TimelineWindow.inst.Repaint();
         }
         
@@ -577,6 +579,7 @@ namespace UnityEditor.Timeline
         {
             TimelineWindow.inst.tree.RmTrack(etrack);
             etrack.track.Remove(TimelineWindow.inst.timeline);
+            TimelineWindow.inst.timeline.RecalcuteDuration();
         }
 
         private void SetTrackFlag(TrackMode mode, bool v)

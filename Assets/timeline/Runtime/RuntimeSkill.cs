@@ -11,7 +11,7 @@ namespace UnityEngine.Timeline
             timeline?.Update();
             if (Input.GetKey(KeyCode.A))
             {
-                timeline = new XTimeline("Assets/timeline.xml");
+                timeline = new XTimeline("Assets/timeline.xml", PlayMode.Skill);
                 timeline.SetPlaying(true);
             }
             if (Input.GetKey(KeyCode.B))

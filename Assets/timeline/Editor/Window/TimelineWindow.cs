@@ -107,10 +107,14 @@ namespace UnityEditor.Timeline
             if (timeline)
             {
                 Color c = TimelineStyles.colorEndLine;
+
                 float x = TimeToPixel(timeline.Duration);
-                Rect rec = new Rect(x, WindowConstants.timeAreaYPosition, 1,
-                    tree.TracksBtmY - WindowConstants.timeAreaYPosition - 2);
-                EditorGUI.DrawRect(rec, c);
+                if (timeline.Duration > 1e-1 && x > WindowConstants.sliderWidth)
+                {
+                    Rect rec = new Rect(x, WindowConstants.timeAreaYPosition, 1,
+                        tree.TracksBtmY - WindowConstants.timeAreaYPosition - 2);
+                    EditorGUI.DrawRect(rec, c);
+                }
             }
         }
 

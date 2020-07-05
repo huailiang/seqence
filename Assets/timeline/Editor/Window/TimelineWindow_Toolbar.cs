@@ -53,7 +53,10 @@ namespace UnityEditor.Timeline
                     if (EditorUtility.DisplayDialog("warn", tip, "ok", "cancel"))
                     {
                         state.Dispose();
-                        timeline.playMode = playMode;
+                    }
+                    else
+                    {
+                        playMode = pmde;
                     }
                     GUIUtility.ExitGUI();
                 }

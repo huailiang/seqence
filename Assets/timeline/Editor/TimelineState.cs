@@ -103,7 +103,7 @@ namespace UnityEditor.Timeline
             timeline = new XTimeline(xconf, mode);
             timeline.Finish = OnPlayFinish;
             AddRuntime();
-            timeline.Time = 2.0f;
+            timeline.Time = 1.0f;
             timeline.editMode = TimelinePlayMode.EditorRun;
         }
 
@@ -124,10 +124,12 @@ namespace UnityEditor.Timeline
             CleanEnv();
             RebuildInspector();
             timeline?.Dispose();
+            timeline = null;
             if (window != null)
             {
                 window.Dispose();
             }
+            XResources.Clean();
         }
 
         private void AddRuntime()

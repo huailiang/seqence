@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace UnityEngine.Timeline
@@ -14,7 +15,7 @@ namespace UnityEngine.Timeline
         {
             if (Application.isPlaying)
             {
-                timeline = new XTimeline(path);
+                timeline = new XTimeline(path, PlayMode.Plot);
                 timeline.SetPlaying(true);
             }
             play = true;
@@ -63,7 +64,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-        
+
 #endif
     }
 }

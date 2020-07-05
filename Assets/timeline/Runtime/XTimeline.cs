@@ -92,7 +92,12 @@ namespace UnityEngine.Timeline
             get { return _duration; }
         }
 
-        public XTimeline(string path, PlayMode mode = PlayMode.Plot)
+        public XTimeline(TimelineConfig conf, PlayMode mode)
+        {
+            Initial(conf, mode, false);
+        }
+
+        public XTimeline(string path, PlayMode mode)
         {
             ReadConf(path);
             if (config != null)
@@ -112,11 +117,6 @@ namespace UnityEngine.Timeline
                 config = new TimelineConfig();
                 config.Read(path);
             }
-        }
-
-        public XTimeline(TimelineConfig conf, PlayMode mode = PlayMode.Plot)
-        {
-            Initial(conf, mode, false);
         }
 
         private void Initial(TimelineConfig conf, PlayMode mode, bool blend)
@@ -141,7 +141,6 @@ namespace UnityEngine.Timeline
 
         private void Build()
         {
-            XResources.Clean();
             delay = 1;
             if (!graph.IsValid())
             {
@@ -154,7 +153,7 @@ namespace UnityEngine.Timeline
             for (int i = 0; i < len; i++)
             {
                 trackTrees[i] = XTimelineFactory.GetTrack(tracksData[i], this);
-                if (i == config.skillHostTrack && i > 0)
+                if (i >= 0 && i == config.skillHostTrack)
                 {
                     SkillHostTrack = trackTrees[i];
                 }
@@ -168,7 +167,7 @@ namespace UnityEngine.Timeline
                 {
                     editMode = TimelinePlayMode.RealRunning;
                 }
-                else if (!isRunningMode)
+                else //if (!isRunningMode)
                 {
                     ManualMode();
                 }

@@ -253,6 +253,7 @@ namespace UnityEditor.Timeline
             rect.x += e.delta.x;
             clip.start = TimelineWindow.inst.PiexlToTime(rect.x);
             e.Use();
+            TimelineWindow.inst.timeline.RecalcuteDuration();
         }
     }
 }
