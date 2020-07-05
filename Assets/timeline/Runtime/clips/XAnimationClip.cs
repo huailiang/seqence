@@ -28,7 +28,6 @@ namespace UnityEngine.Timeline
             if (track.mixPlayable.IsValid())
             {
                 int cnt = track.mixPlayable.GetInputCount() + 1;
-                // cnt = Mathf.Min(track.hasMix ? 2 : 1, cnt);
                 track.mixPlayable.SetInputCount(cnt);
                 playable = AnimationClipPlayable.Create(XTimeline.graph, aclip);
                 if (playable.IsValid())
@@ -48,9 +47,14 @@ namespace UnityEngine.Timeline
         {
             if (playable.IsValid())
             {
-                if (tick >= aclip.length && !anData.loop)
+                if (tick >= aclip.length)
                 {
-                    tick = aclip.length - 0.01f;
+                    if (!anData.loop)
+                        tick = aclip.length - 0.01f;
+                    else
+                    {
+                        tick = tick % aclip.length;
+                    }
                 }
                 playable.SetTime(tick + anData.trim_start);
             }

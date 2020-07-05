@@ -7,9 +7,9 @@
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>0.05551683</start>
-          <duration>0.383333355</duration>
-          <anim>Assets/test/Chomper/Animations/ChomperCutsceneTOIdle.anim</anim>
+          <start>0.0008861627</start>
+          <duration>1.35000014</duration>
+          <anim>Assets/test/Chomper/Animations/ChomperAttack.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>0</trim_end>
           <loop>false</loop>
@@ -23,7 +23,7 @@
         <y>0</y>
         <z>-2</z>
       </pos>
-      <rotY>90</rotY>
+      <rotY>180</rotY>
     </TrackData>
   </tracks>
   <skillHostTrack>1</skillHostTrack>

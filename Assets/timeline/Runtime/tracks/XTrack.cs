@@ -280,10 +280,10 @@ namespace UnityEngine.Timeline
                 float tmp = clips[0].end;
                 for (int i = 1; i < clips.Length; i++)
                 {
-                    if (clips[i].start > tmp)
+                    if (clips[i].start < tmp)
                     {
-                        float start = tmp;
-                        float duration = clips[i].start - tmp;
+                        float start = clips[i].start;
+                        float duration = tmp - clips[i].start;
                         var mix = new XMixClip<XAnimationTrack>(start, duration, clips[i - 1], clips[i]);
                         AddMix(mix);
                     }
@@ -330,7 +330,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-        public TrackData CloneData() //深clone
+        protected TrackData CloneData() //深clone
         {
             return TrackData.DeepCopyByXml(data);
         }

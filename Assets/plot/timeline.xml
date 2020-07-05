@@ -221,7 +221,7 @@
           <loop>true</loop>
         </ClipData>
         <ClipData xsi:type="AnimClipData">
-          <start>3.903708</start>
+          <start>3.0623498</start>
           <duration>2.82126427</duration>
           <anim>Assets/test/Chomper/Animations/ChomperCutsceneTOIdle.anim</anim>
           <trim_start>0</trim_start>
@@ -229,11 +229,19 @@
           <loop>false</loop>
         </ClipData>
         <ClipData xsi:type="AnimClipData">
-          <start>7.283665</start>
+          <start>5.600949</start>
           <duration>1.54340076</duration>
           <anim>Assets/test/Chomper/Animations/ChomperRunForward.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>45</trim_end>
+          <loop>true</loop>
+        </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>6.490478</start>
+          <duration>17.0501881</duration>
+          <anim>Assets/test/Chomper/Animations/ChomperIdle.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>-85</trim_end>
           <loop>true</loop>
         </ClipData>
       </clips>

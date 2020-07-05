@@ -126,7 +126,10 @@ namespace UnityEditor.Timeline
 
         private void OnSave()
         {
-            conf?.Save();
+            if (conf != null)
+            {
+                conf.Save();
+            }
         }
     }
 }

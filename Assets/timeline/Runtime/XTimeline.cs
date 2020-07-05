@@ -1,4 +1,5 @@
-﻿using UnityEngine.Animations;
+﻿using System;
+using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline.Data;
 
@@ -225,12 +226,16 @@ namespace UnityEngine.Timeline
                 float delta = 1.0f / frameRate;
                 if (t - _last > delta)
                 {
+                    _time += delta;
+                    if (_time > _duration)
+                    {
+                        playing = false;
+                        _time = _duration;
+                    }
                     if (Process(_time))
                     {
-                        _time += delta;
                         if (_time >= _duration)
                         {
-                            playing = false;
                             Finish?.Invoke();
                         }
                     }
@@ -308,9 +313,16 @@ namespace UnityEngine.Timeline
                 Object.Destroy(timelineRoot);
 #endif
             }
-            if (!blend && graph.IsValid())
+            try
             {
-                graph.Destroy();
+                if (!blend && graph.IsValid())
+                {
+                    graph.Destroy();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
             }
         }
 

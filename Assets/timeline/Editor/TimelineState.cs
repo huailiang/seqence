@@ -217,6 +217,7 @@ namespace UnityEditor.Timeline
         private void OnPlayFinish()
         {
             SetPlaying(mode == WrapMode.Loop);
+            window.Repaint();
         }
 
         public void SetPlaying(bool play)
