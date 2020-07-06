@@ -4,7 +4,7 @@
     {
         private XTimeline timeline;
         private float time;
-        private bool playing, pause;
+        private bool playing;
 
         private void Start()
         {
@@ -16,14 +16,8 @@
             timeline?.Update();
             if (Input.GetKey(KeyCode.Space))
             {
-                pause = true;
                 playing = true;
                 Play("sk1001");
-            }
-            if (pause && Time.time - time > 0.7f)
-            {
-                pause = false;
-                Debug.Break();
             }
             if (playing && Time.time - time > 0.8f)
             {

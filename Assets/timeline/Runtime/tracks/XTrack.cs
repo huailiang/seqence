@@ -108,7 +108,6 @@ namespace UnityEngine.Timeline
                         clips[i] = BuildClip(data.clips[i]);
                     }
                 }
-
                 if (data.marks != null)
                 {
                     int len = data.marks.Length;
@@ -118,7 +117,6 @@ namespace UnityEngine.Timeline
                         marks[i] = XTimelineFactory.GetMarker(this, data.marks[i]);
                     }
                 }
-
                 if (data.childs != null)
                 {
                     int len = data.childs.Length;
@@ -156,20 +154,11 @@ namespace UnityEngine.Timeline
                 while (tmp)
                 {
                     if (tmp.parent != null)
-                    {
                         if (tmp.parent.Equals(p))
-                        {
                             return true;
-                        }
                         else
-                        {
                             tmp = tmp.parent;
-                        }
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    else break;
                 }
             }
             else
@@ -235,13 +224,9 @@ namespace UnityEngine.Timeline
 
         protected abstract IClip BuildClip(ClipData data);
 
-        public virtual void OnPostBuild()
-        {
-        }
+        public virtual void OnPostBuild() { }
 
-        protected virtual void OnMixer(float time, IMixClip mix)
-        {
-        }
+        protected virtual void OnMixer(float time, IMixClip mix) { }
 
         protected void AddMix(IMixClip mix)
         {
@@ -333,6 +318,35 @@ namespace UnityEngine.Timeline
         protected TrackData CloneData() //deep clone
         {
             return TrackData.DeepCopyByXml(data);
+        }
+
+
+        public IClip GetPlayingPlayable(out float tick)
+        {
+            float t = timeline.Time;
+            if (mixs != null)
+                for (int i = 0; i < mixs.Count; i++)
+                {
+                    float end = mixs[i].duration + mixs[i].start;
+                    float start = mixs[i].start;
+                    if (start < t && end > t)
+                    {
+                        bool lve = t - start > end - t;
+                        tick = t - start;
+                        return lve ? mixs[i].blendA : mixs[i].blendB;
+                    }
+                }
+            if (clips != null)
+                for (int i = 0; i < clips.Length; i++)
+                {
+                    if (clips[i].start < t && clips[i].end > t)
+                    {
+                        tick = t - clips[i].start;
+                        return clips[i];
+                    }
+                }
+            tick = 0;
+            return null;
         }
 
         public virtual void Dispose()

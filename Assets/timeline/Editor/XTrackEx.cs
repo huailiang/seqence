@@ -17,7 +17,7 @@ namespace UnityEditor.Timeline
             for (int i = 0; i < clips.Count; i++)
             {
                 XTimelineObject clip = clips[i] as XTimelineObject;
-                if (clip) list.Add(clip);
+                if (clip != null) list.Add(clip);
             }
             list.AddRange(marks);
             list.AddRange(childs);

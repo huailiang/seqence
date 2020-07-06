@@ -86,7 +86,7 @@ namespace UnityEngine.Timeline
 #if UNITY_EDITOR
             if (sharedPool.ContainsKey(path))
             {
-                return sharedPool[path] as T;
+                return sharedPool[path].asset as T;
             }
             else
             {

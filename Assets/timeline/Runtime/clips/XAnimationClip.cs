@@ -37,7 +37,8 @@ namespace UnityEngine.Timeline
                 }
                 else
                 {
-                    Debug.LogError("aclip: " + (aclip == null) + " " + track.mixPlayable.GetInputCount());
+                    cnt = track.mixPlayable.GetInputCount();
+                    Debug.LogError("aclip: " + (aclip == null) + " " + cnt);
                 }
             }
         }
@@ -47,6 +48,8 @@ namespace UnityEngine.Timeline
         {
             if (playable.IsValid())
             {
+                float offset = anData.trim_start;
+                tick = tick + offset;
                 if (tick >= aclip.length)
                 {
                     if (!anData.loop)
@@ -56,7 +59,7 @@ namespace UnityEngine.Timeline
                         tick = tick % aclip.length;
                     }
                 }
-                playable.SetTime(tick + anData.trim_start);
+                playable.SetTime(tick);
             }
         }
 

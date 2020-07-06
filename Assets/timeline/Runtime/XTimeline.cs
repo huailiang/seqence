@@ -14,13 +14,7 @@ namespace UnityEngine.Timeline
 
     public enum PlayMode { Plot, Skill }
 
-    public class XTimelineObject
-    {
-        public static implicit operator bool(XTimelineObject obj)
-        {
-            return obj != null;
-        }
-    }
+    public class XTimelineObject { }
 
     public class XTimeline
     {
@@ -172,15 +166,46 @@ namespace UnityEngine.Timeline
         public AnimationPlayableOutput blendPlayableOutput { get; set; }
         public AnimationMixerPlayable blendMixPlayable { get; set; }
 
+
+        // Only skill mode worked
         public void BlendTo(string path)
         {
             var track = SkillHostTrack as XAnimationTrack;
-            blendPlayableOutput = track.playableOutput;
-            blendMixPlayable = track.mixPlayable;
+            AnimClipData data=null;
+            if (track)
+            {
+                blendPlayableOutput = track.playableOutput;
+                blendMixPlayable = track.mixPlayable;
+                var clip = track.GetPlayingPlayable(out var tick) as XAnimationClip;
+                if (clip != null)
+                {
+                    var p = clip.playable;
+                    data = (AnimClipData)clip.data;
+                    data.trim_start = tick;
+                    data.duration = Mathf.Min(tick + 0.1f, data.duration);
+                    data.start = 0.01f;
+                }
+            }
             Dispose(true);
             ReadConf(path);
             if (config != null)
             {
+                if (config.skillHostTrack <= 0)
+                {
+                    Debug.LogError("not config skill host " + path);
+                    return;
+                }
+                if (data != null)
+                {
+                    var clips = config.tracks[config.skillHostTrack].clips;
+                    var nc = new ClipData[clips.Length + 1];
+                    nc[0] = data;
+                    for (int i = 1; i < clips.Length + 1; i++)
+                    {
+                        nc[i] = clips[i - 1];
+                    }
+                    config.tracks[config.skillHostTrack].clips = nc;
+                }
                 Initial(config, PlayMode.Skill, true);
             }
             SetPlaying(true);

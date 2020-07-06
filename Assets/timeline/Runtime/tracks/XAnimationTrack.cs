@@ -33,6 +33,7 @@ namespace UnityEngine.Timeline
             if (tmp > 0 && clip.start < tmp)
             {
                 float start = clip.start;
+                if (tmp > clip.end) tmp = clip.end - 0.01f;
                 float duration = tmp - start;
                 var mix = new XMixClip<XAnimationTrack>(start, duration, clips[idx - 1], clip);
                 AddMix(mix);
@@ -73,10 +74,12 @@ namespace UnityEngine.Timeline
                 }
                 else
                 {
-                    Debug.LogError("playable invalid while animating mix");
+                    string tip = "playable invalid while animating mix ";
+                    Debug.LogError(tip + playA.IsValid() + " " + playB.IsValid());
                 }
             }
         }
+
 
         public override void OnBind()
         {
