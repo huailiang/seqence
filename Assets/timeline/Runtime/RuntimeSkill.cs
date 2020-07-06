@@ -1,29 +1,57 @@
-﻿using UnityEngine.Animations;
-
-namespace UnityEngine.Timeline
+﻿namespace UnityEngine.Timeline
 {
     public class RuntimeSkill : MonoBehaviour
     {
-        public XTimeline timeline;
+        private XTimeline timeline;
+        private float time;
+        private bool playing, pause;
+
+        private void Start()
+        {
+            Application.targetFrameRate = 30;
+        }
 
         public void Update()
         {
             timeline?.Update();
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.Space))
             {
-                timeline = new XTimeline("Assets/timeline.xml", PlayMode.Skill);
-                timeline.SetPlaying(true);
+                pause = true;
+                playing = true;
+                Play("sk1001");
             }
-            if (Input.GetKey(KeyCode.B))
+            if (pause && Time.time - time > 0.7f)
             {
-                
-                timeline.BlendTo("Assets/timeline.xml2");
+                pause = false;
+                Debug.Break();
+            }
+            if (playing && Time.time - time > 0.8f)
+            {
+                Play("sk1002");
+                playing = false;
             }
         }
 
         private void OnDestroy()
         {
             timeline?.Dispose();
+        }
+
+
+        private void Play(string name)
+        {
+            Debug.Log("play: " + name);
+            time = Time.time;
+            string path = "Assets/skill/" + name + ".xml";
+            if (timeline == null)
+            {
+                timeline = new XTimeline(path, PlayMode.Skill);
+                timeline.SetPlaying(true);
+            }
+            else
+            {
+                timeline.BlendTo(path);
+            }
         }
 
 #if UNITY_EDITOR
@@ -56,4 +84,5 @@ namespace UnityEngine.Timeline
 
 #endif
     }
+
 }

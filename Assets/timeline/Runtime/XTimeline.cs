@@ -188,7 +188,11 @@ namespace UnityEngine.Timeline
 
         public bool IsHostTrack(XTrack track)
         {
-            return blending && track.ID == config.skillHostTrack;
+            int idx = config.skillHostTrack;
+            var tracksData = config.tracks;
+            return blending &&
+                tracksData.Length > idx &&
+                tracksData[idx] == track.data;
         }
 
         public void Update()
@@ -268,7 +272,7 @@ namespace UnityEngine.Timeline
                 }
                 trackTrees = null;
             }
-            if (timelineRoot)
+            if (timelineRoot && !blend)
             {
 #if UNITY_EDITOR
                 Object.DestroyImmediate(timelineRoot);

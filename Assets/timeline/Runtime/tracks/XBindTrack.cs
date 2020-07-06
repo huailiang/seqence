@@ -51,7 +51,7 @@ namespace UnityEngine.Timeline
 
         public override void Dispose()
         {
-            if (ID != timeline.config.skillHostTrack)
+            if (timeline.IsHostTrack(this))
             {
                 XResources.DestroyGameObject(pat, bindObj);
             }

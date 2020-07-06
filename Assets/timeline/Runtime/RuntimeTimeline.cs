@@ -13,6 +13,7 @@ namespace UnityEngine.Timeline
 
         public void Start()
         {
+            Application.targetFrameRate = 30;
             if (Application.isPlaying)
             {
                 timeline = new XTimeline(path, PlayMode.Plot);
