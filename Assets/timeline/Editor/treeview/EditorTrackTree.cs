@@ -15,7 +15,7 @@ namespace UnityEditor.Timeline
         private Vector2 scroll;
         private Rect posRect, viewRect, winRect;
         private EditorTrack recordTrack;
-        
+
 
         public float TracksBtmY
         {
@@ -69,7 +69,9 @@ namespace UnityEditor.Timeline
                     Add(trees[i], hierachy);
                 }
             }
+            BuildSkillHost();
         }
+
 
         public void MarksOffset(bool show)
         {
@@ -255,7 +257,7 @@ namespace UnityEditor.Timeline
 
         public void ResetSelect(object arg)
         {
-            bool select = (bool) arg;
+            bool select = (bool)arg;
             if (hierachy != null)
                 foreach (var iTrack in hierachy)
                 {
@@ -332,15 +334,45 @@ namespace UnityEditor.Timeline
 
         public void SetSelect(EditorTrack track)
         {
-            if(hierachy!=null)
+            if (hierachy != null)
             {
-                foreach(var it in hierachy)
+                foreach (var it in hierachy)
                 {
                     bool s = it.Equals(track);
                     it.trackF = s;
                 }
             }
         }
-        
+
+
+        public void SetSkillhost(EditorAnimTrack track)
+        {
+            var timeline = TimelineWindow.inst.timeline;
+            foreach (var it in hierachy)
+            {
+                it.isSkillHost = it == track;
+            }
+            int idx = Array.IndexOf(timeline.trackTrees, track);
+            if (idx > 0)
+            {
+                timeline.config.skillHostTrack = (ushort)idx;
+                timeline.SkillHostTrack = track.track;
+            }
+        }
+
+
+        private void BuildSkillHost()
+        {
+            var timeline = TimelineWindow.inst.timeline;
+            int idx = timeline.config.skillHostTrack;
+            if (idx > 0 && idx < timeline.trackTrees.Length)
+            {
+                var track = timeline.trackTrees[idx];
+                foreach (var it in hierachy)
+                {
+                    it.isSkillHost = it == track;
+                }
+            }
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace UnityEditor.Timeline
         public Rect rect, head;
         public EditorClip[] eClips;
         public bool select, allowClip, showChild;
+        public bool isSkillHost;
         private GenericMenu pm;
         private Vector2 scroll;
         protected Color addtiveColor;
@@ -134,6 +135,7 @@ namespace UnityEditor.Timeline
         {
             @select = false;
             showChild = true;
+            isSkillHost = false;
             addtiveColor = Color.white;
             track = (XTrack)t;
             var flag = (TrackFlagAttribute)Attribute.GetCustomAttribute(t.GetType(), typeof(TrackFlagAttribute));

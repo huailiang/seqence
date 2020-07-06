@@ -24,9 +24,7 @@ namespace UnityEngine.Timeline
             get { return false; }
         }
 
-        public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data)
-        {
-        }
+        public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data) { }
 
         protected override IClip BuildClip(ClipData data)
         {
@@ -48,6 +46,7 @@ namespace UnityEngine.Timeline
         {
             throw new Exception("animation track is uncloneable");
         }
+        
 
         public AnimationClipPlayable playA, playB;
 
@@ -92,13 +91,14 @@ namespace UnityEngine.Timeline
                 }
                 else
                 {
+                    AnimationTrackData Data = data as AnimationTrackData;
+                    bindObj.transform.position = Data.pos;
+                    bindObj.transform.rotation = Quaternion.Euler(0, Data.rotY, 0);
+
                     playableOutput = AnimationPlayableOutput.Create(XTimeline.graph, "AnimationOutput", amtor);
                     mixPlayable = AnimationMixerPlayable.Create(XTimeline.graph);
                 }
                 playableOutput.SetSourcePlayable(mixPlayable);
-                AnimationTrackData Data = data as AnimationTrackData;
-                bindObj.transform.position = Data.pos;
-                bindObj.transform.rotation = Quaternion.Euler(0, Data.rotY, 0);
             }
         }
 

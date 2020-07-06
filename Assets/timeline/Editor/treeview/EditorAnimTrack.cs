@@ -181,23 +181,22 @@ namespace UnityEditor.Timeline
         {
             if (TimelineWindow.inst.playMode == PlayMode.Skill)
             {
-                var timeline = TimelineWindow.inst.timeline;
-                if (timeline.config.skillHostTrack == 0)
+                bool tmp = isSkillHost;
+                isSkillHost = EditorGUILayout.Toggle("skill Host", isSkillHost);
+                if (tmp != isSkillHost)
                 {
-                    var root = track.root;
-                    int idx = Array.IndexOf(timeline.trackTrees, root);
-                    if (idx > 0)
-                    {
-                        timeline.config.skillHostTrack = (ushort) idx;
-                    }
+                    TimelineWindow.inst.tree.SetSkillhost(this);
                 }
             }
             if (ch == null && trackArg == null)
             {
                 EditorGUILayout.HelpBox("bind character is none", MessageType.Warning);
             }
-            Data.pos = EditorGUILayout.Vector3Field("Init pos:", Data.pos);
-            Data.rotY = EditorGUILayout.FloatField("Init posY:", Data.rotY);
+            if (!isSkillHost)
+            {
+                Data.pos = EditorGUILayout.Vector3Field("Init pos:", Data.pos);
+                Data.rotY = EditorGUILayout.FloatField("Init posY:", Data.rotY);
+            }
         }
 
         protected override void OnInspectorClip(IClip c)
