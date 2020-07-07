@@ -2,6 +2,13 @@
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline.Data;
+using Unity.Collections;
+
+#if UNITY_2019_3_OR_NEWER
+using UnityEngine.Animations;
+#else
+using UnityEngine.Experimental.Animations;
+#endif
 
 namespace UnityEngine.Timeline
 {
@@ -10,7 +17,7 @@ namespace UnityEngine.Timeline
     public class XAnimationTrack : XBindTrack
     {
         public AnimationPlayableOutput playableOutput;
-        public AnimationMixerPlayable mixPlayable;
+        public AnimationScriptPlayable mixPlayable;
         private int idx;
         private float tmp;
 
@@ -29,7 +36,6 @@ namespace UnityEngine.Timeline
         protected override IClip BuildClip(ClipData data)
         {
             var clip = new XAnimationClip(this, data);
-            clip.port = idx;
             if (tmp > 0 && clip.start < tmp)
             {
                 float start = clip.start;
@@ -69,8 +75,9 @@ namespace UnityEngine.Timeline
                 float weight = (time - mix.start) / mix.duration;
                 if (playA.IsValid() && playB.IsValid())
                 {
-                    mixPlayable.SetInputWeight(playA, 1 - weight);
-                    mixPlayable.SetInputWeight(playB, weight);
+                    var job = mixPlayable.GetJobData<MixerJob>();
+                    job.weight = weight;
+                    mixPlayable.SetJobData(job);
                 }
                 else
                 {
@@ -80,10 +87,11 @@ namespace UnityEngine.Timeline
             }
         }
 
+        NativeArray<TransformStreamHandle> m_Handles;
+        NativeArray<float> m_BoneWeights;
 
         public override void OnBind()
         {
-            base.OnBind();
             if (bindObj && XTimeline.graph.IsValid())
             {
                 var amtor = bindObj.GetComponent<Animator>();
@@ -94,20 +102,46 @@ namespace UnityEngine.Timeline
                 }
                 else
                 {
+                    var transforms = amtor.transform.GetComponentsInChildren<Transform>();
+                    var numTransforms = transforms.Length - 1;
+
+                    m_Handles = new NativeArray<TransformStreamHandle>(numTransforms, Allocator.Persistent, NativeArrayOptions.UninitializedMemory);
+                    m_BoneWeights = new NativeArray<float>(numTransforms, Allocator.Persistent, NativeArrayOptions.ClearMemory);
+                    for (var i = 0; i < numTransforms; ++i)
+                    {
+                        m_Handles[i] = amtor.BindStreamTransform(transforms[i + 1]);
+                        m_BoneWeights[i] = 1.0f;
+                    }
+
+                    var job = new MixerJob()
+                    {
+                        handles = m_Handles,
+                        boneWeights = m_BoneWeights,
+                        weight = 0.0f
+                    };
+
                     AnimationTrackData Data = data as AnimationTrackData;
                     bindObj.transform.position = Data.pos;
                     bindObj.transform.rotation = Quaternion.Euler(0, Data.rotY, 0);
 
                     playableOutput = AnimationPlayableOutput.Create(XTimeline.graph, "AnimationOutput", amtor);
-                    mixPlayable = AnimationMixerPlayable.Create(XTimeline.graph);
+                    mixPlayable = AnimationScriptPlayable.Create(XTimeline.graph, job);
+                    mixPlayable.SetProcessInputs(false);
+
                 }
                 playableOutput.SetSourcePlayable(mixPlayable);
             }
+            base.OnBind();
+        }
+
+        public void OnBind(GameObject bindObj)
+        {
+
         }
 
         public override void Dispose()
         {
-            if (timeline.IsHostTrack(this))
+            if (!timeline.IsHostTrack(this))
             {
                 if (mixPlayable.IsValid())
                 {
@@ -117,6 +151,8 @@ namespace UnityEngine.Timeline
                 {
                     XTimeline.graph.DestroyOutput(playableOutput);
                 }
+                m_Handles.Dispose();
+                m_BoneWeights.Dispose();
             }
             base.Dispose();
         }

@@ -14,7 +14,7 @@ namespace UnityEngine.Timeline
 
         string Display { get; }
 
-        void Update(float time, float prev, bool mix);
+        bool Update(float time, float prev, bool mix);
 
         void Dispose();
 
@@ -68,9 +68,10 @@ namespace UnityEngine.Timeline
             OnDestroy();
         }
 
-        public void Update(float time, float prev, bool mix)
+        public bool Update(float time, float prev, bool mix)
         {
             float tick = time - start;
+            bool rst = false;
             if ((time >= start && (time == 0 || prev < start)) || (time <= end && prev > end))
             {
                 if (!enterd) OnEnter();
@@ -79,11 +80,13 @@ namespace UnityEngine.Timeline
             {
                 if (!enterd) OnEnter();// editor mode can jump when drag time area
                 OnUpdate(tick, mix);
+                rst = true;
             }
             if ((time > end && prev <= end) || (time < start && prev >= start))
             {
                 if (enterd) OnExit();
             }
+            return rst;
         }
 
         public virtual void OnBind()

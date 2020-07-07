@@ -2,6 +2,11 @@
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline.Data;
+#if UNITY_2019_3_OR_NEWER
+using UnityEngine.Animations;
+#else
+using UnityEngine.Experimental.Animations;
+#endif
 
 namespace UnityEngine.Timeline
 {
@@ -153,10 +158,10 @@ namespace UnityEngine.Timeline
             prev = 0;
             if (graph.IsValid())
             {
-                graph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
-                graph.Play();
                 if (Application.isPlaying)
                 {
+                    graph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
+                    graph.Play();
                     editMode = TimelinePlayMode.RealRunning;
                 }
             }
@@ -164,7 +169,7 @@ namespace UnityEngine.Timeline
         }
 
         public AnimationPlayableOutput blendPlayableOutput { get; set; }
-        public AnimationMixerPlayable blendMixPlayable { get; set; }
+        public AnimationScriptPlayable blendMixPlayable { get; set; }
 
 
         // Only skill mode worked
@@ -213,11 +218,15 @@ namespace UnityEngine.Timeline
 
         public bool IsHostTrack(XTrack track)
         {
-            int idx = config.skillHostTrack;
-            var tracksData = config.tracks;
-            return blending &&
-                tracksData.Length > idx &&
-                tracksData[idx] == track.data;
+            if (playMode == PlayMode.Skill)
+            {
+                int idx = config.skillHostTrack;
+                var tracksData = config.tracks;
+                return blending &&
+                    tracksData.Length > idx &&
+                    tracksData[idx] == track.data;
+            }
+            return false;
         }
 
         public void Update()
@@ -270,13 +279,16 @@ namespace UnityEngine.Timeline
                     trackTrees[i].Process(time, prev);
                 }
             prev = time;
-            if (graph.IsValid() && !Application.isPlaying)
+            if (graph.IsValid())
             {
-                if (graph.IsPlaying()) graph.Stop();
-                graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
-                if (graph.GetOutputCount() > 0)
+                if (!Application.isPlaying)
                 {
-                    graph.Evaluate(time);
+                    if (graph.IsPlaying()) graph.Stop();
+                    graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
+                    if (graph.GetOutputCount() > 0)
+                    {
+                        graph.Evaluate(time);
+                    }
                 }
             }
         }
