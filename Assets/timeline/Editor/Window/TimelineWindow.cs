@@ -15,6 +15,7 @@ namespace UnityEditor.Timeline
 
         public Rect centerArea { get; set; }
 
+        
         public PlayMode playMode;
 
         public XTimeline timeline

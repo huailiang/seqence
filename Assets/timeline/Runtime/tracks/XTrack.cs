@@ -158,7 +158,8 @@ namespace UnityEngine.Timeline
                             return true;
                         else
                             tmp = tmp.parent;
-                    else break;
+                    else
+                        break;
                 }
             }
             else
@@ -224,9 +225,13 @@ namespace UnityEngine.Timeline
 
         protected abstract IClip BuildClip(ClipData data);
 
-        public virtual void OnPostBuild() { }
+        public virtual void OnPostBuild()
+        {
+        }
 
-        protected virtual void OnMixer(float time, IMixClip mix) { }
+        protected virtual void OnMixer(float time, IMixClip mix)
+        {
+        }
 
         protected void AddMix(IMixClip mix)
         {
@@ -245,13 +250,26 @@ namespace UnityEngine.Timeline
             ForeachClip(x => x.OnBind());
         }
 
+        protected int clipA, clipB;
+
         public virtual void Process(float time, float prev)
         {
             ForeachTrack(track => track.Process(time, prev));
-            if (!mute)
+            clipA = -1;
+            clipB = -1;
+            if (!mute && clips != null)
             {
                 bool mix = MixTriger(time, out var mixClip);
-                ForeachClip(clip => clip.Update(time, prev, mix));
+                for (int i = 0; i < clips.Length; i++)
+                {
+                    if (clips[i].Update(time, prev, mix))
+                    {
+                        if (clipA == -1)
+                            clipA = i;
+                        else
+                            clipB = i;
+                    }
+                }
                 MarkTriger(time, prev);
                 if (mix) OnMixer(time, mixClip);
             }

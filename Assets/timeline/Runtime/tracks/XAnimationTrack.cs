@@ -3,11 +3,11 @@ using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline.Data;
 using Unity.Collections;
-
 #if UNITY_2019_3_OR_NEWER
 using UnityEngine.Animations;
 #else
 using UnityEngine.Experimental.Animations;
+
 #endif
 
 namespace UnityEngine.Timeline
@@ -31,7 +31,9 @@ namespace UnityEngine.Timeline
             get { return false; }
         }
 
-        public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data) { }
+        public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data)
+        {
+        }
 
         protected override IClip BuildClip(ClipData data)
         {
@@ -63,8 +65,8 @@ namespace UnityEngine.Timeline
             {
                 if (!mix.connect || !Application.isPlaying)
                 {
-                    XAnimationClip clipA = (XAnimationClip)mix.blendA;
-                    XAnimationClip clipB = (XAnimationClip)mix.blendB;
+                    XAnimationClip clipA = (XAnimationClip) mix.blendA;
+                    XAnimationClip clipB = (XAnimationClip) mix.blendB;
                     if (clipA && clipB)
                     {
                         playA = clipA.playable;
@@ -105,8 +107,10 @@ namespace UnityEngine.Timeline
                     var transforms = amtor.transform.GetComponentsInChildren<Transform>();
                     var numTransforms = transforms.Length - 1;
 
-                    m_Handles = new NativeArray<TransformStreamHandle>(numTransforms, Allocator.Persistent, NativeArrayOptions.UninitializedMemory);
-                    m_BoneWeights = new NativeArray<float>(numTransforms, Allocator.Persistent, NativeArrayOptions.ClearMemory);
+                    m_Handles = new NativeArray<TransformStreamHandle>(numTransforms, Allocator.Persistent,
+                        NativeArrayOptions.UninitializedMemory);
+                    m_BoneWeights = new NativeArray<float>(numTransforms, Allocator.Persistent,
+                        NativeArrayOptions.ClearMemory);
                     for (var i = 0; i < numTransforms; ++i)
                     {
                         m_Handles[i] = amtor.BindStreamTransform(transforms[i + 1]);
@@ -115,9 +119,9 @@ namespace UnityEngine.Timeline
 
                     var job = new MixerJob()
                     {
-                        handles = m_Handles,
-                        boneWeights = m_BoneWeights,
-                        weight = 0.0f
+                        handles = m_Handles, 
+                        boneWeights = m_BoneWeights, 
+                        weight = 1.0f
                     };
 
                     AnimationTrackData Data = data as AnimationTrackData;
@@ -127,16 +131,26 @@ namespace UnityEngine.Timeline
                     playableOutput = AnimationPlayableOutput.Create(XTimeline.graph, "AnimationOutput", amtor);
                     mixPlayable = AnimationScriptPlayable.Create(XTimeline.graph, job);
                     mixPlayable.SetProcessInputs(false);
-
                 }
                 playableOutput.SetSourcePlayable(mixPlayable);
             }
             base.OnBind();
         }
 
+        public override void Process(float time, float prev)
+        {
+            base.Process(time, prev);
+            if (mixPlayable.IsValid())
+            {
+                var job = mixPlayable.GetJobData<MixerJob>();
+                job.clipA = clipA;
+                job.clipB = clipB;
+                mixPlayable.SetJobData(job);
+            }
+        }
+
         public void OnBind(GameObject bindObj)
         {
-
         }
 
         public override void Dispose()

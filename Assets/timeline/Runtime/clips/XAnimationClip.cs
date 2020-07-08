@@ -9,7 +9,6 @@ namespace UnityEngine.Timeline
         public AnimationClipPlayable playable;
         public AnimationClip aclip;
         private AnimClipData anData;
-        private bool added = false;
 
         public override string Display
         {
@@ -27,7 +26,6 @@ namespace UnityEngine.Timeline
         {
             base.OnBind();
             track.mixPlayable.AddInput(playable, 0, 1);
-            track.mixPlayable.SetInputWeight(0, 0);
         }
 
 

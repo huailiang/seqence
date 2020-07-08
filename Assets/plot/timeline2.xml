@@ -7,7 +7,7 @@
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>5.307059</start>
+          <start>0</start>
           <duration>28.46667</duration>
           <anim>Assets/test/Clips/ROM.anim</anim>
           <trim_start>0</trim_start>
@@ -16,6 +16,14 @@
         </ClipData>
         <ClipData xsi:type="AnimClipData">
           <start>27.1620369</start>
+          <duration>10.0333338</duration>
+          <anim>Assets/test/Clips/Idle.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>false</loop>
+        </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>36.09751</start>
           <duration>10.0333338</duration>
           <anim>Assets/test/Clips/Idle.anim</anim>
           <trim_start>0</trim_start>

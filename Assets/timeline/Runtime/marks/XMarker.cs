@@ -18,7 +18,7 @@ namespace UnityEngine.Timeline
             get { return track.timeline; }
         }
 
-        public XMarker(XTrack track, MarkData markData)
+        protected XMarker(XTrack track, MarkData markData)
         {
             this.track = track;
             this.MarkData = markData;

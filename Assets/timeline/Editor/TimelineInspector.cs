@@ -93,11 +93,5 @@ namespace UnityEditor.Timeline
                 }
             }
         }
-
-
-        void OnSceneGUI()
-        {
-
-        }
     }
 }
