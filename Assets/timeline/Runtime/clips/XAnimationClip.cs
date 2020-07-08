@@ -55,7 +55,14 @@ namespace UnityEngine.Timeline
 
         protected override void OnDestroy()
         {
-            if (playable.IsValid()) playable.Destroy();
+            if (playable.IsValid())
+            {
+                playable.Destroy();
+                if(track.mixPlayable.IsValid())
+                {
+                    track.mixPlayable.SetInputCount(0);
+                }
+            }
             AnimClipData anData = data as AnimClipData;
             XResources.DestroySharedAsset(anData.anim);
             base.OnDestroy();

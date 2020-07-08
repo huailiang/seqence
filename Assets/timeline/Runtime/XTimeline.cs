@@ -92,15 +92,17 @@ namespace UnityEngine.Timeline
 
         public XTimeline(TimelineConfig conf, PlayMode mode)
         {
-            Initial(conf, mode, false);
+            blending = false;
+            Initial(conf, mode);
         }
 
         public XTimeline(string path, PlayMode mode)
         {
+            blending = false;
             ReadConf(path);
             if (config != null)
             {
-                Initial(config, mode, false);
+                Initial(config, mode);
             }
         }
 
@@ -117,13 +119,12 @@ namespace UnityEngine.Timeline
             }
         }
 
-        private void Initial(TimelineConfig conf, PlayMode mode, bool blend)
+        private void Initial(TimelineConfig conf, PlayMode mode)
         {
             _time = 0;
-            blending = blend;
             playMode = mode;
             config = conf;
-            if (blend == false)
+            if (!blending)
             {
                 if (blendMixPlayable.IsValid())
                 {
@@ -170,6 +171,7 @@ namespace UnityEngine.Timeline
 
         public AnimationPlayableOutput blendPlayableOutput { get; set; }
         public AnimationScriptPlayable blendMixPlayable { get; set; }
+        public MixerJob mixJob { get; set; }
 
 
         // Only skill mode worked
@@ -181,6 +183,7 @@ namespace UnityEngine.Timeline
             {
                 blendPlayableOutput = track.playableOutput;
                 blendMixPlayable = track.mixPlayable;
+                mixJob = track.mixJob;
                 var clip = track.GetPlayingPlayable(out var tick) as XAnimationClip;
                 if (clip != null)
                 {
@@ -191,6 +194,7 @@ namespace UnityEngine.Timeline
                     data.start = 0.01f;
                 }
             }
+            blending = true;
             Dispose(true);
             ReadConf(path);
             if (config != null)
@@ -211,7 +215,7 @@ namespace UnityEngine.Timeline
                     }
                     config.tracks[config.skillHostTrack].clips = nc;
                 }
-                Initial(config, PlayMode.Skill, true);
+                Initial(config, PlayMode.Skill);
             }
             SetPlaying(true);
         }

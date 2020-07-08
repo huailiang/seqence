@@ -107,5 +107,12 @@ namespace UnityEngine.Timeline
                 handle.SetLocalRotation(stream, rotA);
             }
         }
+
+        public void Dispose()
+        {
+            clipA = -1;
+            clipB = -1;
+            handles.Dispose();
+        }
     }
 }

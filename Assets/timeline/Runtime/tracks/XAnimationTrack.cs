@@ -17,7 +17,7 @@ namespace UnityEngine.Timeline
     {
         public AnimationPlayableOutput playableOutput;
         public AnimationScriptPlayable mixPlayable;
-        private MixerJob mixJob;
+        public MixerJob mixJob;
         private int idx;
         private float tmp;
 
@@ -31,9 +31,7 @@ namespace UnityEngine.Timeline
             get { return false; }
         }
 
-        public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data)
-        {
-        }
+        public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data) { }
 
         protected override IClip BuildClip(ClipData data)
         {
@@ -58,7 +56,7 @@ namespace UnityEngine.Timeline
         }
 
 
-        public AnimationClipPlayable playA, playB;
+        private AnimationClipPlayable mixA, mixB;
 
         protected override void OnMixer(float time, IMixClip mix)
         {
@@ -70,13 +68,13 @@ namespace UnityEngine.Timeline
                     XAnimationClip clipB = (XAnimationClip)mix.blendB;
                     if (clipA && clipB)
                     {
-                        playA = clipA.playable;
-                        playB = clipB.playable;
+                        mixA = clipA.playable;
+                        mixB = clipB.playable;
                     }
                 }
                 mix.connect = true;
                 float weight = (time - mix.start) / mix.duration;
-                if (playA.IsValid() && playB.IsValid())
+                if (mixA.IsValid() && mixB.IsValid())
                 {
                     mixJob.weight = weight;
                     mixPlayable.SetJobData(mixJob);
@@ -84,12 +82,11 @@ namespace UnityEngine.Timeline
                 else
                 {
                     string tip = "playable invalid while animating mix ";
-                    Debug.LogError(tip + playA.IsValid() + " " + playB.IsValid());
+                    Debug.LogError(tip + mixA.IsValid() + " " + mixB.IsValid());
                 }
             }
         }
-
-        NativeArray<TransformStreamHandle> m_Handles;
+        
 
         public override void OnBind()
         {
@@ -103,19 +100,19 @@ namespace UnityEngine.Timeline
                 {
                     playableOutput = timeline.blendPlayableOutput;
                     mixPlayable = timeline.blendMixPlayable;
+                    mixJob = timeline.mixJob;
                 }
                 else
                 {
-                    m_Handles = new NativeArray<TransformStreamHandle>(numTransforms, Allocator.Persistent,
+                   var handles = new NativeArray<TransformStreamHandle>(numTransforms, Allocator.Persistent,
                         NativeArrayOptions.UninitializedMemory);
                     for (var i = 0; i < numTransforms; ++i)
                     {
-                        m_Handles[i] = amtor.BindStreamTransform(transforms[i + 1]);
+                        handles[i] = amtor.BindStreamTransform(transforms[i + 1]);
                     }
-
                     mixJob = new MixerJob()
                     {
-                        handles = m_Handles, 
+                        handles = handles, 
                         weight = 1.0f
                     };
 
@@ -142,10 +139,7 @@ namespace UnityEngine.Timeline
                 mixPlayable.SetJobData(mixJob);
             }
         }
-
-        public void OnBind(GameObject bindObj)
-        {
-        }
+        
 
         public override void Dispose()
         {
@@ -159,7 +153,7 @@ namespace UnityEngine.Timeline
                 {
                     XTimeline.graph.DestroyOutput(playableOutput);
                 }
-                m_Handles.Dispose();
+                mixJob.Dispose();
             }
             base.Dispose();
         }
