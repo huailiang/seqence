@@ -2,15 +2,14 @@
 
 namespace UnityEngine.Timeline
 {
-    public class XSceneFxClip : XClip<XSceneFxTrack>, ISharedObject<XSceneFxClip>
+    public class XSceneFxClip : XClip<XSceneFxTrack,XSceneFxClip>, ISharedObject<XSceneFxClip>
     {
         public GameObject prefabGameObject;
         private string path;
         private ParticleSystem[] particleSystems;
         private bool restart;
 
-        public XSceneFxClip next { get; set; }
-
+       
         public override string Display
         {
             get { return prefabGameObject != null ? prefabGameObject.name : ""; }
@@ -81,10 +80,6 @@ namespace UnityEngine.Timeline
             SharedPool<XSceneFxClip>.Return(this);
             base.OnDestroy();
         }
-
-        public void Dispose()
-        {
-            next = null;
-        }
+        
     }
 }

@@ -4,21 +4,20 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    public class XAnimationClip : XClip<XAnimationTrack>, ISharedObject<XAnimationClip>
+    public class XAnimationClip : XClip<XAnimationTrack, XAnimationClip>, ISharedObject<XAnimationClip>
     {
         public AnimationClipPlayable playable;
         public AnimationClip aclip;
         private AnimClipData anData;
         public int port = 0;
 
-        public XAnimationClip next { get; set; }
 
         public override string Display
         {
             get { return aclip != null ? aclip.name + " " + port : " anim" + port; }
         }
 
-        public void Initial(ClipData data,int port)
+        public void Initial(ClipData data, int port)
         {
             this.port = port;
             anData = data as AnimClipData;
@@ -61,7 +60,7 @@ namespace UnityEngine.Timeline
             if (playable.IsValid())
             {
                 playable.Destroy();
-                if(track.mixPlayable.IsValid())
+                if (track.mixPlayable.IsValid())
                 {
                     track.mixPlayable.SetInputCount(0);
                 }
@@ -72,9 +71,5 @@ namespace UnityEngine.Timeline
             base.OnDestroy();
         }
 
-        public void Dispose()
-        {
-            next = null;
-        }
     }
 }
