@@ -23,9 +23,12 @@ namespace UnityEngine.Timeline
             throw new Exception("Postprocess track is uncloneable");
         }
 
-        protected override IClip BuildClip(ClipData data)
+        public override IClip BuildClip(ClipData data)
         {
-            return new XPostprocessClip(this, data);
+            var clip = SharedPool<XPostprocessClip>.Get();
+            clip.data = data;
+            clip.track = this;
+            return clip;
         }
 
         public override void OnDestroy()

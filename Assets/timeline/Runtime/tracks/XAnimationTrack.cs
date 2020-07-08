@@ -33,10 +33,12 @@ namespace UnityEngine.Timeline
             get { return false; }
         }
 
-        protected override IClip BuildClip(ClipData data)
+        public override IClip BuildClip(ClipData data)
         {
-            var clip = new XAnimationClip(this, data);
-            clip.port = idx;
+            var clip = SharedPool<XAnimationClip>.Get();
+            clip.data = data;
+            clip.track = this;
+            clip.Initial(data, idx);
             if (tmp > 0 && clip.start < tmp)
             {
                 float start = clip.start;

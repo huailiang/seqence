@@ -158,7 +158,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-        protected override IClip BuildClip(ClipData data)
+        public override IClip BuildClip(ClipData data)
         {
             throw new Exception("transform no clip");
         }

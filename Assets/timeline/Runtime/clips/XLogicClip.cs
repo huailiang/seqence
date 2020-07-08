@@ -2,15 +2,14 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    public class XLogicClip : XClip<XLogicTrack>
+    public class XLogicClip : XClip<XLogicTrack>, ISharedObject<XLogicClip>
     {
         private GameObject bindObj;
 
         private LogicClipData Data;
 
-        public XLogicClip(XLogicTrack track, ClipData data) : base(track, data)
-        {
-        }
+        public XLogicClip next { get; set; }
+
 
         public override string Display
         {
@@ -58,6 +57,16 @@ namespace UnityEngine.Timeline
             }
         }
 
+        public override void OnDestroy()
+        {
+            SharedPool<XLogicClip>.Return(this);
+            base.OnDestroy();
+        }
+
+        public void Dispose()
+        {
+            next = null;
+        }
 
         private void DrawAttackArea()
         {

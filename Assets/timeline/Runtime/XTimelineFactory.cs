@@ -40,37 +40,9 @@ namespace UnityEngine.Timeline
             }
             if (xTrack)
             {
-                xTrack.data = data;
-                xTrack.timeline = tl;
-                if (parent)
-                {
-                    xTrack.parent = parent;
-                }
-                xTrack.PostCreate();
+                xTrack.Initial(data, tl, parent);
             }
             return xTrack;
-        }
-
-        
-        public static MarkData CreateMarkData(MarkType type)
-        {
-            MarkData data = null;
-            switch (type)
-            {
-                case MarkType.Active:
-                    data = new ActiveMarkData();
-                    break;
-                case MarkType.Jump:
-                    data = new JumpMarkData();
-                    break;
-                case MarkType.Slow:
-                    data = new SlowMarkData();
-                    break;
-                default:
-                    Debug.LogError("unknowm marktype: " + type);
-                    break;
-            }
-            return data;
         }
 
         public static XMarker GetMarker(XTrack track, MarkData data)
@@ -94,6 +66,29 @@ namespace UnityEngine.Timeline
             }
             return marker;
         }
+
+
+        public static MarkData CreateMarkData(MarkType type)
+        {
+            MarkData data = null;
+            switch (type)
+            {
+                case MarkType.Active:
+                    data = new ActiveMarkData();
+                    break;
+                case MarkType.Jump:
+                    data = new JumpMarkData();
+                    break;
+                case MarkType.Slow:
+                    data = new SlowMarkData();
+                    break;
+                default:
+                    Debug.LogError("unknowm marktype: " + type);
+                    break;
+            }
+            return data;
+        }
+
 
         public static MarkData CreateMarkData(BinaryReader reader)
         {

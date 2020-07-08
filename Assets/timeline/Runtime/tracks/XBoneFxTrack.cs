@@ -38,9 +38,12 @@ namespace UnityEngine.Timeline
         }
 
 
-        protected override IClip BuildClip(ClipData data)
+        public override IClip BuildClip(ClipData data)
         {
-            return new XBoneFxClip(this, data);
+            var clip = SharedPool<XBoneFxClip>.Get();
+            clip.data = data;
+            clip.track = this;
+            return clip;
         }
 
 

@@ -8,22 +8,21 @@ namespace UnityEngine.Timeline
 
         float duration { get; set; }
 
-        ClipData data { get; }
+        ClipData data { get; set; }
 
         float end { get; }
 
         string Display { get; }
-
+        
         bool Update(float time, float prev, bool mix);
 
-        void Dispose();
+        void OnDestroy();
 
         void OnBind();
     }
 
     public class XClip<T> : XTimelineObject, IClip where T : XTrack
     {
-
         private bool enterd = false;
 
         protected XTimeline timeline
@@ -31,15 +30,15 @@ namespace UnityEngine.Timeline
             get { return track.timeline; }
         }
 
-        protected T track { get; }
+        public T track { get; set; }
 
-        public ClipData data { get; }
+        public ClipData data { get; set; }
 
-        protected XClip(T track, ClipData data)
-        {
-            this.track = track;
-            this.data = data;
-        }
+        //protected XClip(T track, ClipData data)
+        //{
+        //    this.track = track;
+        //    this.data = data;
+        //}
 
         public float duration
         {
@@ -61,11 +60,6 @@ namespace UnityEngine.Timeline
         public virtual string Display
         {
             get { return string.Empty; }
-        }
-
-        public void Dispose()
-        {
-            OnDestroy();
         }
 
         public bool Update(float time, float prev, bool mix)
@@ -108,7 +102,7 @@ namespace UnityEngine.Timeline
             enterd = false;
         }
 
-        protected virtual void OnDestroy()
+        public virtual void OnDestroy()
         {
         }
 

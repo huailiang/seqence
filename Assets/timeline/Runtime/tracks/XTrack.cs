@@ -97,8 +97,11 @@ namespace UnityEngine.Timeline
             mode = TrackMode.Normal;
         }
 
-        public void PostCreate()
+        public void Initial(TrackData data,XTimeline tl, XTrack parent)
         {
+            this.data = data;
+            this.timeline = tl;
+            this.parent = parent;
             if (data != null)
             {
                 if (data.clips != null)
@@ -226,7 +229,7 @@ namespace UnityEngine.Timeline
             track(this);
         }
 
-        protected abstract IClip BuildClip(ClipData data);
+        public abstract IClip BuildClip(ClipData data);
 
         protected virtual void OnPostBuild() { }
 
@@ -373,7 +376,7 @@ namespace UnityEngine.Timeline
 
         public virtual void OnDestroy()
         {
-            Foreach(track => track.OnDestroy(), clip => clip.Dispose());
+            Foreach(track => track.OnDestroy(), clip => clip.OnDestroy());
             ForeachMark(mark => mark.OnDestroy());
 
             childs = null;

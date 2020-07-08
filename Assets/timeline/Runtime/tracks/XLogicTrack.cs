@@ -21,9 +21,12 @@ namespace UnityEngine.Timeline
             return XTimelineFactory.GetTrack(data, timeline, parent);
         }
 
-        protected override IClip BuildClip(ClipData data)
+        public override IClip BuildClip(ClipData data)
         {
-            return new XLogicClip(this, data);
+            var clip = SharedPool<XLogicClip>.Get();
+            clip.data = data;
+            clip.track = this;
+            return clip;
         }
 
         protected override void OnPostBuild()

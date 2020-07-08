@@ -24,9 +24,14 @@ namespace UnityEngine.Timeline
         }
 
 
-        protected override IClip BuildClip(ClipData data)
+        public override IClip BuildClip(ClipData data)
         {
-            return new XSceneFxClip(this, data);
+            var clip = SharedPool<XSceneFxClip>.Get();
+            clip.data = data;
+            clip.track = this;
+            SceneFxClipData fxdata = (SceneFxClipData)data;
+            clip.Load(fxdata.prefab, fxdata.pos, fxdata.rot, fxdata.scale);
+            return clip;
         }
 
         public override string ToString()
