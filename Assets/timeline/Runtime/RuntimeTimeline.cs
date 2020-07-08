@@ -1,6 +1,5 @@
 ﻿#if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace UnityEngine.Timeline
@@ -64,8 +63,6 @@ namespace UnityEngine.Timeline
                 Gizmos.DrawSphere(ps[0], 0.04f);
             }
         }
-
-
 #endif
     }
 }
