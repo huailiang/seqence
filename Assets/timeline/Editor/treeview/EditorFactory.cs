@@ -25,17 +25,17 @@ namespace UnityEditor.Timeline
             if (t == typeof(XJumpMarker))
             {
                 data = new JumpMarkData() { time = time };
-                marker = new XJumpMarker(track, (JumpMarkData)data);
+                marker = XTimelineFactory.GetMarker(track, data);
             }
             else if (t == typeof(XSlowMarker))
             {
                 data = new SlowMarkData() { time = time, slowRate = 0.5f };
-                marker = new XSlowMarker(track, (SlowMarkData)data);
+                marker = XTimelineFactory.GetMarker(track, data);
             }
             else if (t == typeof(XActiveMark))
             {
                 data = new ActiveMarkData() { time = time };
-                marker = new XActiveMark(track, (ActiveMarkData)data);
+                marker = XTimelineFactory.GetMarker(track, data);
             }
             else
             {

@@ -111,7 +111,7 @@ namespace UnityEditor.Timeline
                 if (list.Contains(marker))
                 {
                     var datas = track.data.marks.ToList();
-                    datas.Remove(marker.MarkData);
+                    datas.Remove(marker.Data);
                     track.data.marks = datas.ToArray();
 
                     list.Remove(marker);
@@ -217,7 +217,7 @@ namespace UnityEditor.Timeline
                     timeline.trackTrees = list.ToArray();
                 }
             }
-            track.Dispose();
+            track.OnDestroy();
         }
 
         public static bool IsAllSubTrackMuted(this XTrack track)

@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace UnityEngine.Timeline.Data
@@ -116,7 +117,7 @@ namespace UnityEngine.Timeline.Data
     }
 
     [Serializable]
-    public sealed class GroupTrackData : TrackData
+    public class GroupTrackData : TrackData
     {
         public string comment = "";
 
@@ -134,7 +135,7 @@ namespace UnityEngine.Timeline.Data
     }
 
     [Serializable]
-    public sealed class AnimationTrackData : BindTrackData
+    public class AnimationTrackData : BindTrackData
     {
         public int roleid = 0;
         public Vector3 pos;
@@ -158,7 +159,7 @@ namespace UnityEngine.Timeline.Data
     }
 
     [Serializable]
-    public sealed class TransformTrackData : TrackData
+    public class TransformTrackData : TrackData
     {
         public float[] time;
         public Vector3[] pos;

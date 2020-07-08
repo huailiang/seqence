@@ -91,12 +91,14 @@ namespace UnityEngine.Timeline
             get { return parent ? parent.locked : locked; }
         }
 
-        protected XTrack(XTimeline tl, TrackData data)
+        protected XTrack()
         {
-            timeline = tl;
-            this.data = data;
             ID = XTimeline.IncID;
             mode = TrackMode.Normal;
+        }
+
+        public void PostCreate()
+        {
             if (data != null)
             {
                 if (data.clips != null)
@@ -127,6 +129,7 @@ namespace UnityEngine.Timeline
                     }
                 }
             }
+            OnPostBuild();
         }
 
         public bool GetFlag(TrackMode mode)
@@ -225,13 +228,9 @@ namespace UnityEngine.Timeline
 
         protected abstract IClip BuildClip(ClipData data);
 
-        public virtual void OnPostBuild()
-        {
-        }
+        protected virtual void OnPostBuild() { }
 
-        protected virtual void OnMixer(float time, IMixClip mix)
-        {
-        }
+        protected virtual void OnMixer(float time, IMixClip mix) { }
 
         protected void AddMix(IMixClip mix)
         {
@@ -372,10 +371,10 @@ namespace UnityEngine.Timeline
             return null;
         }
 
-        public virtual void Dispose()
+        public virtual void OnDestroy()
         {
-            Foreach(track => track.Dispose(), clip => clip.Dispose());
-            ForeachMark(mark => mark.Dispose());
+            Foreach(track => track.OnDestroy(), clip => clip.Dispose());
+            ForeachMark(mark => mark.OnDestroy());
 
             childs = null;
             parent = null;

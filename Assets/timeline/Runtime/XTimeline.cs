@@ -309,7 +309,7 @@ namespace UnityEngine.Timeline
             {
                 for (int i = 0; i < trackTrees.Length; i++)
                 {
-                    trackTrees[i].Dispose();
+                    trackTrees[i].OnDestroy();
                 }
                 trackTrees = null;
             }

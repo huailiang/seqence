@@ -4,13 +4,13 @@ namespace UnityEngine.Timeline
 {
     public class XMarker : XTimelineObject
     {
-        protected XTrack track { get; }
+        protected XTrack track { get; set; }
 
-        public MarkData MarkData { get; }
+        public MarkData Data { get; set; }
 
         public MarkType type
         {
-            get { return MarkData.type; }
+            get { return Data.type; }
         }
 
         protected XTimeline timeline
@@ -18,30 +18,32 @@ namespace UnityEngine.Timeline
             get { return track.timeline; }
         }
 
-        protected XMarker(XTrack track, MarkData markData)
+        public void Initial(XTrack tk, MarkData data)
         {
-            this.track = track;
-            this.MarkData = markData;
+            track = tk;
+            Data = data;
+            OnPostBuild();
         }
 
+        protected virtual void OnPostBuild() { }
 
         public float time
         {
-            get { return MarkData.time; }
-            set { MarkData.time = value; }
+            get { return Data.time; }
+            set { Data.time = value; }
         }
 
         public virtual bool reverse
         {
-            get { return MarkData.reverse; }
-            set { MarkData.reverse = value; }
+            get { return Data.reverse; }
+            set { Data.reverse = value; }
         }
 
         public virtual void OnTriger()
         {
         }
 
-        public virtual void Dispose()
+        public virtual void OnDestroy()
         {
         }
     }

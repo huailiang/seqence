@@ -3,9 +3,11 @@
 namespace UnityEngine.Timeline
 {
     [MarkUsage(AssetType.Marker)]
-    public class XSlowMarker : XMarker
+    public class XSlowMarker : XMarker, ISharedObject<XSlowMarker>
     {
         private SlowMarkData _data;
+
+        public XSlowMarker next { get; set; }
 
         public float slow
         {
@@ -13,9 +15,11 @@ namespace UnityEngine.Timeline
             set { _data.slowRate = value; }
         }
 
-        public XSlowMarker(XTrack track, MarkData data) : base(track, data)
+
+        protected override void OnPostBuild()
         {
-            _data = (SlowMarkData) data;
+            base.OnPostBuild();
+            _data = (SlowMarkData)Data;
         }
 
         public override void OnTriger()
@@ -23,5 +27,17 @@ namespace UnityEngine.Timeline
             base.OnTriger();
             timeline.slow = slow;
         }
+
+        public override void OnDestroy()
+        {
+            SharedPool<XSlowMarker>.Return(this);
+            base.OnDestroy();
+        }
+
+        public void Dispose()
+        {
+            next = null;
+        }
+
     }
 }

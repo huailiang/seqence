@@ -4,8 +4,10 @@ using UnityEngine.Timeline.Data;
 namespace UnityEngine.Timeline
 {
     [TrackFlag(TrackFlag.RootOnly)]
-    public class XSceneFxTrack : XTrack
+    public class XSceneFxTrack : XTrack, ISharedObject<XSceneFxTrack>
     {
+        public XSceneFxTrack next { get; set; }
+
         public override AssetType AssetType
         {
             get { return AssetType.SceneFx; }
@@ -21,9 +23,6 @@ namespace UnityEngine.Timeline
             throw new Exception("scenefx track is uncloneable");
         }
 
-        public XSceneFxTrack(XTimeline tl, TrackData data) : base(tl, data)
-        {
-        }
 
         protected override IClip BuildClip(ClipData data)
         {
@@ -33,6 +32,17 @@ namespace UnityEngine.Timeline
         public override string ToString()
         {
             return "SceneFx " + ID;
+        }
+
+        public override void OnDestroy()
+        {
+            SharedPool<XSceneFxTrack>.Return(this);
+            base.OnDestroy();
+        }
+
+        public void Dispose()
+        {
+            next = null;
         }
     }
 }

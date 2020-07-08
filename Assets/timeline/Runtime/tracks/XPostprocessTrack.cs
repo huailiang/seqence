@@ -4,8 +4,10 @@ using UnityEngine.Timeline.Data;
 namespace UnityEngine.Timeline
 {
     [TrackFlag(TrackFlag.RootOnly)]
-    public class XPostprocessTrack : XTrack
+    public class XPostprocessTrack : XTrack, ISharedObject<XPostprocessTrack>
     {
+        public XPostprocessTrack next { get; set; }
+
         public override AssetType AssetType
         {
             get { return AssetType.PostProcess; }
@@ -26,8 +28,15 @@ namespace UnityEngine.Timeline
             return new XPostprocessClip(this, data);
         }
 
-        public XPostprocessTrack(XTimeline tl, TrackData data) : base(tl, data)
+        public override void OnDestroy()
         {
+            SharedPool<XPostprocessTrack>.Return(this);
+            base.OnDestroy();
+        }
+
+        public void Dispose()
+        {
+            next = null;
         }
 
         public override string ToString()

@@ -13,13 +13,15 @@ namespace UnityEngine.Timeline
 {
     [TrackRequreType(typeof(Animator))]
     [TrackFlag(TrackFlag.RootOnly)]
-    public class XAnimationTrack : XBindTrack
+    public class XAnimationTrack : XBindTrack, ISharedObject<XAnimationTrack>
     {
         public AnimationPlayableOutput playableOutput;
         public AnimationScriptPlayable mixPlayable;
         public MixerJob mixJob;
         private int idx;
         private float tmp;
+
+        public XAnimationTrack next { get; set; }
 
         public override AssetType AssetType
         {
@@ -30,8 +32,6 @@ namespace UnityEngine.Timeline
         {
             get { return false; }
         }
-
-        public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data) { }
 
         protected override IClip BuildClip(ClipData data)
         {
@@ -141,7 +141,7 @@ namespace UnityEngine.Timeline
         }
         
 
-        public override void Dispose()
+        public override void OnDestroy()
         {
             if (!timeline.IsHostTrack(this))
             {
@@ -154,8 +154,14 @@ namespace UnityEngine.Timeline
                     XTimeline.graph.DestroyOutput(playableOutput);
                 }
                 mixJob.Dispose();
+                SharedPool<XAnimationTrack>.Return(this);
             }
-            base.Dispose();
+            base.OnDestroy();
+        }
+
+        public void Dispose()
+        {
+            next = null;
         }
 
         public override string ToString()

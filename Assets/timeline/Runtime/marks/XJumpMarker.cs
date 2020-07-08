@@ -3,9 +3,11 @@
 namespace UnityEngine.Timeline
 {
     [MarkUsage(AssetType.Marker)]
-    public class XJumpMarker : XMarker
+    public class XJumpMarker : XMarker, ISharedObject<XJumpMarker>
     {
         private JumpMarkData _data;
+
+        public XJumpMarker next { get; set; }
 
         public float jump
         {
@@ -13,9 +15,10 @@ namespace UnityEngine.Timeline
             set { _data.jump = value; }
         }
 
-        public XJumpMarker(XTrack track, MarkData data) : base(track, data)
+        protected override void OnPostBuild()
         {
-            _data = (JumpMarkData) data;
+            base.OnPostBuild();
+            _data = (JumpMarkData)Data;
         }
 
 
@@ -26,6 +29,17 @@ namespace UnityEngine.Timeline
             {
                 timeline.JumpTo(jump);
             }
+        }
+
+        public override void OnDestroy()
+        {
+            SharedPool<XJumpMarker>.Return(this);
+            base.OnDestroy();
+        }
+
+        public void Dispose()
+        {
+            next = null;
         }
     }
 }
