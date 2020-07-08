@@ -9,10 +9,11 @@ namespace UnityEngine.Timeline
         public AnimationClipPlayable playable;
         public AnimationClip aclip;
         private AnimClipData anData;
+        public int port = 0;
 
         public override string Display
         {
-            get { return aclip != null ? aclip.name : " anim"; }
+            get { return aclip != null ? aclip.name + " " + port : " anim" + port; }
         }
 
         public XAnimationClip(XAnimationTrack track, ClipData data) : base(track, data)

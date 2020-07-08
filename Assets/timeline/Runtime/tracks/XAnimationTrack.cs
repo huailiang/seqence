@@ -7,7 +7,6 @@ using Unity.Collections;
 using UnityEngine.Animations;
 #else
 using UnityEngine.Experimental.Animations;
-
 #endif
 
 namespace UnityEngine.Timeline
@@ -18,6 +17,7 @@ namespace UnityEngine.Timeline
     {
         public AnimationPlayableOutput playableOutput;
         public AnimationScriptPlayable mixPlayable;
+        private MixerJob mixJob;
         private int idx;
         private float tmp;
 
@@ -38,6 +38,7 @@ namespace UnityEngine.Timeline
         protected override IClip BuildClip(ClipData data)
         {
             var clip = new XAnimationClip(this, data);
+            clip.port = idx;
             if (tmp > 0 && clip.start < tmp)
             {
                 float start = clip.start;
@@ -65,8 +66,8 @@ namespace UnityEngine.Timeline
             {
                 if (!mix.connect || !Application.isPlaying)
                 {
-                    XAnimationClip clipA = (XAnimationClip) mix.blendA;
-                    XAnimationClip clipB = (XAnimationClip) mix.blendB;
+                    XAnimationClip clipA = (XAnimationClip)mix.blendA;
+                    XAnimationClip clipB = (XAnimationClip)mix.blendB;
                     if (clipA && clipB)
                     {
                         playA = clipA.playable;
@@ -77,9 +78,8 @@ namespace UnityEngine.Timeline
                 float weight = (time - mix.start) / mix.duration;
                 if (playA.IsValid() && playB.IsValid())
                 {
-                    var job = mixPlayable.GetJobData<MixerJob>();
-                    job.weight = weight;
-                    mixPlayable.SetJobData(job);
+                    mixJob.weight = weight;
+                    mixPlayable.SetJobData(mixJob);
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace UnityEngine.Timeline
                         m_BoneWeights[i] = 1.0f;
                     }
 
-                    var job = new MixerJob()
+                    mixJob = new MixerJob()
                     {
                         handles = m_Handles, 
                         boneWeights = m_BoneWeights, 
@@ -129,7 +129,7 @@ namespace UnityEngine.Timeline
                     bindObj.transform.rotation = Quaternion.Euler(0, Data.rotY, 0);
 
                     playableOutput = AnimationPlayableOutput.Create(XTimeline.graph, "AnimationOutput", amtor);
-                    mixPlayable = AnimationScriptPlayable.Create(XTimeline.graph, job);
+                    mixPlayable = AnimationScriptPlayable.Create(XTimeline.graph, mixJob);
                     mixPlayable.SetProcessInputs(false);
                 }
                 playableOutput.SetSourcePlayable(mixPlayable);
@@ -142,10 +142,9 @@ namespace UnityEngine.Timeline
             base.Process(time, prev);
             if (mixPlayable.IsValid())
             {
-                var job = mixPlayable.GetJobData<MixerJob>();
-                job.clipA = clipA;
-                job.clipB = clipB;
-                mixPlayable.SetJobData(job);
+                mixJob.clipA = clipA;
+                mixJob.clipB = clipB;
+                mixPlayable.SetJobData(mixJob);
             }
         }
 
