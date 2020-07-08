@@ -1,10 +1,8 @@
 ﻿using Unity.Collections;
-using UnityEngine;
 #if UNITY_2019_3_OR_NEWER
 using UnityEngine.Animations;
 #else
 using UnityEngine.Experimental.Animations;
-
 #endif
 
 namespace UnityEngine.Timeline
@@ -12,7 +10,6 @@ namespace UnityEngine.Timeline
     public struct MixerJob : IAnimationJob
     {
         public NativeArray<TransformStreamHandle> handles;
-        public NativeArray<float> boneWeights;
         public float weight;
         public int clipA, clipB;
 
@@ -72,11 +69,11 @@ namespace UnityEngine.Timeline
 
                         var posA = handle.GetLocalPosition(streamA);
                         var posB = handle.GetLocalPosition(streamB);
-                        handle.SetLocalPosition(stream, Vector3.Lerp(posA, posB, weight * boneWeights[i]));
+                        handle.SetLocalPosition(stream, Vector3.Lerp(posA, posB, weight));
 
                         var rotA = handle.GetLocalRotation(streamA);
                         var rotB = handle.GetLocalRotation(streamB);
-                        handle.SetLocalRotation(stream, Quaternion.Slerp(rotA, rotB, weight * boneWeights[i]));
+                        handle.SetLocalRotation(stream, Quaternion.Slerp(rotA, rotB, weight));
                     }
                 }
             }

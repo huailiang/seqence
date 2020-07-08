@@ -44,11 +44,11 @@
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>10.8418112</start>
-          <duration>21.083334</duration>
+          <start>-0.106389441</start>
+          <duration>38.90356</duration>
           <anim>Assets/test/Chomper/Animations/ChomperIdle.anim</anim>
           <trim_start>0</trim_start>
-          <trim_end>0</trim_end>
+          <trim_end>335</trim_end>
           <loop>true</loop>
         </ClipData>
       </clips>

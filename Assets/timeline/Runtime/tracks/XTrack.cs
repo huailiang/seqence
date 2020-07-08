@@ -262,13 +262,16 @@ namespace UnityEngine.Timeline
                 bool mix = MixTriger(time, out var mixClip);
                 for (int i = 0; i < clips.Length; i++)
                 {
-                    var clip = clips[i] as XAnimationClip;
-                    if (clip.Update(time, prev, mix))
+                    if (clips[i].Update(time, prev, mix))
                     {
-                        if (clipA == -1)
-                            clipA = clip.port;
-                        else
-                            clipB = clip.port;
+                        var clip = clips[i] as XAnimationClip;
+                        if (clip)
+                        {
+                            if (clipA == -1)
+                                clipA = clip.port;
+                            else
+                                clipB = clip.port;
+                        }
                     }
                 }
                 MarkTriger(time, prev);

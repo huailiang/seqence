@@ -90,13 +90,15 @@ namespace UnityEngine.Timeline
         }
 
         NativeArray<TransformStreamHandle> m_Handles;
-        NativeArray<float> m_BoneWeights;
 
         public override void OnBind()
         {
             if (bindObj && XTimeline.graph.IsValid())
             {
                 var amtor = bindObj.GetComponent<Animator>();
+                var transforms = amtor.transform.GetComponentsInChildren<Transform>();
+                var numTransforms = transforms.Length - 1;
+
                 if (timeline.IsHostTrack(this))
                 {
                     playableOutput = timeline.blendPlayableOutput;
@@ -104,23 +106,16 @@ namespace UnityEngine.Timeline
                 }
                 else
                 {
-                    var transforms = amtor.transform.GetComponentsInChildren<Transform>();
-                    var numTransforms = transforms.Length - 1;
-
                     m_Handles = new NativeArray<TransformStreamHandle>(numTransforms, Allocator.Persistent,
                         NativeArrayOptions.UninitializedMemory);
-                    m_BoneWeights = new NativeArray<float>(numTransforms, Allocator.Persistent,
-                        NativeArrayOptions.ClearMemory);
                     for (var i = 0; i < numTransforms; ++i)
                     {
                         m_Handles[i] = amtor.BindStreamTransform(transforms[i + 1]);
-                        m_BoneWeights[i] = 1.0f;
                     }
 
                     mixJob = new MixerJob()
                     {
                         handles = m_Handles, 
-                        boneWeights = m_BoneWeights, 
                         weight = 1.0f
                     };
 
@@ -165,7 +160,6 @@ namespace UnityEngine.Timeline
                     XTimeline.graph.DestroyOutput(playableOutput);
                 }
                 m_Handles.Dispose();
-                m_BoneWeights.Dispose();
             }
             base.Dispose();
         }
