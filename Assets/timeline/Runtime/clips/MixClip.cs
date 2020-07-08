@@ -1,16 +1,7 @@
 ﻿using UnityEngine.Timeline;
 
-public interface IMixClip
-{
-    bool connect { get; set; }
-    float start { get; set; }
-    float duration { get; set; }
-    IClip blendA { get; set; }
-    IClip blendB { get; set; }
-    bool IsIn(float time);
-}
 
-public sealed class XMixClip<T> : IMixClip where T : XTrack
+public sealed class MixClip :  ISharedObject<MixClip>
 {
     public bool connect { get; set; }
     public float start { get; set; }
@@ -18,7 +9,9 @@ public sealed class XMixClip<T> : IMixClip where T : XTrack
     public IClip blendA { get; set; }
     public IClip blendB { get; set; }
 
-    public XMixClip(float start, float duration, IClip clip1, IClip clip2)
+    public MixClip next { get; set; }
+    
+    public void Initial(float start, float duration, IClip clip1, IClip clip2)
     {
         this.start = start;
         this.duration = duration;
@@ -30,5 +23,12 @@ public sealed class XMixClip<T> : IMixClip where T : XTrack
     public bool IsIn(float time)
     {
         return time >= start && time < start + duration;
+    }
+
+    public void Dispose()
+    {
+        connect = false;
+        blendA = null;
+        blendB = null;
     }
 }

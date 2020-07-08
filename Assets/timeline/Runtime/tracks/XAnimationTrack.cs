@@ -7,6 +7,7 @@ using Unity.Collections;
 using UnityEngine.Animations;
 #else
 using UnityEngine.Experimental.Animations;
+
 #endif
 
 namespace UnityEngine.Timeline
@@ -44,8 +45,7 @@ namespace UnityEngine.Timeline
                 float start = clip.start;
                 if (tmp > clip.end) tmp = clip.end - 0.01f;
                 float duration = tmp - start;
-                var mix = new XMixClip<XAnimationTrack>(start, duration, clips[idx - 1], clip);
-                AddMix(mix);
+                BuildMix(start, duration, clips[idx - 1], clip);
             }
             tmp = clip.end;
             idx++;
@@ -60,14 +60,14 @@ namespace UnityEngine.Timeline
 
         private AnimationClipPlayable mixA, mixB;
 
-        protected override void OnMixer(float time, IMixClip mix)
+        protected override void OnMixer(float time, MixClip mix)
         {
             if (mixPlayable.IsValid())
             {
                 if (!mix.connect || !Application.isPlaying)
                 {
-                    XAnimationClip clipA = (XAnimationClip)mix.blendA;
-                    XAnimationClip clipB = (XAnimationClip)mix.blendB;
+                    XAnimationClip clipA = (XAnimationClip) mix.blendA;
+                    XAnimationClip clipB = (XAnimationClip) mix.blendB;
                     if (clipA && clipB)
                     {
                         mixA = clipA.playable;
@@ -88,7 +88,7 @@ namespace UnityEngine.Timeline
                 }
             }
         }
-        
+
 
         public override void OnBind()
         {
@@ -106,17 +106,13 @@ namespace UnityEngine.Timeline
                 }
                 else
                 {
-                   var handles = new NativeArray<TransformStreamHandle>(numTransforms, Allocator.Persistent,
+                    var handles = new NativeArray<TransformStreamHandle>(numTransforms, Allocator.Persistent,
                         NativeArrayOptions.UninitializedMemory);
                     for (var i = 0; i < numTransforms; ++i)
                     {
                         handles[i] = amtor.BindStreamTransform(transforms[i + 1]);
                     }
-                    mixJob = new MixerJob()
-                    {
-                        handles = handles, 
-                        weight = 1.0f
-                    };
+                    mixJob = new MixerJob() {handles = handles, weight = 1.0f};
 
                     AnimationTrackData Data = data as AnimationTrackData;
                     bindObj.transform.position = Data.pos;
@@ -141,7 +137,7 @@ namespace UnityEngine.Timeline
                 mixPlayable.SetJobData(mixJob);
             }
         }
-        
+
 
         public override void OnDestroy()
         {
