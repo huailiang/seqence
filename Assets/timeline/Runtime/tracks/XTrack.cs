@@ -257,23 +257,24 @@ namespace UnityEngine.Timeline
             ForeachTrack(track => track.Process(time, prev));
             clipA = -1;
             clipB = -1;
-            if (!mute && clips != null)
+            if (!mute)
             {
                 bool mix = MixTriger(time, out var mixClip);
-                for (int i = 0; i < clips.Length; i++)
-                {
-                    if (clips[i].Update(time, prev, mix))
+                if (clips != null)
+                    for (int i = 0; i < clips.Length; i++)
                     {
-                        var clip = clips[i] as XAnimationClip;
-                        if (clip)
+                        if (clips[i].Update(time, prev, mix))
                         {
-                            if (clipA == -1)
-                                clipA = clip.port;
-                            else
-                                clipB = clip.port;
+                            var clip = clips[i] as XAnimationClip;
+                            if (clip)
+                            {
+                                if (clipA == -1)
+                                    clipA = clip.port;
+                                else
+                                    clipB = clip.port;
+                            }
                         }
                     }
-                }
                 MarkTriger(time, prev);
                 if (mix) OnMixer(time, mixClip);
             }

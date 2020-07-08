@@ -6,7 +6,7 @@ namespace UnityEngine.Timeline
 {
     public class XResources
     {
-        class Asset : SharedObject
+        class Asset : LinkSharedObject<Asset>
         {
             public Object asset;
             public uint refence;
@@ -30,7 +30,7 @@ namespace UnityEngine.Timeline
         {
             sharedPool.Clear();
             goPool.Clear();
-            SharedPool<Asset>.Clean();
+            LinkSharedPool<Asset>.Clean();
             Resources.UnloadUnusedAssets();
         }
 
@@ -46,7 +46,7 @@ namespace UnityEngine.Timeline
                 var obj = AssetDatabase.LoadAssetAtPath<GameObject>(path);
                 if (obj)
                 {
-                    var tmp = SharedPool<Asset>.Get();
+                    var tmp = LinkSharedPool<Asset>.Get();
                     tmp.asset = obj;
                     goPool.Add(path, tmp);
                     return Object.Instantiate(obj);
@@ -75,7 +75,7 @@ namespace UnityEngine.Timeline
                 if (it.refence <= 0)
                 {
                     goPool.Remove(path);
-                    SharedPool<Asset>.Return(it);
+                    LinkSharedPool<Asset>.Return(it);
                 }
             }
         }
@@ -91,7 +91,7 @@ namespace UnityEngine.Timeline
             else
             {
                 var asset = AssetDatabase.LoadAssetAtPath<T>(path);
-                var tmp = SharedPool<Asset>.Get();
+                var tmp = LinkSharedPool<Asset>.Get();
                 tmp.asset = asset;
                 sharedPool.Add(path, tmp);
                 return asset;
@@ -112,7 +112,7 @@ namespace UnityEngine.Timeline
 #if !UNITY_EDITOR
                      Resources.UnloadAsset(asset.asset);
 #endif
-                    SharedPool<Asset>.Return(asset);
+                    LinkSharedPool<Asset>.Return(asset);
                 }
             }
         }
