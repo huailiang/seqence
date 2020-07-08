@@ -64,7 +64,6 @@ namespace UnityEditor.Timeline
             data.seed = 0;
             data.scale = Vector3.one;
             XSceneFxClip clip = new XSceneFxClip((XSceneFxTrack)track, data);
-            clip.SetReference((GameObject)obj);
             track.AddClip(clip, data);
         }
 

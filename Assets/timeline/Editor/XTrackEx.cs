@@ -217,6 +217,7 @@ namespace UnityEditor.Timeline
                     timeline.trackTrees = list.ToArray();
                 }
             }
+            track.Dispose();
         }
 
         public static bool IsAllSubTrackMuted(this XTrack track)

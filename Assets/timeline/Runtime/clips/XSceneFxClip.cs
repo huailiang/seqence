@@ -20,11 +20,6 @@ namespace UnityEngine.Timeline
             Load(fxdata.prefab, fxdata.pos, fxdata.rot, fxdata.scale);
         }
 
-        public void SetReference(GameObject refObj)
-        {
-            prefabGameObject = refObj;
-        }
-
         public void Load(string path)
         {
             Load(path, Vector3.zero, Vector3.zero, Vector3.one);
