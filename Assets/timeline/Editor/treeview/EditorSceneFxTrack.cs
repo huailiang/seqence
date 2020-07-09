@@ -63,7 +63,7 @@ namespace UnityEditor.Timeline
             data.prefab = AssetDatabase.GetAssetPath(obj);
             data.seed = 0;
             data.scale = Vector3.one;
-            XSceneFxClip clip = new XSceneFxClip((XSceneFxTrack)track, data);
+            var clip = track.BuildClip(data);
             track.AddClip(clip, data);
         }
 

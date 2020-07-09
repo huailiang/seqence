@@ -2,20 +2,16 @@
 
 namespace UnityEngine.Timeline
 {
-    public class XBoneFxClip : XClip<XBoneFxTrack>
+    public class XBoneFxClip : XClip<XBoneFxTrack, XBoneFxClip>, ISharedObject<XBoneFxClip>
     {
         public GameObject fx;
         private string path;
         ParticleSystem[] ps;
         private bool restart;
-
+        
         public override string Display
         {
             get { return fx ? fx.name : "fx"; }
-        }
-
-        public XBoneFxClip(XBoneFxTrack track, ClipData data) : base(track, data)
-        {
         }
 
         public void SetFx(GameObject obj)
@@ -69,7 +65,6 @@ namespace UnityEngine.Timeline
             base.OnEnter();
             restart = true;
             if (fx) fx.SetActive(true);
-
         }
 
         protected override void OnUpdate(float tick, bool mix)
@@ -93,7 +88,7 @@ namespace UnityEngine.Timeline
             restart = false;
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if (fx)
             {
@@ -101,7 +96,11 @@ namespace UnityEngine.Timeline
                 fx = null;
             }
             ps = null;
+            SharedPool<XBoneFxClip>.Return(this);
             base.OnDestroy();
         }
+        
+
     }
+
 }

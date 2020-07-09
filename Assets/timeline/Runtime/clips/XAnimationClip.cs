@@ -4,43 +4,31 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    public class XAnimationClip : XClip<XAnimationTrack>
+    public class XAnimationClip : XClip<XAnimationTrack, XAnimationClip>, ISharedObject<XAnimationClip>
     {
         public AnimationClipPlayable playable;
         public AnimationClip aclip;
-        public int port = 0;
         private AnimClipData anData;
+        public int port = 0;
+
 
         public override string Display
         {
-            get { return aclip != null ? aclip.name + " " + port : " anim:" + port; }
+            get { return aclip != null ? aclip.name + " " + port : " anim" + port; }
         }
 
-        public XAnimationClip(XAnimationTrack track, ClipData data) : base(track, data)
+        public void Initial(ClipData data, int port)
         {
+            this.port = port;
             anData = data as AnimClipData;
             aclip = XResources.LoadSharedAsset<AnimationClip>(anData.anim);
+            playable = AnimationClipPlayable.Create(XTimeline.graph, aclip);
         }
 
-        protected override void OnEnter()
+        public override void OnBind()
         {
-            base.OnEnter();
-            if (track.mixPlayable.IsValid())
-            {
-                int cnt = track.mixPlayable.GetInputCount() + 1;
-                track.mixPlayable.SetInputCount(cnt);
-                playable = AnimationClipPlayable.Create(XTimeline.graph, aclip);
-                if (playable.IsValid())
-                {
-                    XTimeline.graph.Connect(playable, 0, track.mixPlayable, port);
-                    track.mixPlayable.SetInputWeight(port, 1);
-                }
-                else
-                {
-                    cnt = track.mixPlayable.GetInputCount();
-                    Debug.LogError("aclip: " + (aclip == null) + " " + cnt);
-                }
-            }
+            base.OnBind();
+            track.mixPlayable.AddInput(playable, 0, 1);
         }
 
 
@@ -59,27 +47,29 @@ namespace UnityEngine.Timeline
                         tick = tick % aclip.length;
                     }
                 }
-                playable.SetTime(tick);
+                if (playable.IsValid())
+                    playable.SetTime(tick);
+                else
+                    Debug.Log("playable is invalid");
             }
         }
 
 
-        protected override void OnExit()
+        public override void OnDestroy()
         {
             if (playable.IsValid())
             {
-                track.mixPlayable.DisconnectInput(port);
                 playable.Destroy();
+                if (track.mixPlayable.IsValid())
+                {
+                    track.mixPlayable.SetInputCount(0);
+                }
             }
-            base.OnExit();
-        }
-
-        protected override void OnDestroy()
-        {
-            if (playable.IsValid()) playable.Destroy();
             AnimClipData anData = data as AnimClipData;
             XResources.DestroySharedAsset(anData.anim);
+            SharedPool<XAnimationClip>.Return(this);
             base.OnDestroy();
         }
+
     }
 }

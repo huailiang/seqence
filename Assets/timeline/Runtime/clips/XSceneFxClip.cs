@@ -2,23 +2,19 @@
 
 namespace UnityEngine.Timeline
 {
-    public class XSceneFxClip : XClip<XSceneFxTrack>
+    public class XSceneFxClip : XClip<XSceneFxTrack,XSceneFxClip>, ISharedObject<XSceneFxClip>
     {
         public GameObject prefabGameObject;
         private string path;
         private ParticleSystem[] particleSystems;
         private bool restart;
 
+       
         public override string Display
         {
             get { return prefabGameObject != null ? prefabGameObject.name : ""; }
         }
 
-        public XSceneFxClip(XSceneFxTrack track, ClipData data) : base(track, data)
-        {
-            SceneFxClipData fxdata = (SceneFxClipData)data;
-            Load(fxdata.prefab, fxdata.pos, fxdata.rot, fxdata.scale);
-        }
 
         public void Load(string path)
         {
@@ -74,14 +70,16 @@ namespace UnityEngine.Timeline
         }
 
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if (prefabGameObject)
             {
                 XResources.DestroyGameObject(path, prefabGameObject);
                 particleSystems = null;
             }
+            SharedPool<XSceneFxClip>.Return(this);
             base.OnDestroy();
         }
+        
     }
 }

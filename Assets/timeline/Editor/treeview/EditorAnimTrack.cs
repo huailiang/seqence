@@ -164,10 +164,10 @@ namespace UnityEditor.Timeline
             data.anim = AssetDatabase.GetAssetPath(u_clip);
             data.trim_start = 0;
             data.loop = u_clip.isLooping;
-            XAnimationTrack atr = (XAnimationTrack) track;
-            XAnimationClip clip = new XAnimationClip((XAnimationTrack) track, data);
+            XAnimationTrack atr = (XAnimationTrack)track;
+            XAnimationClip clip = track.BuildClip(data) as XAnimationClip;
             clip.aclip = u_clip;
-            clip.port = track.clips?.Length ?? 0;
+            clip.OnBind();
             track.AddClip(clip, data);
         }
 

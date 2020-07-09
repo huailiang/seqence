@@ -8,38 +8,35 @@ namespace UnityEngine.Timeline
 
         float duration { get; set; }
 
-        ClipData data { get; }
+        ClipData data { get; set; }
 
         float end { get; }
 
         string Display { get; }
 
-        void Update(float time, float prev, bool mix);
+        bool Update(float time, float prev, bool mix);
 
-        void Dispose();
+        void OnDestroy();
 
         void OnBind();
     }
 
-    public class XClip<T> : XTimelineObject, IClip where T : XTrack
+    public class XClip<T, C> : XTimelineObject, IClip where T : XTrack
+        where C : XClip<T, C>
     {
-
         private bool enterd = false;
+
+        public C next { get; set; }
 
         protected XTimeline timeline
         {
             get { return track.timeline; }
         }
 
-        protected T track { get; }
+        public T track { get; set; }
 
-        public ClipData data { get; }
+        public ClipData data { get; set; }
 
-        protected XClip(T track, ClipData data)
-        {
-            this.track = track;
-            this.data = data;
-        }
 
         public float duration
         {
@@ -63,14 +60,10 @@ namespace UnityEngine.Timeline
             get { return string.Empty; }
         }
 
-        public void Dispose()
-        {
-            OnDestroy();
-        }
-
-        public void Update(float time, float prev, bool mix)
+        public bool Update(float time, float prev, bool mix)
         {
             float tick = time - start;
+            bool rst = false;
             if ((time >= start && (time == 0 || prev < start)) || (time <= end && prev > end))
             {
                 if (!enterd) OnEnter();
@@ -79,11 +72,13 @@ namespace UnityEngine.Timeline
             {
                 if (!enterd) OnEnter();// editor mode can jump when drag time area
                 OnUpdate(tick, mix);
+                rst = true;
             }
             if ((time > end && prev <= end) || (time < start && prev >= start))
             {
                 if (enterd) OnExit();
             }
+            return rst;
         }
 
         public virtual void OnBind()
@@ -95,7 +90,7 @@ namespace UnityEngine.Timeline
             enterd = true;
         }
 
-        protected virtual void OnUpdate(float tick,bool mix)
+        protected virtual void OnUpdate(float tick, bool mix)
         {
         }
 
@@ -105,14 +100,22 @@ namespace UnityEngine.Timeline
             enterd = false;
         }
 
-        protected virtual void OnDestroy()
+        public virtual void OnDestroy()
         {
+            enterd = false;
+            data = null;
+            track = null;
         }
 
 
-        public static implicit operator bool(XClip<T> clip)
+        public static implicit operator bool(XClip<T,C> clip)
         {
             return clip != null;
+        }
+
+        public void Dispose()
+        {
+            next = null;
         }
     }
 }

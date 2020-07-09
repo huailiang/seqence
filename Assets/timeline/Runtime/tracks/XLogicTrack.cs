@@ -1,14 +1,14 @@
 using UnityEngine.Timeline.Data;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 
 namespace UnityEngine.Timeline
 {
     [TrackFlag(TrackFlag.SubOnly)]
     [UseParent(typeof(XAnimationTrack))]
-    public class XLogicTrack : XTrack
+    public class XLogicTrack : XTrack, ISharedObject<XLogicTrack>
     {
         public TimelineDraw draw;
+
+        public XLogicTrack next { get; set; }
 
         public override AssetType AssetType
         {
@@ -18,16 +18,20 @@ namespace UnityEngine.Timeline
         public override XTrack Clone()
         {
             TrackData data = CloneData();
-            return new XLogicTrack(timeline, data);
+            return XTimelineFactory.GetTrack(data, timeline, parent);
         }
 
-        protected override IClip BuildClip(ClipData data)
+        public override IClip BuildClip(ClipData data)
         {
-            return new XLogicClip(this, data);
+            var clip = SharedPool<XLogicClip>.Get();
+            clip.data = data;
+            clip.track = this;
+            return clip;
         }
-        
-        public XLogicTrack(XTimeline tl, TrackData data) : base(tl, data)
+
+        protected override void OnPostBuild()
         {
+            base.OnPostBuild();
             InitDraw();
         }
 
@@ -38,14 +42,20 @@ namespace UnityEngine.Timeline
 
         public void Clean()
         {
-             draw?.Clean();
+            draw?.Clean();
         }
 
 
-        public override void Dispose()
+        public override void OnDestroy()
         {
             draw?.Destroy();
-            base.Dispose();
+            base.OnDestroy();
+            SharedPool<XLogicTrack>.Return(this);
+        }
+
+        public void Dispose()
+        {
+            next = null;
         }
     }
 }

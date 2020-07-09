@@ -11,28 +11,28 @@ namespace UnityEngine.Timeline
             switch (data.type)
             {
                 case AssetType.Marker:
-                    xTrack = new XMarkerTrack(tl, data);
+                    xTrack = SharedPool<XMarkerTrack>.Get();
                     break;
                 case AssetType.Animation:
-                    xTrack = new XAnimationTrack(tl, data as BindTrackData);
+                    xTrack = SharedPool<XAnimationTrack>.Get();
                     break;
                 case AssetType.BoneFx:
-                    xTrack = new XBoneFxTrack(tl, data);
+                    xTrack = SharedPool<XBoneFxTrack>.Get();
                     break;
                 case AssetType.SceneFx:
-                    xTrack = new XSceneFxTrack(tl, data);
+                    xTrack = SharedPool<XSceneFxTrack>.Get();
                     break;
                 case AssetType.PostProcess:
-                    xTrack = new XPostprocessTrack(tl, data);
+                    xTrack = SharedPool<XPostprocessTrack>.Get();
                     break;
                 case AssetType.Transform:
-                    xTrack = new XTransformTrack(tl, data);
+                    xTrack = SharedPool<XTransformTrack>.Get();
                     break;
                 case AssetType.LogicValue:
-                    xTrack = new XLogicTrack(tl, data);
+                    xTrack = SharedPool<XLogicTrack>.Get();
                     break;
                 case AssetType.Group:
-                    xTrack = new XGroupTrack(tl, data);
+                    xTrack = SharedPool<XGroupTrack>.Get();
                     break;
                 default:
                     Debug.LogError("unknown track " + data.type);
@@ -40,16 +40,34 @@ namespace UnityEngine.Timeline
             }
             if (xTrack)
             {
-                if (parent)
-                {
-                    xTrack.parent = parent;
-                }
-                xTrack.OnPostBuild();
+                xTrack.Initial(data, tl, parent);
             }
             return xTrack;
         }
 
-        
+        public static XMarker GetMarker(XTrack track, MarkData data)
+        {
+            XMarker marker = null;
+            switch (data.type)
+            {
+                case MarkType.Active:
+                    marker = SharedPool<XActiveMark>.Get();
+                    break;
+                case MarkType.Jump:
+                    marker = SharedPool<XJumpMarker>.Get();
+                    break;
+                case MarkType.Slow:
+                    marker = SharedPool<XSlowMarker>.Get();
+                    break;
+            }
+            if (marker != null)
+            {
+                marker.Initial(track, data);
+            }
+            return marker;
+        }
+
+
         public static MarkData CreateMarkData(MarkType type)
         {
             MarkData data = null;
@@ -71,23 +89,6 @@ namespace UnityEngine.Timeline
             return data;
         }
 
-        public static XMarker GetMarker(XTrack track, MarkData data)
-        {
-            XMarker marker = null;
-            switch (data.type)
-            {
-                case MarkType.Active:
-                    marker = new XActiveMark(track, data);
-                    break;
-                case MarkType.Jump:
-                    marker = new XJumpMarker(track, data);
-                    break;
-                case MarkType.Slow:
-                    marker = new XSlowMarker(track, data);
-                    break;
-            }
-            return marker;
-        }
 
         public static MarkData CreateMarkData(BinaryReader reader)
         {

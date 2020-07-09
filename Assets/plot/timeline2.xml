@@ -7,9 +7,25 @@
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>1.954443</start>
+          <start>-0.255101442</start>
+          <duration>10.0333338</duration>
+          <anim>Assets/test/Clips/Idle.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>false</loop>
+        </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>5.484681</start>
           <duration>28.46667</duration>
           <anim>Assets/test/Clips/ROM.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>false</loop>
+        </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>28.7633457</start>
+          <duration>10.0333338</duration>
+          <anim>Assets/test/Clips/Idle.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>0</trim_end>
           <loop>false</loop>
@@ -21,18 +37,18 @@
       <pos>
         <x>0</x>
         <y>0</y>
-        <z>0</z>
+        <z>-7</z>
       </pos>
-      <rotY>0</rotY>
+      <rotY>156</rotY>
     </TrackData>
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>5.127736</start>
-          <duration>1.56666672</duration>
-          <anim>Assets/test/Chomper/Animations/ChomperHit3.anim</anim>
+          <start>-0.106389441</start>
+          <duration>38.90356</duration>
+          <anim>Assets/test/Chomper/Animations/ChomperIdle.anim</anim>
           <trim_start>0</trim_start>
-          <trim_end>0</trim_end>
+          <trim_end>335</trim_end>
           <loop>true</loop>
         </ClipData>
       </clips>
@@ -40,11 +56,11 @@
       <prefab>Assets/test/Chomper.prefab</prefab>
       <roleid>1003</roleid>
       <pos>
-        <x>0</x>
+        <x>2</x>
         <y>0</y>
-        <z>-2</z>
+        <z>-5</z>
       </pos>
-      <rotY>180</rotY>
+      <rotY>190</rotY>
     </TrackData>
   </tracks>
   <skillHostTrack>0</skillHostTrack>

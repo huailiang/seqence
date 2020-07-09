@@ -9,6 +9,7 @@ using UnityEditor;
 namespace UnityEngine.Timeline.Data
 {
     [Serializable]
+    [Flags]
     public enum AssetType
     {
         None = 0,

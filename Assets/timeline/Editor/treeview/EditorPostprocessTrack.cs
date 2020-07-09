@@ -27,7 +27,7 @@ namespace UnityEditor.Timeline
             PostprocessData data = new PostprocessData();
             data.start = t;
             data.duration = 20;
-            XPostprocessClip clip = new XPostprocessClip((XPostprocessTrack) track, data);
+            var clip = track.BuildClip(data);
             track.AddClip(clip, data);
         }
 

@@ -2,6 +2,11 @@
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline.Data;
+#if UNITY_2019_3_OR_NEWER
+using UnityEngine.Animations;
+#else
+using UnityEngine.Experimental.Animations;
+#endif
 
 namespace UnityEngine.Timeline
 {
@@ -87,15 +92,17 @@ namespace UnityEngine.Timeline
 
         public XTimeline(TimelineConfig conf, PlayMode mode)
         {
-            Initial(conf, mode, false);
+            blending = false;
+            Initial(conf, mode);
         }
 
         public XTimeline(string path, PlayMode mode)
         {
+            blending = false;
             ReadConf(path);
             if (config != null)
             {
-                Initial(config, mode, false);
+                Initial(config, mode);
             }
         }
 
@@ -112,13 +119,12 @@ namespace UnityEngine.Timeline
             }
         }
 
-        private void Initial(TimelineConfig conf, PlayMode mode, bool blend)
+        private void Initial(TimelineConfig conf, PlayMode mode)
         {
             _time = 0;
-            blending = blend;
             playMode = mode;
             config = conf;
-            if (blend == false)
+            if (!blending)
             {
                 if (blendMixPlayable.IsValid())
                 {
@@ -153,10 +159,10 @@ namespace UnityEngine.Timeline
             prev = 0;
             if (graph.IsValid())
             {
-                graph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
-                graph.Play();
                 if (Application.isPlaying)
                 {
+                    graph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
+                    graph.Play();
                     editMode = TimelinePlayMode.RealRunning;
                 }
             }
@@ -164,7 +170,8 @@ namespace UnityEngine.Timeline
         }
 
         public AnimationPlayableOutput blendPlayableOutput { get; set; }
-        public AnimationMixerPlayable blendMixPlayable { get; set; }
+        public AnimationScriptPlayable blendMixPlayable { get; set; }
+        public MixerJob mixJob { get; set; }
 
 
         // Only skill mode worked
@@ -176,6 +183,7 @@ namespace UnityEngine.Timeline
             {
                 blendPlayableOutput = track.playableOutput;
                 blendMixPlayable = track.mixPlayable;
+                mixJob = track.mixJob;
                 var clip = track.GetPlayingPlayable(out var tick) as XAnimationClip;
                 if (clip != null)
                 {
@@ -186,6 +194,7 @@ namespace UnityEngine.Timeline
                     data.start = 0.01f;
                 }
             }
+            blending = true;
             Dispose(true);
             ReadConf(path);
             if (config != null)
@@ -206,18 +215,22 @@ namespace UnityEngine.Timeline
                     }
                     config.tracks[config.skillHostTrack].clips = nc;
                 }
-                Initial(config, PlayMode.Skill, true);
+                Initial(config, PlayMode.Skill);
             }
             SetPlaying(true);
         }
 
         public bool IsHostTrack(XTrack track)
         {
-            int idx = config.skillHostTrack;
-            var tracksData = config.tracks;
-            return blending &&
-                tracksData.Length > idx &&
-                tracksData[idx] == track.data;
+            if (playMode == PlayMode.Skill)
+            {
+                int idx = config.skillHostTrack;
+                var tracksData = config.tracks;
+                return blending &&
+                    tracksData.Length > idx &&
+                    tracksData[idx] == track.data;
+            }
+            return false;
         }
 
         public void Update()
@@ -270,13 +283,16 @@ namespace UnityEngine.Timeline
                     trackTrees[i].Process(time, prev);
                 }
             prev = time;
-            if (graph.IsValid() && !Application.isPlaying)
+            if (graph.IsValid())
             {
-                if (graph.IsPlaying()) graph.Stop();
-                graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
-                if (graph.GetOutputCount() > 0)
+                if (!Application.isPlaying)
                 {
-                    graph.Evaluate(time);
+                    if (graph.IsPlaying()) graph.Stop();
+                    graph.SetTimeUpdateMode(DirectorUpdateMode.Manual);
+                    if (graph.GetOutputCount() > 0)
+                    {
+                        graph.Evaluate(time);
+                    }
                 }
             }
         }
@@ -293,7 +309,7 @@ namespace UnityEngine.Timeline
             {
                 for (int i = 0; i < trackTrees.Length; i++)
                 {
-                    trackTrees[i].Dispose();
+                    trackTrees[i].OnDestroy();
                 }
                 trackTrees = null;
             }

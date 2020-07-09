@@ -7,11 +7,13 @@ namespace UnityEngine.Timeline
         public GameObject bindObj;
         private string pat;
 
-        protected XBindTrack(XTimeline tl, BindTrackData data) : base(tl, data)
+        protected override void OnPostBuild()
         {
-            if (!string.IsNullOrEmpty(data.prefab))
+            base.OnPostBuild();
+            BindTrackData bind = data as BindTrackData;
+            if (!string.IsNullOrEmpty(bind.prefab))
             {
-                Rebind(data.prefab);
+                Rebind(bind.prefab);
             }
         }
 
@@ -49,13 +51,13 @@ namespace UnityEngine.Timeline
         }
 
 
-        public override void Dispose()
+        public override void OnDestroy()
         {
-            if (timeline.IsHostTrack(this))
+            if (!timeline.IsHostTrack(this))
             {
                 XResources.DestroyGameObject(pat, bindObj);
             }
-            base.Dispose();
+            base.OnDestroy();
         }
     }
 }

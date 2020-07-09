@@ -3,8 +3,11 @@ using UnityEngine.Timeline.Data;
 
 namespace UnityEngine.Timeline
 {
-    public class XMarkerTrack : XTrack
+    public class XMarkerTrack : XTrack, ISharedObject<XMarkerTrack>
     {
+
+        public XMarkerTrack next { get; set; }
+
         public override AssetType AssetType
         {
             get { return AssetType.Marker; }
@@ -20,13 +23,24 @@ namespace UnityEngine.Timeline
             throw new Exception("mark track is uncloneable");
         }
 
-        public XMarkerTrack(XTimeline tl, TrackData data) : base(tl, data)
+        public XMarkerTrack() 
         {
         }
 
-        protected override IClip BuildClip(ClipData data)
+        public override IClip BuildClip(ClipData data)
         {
             throw new System.Exception("marker no clip");
+        }
+
+        public override void OnDestroy()
+        {
+            SharedPool<XMarkerTrack>.Return(this);
+            base.OnDestroy();
+        }
+
+        public void Dispose()
+        {
+            next = null;
         }
     }
 }

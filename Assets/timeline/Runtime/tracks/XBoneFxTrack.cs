@@ -5,8 +5,11 @@ namespace UnityEngine.Timeline
 {
     [TrackFlag(TrackFlag.SubOnly)]
     [UseParent(typeof(XAnimationTrack))]
-    public class XBoneFxTrack : XTrack
+    public class XBoneFxTrack : XTrack, ISharedObject<XBoneFxTrack>
     {
+
+        public XBoneFxTrack next { get; set; }
+
         public GameObject target
         {
             get
@@ -34,19 +37,31 @@ namespace UnityEngine.Timeline
             throw new Exception("bonefx track is uncloneable");
         }
 
-        public XBoneFxTrack(XTimeline tl, TrackData data) : base(tl, data)
-        {
-        }
 
-        protected override IClip BuildClip(ClipData data)
+        public override IClip BuildClip(ClipData data)
         {
-            return new XBoneFxClip(this, data);
+            var clip = SharedPool<XBoneFxClip>.Get();
+            clip.data = data;
+            clip.track = this;
+            return clip;
         }
 
 
         public override string ToString()
         {
             return "BoneFx " + ID;
+        }
+
+
+        public override void OnDestroy()
+        {
+            SharedPool<XBoneFxTrack>.Return(this);
+            base.OnDestroy();
+        }
+
+        public void Dispose()
+        {
+            next = null;
         }
     }
 }

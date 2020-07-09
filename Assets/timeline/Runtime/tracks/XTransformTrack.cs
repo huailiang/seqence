@@ -5,9 +5,11 @@ namespace UnityEngine.Timeline
 {
     [TrackFlag(TrackFlag.SubOnly | TrackFlag.NoClip)]
     [UseParent(typeof(XAnimationTrack))]
-    public class XTransformTrack : XTrack
+    public class XTransformTrack : XTrack, ISharedObject<XTransformTrack>
     {
         private GameObject _target;
+
+        public XTransformTrack next { get; set; }
 
         public GameObject target
         {
@@ -38,12 +40,14 @@ namespace UnityEngine.Timeline
 
         public override XTrack Clone()
         {
-            return new XTransformTrack(timeline, data);
+            return XTimelineFactory.GetTrack(data, timeline, parent);
         }
 
-        public XTransformTrack(XTimeline tl, TrackData data) : base(tl, data)
+
+        protected override void OnPostBuild()
         {
-            _data = (TransformTrackData) data;
+            base.OnPostBuild();
+            _data = (TransformTrackData)data;
         }
 
         public bool Sample(float time, out Vector3 pos, out Vector3 rot)
@@ -107,9 +111,9 @@ namespace UnityEngine.Timeline
             }
             else
             {
-                _data.time = new[] {t};
-                _data.pos = new[] {pos};
-                _data.rot = new[] {rot};
+                _data.time = new[] { t };
+                _data.pos = new[] { pos };
+                _data.rot = new[] { rot };
             }
         }
 
@@ -154,9 +158,20 @@ namespace UnityEngine.Timeline
             }
         }
 
-        protected override IClip BuildClip(ClipData data)
+        public override IClip BuildClip(ClipData data)
         {
             throw new Exception("transform no clip");
+        }
+
+        public override void OnDestroy()
+        {
+            SharedPool<XTransformTrack>.Return(this);
+            base.OnDestroy();
+        }
+
+        public void Dispose()
+        {
+            next = null;
         }
     }
 }

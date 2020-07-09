@@ -27,7 +27,7 @@ namespace UnityEditor.Timeline
             clipData.start = t;
             clipData.duration = 16;
 
-            XLogicClip clip = new XLogicClip((XLogicTrack)track, clipData);
+            var clip = track.BuildClip(clipData);
             track.AddClip(clip, clipData);
         }
 

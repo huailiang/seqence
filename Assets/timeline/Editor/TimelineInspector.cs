@@ -24,19 +24,23 @@ namespace UnityEditor.Timeline
             if (TimelineWindow.inst)
             {
                 var state = TimelineWindow.inst.state;
-                if (state != null)
+                if (state != null && state.timeline)
                 {
                     GUILayout.BeginVertical();
                     EditorGUILayout.LabelField(state.Name);
-                    EditorGUILayout.LabelField("frame rate: \t" + state.frameRate);
-                    EditorGUILayout.LabelField("play status:\t" + state.playing);
-                    state.mode = (WrapMode) EditorGUILayout.EnumPopup("wrapmode:", state.mode);
+                    EditorGUILayout.LabelField("frame rate:", state.frameRate.ToString());
+                    EditorGUILayout.LabelField("play status:", state.playing.ToString());
+                    state.mode = (WrapMode)EditorGUILayout.EnumPopup("wrapmode:", state.mode);
                     scroll = EditorGUILayout.BeginVerticalScrollView(scroll);
                     GUIMark();
                     GUITracks();
                     EditorGUILayout.EndScrollView();
                     GUILayout.EndVertical();
                 }
+            }
+            else
+            {
+                EditorGUILayout.LabelField("no timeline select");
             }
         }
 
@@ -92,12 +96,6 @@ namespace UnityEditor.Timeline
                     GUILayout.Space(4);
                 }
             }
-        }
-
-
-        void OnSceneGUI()
-        {
-
         }
     }
 }

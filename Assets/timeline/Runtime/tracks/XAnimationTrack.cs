@@ -2,17 +2,27 @@
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline.Data;
+using Unity.Collections;
+#if UNITY_2019_3_OR_NEWER
+using UnityEngine.Animations;
+#else
+using UnityEngine.Experimental.Animations;
+
+#endif
 
 namespace UnityEngine.Timeline
 {
     [TrackRequreType(typeof(Animator))]
     [TrackFlag(TrackFlag.RootOnly)]
-    public class XAnimationTrack : XBindTrack
+    public class XAnimationTrack : XBindTrack, ISharedObject<XAnimationTrack>
     {
         public AnimationPlayableOutput playableOutput;
-        public AnimationMixerPlayable mixPlayable;
+        public AnimationScriptPlayable mixPlayable;
+        public MixerJob mixJob;
         private int idx;
         private float tmp;
+
+        public XAnimationTrack next { get; set; }
 
         public override AssetType AssetType
         {
@@ -24,19 +34,18 @@ namespace UnityEngine.Timeline
             get { return false; }
         }
 
-        public XAnimationTrack(XTimeline tl, BindTrackData data) : base(tl, data) { }
-
-        protected override IClip BuildClip(ClipData data)
+        public override IClip BuildClip(ClipData data)
         {
-            var clip = new XAnimationClip(this, data);
-            clip.port = idx;
+            var clip = SharedPool<XAnimationClip>.Get();
+            clip.data = data;
+            clip.track = this;
+            clip.Initial(data, idx);
             if (tmp > 0 && clip.start < tmp)
             {
                 float start = clip.start;
                 if (tmp > clip.end) tmp = clip.end - 0.01f;
                 float duration = tmp - start;
-                var mix = new XMixClip<XAnimationTrack>(start, duration, clips[idx - 1], clip);
-                AddMix(mix);
+                BuildMix(start, duration, clips[idx - 1], clip);
             }
             tmp = clip.end;
             idx++;
@@ -49,33 +58,33 @@ namespace UnityEngine.Timeline
         }
 
 
-        public AnimationClipPlayable playA, playB;
+        private AnimationClipPlayable mixA, mixB;
 
-        protected override void OnMixer(float time, IMixClip mix)
+        protected override void OnMixer(float time, MixClip mix)
         {
             if (mixPlayable.IsValid())
             {
                 if (!mix.connect || !Application.isPlaying)
                 {
-                    XAnimationClip clipA = (XAnimationClip)mix.blendA;
-                    XAnimationClip clipB = (XAnimationClip)mix.blendB;
+                    XAnimationClip clipA = (XAnimationClip) mix.blendA;
+                    XAnimationClip clipB = (XAnimationClip) mix.blendB;
                     if (clipA && clipB)
                     {
-                        playA = clipA.playable;
-                        playB = clipB.playable;
+                        mixA = clipA.playable;
+                        mixB = clipB.playable;
                     }
                 }
                 mix.connect = true;
                 float weight = (time - mix.start) / mix.duration;
-                if (playA.IsValid() && playB.IsValid())
+                if (mixA.IsValid() && mixB.IsValid())
                 {
-                    mixPlayable.SetInputWeight(playA, 1 - weight);
-                    mixPlayable.SetInputWeight(playB, weight);
+                    mixJob.weight = weight;
+                    mixPlayable.SetJobData(mixJob);
                 }
                 else
                 {
                     string tip = "playable invalid while animating mix ";
-                    Debug.LogError(tip + playA.IsValid() + " " + playB.IsValid());
+                    Debug.LogError(tip + mixA.IsValid() + " " + mixB.IsValid());
                 }
             }
         }
@@ -83,31 +92,56 @@ namespace UnityEngine.Timeline
 
         public override void OnBind()
         {
-            base.OnBind();
             if (bindObj && XTimeline.graph.IsValid())
             {
                 var amtor = bindObj.GetComponent<Animator>();
+                var transforms = amtor.transform.GetComponentsInChildren<Transform>();
+                var numTransforms = transforms.Length - 1;
+
                 if (timeline.IsHostTrack(this))
                 {
                     playableOutput = timeline.blendPlayableOutput;
                     mixPlayable = timeline.blendMixPlayable;
+                    mixJob = timeline.mixJob;
                 }
                 else
                 {
+                    var handles = new NativeArray<TransformStreamHandle>(numTransforms, Allocator.Persistent,
+                        NativeArrayOptions.UninitializedMemory);
+                    for (var i = 0; i < numTransforms; ++i)
+                    {
+                        handles[i] = amtor.BindStreamTransform(transforms[i + 1]);
+                    }
+                    mixJob = new MixerJob() {handles = handles, weight = 1.0f};
+
                     AnimationTrackData Data = data as AnimationTrackData;
                     bindObj.transform.position = Data.pos;
                     bindObj.transform.rotation = Quaternion.Euler(0, Data.rotY, 0);
 
                     playableOutput = AnimationPlayableOutput.Create(XTimeline.graph, "AnimationOutput", amtor);
-                    mixPlayable = AnimationMixerPlayable.Create(XTimeline.graph);
+                    mixPlayable = AnimationScriptPlayable.Create(XTimeline.graph, mixJob);
+                    mixPlayable.SetProcessInputs(false);
                 }
                 playableOutput.SetSourcePlayable(mixPlayable);
             }
+            base.OnBind();
         }
 
-        public override void Dispose()
+        public override void Process(float time, float prev)
         {
-            if (timeline.IsHostTrack(this))
+            base.Process(time, prev);
+            if (mixPlayable.IsValid())
+            {
+                mixJob.clipA = clipA;
+                mixJob.clipB = clipB;
+                mixPlayable.SetJobData(mixJob);
+            }
+        }
+
+
+        public override void OnDestroy()
+        {
+            if (!timeline.IsHostTrack(this))
             {
                 if (mixPlayable.IsValid())
                 {
@@ -117,8 +151,15 @@ namespace UnityEngine.Timeline
                 {
                     XTimeline.graph.DestroyOutput(playableOutput);
                 }
+                mixJob.Dispose();
+                SharedPool<XAnimationTrack>.Return(this);
             }
-            base.Dispose();
+            base.OnDestroy();
+        }
+
+        public void Dispose()
+        {
+            next = null;
         }
 
         public override string ToString()

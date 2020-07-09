@@ -6,20 +6,22 @@ namespace UnityEngine.Timeline
 {
     public class XResources
     {
-        class Asset : SharedObject
+        class Asset : ISharedObject<Asset>
         {
             public Object asset;
             public uint refence;
+
+            public Asset next { get; set; }
 
             public Asset()
             {
                 this.refence = 1;
             }
 
-            public override void Dispose()
+            public void Dispose()
             {
                 refence = 0;
-                base.Dispose();
+                next = null;
             }
         }
 

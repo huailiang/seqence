@@ -3,9 +3,11 @@
 namespace UnityEngine.Timeline
 {
     [MarkUsage(AssetType.SceneFx | AssetType.Animation)]
-    public class XActiveMark : XMarker
+    public class XActiveMark : XMarker, ISharedObject<XActiveMark>
     {
         private ActiveMarkData _data;
+
+        public XActiveMark next { get; set; }
 
         public bool active
         {
@@ -13,9 +15,10 @@ namespace UnityEngine.Timeline
             set { _data.active = value; }
         }
 
-        public XActiveMark(XTrack track, MarkData markData) : base(track, markData)
+        protected override void OnPostBuild()
         {
-            _data = (ActiveMarkData)markData;
+            base.OnPostBuild();
+            _data = (ActiveMarkData)Data;
         }
 
         public override void OnTriger()
@@ -30,6 +33,17 @@ namespace UnityEngine.Timeline
                     go.SetActive(active);
                 }
             }
+        }
+
+        public override void OnDestroy()
+        {
+            SharedPool<XActiveMark>.Return(this);
+            base.OnDestroy();
+        }
+
+        public void Dispose()
+        {
+            next = null;
         }
     }
 }

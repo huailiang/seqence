@@ -24,7 +24,7 @@ namespace UnityEngine.Timeline
 
         public XMarker[] marks;
 
-        public List<IMixClip> mixs;
+        public List<MixClip> mixs;
 
         protected TrackMode mode;
 
@@ -91,12 +91,17 @@ namespace UnityEngine.Timeline
             get { return parent ? parent.locked : locked; }
         }
 
-        protected XTrack(XTimeline tl, TrackData data)
+        protected XTrack()
         {
-            timeline = tl;
-            this.data = data;
             ID = XTimeline.IncID;
             mode = TrackMode.Normal;
+        }
+
+        public void Initial(TrackData data, XTimeline tl, XTrack parent)
+        {
+            this.data = data;
+            this.timeline = tl;
+            this.parent = parent;
             if (data != null)
             {
                 if (data.clips != null)
@@ -127,6 +132,7 @@ namespace UnityEngine.Timeline
                     }
                 }
             }
+            OnPostBuild();
         }
 
         public bool GetFlag(TrackMode mode)
@@ -158,7 +164,8 @@ namespace UnityEngine.Timeline
                             return true;
                         else
                             tmp = tmp.parent;
-                    else break;
+                    else
+                        break;
                 }
             }
             else
@@ -222,17 +229,21 @@ namespace UnityEngine.Timeline
             track(this);
         }
 
-        protected abstract IClip BuildClip(ClipData data);
+        public abstract IClip BuildClip(ClipData data);
 
-        public virtual void OnPostBuild() { }
+        protected virtual void OnPostBuild()
+        {
+        }
 
-        protected virtual void OnMixer(float time, IMixClip mix) { }
+        protected virtual void OnMixer(float time, MixClip mix)
+        {
+        }
 
-        protected void AddMix(IMixClip mix)
+        protected void AddMix(MixClip mix)
         {
             if (mixs == null)
             {
-                mixs = new List<IMixClip>();
+                mixs = new List<MixClip>();
             }
             if (!mixs.Contains(mix))
             {
@@ -245,13 +256,31 @@ namespace UnityEngine.Timeline
             ForeachClip(x => x.OnBind());
         }
 
+        protected int clipA, clipB;
+
         public virtual void Process(float time, float prev)
         {
             ForeachTrack(track => track.Process(time, prev));
+            clipA = -1;
+            clipB = -1;
             if (!mute)
             {
                 bool mix = MixTriger(time, out var mixClip);
-                ForeachClip(clip => clip.Update(time, prev, mix));
+                if (clips != null)
+                    for (int i = 0; i < clips.Length; i++)
+                    {
+                        if (clips[i].Update(time, prev, mix))
+                        {
+                            var clip = clips[i] as XAnimationClip;
+                            if (clip)
+                            {
+                                if (clipA == -1)
+                                    clipA = clip.port;
+                                else
+                                    clipB = clip.port;
+                            }
+                        }
+                    }
                 MarkTriger(time, prev);
                 if (mix) OnMixer(time, mixClip);
             }
@@ -269,16 +298,22 @@ namespace UnityEngine.Timeline
                     {
                         float start = clips[i].start;
                         float duration = tmp - clips[i].start;
-                        var mix = new XMixClip<XAnimationTrack>(start, duration, clips[i - 1], clips[i]);
-                        AddMix(mix);
+                        BuildMix(start, duration, clips[i - 1], clips[i]);
                     }
                     tmp = clips[i].end;
                 }
             }
         }
 
+        protected void BuildMix(float start, float duration, IClip clip1, IClip clip2)
+        {
+            var mix = SharedPool<MixClip>.Get();
+            mix.Initial(start, duration, clip1, clip2);
+            AddMix(mix);
+        }
 
-        private bool MixTriger(float time, out IMixClip mixClip)
+
+        private bool MixTriger(float time, out MixClip mixClip)
         {
             if (mixs != null)
             {
@@ -349,19 +384,23 @@ namespace UnityEngine.Timeline
             return null;
         }
 
-        public virtual void Dispose()
+        public virtual void OnDestroy()
         {
-            Foreach(track => track.Dispose(), clip => clip.Dispose());
-            ForeachMark(mark => mark.Dispose());
+            Foreach(track => track.OnDestroy(), clip => clip.OnDestroy());
+            ForeachMark(mark => mark.OnDestroy());
 
             childs = null;
+            marks = null;
             parent = null;
             if (mixs != null)
             {
+                for (int i = 0; i < mixs.Count; i++)
+                {
+                    SharedPool<MixClip>.Return(mixs[i]);
+                }
                 mixs.Clear();
                 mixs = null;
             }
-            marks = null;
         }
 
 

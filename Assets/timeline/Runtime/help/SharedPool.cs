@@ -3,21 +3,17 @@
 namespace UnityEngine.Timeline
 {
 
-    // next 加在这里，主要是为了避免像LinkList一样 每个节点都要new一个LinkedListNode
-    public class SharedObject
+    // next 加在这里，主要是为了避免像LinkList一样, 每个节点都要new一个LinkedListNode
+    public interface ISharedObject<T> where T : class, new()
     {
-        public SharedObject next;
+        T next { get; set; }
 
-        public virtual void Dispose()
-        {
-            next = null;
-        }
+        void Dispose();
     }
 
 
     // 基于单向链表实现的队列，便于插入和删除，不适合查找， 比较适合缓冲池
-    // 类似于list的为了效率， 插入和删除都必须在末端效率比较高， 这里实现了先进先出的特性
-    public sealed class LinkQueue<T> where T : SharedObject
+    public sealed class LinkQueue<T> where T : class, ISharedObject<T>, new()
     {
         private T _head, _tail;
         private int cnt = 0;
@@ -51,7 +47,7 @@ namespace UnityEngine.Timeline
             var v = _head;
             if (_head.next != null)
             {
-                _head = _head.next as T;
+                _head = _head.next;
             }
             else
             {
@@ -62,7 +58,7 @@ namespace UnityEngine.Timeline
             return v;
         }
 
-        public void For(Action<SharedObject> cb)
+        public void For(Action<ISharedObject<T>> cb)
         {
             var p = _head;
             while (p != null)
@@ -80,7 +76,7 @@ namespace UnityEngine.Timeline
         }
     }
 
-    public class SharedPool<T> where T : SharedObject, new()
+    public class SharedPool<T> where T : class, ISharedObject<T>, new()
     {
         private static LinkQueue<T> pool = new LinkQueue<T>();
 
