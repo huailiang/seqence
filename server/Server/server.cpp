@@ -1,12 +1,12 @@
 #include <iostream>
 #include <string>
-#include "EntitasPP/SystemContainer.hpp"
-#include "EntitasPP/Matcher.hpp"
-#include "EntitasPP/Pool.hpp"
+#include "Entitas/SystemContainer.hpp"
+#include "Entitas/Matcher.hpp"
+#include "Entitas/Pool.hpp"
+
 
 using namespace Entitas;
 using namespace std;
-
 
 class DemoComponent : public IComponent {
 public:
@@ -61,7 +61,7 @@ private:
 };
 
 class MoveSystem : public IInitializeSystem, public IExecuteSystem, public ISetPoolSystem {
-	
+
 public:
 	void SetPool(Pool* pool) {
 		_group = pool->GetGroup(Matcher_AllOf(Position));
@@ -94,16 +94,17 @@ private:
 	std::weak_ptr<Group> _group;
 };
 
-int main(const int argc, const char* argv[]) {
+int main()
+{
 	cout << "hello world" << endl;
-
 	auto systems = std::make_shared<SystemContainer>();
 	auto pool = std::make_shared<Pool>();
-	
+
 	systems->Add(pool->CreateSystem<DemoSystem>());
 	systems->Add(pool->CreateSystem<MoveSystem>());
 	systems->Initialize();
 	for (unsigned int i = 0; i < 2; ++i) {
 		systems->Execute();
 	}
+	return 1;
 }

@@ -1,82 +1,77 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
+    <Filter Include="Entitas">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="源文件\EntitasPP">
-      <UniqueIdentifier>{182102a9-4f1f-4c59-ba66-b88a51c78501}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\EntitasPP\main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\EntitasPP\EntitasPP\Entity.cpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClCompile>
-    <ClCompile Include="..\EntitasPP\EntitasPP\Group.cpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClCompile>
-    <ClCompile Include="..\EntitasPP\EntitasPP\GroupObserver.cpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClCompile>
-    <ClCompile Include="..\EntitasPP\EntitasPP\Matcher.cpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClCompile>
-    <ClCompile Include="..\EntitasPP\EntitasPP\Pool.cpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClCompile>
-    <ClCompile Include="..\EntitasPP\EntitasPP\ReactiveSystem.cpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClCompile>
-    <ClCompile Include="..\EntitasPP\EntitasPP\SystemContainer.cpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClCompile>
-    <ClCompile Include="..\EntitasPP\EntitasPP\ComponentTypeId.cpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClCompile>
+    <ClInclude Include="..\Engine\Entitas\Group.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\GroupEventType.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\GroupObserver.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\IComponent.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\ISystem.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\Matcher.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\Pool.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\ReactiveSystem.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\SystemContainer.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\TriggerOnEvent.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\ComponentTypeId.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\Delegate.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Entitas\Entity.hpp">
+      <Filter>Entitas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\EntitasPP\EntitasPP\Entity.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\Group.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\GroupEventType.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\GroupObserver.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\IComponent.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\ISystem.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\Matcher.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\Pool.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\ReactiveSystem.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\SystemContainer.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\TriggerOnEvent.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\ComponentTypeId.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\EntitasPP\EntitasPP\Delegate.hpp">
-      <Filter>源文件\EntitasPP</Filter>
-    </ClInclude>
+    <ClCompile Include="..\Engine\Entitas\GroupObserver.cpp">
+      <Filter>Entitas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Entitas\Matcher.cpp">
+      <Filter>Entitas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Entitas\Pool.cpp">
+      <Filter>Entitas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Entitas\ReactiveSystem.cpp">
+      <Filter>Entitas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Entitas\SystemContainer.cpp">
+      <Filter>Entitas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Entitas\ComponentTypeId.cpp">
+      <Filter>Entitas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Entitas\Entity.cpp">
+      <Filter>Entitas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Entitas\Group.cpp">
+      <Filter>Entitas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\engine.cpp" />
   </ItemGroup>
 </Project>
