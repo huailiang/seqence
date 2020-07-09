@@ -5,7 +5,5 @@ build/
 **/.idea/
 **/.vscode/
 *.tmp
-*.user
-*.userprefs
 *.pidb
 *.DS_Store

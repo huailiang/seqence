@@ -3,7 +3,7 @@
 #include "GroupObserver.hpp"
 #include <algorithm>
 
-namespace EntitasPP
+namespace Entitas
 {
 	Group::Group(const Matcher& matcher) : mMatcher(matcher)
 	{

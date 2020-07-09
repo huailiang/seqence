@@ -3,7 +3,7 @@
 #include "GroupObserver.hpp"
 #include "ISystem.hpp"
 
-namespace EntitasPP
+namespace Entitas
 {
 	class ReactiveSystem : public IExecuteSystem
 	{

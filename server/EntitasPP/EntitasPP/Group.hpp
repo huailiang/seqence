@@ -5,7 +5,7 @@
 #include "GroupEventType.hpp"
 #include <unordered_set>
 
-namespace EntitasPP
+namespace Entitas
 {
 	class GroupObserver;
 

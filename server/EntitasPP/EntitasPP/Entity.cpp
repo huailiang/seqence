@@ -1,6 +1,6 @@
 #include "Entity.hpp"
 
-namespace EntitasPP
+namespace Entitas
 {
 	Entity::Entity(std::map<ComponentId, std::stack<IComponent*>>* componentPools)
 	{
@@ -179,7 +179,7 @@ namespace EntitasPP
 
 namespace std
 {
-	bool operator ==(weak_ptr<EntitasPP::Entity> left, weak_ptr<EntitasPP::Entity> right)
+	bool operator ==(weak_ptr<Entitas::Entity> left, weak_ptr<Entitas::Entity> right)
 	{
 		return left.lock().get() == right.lock().get();
 	}

@@ -4,7 +4,7 @@
 #include "TriggerOnEvent.hpp"
 #include <vector>
 
-namespace EntitasPP
+namespace Entitas
 {
 	class Pool;
 

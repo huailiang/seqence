@@ -3,7 +3,7 @@
 #include "Matcher.hpp"
 #include "GroupEventType.hpp"
 
-namespace EntitasPP
+namespace Entitas
 {
 	struct TriggerOnEvent
 	{

@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{1DCDD8BC-F134-4D34-A800-CFA7E3CF30CA}</ProjectGuid>
-    <RootNamespace>Entitas</RootNamespace>
+    <ProjectGuid>{3AD56166-2B10-4AF7-A56B-CF61F63F1C01}</ProjectGuid>
+    <RootNamespace>Project</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -39,7 +39,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -70,18 +70,21 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>E:\unity\seqence\server\EntitasPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Entitas.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -120,33 +123,12 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Entitas.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\EntitasPP\EntitasPP\ComponentTypeId.cpp" />
-    <ClCompile Include="..\EntitasPP\EntitasPP\Entity.cpp" />
-    <ClCompile Include="..\EntitasPP\EntitasPP\Group.cpp" />
-    <ClCompile Include="..\EntitasPP\EntitasPP\GroupObserver.cpp" />
-    <ClCompile Include="..\EntitasPP\EntitasPP\Matcher.cpp" />
-    <ClCompile Include="..\EntitasPP\EntitasPP\Pool.cpp" />
-    <ClCompile Include="..\EntitasPP\EntitasPP\ReactiveSystem.cpp" />
-    <ClCompile Include="..\EntitasPP\EntitasPP\SystemContainer.cpp" />
-    <ClCompile Include="..\EntitasPP\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\EntitasPP\EntitasPP\ComponentTypeId.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\Delegate.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\Entity.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\Group.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\GroupEventType.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\GroupObserver.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\IComponent.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\ISystem.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\Matcher.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\Pool.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\ReactiveSystem.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\SystemContainer.hpp" />
-    <ClInclude Include="..\EntitasPP\EntitasPP\TriggerOnEvent.hpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,6 @@
 #include "ComponentTypeId.hpp"
 
-namespace EntitasPP
+namespace Entitas
 {
 	unsigned int ComponentTypeId::mCounter = 0;
 }

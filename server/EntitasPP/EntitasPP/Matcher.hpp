@@ -2,7 +2,7 @@
 
 #include "Entity.hpp"
 
-namespace EntitasPP
+namespace Entitas
 {
 	class Matcher;
 	class TriggerOnEvent;
@@ -56,9 +56,9 @@ namespace EntitasPP
 namespace std
 {
 	template <>
-	struct hash<EntitasPP::Matcher>
+	struct hash<Entitas::Matcher>
 	{
-		std::size_t operator()(const EntitasPP::Matcher& matcher) const
+		std::size_t operator()(const Entitas::Matcher& matcher) const
 		{
 			return hash<unsigned int>()(matcher.GetHashCode());
 		}
@@ -76,8 +76,8 @@ namespace
 #define GET_MACRO(_1, _2, _3, _4, _5, _6, NAME,...) NAME
 #define FOR_EACH(MODIFIER,...) GET_MACRO(__VA_ARGS__, FUNC_6, FUNC_5, FUNC_4, FUNC_3, FUNC_2, FUNC_1)(MODIFIER, __VA_ARGS__)
 
-#define COMPONENT_GET_TYPE_ID(COMPONENT_CLASS) EntitasPP::ComponentTypeId::Get<COMPONENT_CLASS>()
-#define Matcher_AllOf(...) ((EntitasPP::Matcher)EntitasPP::Matcher::AllOf(std::vector<EntitasPP::ComponentId>({ FOR_EACH(COMPONENT_GET_TYPE_ID, __VA_ARGS__) })))
-#define Matcher_AnyOf(...) ((EntitasPP::Matcher)EntitasPP::Matcher::AnyOf(std::vector<EntitasPP::ComponentId>({ FOR_EACH(COMPONENT_GET_TYPE_ID, __VA_ARGS__) })))
-#define Matcher_NoneOf(...) ((EntitasPP::Matcher)EntitasPP::Matcher::NoneOf(std::vector<EntitasPP::ComponentId>({ FOR_EACH(COMPONENT_GET_TYPE_ID, __VA_ARGS__) })))
+#define COMPONENT_GET_TYPE_ID(COMPONENT_CLASS) Entitas::ComponentTypeId::Get<COMPONENT_CLASS>()
+#define Matcher_AllOf(...) ((Entitas::Matcher)Entitas::Matcher::AllOf(std::vector<Entitas::ComponentId>({ FOR_EACH(COMPONENT_GET_TYPE_ID, __VA_ARGS__) })))
+#define Matcher_AnyOf(...) ((Entitas::Matcher)Entitas::Matcher::AnyOf(std::vector<Entitas::ComponentId>({ FOR_EACH(COMPONENT_GET_TYPE_ID, __VA_ARGS__) })))
+#define Matcher_NoneOf(...) ((Entitas::Matcher)Entitas::Matcher::NoneOf(std::vector<Entitas::ComponentId>({ FOR_EACH(COMPONENT_GET_TYPE_ID, __VA_ARGS__) })))
 }

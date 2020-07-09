@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <map>
 
-namespace EntitasPP
+namespace Entitas
 {
 	class ISystem;
 

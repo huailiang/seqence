@@ -3,7 +3,7 @@
 #include "IComponent.hpp"
 #include <vector>
 
-namespace EntitasPP
+namespace Entitas
 {
 	typedef unsigned int ComponentId;
 	typedef std::vector<ComponentId> ComponentIdList;

@@ -3,7 +3,7 @@
 #include "ISystem.hpp"
 #include <vector>
 
-namespace EntitasPP
+namespace Entitas
 {
 	class SystemContainer : public IInitializeSystem, public IExecuteSystem, public IFixedExecuteSystem
 	{

@@ -2,7 +2,7 @@
 #include "TriggerOnEvent.hpp"
 #include <algorithm>
 
-namespace EntitasPP
+namespace Entitas
 {
 	auto Matcher::AllOf(const ComponentIdList indices) -> const Matcher
 	{

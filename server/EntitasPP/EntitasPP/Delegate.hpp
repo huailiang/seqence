@@ -8,7 +8,7 @@
 #include <vector>
 #include <memory>
 
-namespace EntitasPP
+namespace Entitas
 {
 	template<typename>
 	class Delegate;

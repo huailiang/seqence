@@ -7,7 +7,7 @@
 #include <unordered_set>
 #include <functional>
 
-namespace EntitasPP
+namespace Entitas
 {
 	class Group;
 

@@ -5,7 +5,7 @@
 #include <stack>
 #include <map>
 
-namespace EntitasPP
+namespace Entitas
 {
 	class Entity;
 	typedef std::shared_ptr<Entity> EntityPtr;
@@ -135,13 +135,13 @@ namespace EntitasPP
 namespace std
 {
 	template <>
-	struct hash<weak_ptr<EntitasPP::Entity>>
+	struct hash<weak_ptr<Entitas::Entity>>
 	{
-		std::size_t operator()(const weak_ptr<EntitasPP::Entity>& ptr) const
+		std::size_t operator()(const weak_ptr<Entitas::Entity>& ptr) const
 		{
 			return hash<unsigned int>()(ptr.lock()->GetUuid());
 		}
 	};
 
-	bool operator ==(weak_ptr<EntitasPP::Entity> left, weak_ptr<EntitasPP::Entity> right);
+	bool operator ==(weak_ptr<Entitas::Entity> left, weak_ptr<Entitas::Entity> right);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace EntitasPP
+namespace Entitas
 {
 	enum class GroupEventType
 	{
