@@ -5,7 +5,6 @@
 
 namespace Entitas
 {
-
 	void Initial();
 	void Update(float delta);
 	void Destroy();

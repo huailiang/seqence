@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
 #include <time.h>
+#include <vector>
 #include "engine.hpp"
 #include "conio.h"
 
 using namespace std;
 
 bool flag_q;
-
 
 int main()
 {

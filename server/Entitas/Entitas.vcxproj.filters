@@ -68,6 +68,12 @@
     <ClInclude Include="..\Engine\System\DemoSystem.hpp">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine\Component\Attribute.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\System\EntitySystem.hpp">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\Entitas\GroupObserver.cpp">

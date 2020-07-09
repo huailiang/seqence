@@ -5,7 +5,6 @@
 
 namespace Entitas
 {
-	using namespace std;
 
 	class DemoSystem : public IInitializeSystem, public IExecuteSystem, public ISetPoolSystem {
 	public:
@@ -19,7 +18,7 @@ namespace Entitas
 		void Execute() {
 			_pool->CreateEntity()->Add<DemoComponent>("foo", "bar");
 			auto entitiesCount = _pool->GetGroup(Matcher_AllOf(DemoComponent))->Count();
-			std::cout << "There are " << entitiesCount << " entities with the component DemoComponent" << std::endl;
+			std::cout << "There are " << entitiesCount << " entities with the DemoComponent" << std::endl;
 			std::cout << "DemoSystem executed" << std::endl;
 		}
 

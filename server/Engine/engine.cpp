@@ -1,11 +1,7 @@
+#include "engine.hpp"
 #include "Entitas/Matcher.hpp"
 #include "System/MoveSystem.hpp"
 #include "System/DemoSystem.hpp"
-#include "engine.hpp"
-#include <iostream>
-#include <string>
-
-using namespace std;
 
 
 namespace Entitas
@@ -17,7 +13,7 @@ namespace Entitas
 
 	void Initial()
 	{
-		cout << "engine initial" << endl;
+		printf("engine initial");
 		systems = new SystemContainer();
 		pool = new Pool();
 

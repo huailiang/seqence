@@ -6,7 +6,6 @@ namespace Entitas
 {
 	using namespace std;
 
-
 	class DemoComponent : public IComponent {
 	public:
 		void Reset(const std::string& name1, const std::string& name2) {
