@@ -5,6 +5,12 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{1ec7edc0-4f50-4fc0-b340-7a2e2d44b056}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{e29ec7f8-d42e-4fef-977e-44dbe70dc217}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Engine\Entitas\Group.hpp">
@@ -47,6 +53,21 @@
       <Filter>Entitas</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\engine.hpp" />
+    <ClInclude Include="..\Engine\Components\Move.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Components\Position.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\system\MoveSystem.hpp">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Component\DemoComponent.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\System\DemoSystem.hpp">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\Entitas\GroupObserver.cpp">

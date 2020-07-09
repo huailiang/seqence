@@ -12,7 +12,7 @@ bool flag_q;
 int main()
 {
 	cout << "server start" << endl;
-	int fps = 30;
+	const int fps = 30;
 	Entitas::Initial();
 	int per = 1000 / fps;
 	clock_t rawtime = 0;
