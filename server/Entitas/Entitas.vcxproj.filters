@@ -46,6 +46,7 @@
     <ClInclude Include="..\Engine\Entitas\Entity.hpp">
       <Filter>Entitas</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine\engine.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\Entitas\GroupObserver.cpp">
