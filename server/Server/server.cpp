@@ -9,9 +9,42 @@ using namespace std;
 
 bool flag_q;
 
+
+class AB
+{
+public:
+	AB(int _a)
+	{
+		a = _a;
+	}
+
+	~AB()
+	{
+		printf("DESTROY \n");
+	}
+
+	int a;
+};
+
+std::shared_ptr<AB> ptr;
+std::vector< std::shared_ptr<AB>> arr;
+
+void test()
+{
+	auto ptr = std::shared_ptr<AB>(new AB(2));
+	cout << ptr->a << endl;
+	arr.push_back(ptr);
+	ptr = nullptr;
+};
+
 int main()
 {
 	cout << "server start" << endl;
+	test();
+	cout << "size: " << arr.size() << endl;
+	arr.clear();
+	cout << "size2:" << arr.size() << endl;
+
 	const int fps = 30;
 	Entitas::Initial();
 	int per = 1000 / fps;

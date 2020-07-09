@@ -6,7 +6,6 @@
 
 namespace Entitas
 {
-	using namespace std;
 
 	class EntitySystem : public IInitializeSystem, public IExecuteSystem, public ISetPoolSystem {
 
@@ -17,9 +16,9 @@ namespace Entitas
 		}
 
 		void Initialize() {
-			auto e = _pool->CreateEntity();
-			e->Add<Position>(1.0f, 2.0f, 3.0f);
-			e->Add<Attribute>(2, 1, 2, 3);
+			player = _pool->CreateEntity();
+			player->Add<Position>(1.0f, 2.0f, 3.0f);
+			player->Add<Attribute>(2, 1, 2, 3);
 		}
 
 		void Execute() {
@@ -29,17 +28,18 @@ namespace Entitas
 				{
 					auto pos = e->Get<Position>();
 					e->Replace<Position>(pos->x, pos->y, pos->z);
-					cout << e->Get<Position>()->y << endl;
+					std::cout << e->Get<Position>()->y << std::endl;
 				}
 				else
 				{
-					cout << "no postion exist" << endl;
+					printf("no postion exist");
 				}
 			}
 		}
 	private:
 		Pool* _pool;
 		std::weak_ptr<Group> _group;
+		std::shared_ptr<Entity> player;
 	};
 
 }

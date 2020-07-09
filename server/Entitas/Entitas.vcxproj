@@ -40,6 +40,7 @@
     <ClInclude Include="..\Engine\System\EntitySystem.hpp" />
     <ClInclude Include="..\Engine\System\DemoSystem.hpp" />
     <ClInclude Include="..\Engine\system\MoveSystem.hpp" />
+    <ClInclude Include="..\Engine\Util\util.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\Entitas\ComponentTypeId.cpp" />
@@ -51,6 +52,7 @@
     <ClCompile Include="..\Engine\Entitas\ReactiveSystem.cpp" />
     <ClCompile Include="..\Engine\Entitas\SystemContainer.cpp" />
     <ClCompile Include="..\Engine\engine.cpp" />
+    <ClCompile Include="..\Engine\Util\util.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

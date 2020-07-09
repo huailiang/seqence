@@ -11,6 +11,9 @@
     <Filter Include="System">
       <UniqueIdentifier>{e29ec7f8-d42e-4fef-977e-44dbe70dc217}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{74f5e189-377b-4677-bc5f-3568196cf4f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Engine\Entitas\Group.hpp">
@@ -74,6 +77,9 @@
     <ClInclude Include="..\Engine\System\EntitySystem.hpp">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine\Util\util.hpp">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\Entitas\GroupObserver.cpp">
@@ -101,5 +107,8 @@
       <Filter>Entitas</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\engine.cpp" />
+    <ClCompile Include="..\Engine\Util\util.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
