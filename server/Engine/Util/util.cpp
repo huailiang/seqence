@@ -11,4 +11,9 @@ namespace Entitas
 
 	}
 
+	bool util::circleAttack(float radius, Position attack, Position skill)
+	{
+		return true;
+	}
+
 }

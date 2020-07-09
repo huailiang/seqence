@@ -80,6 +80,9 @@
     <ClInclude Include="..\Engine\Util\util.hpp">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine\Util\tinyxml2.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\Entitas\GroupObserver.cpp">
@@ -108,6 +111,9 @@
     </ClCompile>
     <ClCompile Include="..\Engine\engine.cpp" />
     <ClCompile Include="..\Engine\Util\util.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Util\tinyxml2.cpp">
       <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
