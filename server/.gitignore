@@ -1,0 +1,11 @@
+Debug/
+x64/
+build/
+**/.vs/
+**/.idea/
+**/.vscode/
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.DS_Store
