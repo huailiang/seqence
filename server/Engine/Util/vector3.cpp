@@ -100,15 +100,26 @@ namespace Entitas
 		 | a.x a.y a.z|
 		 | b.x b.y b.z| = (a.y*b.z -a.z*b.y)i + (a.z*b.x - a.x*b.z)j + (a.x*b.y - a.y*b.x)k
 	*/
-	vector3 vector3::crossProduct(const vector3 &v)
+	vector3 vector3::cross(const vector3 &v)
 	{
 		return vector3(y * v.z - z * v.y,
 			z * v.x - x * v.z,
 			x * v.y - y * v.x);
 	}
 
-	void vector3::printVec3()
+	void vector3::tostring()
 	{
 		std::cout << "(" << x << ", " << y << ", " << z << ")" << std::endl;
 	}
+
+	
+	// v表示x-z轴转的逆时针角度
+	// https://blog.csdn.net/hjq376247328/article/details/45113563
+	vector3 vector3::rotateY(const float v)
+	{
+		float x1 = x * cos(v) - z * sin(v);
+		float z1 = x * sin(v) + z * cos(v);
+		return vector3(x1, y, z1);
+	}
+
 }

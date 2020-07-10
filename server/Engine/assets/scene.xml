@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<scene name="Depth">
+    <node type="camera">
+        <eye>0 10 10</eye>
+        <front>0 0 -1</front>
+        <refUp>0 1 0</refUp>
+        <fov>90</fov>
+    </node>
+    <node type="Sphere">
+        <center>0 10 -10</center>
+        <radius>10</radius>
+    </node>
+    <node type="Plane">
+        <direction>0 10 -10</direction>
+        <distance>10</distance>
+    </node>
+</scene>

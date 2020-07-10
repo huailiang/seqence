@@ -5,6 +5,10 @@
         <Blog>CSDN</Blog>
         <Code>GitHub</Code>
     </User>
+    <User Name="fengbingchu2n">
+        <Blog>CSDN</Blog>
+        <Code>GitHub</Code>
+    </User>
     <Blog Name="CSDN">
         <Address>https://blog.csdn.net/fengbingchun</Address>
         <ID>fengbingchun</ID>
