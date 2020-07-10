@@ -47,63 +47,27 @@
             <float>0.124227732</float>
             <float>1.86048925</float>
             <float>4.556264</float>
-            <float>11.1586266</float>
-            <float>16.6033764</float>
           </time>
           <pos>
-            <Vector3>
+            <Vector4>
               <x>0</x>
-              <y>0</y>
+              <y>2</y>
               <z>0</z>
-            </Vector3>
-            <Vector3>
+              <w>12</w>
+            </Vector4>
+            <Vector4>
               <x>-0.81</x>
               <y>0</y>
               <z>0.13</z>
-            </Vector3>
-            <Vector3>
+              <w>2</w>
+            </Vector4>
+            <Vector4>
               <x>-1.005</x>
               <y>0</y>
               <z>-1.113</z>
-            </Vector3>
-            <Vector3>
-              <x>1.25</x>
-              <y>0</y>
-              <z>-3.554</z>
-            </Vector3>
-            <Vector3>
-              <x>3.12</x>
-              <y>0</y>
-              <z>0.12</z>
-            </Vector3>
+              <w>23</w>
+            </Vector4>
           </pos>
-          <rot>
-            <Vector3>
-              <x>0</x>
-              <y>278.94</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>0</x>
-              <y>278.94</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>0</x>
-              <y>278.94</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>0</x>
-              <y>226.81</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>0</x>
-              <y>346.81</y>
-              <z>0</z>
-            </Vector3>
-          </rot>
           <select>false</select>
         </TrackData>
         <TrackData>
@@ -258,76 +222,15 @@
           <type>Transform</type>
           <time>
             <float>0.270216137</float>
-            <float>3.17503953</float>
-            <float>8.545585</float>
-            <float>10.5722065</float>
-            <float>15.0307722</float>
-            <float>20.2324333</float>
           </time>
           <pos>
-            <Vector3>
+            <Vector4>
               <x>-3</x>
               <y>0</y>
               <z>-5</z>
-            </Vector3>
-            <Vector3>
-              <x>-2</x>
-              <y>0</y>
-              <z>-5</z>
-            </Vector3>
-            <Vector3>
-              <x>-2</x>
-              <y>0</y>
-              <z>-5</z>
-            </Vector3>
-            <Vector3>
-              <x>-2</x>
-              <y>0</y>
-              <z>-5</z>
-            </Vector3>
-            <Vector3>
-              <x>-0.97</x>
-              <y>0</y>
-              <z>-5</z>
-            </Vector3>
-            <Vector3>
-              <x>-0.97</x>
-              <y>0</y>
-              <z>-5</z>
-            </Vector3>
+              <w>32</w>
+            </Vector4>
           </pos>
-          <rot>
-            <Vector3>
-              <x>-0</x>
-              <y>120.000008</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>72.44</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>72.44</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>22.9999924</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>22.9999924</y>
-              <z>0</z>
-            </Vector3>
-            <Vector3>
-              <x>-0</x>
-              <y>22.9999924</y>
-              <z>0</z>
-            </Vector3>
-          </rot>
           <select>false</select>
         </TrackData>
         <TrackData>

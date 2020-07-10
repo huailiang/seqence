@@ -184,8 +184,11 @@ namespace UnityEditor.Timeline
                         EditorGUIUtility.ExitGUI();
                     }
                     EditorGUILayout.EndHorizontal();
-                    Data.pos[i] = EditorGUILayout.Vector3Field("pos", Data.pos[i]);
-                    Data.rot[i] = EditorGUILayout.Vector3Field("rot", Data.rot[i]);
+                    Vector3 pos = Data.pos[i];
+                    pos = EditorGUILayout.Vector3Field("pos", pos);
+                    float rot = Data.pos[i].w;
+                    rot = EditorGUILayout.FloatField("rotY", rot);
+                    Data.pos[i] = new Vector4(pos.x, pos.y, pos.z, rot);
                     EditorGUILayout.Space();
                 }
             }

@@ -61,14 +61,16 @@ namespace UnityEngine.Timeline
             int len = _data.time.Length;
             if (time < _data.time[0])
             {
-                pos = _data.pos[0];
-                rot = _data.rot[0];
+                Vector4 v = _data.pos[0];
+                pos = v;
+                rot = new Vector3(0, v.w, 0);
                 return true;
             }
             else if (time > _data.time[len - 1])
             {
-                pos = _data.pos[len - 1];
-                rot = _data.rot[len - 1];
+                Vector4 v = _data.pos[len-1];
+                pos = v;
+                rot = new Vector3(0, v.w, 0);
                 return true;
             }
             for (int i = 0; i < len - 1; i++)
@@ -76,8 +78,9 @@ namespace UnityEngine.Timeline
                 if (time >= _data.time[i] && time <= _data.time[i + 1])
                 {
                     float dt = (time - _data.time[i]) / (_data.time[i + 1] - _data.time[i]);
-                    pos = Vector3.Lerp(_data.pos[i], _data.pos[i + 1], dt);
-                    rot = Vector3.Lerp(_data.rot[i], _data.rot[i + 1], dt);
+                    Vector4 v = Vector4.Lerp(_data.pos[i], _data.pos[i + 1], dt);
+                    pos = v;
+                    rot = new Vector3(0, v.w, 0);
                     return true;
                 }
             }
@@ -96,8 +99,9 @@ namespace UnityEngine.Timeline
                 {
                     if (time[i] == t)
                     {
-                        _data.pos[i] = pos;
-                        _data.rot[i] = rot;
+                        Vector4 p = pos;
+                        p.w = rot.y;
+                        _data.pos[i] = p;
                         find = true;
                         break;
                     }
@@ -105,15 +109,17 @@ namespace UnityEngine.Timeline
                 if (!find)
                 {
                     TimelineUtil.Add(ref _data.time, t);
-                    TimelineUtil.Add(ref _data.pos, pos);
-                    TimelineUtil.Add(ref _data.rot, rot);
+                    Vector4 p = pos;
+                    p.w = rot.y;
+                    TimelineUtil.Add(ref _data.pos, p);
                 }
             }
             else
             {
                 _data.time = new[] { t };
-                _data.pos = new[] { pos };
-                _data.rot = new[] { rot };
+                Vector4 p = pos;
+                p.w = rot.y;
+                _data.pos = new[] { p };
             }
         }
 
@@ -139,7 +145,6 @@ namespace UnityEngine.Timeline
             {
                 _data.time = TimelineUtil.Remv(_data.time, i);
                 _data.pos = TimelineUtil.Remv(_data.pos, i);
-                _data.rot = TimelineUtil.Remv(_data.rot, i);
                 return true;
             }
             return false;
