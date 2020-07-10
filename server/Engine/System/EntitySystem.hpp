@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../Component/Attribute.hpp"
+#include "../Component/Rotation.hpp"
 #include "../Component/Position.hpp"
 #include "../Entitas/ISystem.hpp"
 
@@ -19,8 +20,10 @@ namespace Entitas
 			player = _pool->CreateEntity();
 			vector3 p;
 			p.x = 1;
+			player->Add<Rotation>();
 			player->Add<Position>(p);
 			player->Add<Attribute>(2, 1, 2, 3);
+			player->OnEntityReleased += OnEntityDestroy;
 		}
 
 		void Execute() {
@@ -38,6 +41,18 @@ namespace Entitas
 				}
 			}
 		}
+
+		void OnEntityDestroy(Entity* entity)
+		{
+			// sync to server
+		}
+
+		void UpdatePosition()
+		{
+
+		}
+
+
 	private:
 		Pool* _pool;
 		std::weak_ptr<Group> _group;

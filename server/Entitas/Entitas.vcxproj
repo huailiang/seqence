@@ -23,6 +23,7 @@
     <ClInclude Include="..\Engine\Component\DemoComponent.hpp" />
     <ClInclude Include="..\Engine\Component\Move.hpp" />
     <ClInclude Include="..\Engine\Component\Position.hpp" />
+    <ClInclude Include="..\Engine\Component\Rotation.hpp" />
     <ClInclude Include="..\Engine\engine.hpp" />
     <ClInclude Include="..\Engine\Entitas\ComponentTypeId.hpp" />
     <ClInclude Include="..\Engine\Entitas\Delegate.hpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="..\Engine\Entitas\ReactiveSystem.hpp" />
     <ClInclude Include="..\Engine\Entitas\SystemContainer.hpp" />
     <ClInclude Include="..\Engine\Entitas\TriggerOnEvent.hpp" />
+    <ClInclude Include="..\Engine\EngineInfo.hpp" />
     <ClInclude Include="..\Engine\System\EntitySystem.hpp" />
     <ClInclude Include="..\Engine\System\DemoSystem.hpp" />
     <ClInclude Include="..\Engine\system\MoveSystem.hpp" />

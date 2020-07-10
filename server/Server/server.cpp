@@ -46,7 +46,7 @@ int main(int argc, char*  argv[])
 	cout << "size2:" << arr.size() << endl;
 
 	const int fps = 30;
-	Entitas::Initial();
+	Entitas::Initial(fps);
 	int per = 1000 / fps;
 	clock_t rawtime = 0;
 	int ch;

@@ -2,7 +2,6 @@
 #include <iostream>
 #include "util.hpp"
 #include "tinyxml2.h"
-#include "../Component/Position.hpp"
 
 
 using namespace std;
@@ -10,7 +9,7 @@ using namespace tinyxml2;
 
 namespace Entitas
 {
-	
+
 	const float PI = 3.1415926;
 
 
@@ -80,7 +79,7 @@ namespace Entitas
 		float forwardDotA = forward.dot(deltaA);
 		if (forwardDotA > 0 && forwardDotA <= length)
 		{
-			
+
 			auto right = forward.rotateY(-PI / 2);
 			if (abs(forward.dot(deltaA)) < width)
 			{
@@ -96,11 +95,18 @@ namespace Entitas
 		deltaA.normalize();
 		float tmpAngle = acos(deltaA.dot(forward)); //»¡¶È
 		tmpAngle = tmpAngle * PI / 180; //½Ç¶È
-		if (tmpAngle < angle *0.5f && (attacked - attacker).length < raduis)
+		deltaA = attacked - attacker;
+		if (tmpAngle < angle *0.5f && deltaA.length() < raduis)
 		{
 			return true;
 		}
 		return false;
+	}
+
+	vector3 util::Angle2Forward(float angle)
+	{
+		angle = angle * PI / 180;
+		return vector3(sin(angle), 0, cos(angle));
 	}
 
 }

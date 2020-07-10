@@ -1,4 +1,5 @@
 #include "engine.hpp"
+#include "EngineInfo.hpp"
 #include "Entitas/Matcher.hpp"
 #include "System/MoveSystem.hpp"
 #include "System/DemoSystem.hpp"
@@ -6,14 +7,16 @@
 
 namespace Entitas
 {
-
 	SystemContainer *systems;
 	Pool* pool;
 
-
-	void Initial()
+	void Initial(int rate)
 	{
 		printf("engine initial");
+		EngineInfo::frameRate = 30;
+		EngineInfo::frameCount = 0;
+		EngineInfo::time = 0;
+
 		systems = new SystemContainer();
 		pool = new Pool();
 
@@ -30,8 +33,11 @@ namespace Entitas
 		//printf("engine update %.3f \n", delta);
 		if (systems)
 		{
-			//systems->Execute();
+			systems->Execute();
 		}
+		EngineInfo::frameCount++;
+		EngineInfo::delta = delta;
+		EngineInfo::time += delta;
 	}
 
 	void Destroy()

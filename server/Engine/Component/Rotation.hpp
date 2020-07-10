@@ -5,14 +5,16 @@
 namespace Entitas
 {
 
-	class Position : public IComponent {
+
+	class Rotation : public IComponent
+	{
 	public:
-		void Reset(vector3 p) {
-			pos = p;
+		void Reset(float vy)
+		{
+			v = vy;
 		}
 
-		vector3 pos;
+
+		float v;
 	};
-
-
 }

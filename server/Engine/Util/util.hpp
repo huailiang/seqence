@@ -22,6 +22,7 @@ namespace Entitas
 
 		static bool SectorAttack(vector3 attacker, vector3 attacked, vector3 forward, float angle, float raduis);
 
+		static vector3 Angle2Forward(float angle);
 	};
 }
 

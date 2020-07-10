@@ -86,6 +86,10 @@
     <ClInclude Include="..\Engine\Component\Attribute.hpp">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine\Component\Rotation.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\EngineInfo.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\Entitas\GroupObserver.cpp">
