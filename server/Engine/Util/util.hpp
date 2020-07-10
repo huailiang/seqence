@@ -1,19 +1,25 @@
 #ifndef  __util__
 #define __util__
 
-#include "../Component/Position.hpp"
+#include "vector3.hpp"
 
 
 namespace Entitas
 {
+
 	class util
 	{
+
 	public:
-		void loadPath(const char* path);
 
-		bool circleAttack(float radius, Position attack, Position skill);
+		static void LoadPath(const char* path);
 
-	private:
+		static bool CircleAttack(float radius, vector3 attack, vector3 skill);
+
+		static bool RectAttack(vector3 attacker, vector3 attacked, float length, float width);
+
+		static bool SectorAttack(vector3 attacker, vector3 attacked, float angle, float raduis);
+
 
 	};
 }

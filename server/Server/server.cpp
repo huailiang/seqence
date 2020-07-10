@@ -37,7 +37,7 @@ void test()
 	ptr = nullptr;
 };
 
-int main()
+int main(int argc, char*  argv[])
 {
 	cout << "server start" << endl;
 	test();

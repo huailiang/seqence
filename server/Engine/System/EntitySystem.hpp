@@ -17,7 +17,9 @@ namespace Entitas
 
 		void Initialize() {
 			player = _pool->CreateEntity();
-			player->Add<Position>(1.0f, 2.0f, 3.0f);
+			vector3 p;
+			p.x = 1;
+			player->Add<Position>(p);
 			player->Add<Attribute>(2, 1, 2, 3);
 		}
 
@@ -27,8 +29,8 @@ namespace Entitas
 				if (e->Has<Position>())
 				{
 					auto pos = e->Get<Position>();
-					e->Replace<Position>(pos->x, pos->y, pos->z);
-					std::cout << e->Get<Position>()->y << std::endl;
+					e->Replace<Position>(pos->pos.x, pos->pos.y, pos->pos.z);
+					std::cout << e->Get<Position>()->pos.y << std::endl;
 				}
 				else
 				{

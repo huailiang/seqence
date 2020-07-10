@@ -18,7 +18,10 @@ namespace Entitas
 
 		void Initialize() {
 			auto e = _pool->CreateEntity();
-			e->Add<Position>(1.0f, 2.0f, 3.0f);
+			vector3 p;
+			p.x = 1;
+			p.y = 2;
+			e->Add<Position>(p);
 			e->Add<Move>(2);
 		}
 
@@ -28,8 +31,9 @@ namespace Entitas
 				if (e->Has<Move>())
 				{
 					auto move = e->Get<Move>();
-					e->Replace<Position>(pos->x, pos->y + move->speed, pos->z);
-					cout << e->Get<Position>()->y << endl;
+					pos->pos.y += move->speed;
+					e->Replace<Position>(pos->pos);
+					cout << e->Get<Position>()->pos.y << endl;
 				}
 				else
 				{
@@ -37,6 +41,7 @@ namespace Entitas
 				}
 			}
 		}
+
 	private:
 		Pool* _pool;
 		std::weak_ptr<Group> _group;

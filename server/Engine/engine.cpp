@@ -2,7 +2,7 @@
 #include "Entitas/Matcher.hpp"
 #include "System/MoveSystem.hpp"
 #include "System/DemoSystem.hpp"
-
+#include "Util/util.hpp"
 
 namespace Entitas
 {
@@ -20,6 +20,7 @@ namespace Entitas
 		systems->Add(pool->CreateSystem<DemoSystem>());
 		systems->Add(pool->CreateSystem<MoveSystem>());
 		systems->Initialize();
+		util::LoadPath("AB.txt");
 	}
 
 

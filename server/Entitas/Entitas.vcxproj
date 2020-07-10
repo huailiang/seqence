@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Engine\Components\Move.hpp" />
-    <ClInclude Include="..\Engine\Components\Position.hpp" />
     <ClInclude Include="..\Engine\Component\Attribute.hpp" />
     <ClInclude Include="..\Engine\Component\DemoComponent.hpp" />
+    <ClInclude Include="..\Engine\Component\Move.hpp" />
+    <ClInclude Include="..\Engine\Component\Position.hpp" />
     <ClInclude Include="..\Engine\engine.hpp" />
     <ClInclude Include="..\Engine\Entitas\ComponentTypeId.hpp" />
     <ClInclude Include="..\Engine\Entitas\Delegate.hpp" />
@@ -42,6 +42,7 @@
     <ClInclude Include="..\Engine\system\MoveSystem.hpp" />
     <ClInclude Include="..\Engine\Util\tinyxml2.h" />
     <ClInclude Include="..\Engine\Util\util.hpp" />
+    <ClInclude Include="..\Engine\Util\vector3.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\Entitas\ComponentTypeId.cpp" />
@@ -55,6 +56,7 @@
     <ClCompile Include="..\Engine\engine.cpp" />
     <ClCompile Include="..\Engine\Util\tinyxml2.cpp" />
     <ClCompile Include="..\Engine\Util\util.cpp" />
+    <ClCompile Include="..\Engine\Util\vector3.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -129,6 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/D _CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,6 +164,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/D _CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
