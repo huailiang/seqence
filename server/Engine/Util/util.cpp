@@ -2,6 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include "util.hpp"
+#include "EngineInfo.hpp"
 #include "tinyxml2.h"
 
 
@@ -19,13 +20,24 @@ namespace Entitas
         fprintf(f, "hekko wo");
         fclose(f);
     }
+    
+    string util::GetAssetPath(const char* name)
+    {
+        const char* dir=  EngineInfo::assetPath;
+        string s1(dir);
+        string s2(name);
+        return s1+s2;
+    }
 
-	int util::LoadPath(const char* path)
+    
+	int util::LoadPath(const char* name)
 	{
 		tinyxml2::XMLDocument doc;
-		tinyxml2::XMLError ret = doc.LoadFile(path);
+        string path = GetAssetPath(name);
+        std::cout<<"user path:"<<path<<endl;
+		tinyxml2::XMLError ret = doc.LoadFile(path.c_str());
 		if (ret != 0) {
-			fprintf(stderr, "fail to load xml file: %s\n", path);
+			fprintf(stderr, "fail to load xml2 file: %s\n", name);
 			return -1;
 		}
 
@@ -43,12 +55,14 @@ namespace Entitas
 	}
 
 
-	int util::LoadScene(const char* path)
+	int util::LoadScene(const char* name)
 	{
 		tinyxml2::XMLDocument doc;
-		tinyxml2::XMLError ret = doc.LoadFile(path);
+        string path = GetAssetPath(name);
+        std::cout<<"scene path:"<<path<<endl;
+		tinyxml2::XMLError ret = doc.LoadFile(path.c_str());
 		if (ret != 0) {
-			fprintf(stderr, "fail to load xml file: %s\n", path);
+			fprintf(stderr, "fail to load xml3 file: %s\n", name);
 			return -1;
 		}
 

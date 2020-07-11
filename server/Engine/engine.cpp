@@ -14,13 +14,19 @@ namespace Entitas
     int EngineInfo::frameCount;
     float EngineInfo::time;
     float EngineInfo::delta;
+    const char* EngineInfo::assetPath;
 
-	void Initial(int rate)
+    /*
+     * 第一个参数是fps
+     * 第二个参数是asset目录（资源目录）
+     */
+	void Initial(int rate, const char* assets)
 	{
 		printf("engine initial");
 		EngineInfo::frameRate = 30;
 		EngineInfo::frameCount = 0;
 		EngineInfo::time = 0;
+        EngineInfo::assetPath = assets;
 
 		systems = new SystemContainer();
 		pool = new Pool();
@@ -28,8 +34,8 @@ namespace Entitas
 		systems->Add(pool->CreateSystem<DemoSystem>());
 		systems->Add(pool->CreateSystem<MoveSystem>());
 		systems->Initialize();
-		util::LoadPath("../Engine/assets/tinyxml.xml");
-		util::LoadScene("../Engine/assets/scene.xml");
+		util::LoadPath("tinyxml.xml");
+		util::LoadScene("scene.xml");
 	}
 
 
@@ -38,7 +44,7 @@ namespace Entitas
 		//printf("engine update %.3f \n", delta);
 		if (systems)
 		{
-			systems->Execute();
+            systems->Execute();
 		}
 		EngineInfo::frameCount++;
 		EngineInfo::delta = delta;

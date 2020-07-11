@@ -11,6 +11,7 @@ namespace Entitas
 		static float time;
 		static int frameCount;
 		static int frameRate;
+        static const char* assetPath;
 	};
 
 }

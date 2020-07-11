@@ -115,12 +115,12 @@
 		4C7B13CE24B9E75000C9B348 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				4C7B13CF24B9E75000C9B348 /* util.cpp */,
-				4C7B13D024B9E75000C9B348 /* tinyxml2.cpp */,
-				4C7B13D124B9E75000C9B348 /* vector3.cpp */,
 				4C7B13D224B9E75000C9B348 /* tinyxml2.h */,
+				4C7B13D024B9E75000C9B348 /* tinyxml2.cpp */,
 				4C7B13D324B9E75000C9B348 /* util.hpp */,
+				4C7B13CF24B9E75000C9B348 /* util.cpp */,
 				4C7B13D424B9E75000C9B348 /* vector3.hpp */,
+				4C7B13D124B9E75000C9B348 /* vector3.cpp */,
 			);
 			name = Util;
 			path = ../../Engine/Util;
@@ -190,8 +190,8 @@
 			children = (
 				4C7B13C524B9E75000C9B348 /* assets */,
 				4C7B13D624B9E75000C9B348 /* Component */,
-				4C7B13CC24B9E75000C9B348 /* engine.cpp */,
 				4C7B13CD24B9E75000C9B348 /* engine.hpp */,
+				4C7B13CC24B9E75000C9B348 /* engine.cpp */,
 				4C7B13D524B9E75000C9B348 /* EngineInfo.hpp */,
 				4C7B13DC24B9E75000C9B348 /* Entitas */,
 				4C7B13C824B9E75000C9B348 /* System */,

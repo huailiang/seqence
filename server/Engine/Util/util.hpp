@@ -2,7 +2,7 @@
 #define __util__
 
 #include "vector3.hpp"
-
+#include <string>
 
 namespace Entitas
 {
@@ -14,10 +14,12 @@ namespace Entitas
         
         static void write();
 
-		static int LoadPath(const char* path);
+		static int LoadPath(const char* name);
 
-		static int LoadScene(const char* path);
+		static int LoadScene(const char* name);
 		
+        static std::string GetAssetPath(const char* name);
+        
 		static bool CircleAttack(float radius, vector3 attack, vector3 skill);
 
 		static bool RectAttack(vector3 attacker, vector3 attacked, vector3 forward, float length, float width);

@@ -7,7 +7,8 @@ bool flag_q;
 
 int main(int argc, const char * argv[]) {
     const int fps = 3;
-    Entitas::Initial(fps);
+    const char* assets="../../../../Engine/assets/";
+    Entitas::Initial(fps,assets);
     int per = 1000 *1000 / fps;
     clock_t rawtime = 0;
     

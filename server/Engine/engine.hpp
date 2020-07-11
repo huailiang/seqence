@@ -5,7 +5,7 @@
 
 namespace Entitas
 {
-	void Initial(int rate);
+	void Initial(int rate, const char* assets);
 	void Update(float delta);
 	void Destroy();
 }
