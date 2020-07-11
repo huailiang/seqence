@@ -11,6 +11,8 @@ namespace Entitas
 	{
 
 	public:
+        
+        static void write();
 
 		static int LoadPath(const char* path);
 

@@ -9,6 +9,11 @@ namespace Entitas
 {
 	SystemContainer *systems;
 	Pool* pool;
+    
+    int EngineInfo::frameRate;
+    int EngineInfo::frameCount;
+    float EngineInfo::time;
+    float EngineInfo::delta;
 
 	void Initial(int rate)
 	{

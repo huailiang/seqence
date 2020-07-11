@@ -1,5 +1,6 @@
 #include <vector>
 #include<iostream>
+#include <math.h>
 #include "vector3.hpp"
 
 using namespace std;

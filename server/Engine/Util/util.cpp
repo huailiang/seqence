@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <math.h>
 #include "util.hpp"
 #include "tinyxml2.h"
 
@@ -12,6 +13,12 @@ namespace Entitas
 
 	const float PI = 3.1415926;
 
+    void util::write()
+    {
+        FILE* f = fopen("test.xml", "w");
+        fprintf(f, "hekko wo");
+        fclose(f);
+    }
 
 	int util::LoadPath(const char* path)
 	{
@@ -32,6 +39,7 @@ namespace Entitas
 			return -1;
 		}
 		fprintf(stdout, "user name: %s\n", user->Attribute("Name"));
+        return 0;
 	}
 
 
@@ -62,6 +70,7 @@ namespace Entitas
 			}
 			surface = surface->NextSiblingElement();
 		}
+        return 1;
 	}
 
 
