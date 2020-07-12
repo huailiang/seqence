@@ -19,6 +19,7 @@
 		4C7B13FB24B9E75000C9B348 /* Pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B13EB24B9E75000C9B348 /* Pool.cpp */; };
 		4C7B13FC24B9E75000C9B348 /* SystemContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B13EC24B9E75000C9B348 /* SystemContainer.cpp */; };
 		4C7B13FD24B9E75000C9B348 /* Group.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B13EE24B9E75000C9B348 /* Group.cpp */; };
+		4CAAB74624BB0CCE001CFC7E /* interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAB74424BB0CCE001CFC7E /* interface.cpp */; };
 		4CBF955724B9DE6800AD1CB0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CBF953124B9DE6800AD1CB0 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,8 @@
 		4C7B13EF24B9E75000C9B348 /* ComponentTypeId.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ComponentTypeId.hpp; sourceTree = "<group>"; };
 		4C7B13F024B9E75000C9B348 /* Delegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Delegate.hpp; sourceTree = "<group>"; };
 		4C7B13F124B9E75000C9B348 /* Entity.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Entity.hpp; sourceTree = "<group>"; };
+		4CAAB74424BB0CCE001CFC7E /* interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = interface.cpp; path = ../../Engine/interface.cpp; sourceTree = "<group>"; };
+		4CAAB74524BB0CCE001CFC7E /* interface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = interface.hpp; path = ../../Engine/interface.hpp; sourceTree = "<group>"; };
 		4CBF912024B9D6B700AD1CB0 /* server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBF915D24B9D93300AD1CB0 /* Engine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Engine.bundle; path = ../../build_osx/Debug/Engine.bundle; sourceTree = "<group>"; };
 		4CBF953124B9DE6800AD1CB0 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -193,6 +196,8 @@
 				4C7B13CD24B9E75000C9B348 /* engine.hpp */,
 				4C7B13CC24B9E75000C9B348 /* engine.cpp */,
 				4C7B13D524B9E75000C9B348 /* EngineInfo.hpp */,
+				4CAAB74524BB0CCE001CFC7E /* interface.hpp */,
+				4CAAB74424BB0CCE001CFC7E /* interface.cpp */,
 				4C7B13DC24B9E75000C9B348 /* Entitas */,
 				4C7B13C824B9E75000C9B348 /* System */,
 				4C7B13CE24B9E75000C9B348 /* Util */,
@@ -266,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C7B13F824B9E75000C9B348 /* Matcher.cpp in Sources */,
+				4CAAB74624BB0CCE001CFC7E /* interface.cpp in Sources */,
 				4C7B13F524B9E75000C9B348 /* vector3.cpp in Sources */,
 				4C7B13F424B9E75000C9B348 /* tinyxml2.cpp in Sources */,
 				4C7B13FB24B9E75000C9B348 /* Pool.cpp in Sources */,

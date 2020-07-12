@@ -5,7 +5,6 @@
 namespace Entitas
 {
 
-
 	class Rotation : public IComponent
 	{
 	public:

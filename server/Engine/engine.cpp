@@ -1,4 +1,5 @@
 #include "engine.hpp"
+#include "interface.hpp"
 #include "EngineInfo.hpp"
 #include "Entitas/Matcher.hpp"
 #include "System/MoveSystem.hpp"
@@ -15,14 +16,11 @@ namespace Entitas
     float EngineInfo::time;
     float EngineInfo::delta;
     const char* EngineInfo::assetPath;
-
-     float a = 2;
-    void func(float *& p)
-    {
-        p = new float[2];
-        p = &a;
-        p[1]=23;
-    }
+    
+    SyncPos posDelegate;
+    SyncRot rotDelegate;
+    SyncPlay  playDelegate;
+    BroadCast broadDelegate;
     
     /*
      * 第一个参数是fps
@@ -44,9 +42,6 @@ namespace Entitas
 		systems->Initialize();
         
         float* time;
-        func(time);
-        cout<<time[0]<<" "<<*(time+1)<<" "<<*time<<endl;
-        
         size_t cnt =0;
         vector3* pos;
         float* rot;

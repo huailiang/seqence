@@ -4,6 +4,7 @@
 
 namespace Entitas
 {
+    
 	class EngineInfo
 	{
 	public:

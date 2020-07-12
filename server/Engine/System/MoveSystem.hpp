@@ -2,6 +2,7 @@
 #include "../Component/Position.hpp"
 #include "../Entitas/ISystem.hpp"
 #include <iostream>
+#include <sys/socket.h>
 
 
 namespace Entitas

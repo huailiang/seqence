@@ -6,6 +6,7 @@ namespace Entitas
 {
 
 	class Position : public IComponent {
+        
 	public:
 		void Reset(vector3 p) {
 			pos = p;
