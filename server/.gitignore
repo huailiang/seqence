@@ -11,3 +11,4 @@ build_osx/
 build_ios/
 xcode_proj/Build/
 xcode_proj/DerivedData/
+xcode_proj/Index/DataStor/

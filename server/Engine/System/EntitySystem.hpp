@@ -64,6 +64,7 @@ namespace Entitas
         bool Hit(EntityPtr e, vector3 p, float rot)
         {
             float time = EngineInfo::time;
+            auto path = e->Get<Path>();
             return false;
         }
 
