@@ -1,3 +1,6 @@
+#ifndef  __demosystem__
+#define __demosystem__
+
 #include <iostream>
 #include "../Component/DemoComponent.hpp"
 #include "../Entitas/ISystem.hpp"
@@ -30,3 +33,6 @@ namespace Entitas
 	};
 
 }
+
+
+#endif

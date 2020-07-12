@@ -6,7 +6,6 @@ using namespace std;
 bool flag_q;
 
 
-
 int main(int argc, const char * argv[]) {
     const int fps = 3;
     const char* assets="../../../../Engine/assets/";
@@ -21,7 +20,7 @@ int main(int argc, const char * argv[]) {
             Entitas::Destroy();
             break;
         }
-        
+
         auto t = clock();
         auto delta = t - rawtime;
         if (delta >= per)

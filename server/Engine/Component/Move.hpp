@@ -1,3 +1,6 @@
+#ifndef  __move__
+#define __move__
+
 #include "../Entitas/Pool.hpp"
 
 
@@ -14,3 +17,6 @@ namespace Entitas
 		float speed;
 	};
 }
+
+
+#endif

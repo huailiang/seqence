@@ -1,3 +1,6 @@
+#ifndef __movesystem__
+#define __movesystem__
+
 #include "../Component/Move.hpp"
 #include "../Component/Position.hpp"
 #include "../Entitas/ISystem.hpp"
@@ -49,3 +52,6 @@ namespace Entitas
 	};
 
 }
+
+
+#endif

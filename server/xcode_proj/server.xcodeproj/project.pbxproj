@@ -53,7 +53,7 @@
 		4C7B13D724B9E75000C9B348 /* Position.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Position.hpp; sourceTree = "<group>"; };
 		4C7B13D824B9E75000C9B348 /* Rotation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Rotation.hpp; sourceTree = "<group>"; };
 		4C7B13D924B9E75000C9B348 /* Move.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Move.hpp; sourceTree = "<group>"; };
-		4C7B13DA24B9E75000C9B348 /* Attribute.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Attribute.hpp; sourceTree = "<group>"; };
+		4C7B13DA24B9E75000C9B348 /* XEntity.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XEntity.hpp; sourceTree = "<group>"; };
 		4C7B13DB24B9E75000C9B348 /* DemoComponent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DemoComponent.hpp; sourceTree = "<group>"; };
 		4C7B13DD24B9E75000C9B348 /* SystemContainer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SystemContainer.hpp; sourceTree = "<group>"; };
 		4C7B13DE24B9E75000C9B348 /* Group.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Group.hpp; sourceTree = "<group>"; };
@@ -79,6 +79,8 @@
 		4CAAB74424BB0CCE001CFC7E /* interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = interface.cpp; path = ../../Engine/interface.cpp; sourceTree = "<group>"; };
 		4CAAB74524BB0CCE001CFC7E /* interface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = interface.hpp; path = ../../Engine/interface.hpp; sourceTree = "<group>"; };
 		4CAAB74724BB408B001CFC7E /* Path.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Path.hpp; sourceTree = "<group>"; };
+		4CAAB74824BB5E91001CFC7E /* XMonster.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = XMonster.hpp; sourceTree = "<group>"; };
+		4CAAB74924BB5E9B001CFC7E /* XRole.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = XRole.hpp; sourceTree = "<group>"; };
 		4CBF912024B9D6B700AD1CB0 /* server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBF915D24B9D93300AD1CB0 /* Engine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Engine.bundle; path = ../../build_osx/Debug/Engine.bundle; sourceTree = "<group>"; };
 		4CBF953124B9DE6800AD1CB0 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -136,8 +138,10 @@
 				4CAAB74724BB408B001CFC7E /* Path.hpp */,
 				4C7B13D724B9E75000C9B348 /* Position.hpp */,
 				4C7B13D824B9E75000C9B348 /* Rotation.hpp */,
+				4CAAB74824BB5E91001CFC7E /* XMonster.hpp */,
 				4C7B13D924B9E75000C9B348 /* Move.hpp */,
-				4C7B13DA24B9E75000C9B348 /* Attribute.hpp */,
+				4CAAB74924BB5E9B001CFC7E /* XRole.hpp */,
+				4C7B13DA24B9E75000C9B348 /* XEntity.hpp */,
 				4C7B13DB24B9E75000C9B348 /* DemoComponent.hpp */,
 			);
 			name = Component;

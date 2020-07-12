@@ -1,3 +1,7 @@
+#ifndef  __rotation__
+#define __rotation__
+
+
 #include "../Util/vector3.hpp"
 #include "../Entitas/Pool.hpp"
 
@@ -17,3 +21,6 @@ namespace Entitas
 		float v;
 	};
 }
+
+
+#endif
