@@ -4,6 +4,7 @@
 #include "Entitas/Matcher.hpp"
 #include "System/MoveSystem.hpp"
 #include "System/DemoSystem.hpp"
+#include "System/EntitySystem.hpp"
 #include "Util/util.hpp"
 
 namespace Entitas
