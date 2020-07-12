@@ -1,8 +1,8 @@
 #include "interface.hpp"
 
+
 namespace Entitas
 {
-
 
     // c# -> c++
     void InitNative(SyncPos pos,SyncRot rot, SyncPlay play, BroadCast broad)
