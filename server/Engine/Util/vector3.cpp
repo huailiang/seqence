@@ -96,7 +96,7 @@ namespace Entitas
 	}
 
 	/*
-	Cross Product��˹�ʽ
+	Cross Product▓µ│╦╣½╩╜
 	aXb = | i,  j,  k  |
 		 | a.x a.y a.z|
 		 | b.x b.y b.z| = (a.y*b.z -a.z*b.y)i + (a.z*b.x - a.x*b.z)j + (a.x*b.y - a.y*b.x)k
@@ -114,7 +114,7 @@ namespace Entitas
 	}
 
 	
-	// v��ʾx-z��ת����ʱ��Ƕ�
+	// v▒φ╩╛x-z╓ß╫¬╡──µ╩▒╒δ╜╟╢╚
 	// https://blog.csdn.net/hjq376247328/article/details/45113563
 	vector3 vector3::rotateY(const float v)
 	{

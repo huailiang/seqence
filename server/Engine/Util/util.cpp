@@ -13,13 +13,6 @@ namespace Entitas
 {
 
 	const float PI = 3.1415926;
-
-    void util::write()
-    {
-        FILE* f = fopen("test.xml", "w");
-        fprintf(f, "hekko wo");
-        fclose(f);
-    }
     
     string util::GetAssetPath(const char* name)
     {
@@ -28,64 +21,53 @@ namespace Entitas
         string s2(name);
         return s1+s2;
     }
-
     
-	int util::LoadPath(const char* name)
-	{
-		tinyxml2::XMLDocument doc;
+    int util::LoadPath(const char* name, size_t& cnt, float*& time, vector3*& pos, float*& rot)
+    {
+        tinyxml2::XMLDocument doc;
         string path = GetAssetPath(name);
-        std::cout<<"user path:"<<path<<endl;
-		tinyxml2::XMLError ret = doc.LoadFile(path.c_str());
-		if (ret != 0) {
-			fprintf(stderr, "fail to load xml2 file: %s\n", name);
-			return -1;
-		}
-
-		tinyxml2::XMLElement* root = doc.RootElement();
-		fprintf(stdout, "root element name: %s\n", root->Name());
-
-		// User
-		tinyxml2::XMLElement* user = root->FirstChildElement("User");
-		if (!user) {
-			fprintf(stderr, "no child element: User\n");
-			return -1;
-		}
-		fprintf(stdout, "user name: %s\n", user->Attribute("Name"));
+        tinyxml2::XMLError ret = doc.LoadFile(path.c_str());
+        if (ret != 0) {
+            fprintf(stderr, "fail to load xml2 file: %s\n", name);
+            return -1;
+        }
+        tinyxml2::XMLElement* root = doc.RootElement();
+        XMLElement *t = root->FirstChildElement("time");
+        XMLElement *v= t->FirstChildElement("float");
+        
+        cnt =0;
+        while (v) {
+            v=v->NextSiblingElement();
+            cnt++;
+        }
+        
+        time = new float[cnt];
+        pos = new vector3[cnt];
+        rot = new float[cnt];
+        int i=0;
+        v= t->FirstChildElement("float");
+        while (v) {
+            float vl  =atof(v->GetText());
+             printf("v: %f\n", vl);
+            time[i++] = vl;
+             v= v->NextSiblingElement();
+        }
+        t = root->FirstChildElement("pos");
+        v= t->FirstChildElement("Vector4");
+        i=0;
+        while (v) {
+            auto x= atof(v->FirstChildElement("x")->GetText());
+            auto y = atof(v->FirstChildElement("y")->GetText());
+            auto z = atof(v->FirstChildElement("z")->GetText());
+            auto w = atof(v->FirstChildElement("w")->GetText());
+            vector3 vec(x,y,z);
+            pos[i]= vec;
+            rot[i++]=w;
+            v=v->NextSiblingElement();
+        }
+        doc.Clear();
         return 0;
-	}
-
-
-	int util::LoadScene(const char* name)
-	{
-		tinyxml2::XMLDocument doc;
-        string path = GetAssetPath(name);
-        std::cout<<"scene path:"<<path<<endl;
-		tinyxml2::XMLError ret = doc.LoadFile(path.c_str());
-		if (ret != 0) {
-			fprintf(stderr, "fail to load xml3 file: %s\n", name);
-			return -1;
-		}
-
-		tinyxml2::XMLElement* root = doc.RootElement();
-		fprintf(stdout, "root element name: %s\n", root->Name());
-
-		XMLElement *surface = root->FirstChildElement("node");
-		while (surface)
-		{
-			XMLElement *surfaceChild = surface->FirstChildElement();
-			const char* content;
-			const XMLAttribute *attributeOfSurface = surface->FirstAttribute();
-			cout << attributeOfSurface->Name() << ":" << attributeOfSurface->Value() << endl;
-			while (surfaceChild)
-			{
-				content = surfaceChild->GetText();
-				surfaceChild = surfaceChild->NextSiblingElement();
-				cout << content << endl;
-			}
-			surface = surface->NextSiblingElement();
-		}
-        return 1;
-	}
+    }
 
 
 

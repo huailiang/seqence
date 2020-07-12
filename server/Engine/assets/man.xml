@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TransformTrackData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <type>Transform</type>
+  <time>
+    <float>0.124227732</float>
+    <float>1.86048925</float>
+    <float>4.556264</float>
+  </time>
+  <pos>
+    <Vector4>
+      <x>0</x>
+      <y>0</y>
+      <z>-2</z>
+      <w>12</w>
+    </Vector4>
+    <Vector4>
+      <x>-0.81</x>
+      <y>0</y>
+      <z>0</z>
+      <w>95</w>
+    </Vector4>
+    <Vector4>
+      <x>-1.005</x>
+      <y>0</y>
+      <z>-1.113</z>
+      <w>180</w>
+    </Vector4>
+  </pos>
+  <select>false</select>
+</TransformTrackData>

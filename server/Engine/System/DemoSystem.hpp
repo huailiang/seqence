@@ -13,13 +13,13 @@ namespace Entitas
 		}
 		void Initialize() {
 			_pool->CreateEntity()->Add<DemoComponent>("foo", "bar");
-			std::cout << "DemoSystem initialized" << std::endl;
+            _pool->CreateEntity()->Add<DemoComponent>("foo2", "bar");
+            auto entitiesCount = _pool->GetGroup(Matcher_AllOf(DemoComponent))->Count();
+            std::cout << "DemoSystem initialized: "<<entitiesCount << std::endl;
 		}
 		void Execute() {
-			_pool->CreateEntity()->Add<DemoComponent>("foo", "bar");
 			auto entitiesCount = _pool->GetGroup(Matcher_AllOf(DemoComponent))->Count();
 			std::cout << "There are " << entitiesCount << " entities with the DemoComponent" << std::endl;
-			std::cout << "DemoSystem executed" << std::endl;
 		}
 
 	private:

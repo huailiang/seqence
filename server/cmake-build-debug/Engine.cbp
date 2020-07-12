@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Engine"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Engine">
+				<Option output="/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Engine.bundle/Contents/MacOS/Engine" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DCOMPATIBLE_FORMAT"/>
+					<Add directory="/Users/penghuailiang/Documents/unity/seqence/server"/>
+					<Add directory="/Users/penghuailiang/Documents/unity/seqence/server/Engine"/>
+					<Add directory="/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.1/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 Engine"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Engine/fast">
+				<Option output="/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Engine.bundle/Contents/MacOS/Engine" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DCOMPATIBLE_FORMAT"/>
+					<Add directory="/Users/penghuailiang/Documents/unity/seqence/server"/>
+					<Add directory="/Users/penghuailiang/Documents/unity/seqence/server/Engine"/>
+					<Add directory="/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.1/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 Engine/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/ComponentTypeId.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/ComponentTypeId.hpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/Entity.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/Entity.hpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/Group.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/Group.hpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/GroupObserver.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/GroupObserver.hpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/Matcher.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/Matcher.hpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/Pool.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/Pool.hpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/ReactiveSystem.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/ReactiveSystem.hpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/SystemContainer.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Entitas/SystemContainer.hpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Util/tinyxml2.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Util/tinyxml2.h">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Util/util.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Util/util.hpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Util/vector3.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/Util/vector3.hpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/engine.cpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/Engine/engine.hpp">
+			<Option target="Engine"/>
+		</Unit>
+		<Unit filename="/Users/penghuailiang/Documents/unity/seqence/server/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

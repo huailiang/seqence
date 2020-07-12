@@ -16,6 +16,14 @@ namespace Entitas
     float EngineInfo::delta;
     const char* EngineInfo::assetPath;
 
+     float a = 2;
+    void func(float *& p)
+    {
+        p = new float[2];
+        p = &a;
+        p[1]=23;
+    }
+    
     /*
      * 第一个参数是fps
      * 第二个参数是asset目录（资源目录）
@@ -34,8 +42,17 @@ namespace Entitas
 		systems->Add(pool->CreateSystem<DemoSystem>());
 		systems->Add(pool->CreateSystem<MoveSystem>());
 		systems->Initialize();
-		util::LoadPath("tinyxml.xml");
-		util::LoadScene("scene.xml");
+        
+        float* time;
+        func(time);
+        cout<<time[0]<<" "<<*(time+1)<<" "<<*time<<endl;
+        
+        size_t cnt =0;
+        vector3* pos;
+        float* rot;
+        util::LoadPath("man.xml", cnt, time, pos, rot);
+        printf("cnt: %ld, time0: %f, time1: %f rot: %f\n", cnt, time[0], time[1], rot[1]);
+        pos[0].tostring();
 	}
 
 

@@ -33,7 +33,7 @@ namespace Entitas
 					auto move = e->Get<Move>();
 					pos->pos.y += move->speed;
 					e->Replace<Position>(pos->pos);
-					cout << e->Get<Position>()->pos.y << endl;
+                    cout <<"pos Y: "<< e->Get<Position>()->pos.y << endl;
 				}
 				else
 				{

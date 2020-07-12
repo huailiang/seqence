@@ -12,11 +12,7 @@ namespace Entitas
 
 	public:
         
-        static void write();
-
-		static int LoadPath(const char* name);
-
-		static int LoadScene(const char* name);
+        static int LoadPath(const char* name, size_t& cnt, float*& time, vector3*& pos, float*& rot);
 		
         static std::string GetAssetPath(const char* name);
         

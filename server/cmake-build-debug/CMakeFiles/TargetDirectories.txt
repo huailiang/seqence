@@ -1,0 +1,3 @@
+/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/penghuailiang/Documents/unity/seqence/server/cmake-build-debug/CMakeFiles/Engine.dir

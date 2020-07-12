@@ -51,21 +51,21 @@
           <pos>
             <Vector4>
               <x>0</x>
-              <y>2</y>
-              <z>0</z>
+              <y>0</y>
+              <z>-2</z>
               <w>12</w>
             </Vector4>
             <Vector4>
               <x>-0.81</x>
               <y>0</y>
-              <z>0.13</z>
-              <w>2</w>
+              <z>0</z>
+              <w>95</w>
             </Vector4>
             <Vector4>
               <x>-1.005</x>
               <y>0</y>
               <z>-1.113</z>
-              <w>23</w>
+              <w>180</w>
             </Vector4>
           </pos>
           <select>false</select>
@@ -222,6 +222,11 @@
           <type>Transform</type>
           <time>
             <float>0.270216137</float>
+            <float>2.76774287</float>
+            <float>5.73440552</float>
+            <float>10.5813475</float>
+            <float>13.4644423</float>
+            <float>20.4005833</float>
           </time>
           <pos>
             <Vector4>
@@ -229,6 +234,36 @@
               <y>0</y>
               <z>-5</z>
               <w>32</w>
+            </Vector4>
+            <Vector4>
+              <x>-3</x>
+              <y>0</y>
+              <z>-5</z>
+              <w>180</w>
+            </Vector4>
+            <Vector4>
+              <x>-2.12</x>
+              <y>0</y>
+              <z>-6.28</z>
+              <w>0</w>
+            </Vector4>
+            <Vector4>
+              <x>-2.12</x>
+              <y>0</y>
+              <z>-4.28</z>
+              <w>0</w>
+            </Vector4>
+            <Vector4>
+              <x>-2.12</x>
+              <y>0</y>
+              <z>-4.28</z>
+              <w>0</w>
+            </Vector4>
+            <Vector4>
+              <x>-2.12</x>
+              <y>0</y>
+              <z>-4.28</z>
+              <w>23.9999981</w>
             </Vector4>
           </pos>
           <select>false</select>
