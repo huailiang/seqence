@@ -7,7 +7,7 @@ __剧情-技能编辑器__
 
 ## 序列化方式
 
-支持xml和bytes两种序列化方式， xml兼容性和可读性更高，比较适用项目前期，改动比较频繁的情况。 bytes运行时效率更高。 这里并不采用unity原生timeline的scriptobject序列化方式， 主要原因是效率和服务器不可读。
+支持xml和bytes两种序列化方式， xml兼容性和可读性更高，比较适用项目前期，改动比较频繁的情况。 bytes运行时效率更高。 这里并不采用unity原生timeline的scriptobject序列化方式， 主要原因是性能问题和服务器不可读。
 
 
 ## 多线程支持
@@ -21,13 +21,16 @@ __剧情-技能编辑器__
 
 ## 版本记录
 
-v1.1 客户端基本框架实现
+[v1.1:][i3]  客户端基本框架实现
 
-v2.0 升级到多线程的AniationJob
+[v2.0:][i2]  升级到多线程的AniationJob
 
-v2.5 全局缓冲池，资源复用
+[v2.5:][i4]  全局缓冲池，资源复用
 
-v3.0 Entitas架构的Virtual Server集成
+[v3.0:][i1]  Entitas架构的Virtual Server集成
 
 
 [i1]: https://github.com/huailiang/seqence
+[i2]: https://github.com/huailiang/seqence/releases/tag/v2.0
+[i3]: https://github.com/huailiang/seqence/releases/tag/v1.1
+[i4]: https://github.com/huailiang/seqence/releases/tag/v2.5
