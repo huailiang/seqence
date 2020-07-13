@@ -46,7 +46,7 @@ int main(int argc, char*  argv[])
 	cout << "size2:" << arr.size() << endl;
 
 	const int fps = 30;
-	const char* asset="../Engine/assets/"
+	const char* assets = "../Engine/assets/";
 	Entitas::Initial(fps, assets);
 	int per = 1000 / fps;
 	clock_t rawtime = 0;

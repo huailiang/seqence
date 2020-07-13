@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Engine\Component\Attribute.hpp" />
     <ClInclude Include="..\Engine\Component\DemoComponent.hpp" />
     <ClInclude Include="..\Engine\Component\Move.hpp" />
     <ClInclude Include="..\Engine\Component\Position.hpp" />
     <ClInclude Include="..\Engine\Component\Rotation.hpp" />
+    <ClInclude Include="..\Engine\Component\XEntity.hpp" />
+    <ClInclude Include="..\Engine\Component\XMonster.hpp" />
+    <ClInclude Include="..\Engine\Component\XRole.hpp" />
     <ClInclude Include="..\Engine\engine.hpp" />
     <ClInclude Include="..\Engine\Entitas\ComponentTypeId.hpp" />
     <ClInclude Include="..\Engine\Entitas\Delegate.hpp" />
@@ -39,6 +41,7 @@
     <ClInclude Include="..\Engine\Entitas\SystemContainer.hpp" />
     <ClInclude Include="..\Engine\Entitas\TriggerOnEvent.hpp" />
     <ClInclude Include="..\Engine\EngineInfo.hpp" />
+    <ClInclude Include="..\Engine\interface.hpp" />
     <ClInclude Include="..\Engine\System\EntitySystem.hpp" />
     <ClInclude Include="..\Engine\System\DemoSystem.hpp" />
     <ClInclude Include="..\Engine\system\MoveSystem.hpp" />
@@ -56,6 +59,7 @@
     <ClCompile Include="..\Engine\Entitas\ReactiveSystem.cpp" />
     <ClCompile Include="..\Engine\Entitas\SystemContainer.cpp" />
     <ClCompile Include="..\Engine\engine.cpp" />
+    <ClCompile Include="..\Engine\interface.cpp" />
     <ClCompile Include="..\Engine\Util\tinyxml2.cpp" />
     <ClCompile Include="..\Engine\Util\util.cpp" />
     <ClCompile Include="..\Engine\Util\vector3.cpp" />

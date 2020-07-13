@@ -2,7 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include "util.hpp"
-#include "EngineInfo.hpp"
+#include "../EngineInfo.hpp"
 #include "tinyxml2.h"
 
 
