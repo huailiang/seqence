@@ -28,6 +28,7 @@ namespace Entitas
 				auto pair = std::make_pair(name, path);
 				pat_dict.insert(pair);
 			}
+            return nullptr;
 		}
 
 	private:

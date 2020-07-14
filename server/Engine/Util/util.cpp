@@ -156,6 +156,7 @@ namespace Entitas
 			}
 			trackData = trackData->NextSiblingElement();
 		}
+        return 0;
 	}
 
 	bool util::CircleAttack(float radius, vector3 attack, vector3 skill)

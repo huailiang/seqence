@@ -27,6 +27,7 @@ namespace Entitas
 				skill->Reset(name);
 				auto pair = make_pair(name, skill);
 				skills_dict.insert(pair);
+                return nullptr;
 			}
 		}
 
