@@ -87,9 +87,6 @@
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\EngineInfo.hpp" />
-    <ClInclude Include="..\Engine\Component\XEntity.hpp">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="..\Engine\Component\XMonster.hpp">
       <Filter>Component</Filter>
     </ClInclude>
@@ -109,6 +106,9 @@
     <ClInclude Include="..\Engine\type.hpp" />
     <ClInclude Include="..\Engine\System\SkillSystem.hpp">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Component\XActor.hpp">
+      <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -20,7 +20,7 @@ namespace Entitas
 	float EngineInfo::delta;
 
 	SyncPos posDelegate;
-	SyncRot rotDelegate;
+	SyncRole roleDelegate;
 	SyncPlay  playDelegate;
 	BroadCast broadDelegate;
 

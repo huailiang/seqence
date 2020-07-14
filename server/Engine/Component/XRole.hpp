@@ -1,18 +1,21 @@
 #ifndef  __xrole__
 #define __xrole__
 
-#include "XEntity.hpp"
+#include "XActor.hpp"
 
 
 namespace Entitas
 {
 
-	class Role : public XEntity {
+	class Role : public XActor {
+
 	public:
+
 		void Reset(unsigned int id, float hp, float sp, float attack, float hit) 
 		{
-			XEntity::Reset(uid, hp, sp, attack, hit);
+			XActor::Reset(uid, hp, sp, attack, hit);
 		}
+
 	};
 
 }

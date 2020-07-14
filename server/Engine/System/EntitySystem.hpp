@@ -45,8 +45,7 @@ namespace Entitas
                     auto rot = e->Get<Rotation>();
                     pos->pos.y+=2;
 					e->Replace<Position>(pos->pos);
-                    posDelegate(attr->uid,pos->pos.x,pos->pos.y,pos->pos.z);
-                    rotDelegate(attr->uid,rot->v);
+					posDelegate(attr->uid, pos->pos.x, pos->pos.y, pos->pos.z, rot->v);
                     Hit(e);
 				}
 				else

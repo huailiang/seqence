@@ -7,10 +7,10 @@ namespace Entitas
 
 	// c# -> c++
 	void InitNative(int rate, const char* assets,
-		SyncPos pos, SyncRot rot, SyncPlay play, BroadCast broad)
+		SyncPos pos, SyncRole role, SyncPlay play, BroadCast broad)
 	{
 		posDelegate = pos;
-		rotDelegate = rot;
+		roleDelegate = role;
 		playDelegate = play;
 		broadDelegate = broad;
 

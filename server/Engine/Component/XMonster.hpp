@@ -1,16 +1,16 @@
 #ifndef  __xmonster__
 #define __xmonster__
 
-#include "XEntity.hpp"
+#include "XActor.hpp"
 
 
 namespace Entitas
 {
 
-	class Monster : public XEntity {
+	class Monster : public XActor {
 	public:
         void Reset(unsigned int id, float hp, float sp, float attack, float hit) {
-			XEntity::Reset(uid, hp, sp, attack, hit);
+			XActor::Reset(uid, hp, sp, attack, hit);
 		}
 
 	};

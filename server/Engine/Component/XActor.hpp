@@ -1,11 +1,12 @@
 #ifndef  __xentity__
 #define __xentity__
 
+#include "../Entitas/IComponent.hpp"
 
 namespace Entitas
 {
 
-	class XEntity : public IComponent {
+	class XActor : public IComponent {
 	public:
 		void Reset(unsigned int id, float hp, float sp, float attack, float hit) {
             this->uid = id;

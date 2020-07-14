@@ -25,7 +25,7 @@
     <ClInclude Include="..\Engine\Component\Position.hpp" />
     <ClInclude Include="..\Engine\Component\Rotation.hpp" />
     <ClInclude Include="..\Engine\Component\Skill.hpp" />
-    <ClInclude Include="..\Engine\Component\XEntity.hpp" />
+    <ClInclude Include="..\Engine\Component\XActor.hpp" />
     <ClInclude Include="..\Engine\Component\XMonster.hpp" />
     <ClInclude Include="..\Engine\Component\XRole.hpp" />
     <ClInclude Include="..\Engine\engine.hpp" />

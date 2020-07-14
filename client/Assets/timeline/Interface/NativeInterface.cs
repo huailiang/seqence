@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class NativeInterface
 {
-    public delegate void PosDelegate(uint uid, float x, float y, float z);
+    public delegate void PosDelegate(uint uid, float x, float y, float z, float w);
 
-    public delegate void RotDelegate(uint uid, float rot);
+    public delegate void CreateRoleDelegate(uint uid, uint confID);
 
     public delegate void PlayDelegate(uint uid, string skill);
 
@@ -18,7 +18,7 @@ public class NativeInterface
 #else
     [DllImport("Engine")]
 #endif
-    static extern void InitNative(PosDelegate cb, RotDelegate cb2, PlayDelegate cb3, BroadDelegate cb4);
+    static extern void InitNative(PosDelegate cb, CreateRoleDelegate cb2, PlayDelegate cb3, BroadDelegate cb4);
 
 #if UNITY_IPHONE || UNITY_XBOX360
     [DllImport("__Internal")]
@@ -43,7 +43,7 @@ public class NativeInterface
 
     public static void Init()
     {
-        InitNative(OnPosSync, OnRotSync, OnPlaySync, OnBroadSync);
+        InitNative(OnPosSync, OnRoleSync, OnPlaySync, OnBroadSync);
     }
 
     public static void Recv(uint id, byte[] buffer, int len)
@@ -63,16 +63,17 @@ public class NativeInterface
 
 
     [MonoPInvokeCallback(typeof(PosDelegate))]
-    static void OnPosSync(uint id, float x, float y, float z)
+    static void OnPosSync(uint id, float x, float y, float z, float w)
     {
         Vector3 pos = new Vector3(x, y, z);
-        Debug.Log(pos);
+        Quaternion rot = Quaternion.Euler(0, w, 0);
+        Debug.Log(pos + " " + rot);
     }
 
-    [MonoPInvokeCallback(typeof(RotDelegate))]
-    static void OnRotSync(uint id, float rot)
+    [MonoPInvokeCallback(typeof(CreateRoleDelegate))]
+    static void OnRoleSync(uint id, uint confid)
     {
-        Debug.Log(rot);
+        Debug.Log(id + " " + confid);
     }
 
     [MonoPInvokeCallback(typeof(PlayDelegate))]

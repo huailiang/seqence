@@ -178,7 +178,7 @@ namespace UnityEngine.Timeline
         public void BlendTo(string path)
         {
             var track = SkillHostTrack as XAnimationTrack;
-            AnimClipData data=null;
+            AnimClipData data = null;
             if (track)
             {
                 blendPlayableOutput = track.playableOutput;

@@ -18,9 +18,9 @@ namespace Entitas
 #endif
 
 	// c++ -> c#
-	typedef void(*SyncPos)(unsigned int id, float x, float y, float z);
+	typedef void(*SyncPos)(unsigned int id, float x, float y, float z, float w);
 
-	typedef void(*SyncRot)(unsigned int id, float rot);
+	typedef void(*SyncRole)(unsigned int id, unsigned int confID);
 
 	typedef void(*SyncPlay)(unsigned int id, const char* skillID);
 
@@ -28,14 +28,14 @@ namespace Entitas
 
 
 	extern SyncPos posDelegate;
-	extern SyncRot rotDelegate;
+	extern SyncRole roleDelegate;
 	extern SyncPlay  playDelegate;
 	extern BroadCast broadDelegate;
 
 
 	// c# -> c++
 	ENGINE_INTERFACE_EXPORT void InitNative(int rate, const char* assets,
-		SyncPos pos, SyncRot rot, SyncPlay play, BroadCast broad);
+		SyncPos pos, SyncRole rot, SyncPlay play, BroadCast broad);
 
 	ENGINE_INTERFACE_EXPORT void NativeRecv(unsigned int id, unsigned char* buffer, int len);
 
