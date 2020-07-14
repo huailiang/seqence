@@ -6,11 +6,13 @@
 
 namespace Entitas
 {
-	void Initial(int rate, const char* assets);
+	void EngineInitial(int rate, const char* assets);
 	
-    void Update(float delta);
+    void EngineUpdate(float delta);
+
+	void EngineNotify(unsigned int id, unsigned char* buffer, int len);
     
-	void Destroy();
+	void EngineDestroy();
 }
 
 #endif // ! __engine__

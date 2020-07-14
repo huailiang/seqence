@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TimelineConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <tracks>
+    <TrackData>
+      <type>Marker</type>
+    </TrackData>
+    <TrackData xsi:type="AnimationTrackData">
+      <clips>
+        <ClipData xsi:type="AnimClipData">
+          <start>-0.0005551665</start>
+          <duration>1.669077</duration>
+          <anim>Assets/test/Chomper/Animations/ChomperCutsceneTOIdle.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>828</trim_end>
+          <loop>true</loop>
+        </ClipData>
+      </clips>
+      <type>Animation</type>
+      <prefab>Assets/test/Chomper.prefab</prefab>
+      <roleid>1003</roleid>
+      <pos>
+        <x>0</x>
+        <y>0</y>
+        <z>-4</z>
+      </pos>
+      <rotY>150</rotY>
+    </TrackData>
+  </tracks>
+  <skillHostTrack>1</skillHostTrack>
+</TimelineConfig>

@@ -97,6 +97,19 @@
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\interface.hpp" />
+    <ClInclude Include="..\Engine\Component\Path.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\System\PathSystem.hpp">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\Component\Skill.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\type.hpp" />
+    <ClInclude Include="..\Engine\System\SkillSystem.hpp">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\Entitas\GroupObserver.cpp">

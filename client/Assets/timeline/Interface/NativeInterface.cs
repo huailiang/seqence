@@ -20,7 +20,6 @@ public class NativeInterface
 #endif
     static extern void InitNative(PosDelegate cb, RotDelegate cb2, PlayDelegate cb3, BroadDelegate cb4);
 
-
 #if UNITY_IPHONE || UNITY_XBOX360
     [DllImport("__Internal")]
 #else
@@ -28,16 +27,38 @@ public class NativeInterface
 #endif
     static extern void NativeRecv(uint id, byte[] buffer, int len);
 
+#if UNITY_IPHONE || UNITY_XBOX360
+    [DllImport("__Internal")]
+#else
+    [DllImport("Engine")]
+#endif
+    static extern void NativeUpdate(float delta);
+
+#if UNITY_IPHONE || UNITY_XBOX360
+    [DllImport("__Internal")]
+#else
+    [DllImport("Engine")]
+#endif
+    static extern void NativeDestroy();
 
     public static void Init()
     {
         InitNative(OnPosSync, OnRotSync, OnPlaySync, OnBroadSync);
     }
 
-
     public static void Recv(uint id, byte[] buffer, int len)
     {
         NativeRecv(id, buffer, len);
+    }
+
+    public static void Update(float delta)
+    {
+        NativeUpdate(delta);
+    }
+
+    public static void Quit()
+    {
+        NativeDestroy();
     }
 
 

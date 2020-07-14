@@ -1,10 +1,10 @@
 #ifndef __movesystem__
 #define __movesystem__
 
+#include <iostream>
 #include "../Component/Move.hpp"
 #include "../Component/Position.hpp"
 #include "../Entitas/ISystem.hpp"
-#include <iostream>
 
 
 namespace Entitas

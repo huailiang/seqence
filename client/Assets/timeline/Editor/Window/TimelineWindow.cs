@@ -4,7 +4,7 @@ using PlayMode = UnityEngine.Timeline.PlayMode;
 
 namespace UnityEditor.Timeline
 {
-    [EditorWindowTitle(title = "Timeline", useTypeNameAsIconName = true)]
+
     public partial class TimelineWindow : EditorWindow
     {
         public static TimelineWindow inst;
@@ -133,8 +133,7 @@ namespace UnityEditor.Timeline
         public static void ShowWindow()
         {
             inst = GetWindow<TimelineWindow>(typeof(SceneView));
-            inst.titleContent = EditorGUIUtility.IconContent("TimelineAsset Icon", "Timeline");
-            inst.titleContent.text = "  Seqence Editor";
+            inst.titleContent = new GUIContent("Seqence", "Seqence Editor");
         }
     }
 }

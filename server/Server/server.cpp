@@ -10,44 +10,11 @@ using namespace std;
 bool flag_q;
 
 
-class AB
-{
-public:
-	AB(int _a)
-	{
-		a = _a;
-	}
-
-	~AB()
-	{
-		printf("DESTROY \n");
-	}
-
-	int a;
-};
-
-std::shared_ptr<AB> ptr;
-std::vector< std::shared_ptr<AB>> arr;
-
-void test()
-{
-	auto ptr = std::shared_ptr<AB>(new AB(2));
-	cout << ptr->a << endl;
-	arr.push_back(ptr);
-	ptr = nullptr;
-};
-
 int main(int argc, char*  argv[])
 {
-	cout << "server start" << endl;
-	test();
-	cout << "size: " << arr.size() << endl;
-	arr.clear();
-	cout << "size2:" << arr.size() << endl;
-
 	const int fps = 30;
 	const char* assets = "../Engine/assets/";
-	Entitas::Initial(fps, assets);
+	Entitas::EngineInitial(fps, assets);
 	int per = 1000 / fps;
 	clock_t rawtime = 0;
 	int ch;
@@ -55,7 +22,7 @@ int main(int argc, char*  argv[])
 	{
 		if (flag_q)
 		{
-			Entitas::Destroy();
+			Entitas::EngineDestroy();
 			break;
 		}
 		
@@ -71,7 +38,7 @@ int main(int argc, char*  argv[])
 		int delta = t - rawtime;
 		if (delta >= per)
 		{
-			Entitas::Update(delta / 1000.0f);
+			Entitas::EngineUpdate(delta / 1000.0f);
 			rawtime = clock();
 		}
 	}

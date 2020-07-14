@@ -21,8 +21,10 @@
   <ItemGroup>
     <ClInclude Include="..\Engine\Component\DemoComponent.hpp" />
     <ClInclude Include="..\Engine\Component\Move.hpp" />
+    <ClInclude Include="..\Engine\Component\Path.hpp" />
     <ClInclude Include="..\Engine\Component\Position.hpp" />
     <ClInclude Include="..\Engine\Component\Rotation.hpp" />
+    <ClInclude Include="..\Engine\Component\Skill.hpp" />
     <ClInclude Include="..\Engine\Component\XEntity.hpp" />
     <ClInclude Include="..\Engine\Component\XMonster.hpp" />
     <ClInclude Include="..\Engine\Component\XRole.hpp" />
@@ -45,6 +47,9 @@
     <ClInclude Include="..\Engine\System\EntitySystem.hpp" />
     <ClInclude Include="..\Engine\System\DemoSystem.hpp" />
     <ClInclude Include="..\Engine\system\MoveSystem.hpp" />
+    <ClInclude Include="..\Engine\System\PathSystem.hpp" />
+    <ClInclude Include="..\Engine\System\SkillSystem.hpp" />
+    <ClInclude Include="..\Engine\type.hpp" />
     <ClInclude Include="..\Engine\Util\tinyxml2.h" />
     <ClInclude Include="..\Engine\Util\util.hpp" />
     <ClInclude Include="..\Engine\Util\vector3.hpp" />

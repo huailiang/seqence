@@ -4,7 +4,7 @@
 
 namespace Entitas
 {
-    
+
 	class EngineInfo
 	{
 	public:
@@ -12,8 +12,9 @@ namespace Entitas
 		static float time;
 		static int frameCount;
 		static int frameRate;
-        static const char* assetPath;
+		static const char* assetPath;
 	};
+
 
 }
 

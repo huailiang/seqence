@@ -22,7 +22,7 @@ namespace Entitas
             }
             else if(t>time[cnt-1])
             {
-                r= &rot[cnt-1];
+                r = &rot[cnt-1];
                 return pos[cnt-1];
             }
             else
@@ -40,6 +40,14 @@ namespace Entitas
             }
             return vector3(0,0,0);
         }
+
+		~Path()
+		{
+			delete[] time;
+			delete[] pos;
+			delete[] rot;
+			cnt = 0;
+		}
 
     private:
         size_t cnt;
