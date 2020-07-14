@@ -1,6 +1,8 @@
 #ifndef  __xentity__
 #define __xentity__
 
+
+#include "../Component/Path.hpp"
 #include "../Entitas/IComponent.hpp"
 
 namespace Entitas
@@ -8,7 +10,7 @@ namespace Entitas
 
 	class XActor : public IComponent {
 	public:
-		void Reset(unsigned int id, float hp, float sp, float attack, float hit) {
+		void Reset(unsigned int id, float hp, float sp, float attack, float hit, Path* path) {
             this->uid = id;
 			this->hp = hp;
 			this->sp = sp;
@@ -21,6 +23,8 @@ namespace Entitas
 		float sp;
 		float attack;
 		float hit;
+        Path* path;
+        
 	};
 
 }

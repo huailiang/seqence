@@ -5,8 +5,8 @@
 #include "System/MoveSystem.hpp"
 #include "System/DemoSystem.hpp"
 #include "System/EntitySystem.hpp"
-#include "System/PathSystem.hpp"
-#include "System/SkillSystem.hpp"
+#include "Conf/PathSystem.hpp"
+#include "Conf/SkillSystem.hpp"
 #include "Util/util.hpp"
 
 namespace Entitas

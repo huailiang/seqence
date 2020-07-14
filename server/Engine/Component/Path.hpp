@@ -14,7 +14,7 @@ namespace Entitas
             util::LoadPath(name, cnt, time, pos, rot);
 		}
         
-        vector3 Sample(float t, float*& r)
+        vector3 Sample(float t, float*& r) const
         {
             if (t<time[0]) {
                 r = &rot[0];
