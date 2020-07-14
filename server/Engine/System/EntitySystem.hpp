@@ -21,20 +21,24 @@ namespace Entitas
 		}
 
 		void Initialize() {
-            
+			auto player = _pool->CreateEntity();
+			vector3 p;
+			p.x = 1;
+			player->Add<Rotation>(2);
+			player->Add<Position>(p);
+			player->Add<Role>(1001, 2, 1, 2, 3);
+			player->Add<Path>("man.xml");
+			player->OnEntityReleased += OnEntityDestroy;
+
+			auto monster = _pool->CreateEntity();
+			monster->Add<Rotation>(90);
+			p.z = 45;
+			monster->Add<Position>(p);
+			monster->Add<Path>("monster.xml");
+			monster->Add<Monster>(1002, 2, 1, 2, 4);
+			monster->OnEntityReleased += OnEntityDestroy;
 		}
         
-        void CreateEntity()
-        {
-            auto player = _pool->CreateEntity();
-            vector3 p;
-            p.x = 1;
-            player->Add<Rotation>(2);
-            player->Add<Position>(p);
-            player->Add<Role>(1001, 2, 1, 2, 3);
-            player->Add<Path>("man.xml");
-            player->OnEntityReleased += OnEntityDestroy;
-        }
 
 		void Execute() {
 			for (auto &e : _group.lock()->GetEntities()) {
@@ -42,11 +46,11 @@ namespace Entitas
 				if (e->Has<Position>() && e->Has<Rotation>())
 				{
 					auto pos = e->Get<Position>();
-                    auto rot = e->Get<Rotation>();
-                    pos->pos.y+=2;
+					auto rot = e->Get<Rotation>();
+					pos->pos.y += 2;
 					e->Replace<Position>(pos->pos);
 					posDelegate(attr->uid, pos->pos.x, pos->pos.y, pos->pos.z, rot->v);
-                    Hit(e);
+					Hit(e);
 				}
 				else
 				{
