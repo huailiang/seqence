@@ -108,7 +108,7 @@ namespace Entitas
 			x * v.y - y * v.x);
 	}
 
-	void vector3::tostring()
+	void vector3::output()
 	{
 		std::cout << "(" << x << ", " << y << ", " << z << ")" << std::endl;
 	}

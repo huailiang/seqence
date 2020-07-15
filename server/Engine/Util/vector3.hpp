@@ -27,7 +27,7 @@ namespace Entitas
 		float length();
 		void normalize();
 		vector3 cross(const vector3 &v);
-		void tostring();
+		void output();
 
 		vector3 rotateY(const float v);
 

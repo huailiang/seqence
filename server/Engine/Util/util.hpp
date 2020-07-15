@@ -4,6 +4,7 @@
 #include "vector3.hpp"
 #include "tinyxml2.h"
 #include <string>
+#include <sstream> 
 #include <unordered_map>
 
 namespace Entitas
@@ -38,6 +39,16 @@ namespace Entitas
 		{
 			return x1 + (x2 - x1) * t;
 		}
+
+		template<typename T>
+		T convert(const char *str)
+		{
+			std::stringstream ss(str);
+			T t;
+			ss >> t;
+			return t;
+		}
+
 
 	private:
 

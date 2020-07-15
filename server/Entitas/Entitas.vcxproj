@@ -46,6 +46,7 @@
     <ClInclude Include="..\Engine\Entitas\TriggerOnEvent.hpp" />
     <ClInclude Include="..\Engine\EngineInfo.hpp" />
     <ClInclude Include="..\Engine\interface.hpp" />
+    <ClInclude Include="..\Engine\log.hpp" />
     <ClInclude Include="..\Engine\Singleton.hpp" />
     <ClInclude Include="..\Engine\System\EntitySystem.hpp" />
     <ClInclude Include="..\Engine\System\DemoSystem.hpp" />
@@ -66,6 +67,7 @@
     <ClCompile Include="..\Engine\Entitas\SystemContainer.cpp" />
     <ClCompile Include="..\Engine\engine.cpp" />
     <ClCompile Include="..\Engine\interface.cpp" />
+    <ClCompile Include="..\Engine\log.cpp" />
     <ClCompile Include="..\Engine\System\EntitySystem.cpp" />
     <ClCompile Include="..\Engine\Util\tinyxml2.cpp" />
     <ClCompile Include="..\Engine\Util\util.cpp" />

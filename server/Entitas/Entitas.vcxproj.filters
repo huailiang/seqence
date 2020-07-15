@@ -114,6 +114,7 @@
       <Filter>Conf</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\Singleton.hpp" />
+    <ClInclude Include="..\Engine\log.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\Entitas\GroupObserver.cpp">
@@ -154,5 +155,6 @@
     <ClCompile Include="..\Engine\System\EntitySystem.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="..\Engine\log.cpp" />
   </ItemGroup>
 </Project>

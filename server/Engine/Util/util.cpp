@@ -11,7 +11,7 @@ using namespace tinyxml2;
 namespace Entitas
 {
 
-	const float PI = 3.1415926;
+	const float PI = 3.1415926f;
 
 	const char* EngineInfo::assetPath;
 
@@ -56,7 +56,7 @@ namespace Entitas
 		int i = 0;
 		v = t->FirstChildElement("float");
 		while (v) {
-			float vl = atof(v->GetText());
+			float vl = v->FloatText(0);
 			printf("v: %f\n", vl);
 			time[i++] = vl;
 			v = v->NextSiblingElement();
@@ -65,10 +65,10 @@ namespace Entitas
 		v = t->FirstChildElement("Vector4");
 		i = 0;
 		while (v) {
-			auto x = atof(v->FirstChildElement("x")->GetText());
-			auto y = atof(v->FirstChildElement("y")->GetText());
-			auto z = atof(v->FirstChildElement("z")->GetText());
-			auto w = atof(v->FirstChildElement("w")->GetText());
+			auto x = v->FirstChildElement("x")->FloatText(0);
+			auto y = v->FirstChildElement("y")->FloatText(0);
+			auto z = v->FirstChildElement("z")->FloatText(0);
+			auto w = v->FirstChildElement("w")->FloatText(0);
 			vector3 vec(x, y, z);
 			pos[i] = vec;
 			rot[i++] = w;
@@ -92,7 +92,7 @@ namespace Entitas
 		int hostIdx = host->IntText(0);
 		XMLElement *tracks = root->FirstChildElement("tracks");
 
-		int i = 0;
+		size_t i = 0;
 		cnt = 0;
 		XMLElement *trackData = tracks->FirstChildElement("TrackData");
 		while (trackData)

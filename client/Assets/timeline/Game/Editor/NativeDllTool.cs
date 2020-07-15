@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using UnityEditor;
-
+using UnityEngine;
 
 static class XNatives
 {
@@ -21,10 +21,25 @@ public class NativeDllTool
     [MenuItem("Tools/FreeDll")]
     static void FreeLiabrary()
     {
+
+#if UNITY_EDITOR_WIN
         XNatives.ecs_dll = XNatives.LoadLibrary(entatis);
         while (XNatives.FreeLibrary(XNatives.ecs_dll.Value)) ;
         XNatives.ecs_dll = null;
         AssetDatabase.Refresh();
+        Debug.Log("FREE END");
+#endif
+    }
+
+
+    [MenuItem("Tools/ReloadDll")]
+    static void ReloadLiabrary()
+    {
+#if UNITY_EDITOR_WIN
+        XNatives.LoadLibrary(entatis);
+        AssetDatabase.Refresh();
+        Debug.Log("LOAD END");
+#endif
     }
 
 }

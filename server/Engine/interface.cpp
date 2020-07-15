@@ -9,12 +9,12 @@ namespace Entitas
 
 		// c# -> c++
 		void InitNative(int rate, const char* assets,
-			SyncPos pos, SyncRole role, SyncPlay play, BroadCast broad)
+			SyncPos pos, SyncRole role, SyncPlay play, SyncLog log)
 		{
 			posDelegate = pos;
 			roleDelegate = role;
 			playDelegate = play;
-			broadDelegate = broad;
+			logDelegate = log;
 
 			EngineInitial(rate, assets);
 		}

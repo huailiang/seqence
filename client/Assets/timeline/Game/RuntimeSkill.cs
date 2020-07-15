@@ -15,7 +15,7 @@
 
         public void Update()
         {
-           // NativeInterface.Update(Time.deltaTime);
+            NativeInterface.Update(Time.deltaTime);
             timeline?.Update();
             if (Input.GetKey(KeyCode.Space))
             {

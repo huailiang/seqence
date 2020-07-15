@@ -10,7 +10,7 @@ public class NativeInterface
 
     public delegate void PlayDelegate(uint uid, string skill);
 
-    public delegate void BroadDelegate(byte[] buffer, int len);
+    public delegate void LogDelegate(string msg, int types);
 
 
 #if UNITY_IPHONE || UNITY_XBOX360
@@ -18,7 +18,7 @@ public class NativeInterface
 #else
     [DllImport("Entitas")]
 #endif
-    static extern void InitNative(int rate, string assets, PosDelegate cb, CreateRoleDelegate cb2, PlayDelegate cb3, BroadDelegate cb4);
+    static extern void InitNative(int rate, string assets, PosDelegate cb, CreateRoleDelegate cb2, PlayDelegate cb3, LogDelegate cb4);
 
 #if UNITY_IPHONE || UNITY_XBOX360
     [DllImport("__Internal")]
@@ -43,7 +43,7 @@ public class NativeInterface
 
     public static void Init(int rate, string assets)
     {
-        InitNative(rate, assets, OnPosSync, OnRoleSync, OnPlaySync, OnBroadSync);
+        InitNative(rate, assets, OnPosSync, OnRoleSync, OnPlaySync, OnLogSync);
     }
 
     public static void Recv(uint id, byte[] buffer, int len)
@@ -85,9 +85,14 @@ public class NativeInterface
         EntityMgr.Instance.Play(id, skill);
     }
 
-    [MonoPInvokeCallback(typeof(BroadDelegate))]
-    static void OnBroadSync(byte[] buffer, int len)
+    [MonoPInvokeCallback(typeof(LogDelegate))]
+    static void OnLogSync(string msg, int types)
     {
-        Debug.Log(len);
+        if (types == 0)
+            Debug.Log(msg);
+        else if (types == 1)
+            Debug.LogWarning(msg);
+        else
+            Debug.LogError(msg);
     }
 }

@@ -17,26 +17,26 @@ namespace Entitas
 #define ENGINE_INTERFACE_EXPORT
 #endif
 
-	// c++ -> c#
-	typedef void(*SyncPos)(unsigned int id, float x, float y, float z, float w);
-
-	typedef void(*SyncRole)(unsigned int id, unsigned int confID);
-
-	typedef void(*SyncPlay)(unsigned int id, const char* skillID);
-
-	typedef void(*BroadCast)(unsigned char* buffer, int len);
-
-
-	extern SyncPos posDelegate;
-	extern SyncRole roleDelegate;
-	extern SyncPlay  playDelegate;
-	extern BroadCast broadDelegate;
-
 	extern "C"
 	{
+		// c++ -> c#
+		typedef void(*SyncPos)(unsigned int id, float x, float y, float z, float w);
+
+		typedef void(*SyncRole)(unsigned int id, unsigned int confID);
+
+		typedef void(*SyncPlay)(unsigned int id, const char* skillID);
+
+		typedef void(*SyncLog)(const char* buffer, int type);
+
+
+		extern SyncPos	 posDelegate;
+		extern SyncRole	 roleDelegate;
+		extern SyncPlay  playDelegate;
+		extern SyncLog   logDelegate;
+
 		// c# -> c++
 		ENGINE_INTERFACE_EXPORT void InitNative(int rate, const char* assets,
-			SyncPos pos, SyncRole rot, SyncPlay play, BroadCast broad);
+			SyncPos pos, SyncRole rot, SyncPlay play, SyncLog broad);
 
 		ENGINE_INTERFACE_EXPORT void NativeRecv(unsigned int id, unsigned char* buffer, int len);
 

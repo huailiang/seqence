@@ -1,5 +1,5 @@
 #include "engine.hpp"
-#include "interface.hpp"
+#include "log.hpp"
 #include "EngineInfo.hpp"
 #include "Entitas/Matcher.hpp"
 #include "System/MoveSystem.hpp"
@@ -22,7 +22,6 @@ namespace Entitas
 	SyncPos posDelegate;
 	SyncRole roleDelegate;
 	SyncPlay  playDelegate;
-	BroadCast broadDelegate;
 
 	/*
 	 * 第一个参数是fps
@@ -30,7 +29,8 @@ namespace Entitas
 	 */
 	void EngineInitial(int rate, const char* assets)
 	{
-		printf("engine initial");
+		InitLogger("debug.log", "warn.log", "error.log");
+		LOG("engine initial");
 		EngineInfo::frameRate = rate;
 		EngineInfo::frameCount = 0;
 		EngineInfo::time = 0;
@@ -48,8 +48,8 @@ namespace Entitas
 		vector3* pos;
 		float* rot;
 		util::LoadPath("man.xml", cnt, time, pos, rot);
-		printf("cnt: %ld, time0: %f, time1: %f rot: %f\n", cnt, time[0], time[1], rot[1]);
-		pos[0].tostring();
+		LOG("cnt:") << cnt << " time:" << time[0] << " rot:" << rot[1];
+		pos[0].output();
 	}
 
 
