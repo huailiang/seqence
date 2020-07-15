@@ -26,6 +26,6 @@ mkdir -p build_osx && cd build_osx
 cmake -GXcode ../
 cd ..
 cmake --build build_osx --config Release
-# mkdir -p Plugins/Entitas.bundle/Contents/MacOS/
-# cp build_osx/Release/Entitas.bundle/Contents/MacOS/Entitas Plugins/Entitas.bundle/Contents/MacOS/Entitas
+mkdir -p Plugins/Entitas.bundle/Contents/MacOS/
+cp build_osx/Release/Entitas.bundle/Contents/MacOS/Entitas Plugins/Entitas.bundle/Contents/MacOS/Entitas
 

@@ -1,6 +1,7 @@
 #ifndef  __skill__
 #define __skill__
 
+#include <vector>
 #include "../Util/vector3.hpp"
 #include "../Util/util.hpp"
 #include "../Entitas/IComponent.hpp"
@@ -17,7 +18,7 @@ namespace Entitas
 				types, effect);
 		}
 
-		int Find(float time)
+		size_t Find(float time)
 		{
 			for (size_t i = 0; i < cnt; i++)
 			{

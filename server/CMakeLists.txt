@@ -6,6 +6,8 @@ project(Entitas)
 if ( IOS )
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fembed-bitcode")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fembed-bitcode")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -arch armv7 -arch arm64")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -arch armv7 -arch arm64")
 endif ()
 
 option ( GC64 "using gc64" OFF )
