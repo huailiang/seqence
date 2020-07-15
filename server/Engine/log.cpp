@@ -60,6 +60,7 @@ namespace Entitas
 				logDelegate(vl.c_str(), CWarn);
 				break;
 			case ERR:
+            case FATAL:
 				logDelegate(vl.c_str(), CError);
 				break;
 			}

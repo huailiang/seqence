@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C2D0A7024BF44C7000F1033 /* EntitySystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C2D0A6F24BF44C7000F1033 /* EntitySystem.cpp */; };
+		4C2D0A7324BF456E000F1033 /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C2D0A7124BF456E000F1033 /* log.cpp */; };
 		4C7B13F224B9E75000C9B348 /* engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B13CC24B9E75000C9B348 /* engine.cpp */; };
 		4C7B13F324B9E75000C9B348 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B13CF24B9E75000C9B348 /* util.cpp */; };
 		4C7B13F424B9E75000C9B348 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B13D024B9E75000C9B348 /* tinyxml2.cpp */; };
@@ -36,6 +38,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4C2D0A6F24BF44C7000F1033 /* EntitySystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EntitySystem.cpp; sourceTree = "<group>"; };
+		4C2D0A7124BF456E000F1033 /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = log.cpp; path = ../../Engine/log.cpp; sourceTree = "<group>"; };
+		4C2D0A7224BF456E000F1033 /* log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = log.hpp; path = ../../Engine/log.hpp; sourceTree = "<group>"; };
 		4C7B13C924B9E75000C9B348 /* DemoSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DemoSystem.hpp; sourceTree = "<group>"; };
 		4C7B13CA24B9E75000C9B348 /* EntitySystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EntitySystem.hpp; sourceTree = "<group>"; };
 		4C7B13CB24B9E75000C9B348 /* MoveSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MoveSystem.hpp; sourceTree = "<group>"; };
@@ -121,6 +126,7 @@
 		4C7B13C824B9E75000C9B348 /* System */ = {
 			isa = PBXGroup;
 			children = (
+				4C2D0A6F24BF44C7000F1033 /* EntitySystem.cpp */,
 				4C7B13C924B9E75000C9B348 /* DemoSystem.hpp */,
 				4C7B13CA24B9E75000C9B348 /* EntitySystem.hpp */,
 				4C7B13CB24B9E75000C9B348 /* MoveSystem.hpp */,
@@ -227,6 +233,8 @@
 				4C7B13CC24B9E75000C9B348 /* engine.cpp */,
 				4CB650BA24BDF6ED005FF6B6 /* Singleton.hpp */,
 				4C7B13D524B9E75000C9B348 /* EngineInfo.hpp */,
+				4C2D0A7124BF456E000F1033 /* log.cpp */,
+				4C2D0A7224BF456E000F1033 /* log.hpp */,
 				4CAAB74524BB0CCE001CFC7E /* interface.hpp */,
 				4CAAB74424BB0CCE001CFC7E /* interface.cpp */,
 				4C7B13DC24B9E75000C9B348 /* Entitas */,
@@ -310,6 +318,8 @@
 				4C7B13F724B9E75000C9B348 /* Entity.cpp in Sources */,
 				4C7B13F624B9E75000C9B348 /* ComponentTypeId.cpp in Sources */,
 				4CBF955724B9DE6800AD1CB0 /* main.cpp in Sources */,
+				4C2D0A7024BF44C7000F1033 /* EntitySystem.cpp in Sources */,
+				4C2D0A7324BF456E000F1033 /* log.cpp in Sources */,
 				4C7B13F224B9E75000C9B348 /* engine.cpp in Sources */,
 				4C7B13FA24B9E75000C9B348 /* GroupObserver.cpp in Sources */,
 				4C7B13F324B9E75000C9B348 /* util.cpp in Sources */,

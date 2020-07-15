@@ -15,7 +15,7 @@ namespace Entitas
 
 	public:
 		Group(const Matcher& matcher);
-		auto Count() const -> const unsigned int;
+		auto Count() const -> const size_t;
 		auto GetEntities()->std::vector<EntityPtr>;
 		auto GetSingleEntity() const->EntityPtr;
 		bool ContainsEntity(const EntityPtr& entity) const;

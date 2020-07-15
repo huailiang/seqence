@@ -152,12 +152,12 @@ namespace Entitas
 
 			auto entities = GetEntities();
 
-			for (int i = 0, entitiesLength = entities.size(); i < entitiesLength; i++)
+			for (size_t i = 0, entitiesLength = entities.size(); i < entitiesLength; i++)
 			{
 				group->HandleEntitySilently(entities[i]);
 			}
 			mGroups[group->GetMatcher()] = group;
-			for (int i = 0, indicesLength = matcher.GetIndices().size(); i < indicesLength; i++)
+			for (size_t i = 0, indicesLength = matcher.GetIndices().size(); i < indicesLength; i++)
 			{
 				mGroupsForIndex[matcher.GetIndices()[i]].push_back(group);
 			}
@@ -214,17 +214,17 @@ namespace Entitas
 		ResetCreationIndex();
 	}
 
-	auto Pool::GetEntityCount() const -> unsigned int
+	auto Pool::GetEntityCount() const -> size_t
 	{
 		return mEntities.size();
 	}
 
-	auto Pool::GetReusableEntitiesCount() const -> unsigned int
+	auto Pool::GetReusableEntitiesCount() const -> size_t
 	{
 		return mReusableEntities.size();
 	}
 
-	auto Pool::GetRetainedEntitiesCount() const -> unsigned int
+	auto Pool::GetRetainedEntitiesCount() const -> size_t
 	{
 		return mRetainedEntities.size();
 	}
@@ -262,7 +262,7 @@ namespace Entitas
 		{
 			auto events = std::vector<std::pair<std::weak_ptr<Group>, Group::GroupChanged*>>();
 
-			for (int i = 0, groupsCount = groups.size(); i < groupsCount; ++i)
+			for (size_t i = 0, groupsCount = groups.size(); i < groupsCount; ++i)
 			{
 				events.push_back(std::make_pair(groups[i], groups[i].lock()->HandleEntity(entity)));
 			}

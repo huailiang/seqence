@@ -32,7 +32,7 @@ namespace Entitas
 
 	void GroupObserver::Activate()
 	{
-		for (unsigned int i = 0, groupCount = mGroups.size(); i < groupCount; ++i)
+		for (size_t i = 0, groupCount = mGroups.size(); i < groupCount; ++i)
 		{
 			auto g = mGroups[i].lock();
 			auto eventType = mEventTypes[i];
@@ -60,7 +60,7 @@ namespace Entitas
 
 	void GroupObserver::Deactivate()
 	{
-		for (unsigned int i = 0, groupCount = mGroups.size(); i < groupCount; ++i)
+		for (size_t i = 0, groupCount = mGroups.size(); i < groupCount; ++i)
 		{
 			if (!mGroups[i].expired())
 			{

@@ -13,6 +13,6 @@ build64/
 Plugins/
 xcode_proj/Build/
 xcode_proj/DerivedData/
-xcode_proj/Index/DataStor/
+xcode_proj/Index
 cmake-build-debug/
 **/*.log

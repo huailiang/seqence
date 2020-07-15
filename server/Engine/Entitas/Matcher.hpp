@@ -26,7 +26,7 @@ namespace Entitas
 		auto GetAnyOfIndices() const -> const ComponentIdList;
 		auto GetNoneOfIndices() const -> const ComponentIdList;
 
-		auto GetHashCode() const -> unsigned int;
+		auto GetHashCode() const -> size_t;
 		bool CompareIndices(const Matcher& matcher) const;
 
 		auto OnEntityAdded() -> const TriggerOnEvent*;
@@ -44,12 +44,12 @@ namespace Entitas
 		ComponentIdList mNoneOfIndices;
 
 	private:
-		auto ApplyHash(unsigned int hash, const ComponentIdList indices, int i1, int i2) const -> unsigned int;
+		auto ApplyHash(size_t hash, const ComponentIdList indices, int i1, int i2) const -> size_t;
 		auto MergeIndices() const->ComponentIdList;
 		static auto MergeIndices(MatcherList matchers)->ComponentIdList;
 		static auto DistinctIndices(ComponentIdList indices)->ComponentIdList;
 
-		unsigned int mCachedHash{ 0 };
+		size_t mCachedHash{ 0 };
 	};
 }
 
@@ -60,7 +60,7 @@ namespace std
 	{
 		std::size_t operator()(const Entitas::Matcher& matcher) const
 		{
-			return hash<unsigned int>()(matcher.GetHashCode());
+			return hash<size_t>()(matcher.GetHashCode());
 		}
 	};
 }

@@ -30,9 +30,9 @@ namespace Entitas
 		void ClearComponentPools();
 		void Reset();
 
-		auto GetEntityCount() const -> unsigned int;
-		auto GetReusableEntitiesCount() const -> unsigned int;
-		auto GetRetainedEntitiesCount() const -> unsigned int;
+		auto GetEntityCount() const -> size_t;
+		auto GetReusableEntitiesCount() const -> size_t;
+		auto GetRetainedEntitiesCount() const -> size_t;
 
 		auto CreateSystem(std::shared_ptr<ISystem> system)->std::shared_ptr<ISystem>;
 		template <typename T> inline auto CreateSystem()->std::shared_ptr<ISystem>;

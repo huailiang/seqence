@@ -9,7 +9,7 @@ namespace Entitas
 	{
 	}
 
-	auto Group::Count() const -> const unsigned int
+	auto Group::Count() const -> const size_t
 	{
 		return mEntities.size();
 	}

@@ -60,7 +60,6 @@ namespace Entitas
 		LogLevel m_log_level;
 	};
 	
-	// 根据不同等级进行用不同的输出流进行读写  
 	#define LOG(text) Log(INFO).Start(INFO, text,__FILE__,__LINE__,__FUNCTION__)  
 	
 	#define WARN(text) Log(WARN).Start(WARN,text,__FILE__,__LINE__,__FUNCTION__)
@@ -69,7 +68,6 @@ namespace Entitas
 	
 	#define PRINT Log(INFO).OStart(__FILE__,__LINE__,__FUNCTION__) 
 	
-	// 利用日记进行检查的各种宏  
 	#define CHECK(a) if(!(a)){ LOG(ERR)<<" CHECK failed "<<endl<<#a<< "= "<< (a)<<endl;abort(); }                                                      
 	
 	#define CHECK_NOTNULL(a) if( NULL == (a)){ LOG(ERR)<<" CHECK_NOTNULL failed "<< #a << "== NULL "<<endl; abort();}

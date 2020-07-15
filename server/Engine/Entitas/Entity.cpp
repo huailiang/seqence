@@ -92,7 +92,7 @@ namespace Entitas
 		return false;
 	}
 
-	auto Entity::GetComponentsCount() const -> unsigned int
+	auto Entity::GetComponentsCount() const -> size_t
 	{
 		return mComponents.size();
 	}
@@ -112,7 +112,7 @@ namespace Entitas
 		}
 	}
 
-	auto Entity::GetUuid() const -> const unsigned int
+	auto Entity::GetUuid() const -> const size_t
 	{
 		return mUuid;
 	}

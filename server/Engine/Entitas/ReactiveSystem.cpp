@@ -33,7 +33,7 @@ namespace Entitas
 			mClearAfterExecute = true;
 		}
 
-		unsigned int triggersLength = triggers.size();
+		size_t triggersLength = triggers.size();
 		auto groups = std::vector<std::weak_ptr<Group>>(triggersLength);
 		auto eventTypes = std::vector<GroupEventType>(triggersLength);
 

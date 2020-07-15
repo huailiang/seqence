@@ -56,31 +56,6 @@ namespace Entitas
 	}
 
 	void EntitySystem::Execute() {
-		float time = EngineInfo::time;
-		for (auto &e : _group.lock()->GetEntities()) {
-			if (e->Has<XActor>())
-			{
-				auto actor = e->Get<XActor>();
-				auto path = actor->path;
-				float rot;
-				auto pos = path->Sample(time, rot);
-				if (e->Has<Position>())
-				{
-					auto c_pos = e->Get<Position>();
-					c_pos->Reset(pos);
-				}
-				if (e->Has<Rotation>())
-				{
-					auto c_rot = e->Get<Rotation>();
-					c_rot->Reset(rot);
-				}
-				posDelegate(actor->uid, pos.x, pos.y, pos.z, rot);
-			}
-			else
-			{
-				printf("no postion exist");
-			}
-		}
 		Hit();
 	}
 
@@ -95,7 +70,7 @@ namespace Entitas
 			auto skill = e->Get<Skill>();
 			if (skill)
 			{
-				int idx = skill->Find(time);
+				size_t idx = skill->Find(time);
 				if (idx >= 0)
 				{
 					Caster(idx, skill, pos->pos, rot->v);
@@ -106,7 +81,7 @@ namespace Entitas
 	}
 
 
-	void  EntitySystem::Caster(int idx, Skill* skill, vector3 rolePos, float roleRot)
+	void  EntitySystem::Caster(size_t idx, Skill* skill, vector3 rolePos, float roleRot)
 	{
 		int shape = skill->shapes[idx];
 		float arg = skill->arg[idx];
@@ -114,7 +89,6 @@ namespace Entitas
 
 		for (auto &e : _group2.lock()->GetEntities()) {
 			auto pos = e->Get<Position>();
-			auto rot = e->Get<Rotation>();
 			if (shape == RING)
 			{
 				if (util::CircleAttack(arg, rolePos, pos->pos))
@@ -145,7 +119,7 @@ namespace Entitas
 		}
 	}
 
-	void EntitySystem::CalHurt(int idx, Skill* skill, EntityPtr e)
+	void EntitySystem::CalHurt(size_t idx, Skill* skill, EntityPtr e)
 	{
 		std::vector<const char*> types = skill->types[idx];
 		std::vector<float> effects = skill->effect[idx];

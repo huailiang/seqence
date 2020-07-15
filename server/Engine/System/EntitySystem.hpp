@@ -24,9 +24,9 @@ namespace Entitas
 
 		bool Hit();
 
-		void Caster(int idx, Skill* skill, vector3 rolePos, float roleRot);
+		void Caster(size_t idx, Skill* skill, vector3 rolePos, float roleRot);
 
-		void CalHurt(int idx, Skill* skill, EntityPtr ator);
+		void CalHurt(size_t idx, Skill* skill, EntityPtr ator);
 
 		static void OnEntityDestroy(Entity* entity);
 

@@ -27,9 +27,9 @@ namespace Entitas
 
 		bool HasComponents(const std::vector<ComponentId>& indices) const;
 		bool HasAnyComponent(const std::vector<ComponentId>& indices) const;
-		auto GetComponentsCount() const -> unsigned int;
+		auto GetComponentsCount() const -> size_t;
 		void RemoveAllComponents();
-		auto GetUuid() const -> const unsigned int;
+		auto GetUuid() const -> const size_t;
 		bool IsEnabled();
 
 		bool operator ==(const EntityPtr& right) const;
@@ -139,7 +139,7 @@ namespace std
 	{
 		std::size_t operator()(const weak_ptr<Entitas::Entity>& ptr) const
 		{
-			return hash<unsigned int>()(ptr.lock()->GetUuid());
+			return hash<size_t>()(ptr.lock()->GetUuid());
 		}
 	};
 

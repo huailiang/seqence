@@ -81,7 +81,7 @@ namespace Entitas
 		return mNoneOfIndices;
 	}
 
-	auto Matcher::GetHashCode() const -> unsigned int
+	auto Matcher::GetHashCode() const -> size_t
 	{
 		return mCachedHash;
 	}
@@ -99,7 +99,7 @@ namespace Entitas
 		{
 			return false;
 		}
-		for (unsigned int i = 0, count = leftIndices.size(); i < count; ++i)
+		for (size_t i = 0, count = leftIndices.size(); i < count; ++i)
 		{
 			if (leftIndices[i] != rightIndices[i])
 			{
@@ -151,7 +151,7 @@ namespace Entitas
 
 	void Matcher::CalculateHash()
 	{
-		unsigned int hash = typeid(Matcher).hash_code();
+		size_t hash = typeid(Matcher).hash_code();
 
 		hash = ApplyHash(hash, mAllOfIndices, 3, 53);
 		hash = ApplyHash(hash, mAnyOfIndices, 307, 367);
@@ -160,11 +160,11 @@ namespace Entitas
 		mCachedHash = hash;
 	}
 
-	auto Matcher::ApplyHash(unsigned int hash, const ComponentIdList indices, int i1, int i2) const -> unsigned int
+	auto Matcher::ApplyHash(size_t hash, const ComponentIdList indices, int i1, int i2) const -> size_t
 	{
 		if (indices.size() > 0)
 		{
-			for (int i = 0, indicesLength = indices.size(); i < indicesLength; i++)
+			for (size_t i = 0, indicesLength = indices.size(); i < indicesLength; i++)
 			{
 				hash ^= indices[i] * i1;
 			}
