@@ -28,6 +28,8 @@
     <ClInclude Include="..\Engine\Component\XActor.hpp" />
     <ClInclude Include="..\Engine\Component\XMonster.hpp" />
     <ClInclude Include="..\Engine\Component\XRole.hpp" />
+    <ClInclude Include="..\Engine\Conf\PathSystem.hpp" />
+    <ClInclude Include="..\Engine\Conf\SkillSystem.hpp" />
     <ClInclude Include="..\Engine\engine.hpp" />
     <ClInclude Include="..\Engine\Entitas\ComponentTypeId.hpp" />
     <ClInclude Include="..\Engine\Entitas\Delegate.hpp" />
@@ -44,11 +46,10 @@
     <ClInclude Include="..\Engine\Entitas\TriggerOnEvent.hpp" />
     <ClInclude Include="..\Engine\EngineInfo.hpp" />
     <ClInclude Include="..\Engine\interface.hpp" />
+    <ClInclude Include="..\Engine\Singleton.hpp" />
     <ClInclude Include="..\Engine\System\EntitySystem.hpp" />
     <ClInclude Include="..\Engine\System\DemoSystem.hpp" />
     <ClInclude Include="..\Engine\system\MoveSystem.hpp" />
-    <ClInclude Include="..\Engine\System\PathSystem.hpp" />
-    <ClInclude Include="..\Engine\System\SkillSystem.hpp" />
     <ClInclude Include="..\Engine\type.hpp" />
     <ClInclude Include="..\Engine\Util\tinyxml2.h" />
     <ClInclude Include="..\Engine\Util\util.hpp" />

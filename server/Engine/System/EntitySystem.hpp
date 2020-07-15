@@ -86,33 +86,33 @@ namespace Entitas
             }
 		}
         
-        bool Hit()
-        {
-            float time = EngineInfo::time;
-            auto size = _group2.lock()->Count();
-            vector3 arr_pos[size];
-            float arr_rot[size];
-            int i =0;
-            for (auto &e : _group2.lock()->GetEntities()) {
-                auto path = e->Get<Path>();
-                float* rot;
-                auto pos = path->Sample(time, rot);
-                arr_pos[i] = pos;
-                arr_rot[i] = *rot;
-                delete rot;
-            }
+		bool Hit()
+		{
+			float time = EngineInfo::time;
+			auto size = _group2.lock()->Count();
+			vector3* arr_pos = new vector3[size];
+			float* arr_rot = new float[size];
+			int i = 0;
+			for (auto &e : _group2.lock()->GetEntities()) {
+				auto path = e->Get<Path>();
+				float* rot;
+				auto pos = path->Sample(time, rot);
+				arr_pos[i] = pos;
+				arr_rot[i] = *rot;
+				delete rot;
+			}
 
-            for (auto &e : _group.lock()->GetEntities()) {
-                auto path = e->Get<Path>();
-                float* rot;
-                auto pos = path->Sample(time, rot);
-                for(int i=0;i<size;i++)
-                {
-                    
-                }
-            }
-            return false;
-        }
+			for (auto &e : _group.lock()->GetEntities()) {
+				auto path = e->Get<Path>();
+				float* rot;
+				auto pos = path->Sample(time, rot);
+				for (int i = 0; i < size; i++)
+				{
+
+				}
+			}
+			return false;
+		}
 
 
 	private:
