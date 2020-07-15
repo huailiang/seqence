@@ -7,15 +7,17 @@
 namespace Entitas
 {
 
-	class Monster : public XActor {
+	class Monster : public XActor
+	{
+
 	public:
-        void Reset(unsigned int id, float hp, float sp, float attack, float hit, Path* path) {
-			XActor::Reset(uid, hp, sp, attack, hit, path);
+		void Reset(unsigned int id, int confid, float hp, float sp, float attack, float hit, Path* path)
+		{
+			XActor::Reset(uid, confid, hp, sp, attack, hit, path);
 		}
 
 	};
 
 }
-
 
 #endif

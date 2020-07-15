@@ -8,6 +8,7 @@ namespace Entitas
 	struct TriggerOnEvent
 	{
 	public:
+
 		TriggerOnEvent(const Matcher trigger, const GroupEventType eventType)
 		{
 			this->trigger = trigger;

@@ -66,6 +66,7 @@
     <ClCompile Include="..\Engine\Entitas\SystemContainer.cpp" />
     <ClCompile Include="..\Engine\engine.cpp" />
     <ClCompile Include="..\Engine\interface.cpp" />
+    <ClCompile Include="..\Engine\System\EntitySystem.cpp" />
     <ClCompile Include="..\Engine\Util\tinyxml2.cpp" />
     <ClCompile Include="..\Engine\Util\util.cpp" />
     <ClCompile Include="..\Engine\Util\vector3.cpp" />

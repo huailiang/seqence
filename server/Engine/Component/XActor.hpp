@@ -10,8 +10,9 @@ namespace Entitas
 
 	class XActor : public IComponent {
 	public:
-		void Reset(unsigned int id, float hp, float sp, float attack, float hit, Path* path) {
+		void Reset(unsigned int id, int confId, float hp, float sp, float attack, float hit, Path* path) {
             this->uid = id;
+			this->confId = confId;
 			this->hp = hp;
 			this->sp = sp;
 			this->attack = attack;
@@ -19,6 +20,7 @@ namespace Entitas
 		}
 
         unsigned int uid;
+		int confId;
 		float hp;
 		float sp;
 		float attack;

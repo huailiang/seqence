@@ -17,6 +17,18 @@ namespace Entitas
 				types, effect);
 		}
 
+		int Find(float time)
+		{
+			for (size_t i = 0; i < cnt; i++)
+			{
+				if (start[i]<time &&start[i] + duration[i]>time)
+				{
+					return i;
+				}
+			}
+			return -1;
+		}
+
 
 		~Skill()
 		{
@@ -30,7 +42,6 @@ namespace Entitas
 			delete[] effect;
 		}
 
-	private:
 		size_t cnt;
 		float* start, *duration;
 		int* shapes;

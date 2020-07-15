@@ -151,5 +151,8 @@
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\interface.cpp" />
+    <ClCompile Include="..\Engine\System\EntitySystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

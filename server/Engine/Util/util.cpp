@@ -14,7 +14,14 @@ namespace Entitas
 	const float PI = 3.1415926;
 
 	const char* EngineInfo::assetPath;
-    
+
+	unsigned int util::inc_uid;
+
+	util::util()
+	{
+		inc_uid = 1 << 4;
+	}
+
 	string util::GetAssetPath(const char* name)
 	{
 		const char* dir = Entitas::EngineInfo::assetPath;
@@ -22,7 +29,7 @@ namespace Entitas
 		string s2(name);
 		return s1 + s2;
 	}
-    
+
 	int util::LoadPath(const char* name, size_t& cnt, float*& time, vector3*& pos, float*& rot)
 	{
 		tinyxml2::XMLDocument doc;
@@ -156,7 +163,7 @@ namespace Entitas
 			}
 			trackData = trackData->NextSiblingElement();
 		}
-        return 0;
+		return 0;
 	}
 
 	bool util::CircleAttack(float radius, vector3 attack, vector3 skill)
@@ -200,6 +207,11 @@ namespace Entitas
 	{
 		angle = angle * PI / 180;
 		return vector3(sin(angle), 0, cos(angle));
+	}
+
+	unsigned int util::GetIncUID()
+	{
+		return inc_uid++;
 	}
 
 }
