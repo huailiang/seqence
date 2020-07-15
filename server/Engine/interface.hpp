@@ -32,17 +32,19 @@ namespace Entitas
 	extern SyncPlay  playDelegate;
 	extern BroadCast broadDelegate;
 
+	extern "C"
+	{
+		// c# -> c++
+		ENGINE_INTERFACE_EXPORT void InitNative(int rate, const char* assets,
+			SyncPos pos, SyncRole rot, SyncPlay play, BroadCast broad);
 
-	// c# -> c++
-	ENGINE_INTERFACE_EXPORT void InitNative(int rate, const char* assets,
-		SyncPos pos, SyncRole rot, SyncPlay play, BroadCast broad);
+		ENGINE_INTERFACE_EXPORT void NativeRecv(unsigned int id, unsigned char* buffer, int len);
 
-	ENGINE_INTERFACE_EXPORT void NativeRecv(unsigned int id, unsigned char* buffer, int len);
-
-	ENGINE_INTERFACE_EXPORT void NativeUpdate(float delta);
+		ENGINE_INTERFACE_EXPORT void NativeUpdate(float delta);
 
 
-	ENGINE_INTERFACE_EXPORT void NativeDestroy();
+		ENGINE_INTERFACE_EXPORT void NativeDestroy();
+	}
 }
 
 #endif // ! __interface__

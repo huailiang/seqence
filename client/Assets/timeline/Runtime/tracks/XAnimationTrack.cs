@@ -7,7 +7,6 @@ using Unity.Collections;
 using UnityEngine.Animations;
 #else
 using UnityEngine.Experimental.Animations;
-
 #endif
 
 namespace UnityEngine.Timeline

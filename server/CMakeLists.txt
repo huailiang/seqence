@@ -1,7 +1,7 @@
 
 cmake_minimum_required(VERSION 3.1)
 
-project(Engine)
+project(Entitas)
 
 if ( IOS )
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fembed-bitcode")
@@ -63,30 +63,30 @@ source_group_by_dir(${CMAKE_CURRENT_SOURCE_DIR} CORE_ECS)
 if (APPLE)
     if (IOS)
         set(CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
-        add_library(Engine STATIC
+        add_library(Entitas STATIC
            ${CORE_ECS}
         )
-		set_xcode_property (Engine IPHONEOS_DEPLOYMENT_TARGET "7.0" "all")
+		set_xcode_property (Entitas IPHONEOS_DEPLOYMENT_TARGET "7.0" "all")
     else ()
         set(CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD_64_BIT)")
-        add_library(Engine MODULE
+        add_library(Entitas MODULE
             ${CORE_ECS}
         )
-        set_target_properties ( Engine PROPERTIES BUNDLE TRUE )
+        set_target_properties ( Entitas PROPERTIES BUNDLE TRUE )
     endif ()
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Switch")
-    add_library(Engine STATIC
+    add_library(Entitas STATIC
         ${CORE_ECS}
     )
-    target_compile_options(Engine PRIVATE -m64 -mcpu=cortex-a57+fp+simd+crypto+crc -fno-common -fno-short-enums -ffunction-sections -fdata-sections -fPIC -fms-extensions)
+    target_compile_options(Entitas PRIVATE -m64 -mcpu=cortex-a57+fp+simd+crypto+crc -fno-common -fno-short-enums -ffunction-sections -fdata-sections -fPIC -fms-extensions)
 else ( )
-    add_library(Engine SHARED
+    add_library(Entitas SHARED
         ${CORE_ECS}
     )
 endif ( )
 
 
-target_compile_definitions (Engine PRIVATE COMPATIBLE_FORMAT)
+target_compile_definitions (Entitas PRIVATE COMPATIBLE_FORMAT)
 
 if(UINT_ESPECIALLY)
     ADD_DEFINITIONS(-DUINT_ESPECIALLY)

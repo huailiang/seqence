@@ -25,7 +25,7 @@ namespace UnityEngine.Timeline
             }
         }
 
-        public void Rebind(string prefab)
+        private void Rebind(string prefab)
         {
             if (!string.IsNullOrEmpty(prefab) && bindObj == null)
             {
@@ -33,7 +33,7 @@ namespace UnityEngine.Timeline
                 GameObject obj = null;
                 if (timeline.IsHostTrack(this))
                 {
-                    obj = timeline.blendPlayableOutput.GetTarget().gameObject;
+                    obj = timeline.hostAnimator.gameObject;
                 }
                 else
                 {

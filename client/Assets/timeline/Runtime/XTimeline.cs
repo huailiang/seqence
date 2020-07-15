@@ -96,10 +96,14 @@ namespace UnityEngine.Timeline
             Initial(conf, mode);
         }
 
-        public XTimeline(string path, PlayMode mode)
+        public XTimeline(string path, PlayMode mode, Animator ator = null)
         {
             blending = false;
             ReadConf(path);
+            if (mode == PlayMode.Skill)
+            {
+                hostAnimator = ator;
+            }
             if (config != null)
             {
                 Initial(config, mode);
@@ -169,6 +173,7 @@ namespace UnityEngine.Timeline
             _duration = RecalcuteDuration();
         }
 
+        public Animator hostAnimator { get; set; }
         public AnimationPlayableOutput blendPlayableOutput { get; set; }
         public AnimationScriptPlayable blendMixPlayable { get; set; }
         public MixerJob mixJob { get; set; }
@@ -225,10 +230,9 @@ namespace UnityEngine.Timeline
             if (playMode == PlayMode.Skill)
             {
                 int idx = config.skillHostTrack;
-                var tracksData = config.tracks;
-                return blending &&
-                    tracksData.Length > idx &&
-                    tracksData[idx] == track.data;
+                var tracks = config.tracks;
+                return tracks.Length > idx &&
+                    tracks[idx] == track.data;
             }
             return false;
         }

@@ -4,31 +4,29 @@
     {
         private XTimeline timeline;
         private float time;
-        private bool playing;
 
         private void Start()
         {
             Application.targetFrameRate = 30;
+            string assets = Application.dataPath + "/skill/";
+            Debug.Log(assets);
+            NativeInterface.Init(Application.targetFrameRate, assets);
         }
 
         public void Update()
         {
+           // NativeInterface.Update(Time.deltaTime);
             timeline?.Update();
             if (Input.GetKey(KeyCode.Space))
             {
-                playing = true;
                 Play("sk1001");
-            }
-            if (playing && Time.time - time > 0.8f)
-            {
-                Play("sk1002");
-                playing = false;
             }
         }
 
         private void OnDestroy()
         {
             timeline?.Dispose();
+            NativeInterface.Quit();
         }
 
 
