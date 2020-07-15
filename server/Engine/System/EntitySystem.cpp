@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include "EntitySystem.hpp"
 #include "../type.hpp"
 #include "../EngineInfo.hpp"
@@ -116,17 +117,26 @@ namespace Entitas
 			auto rot = e->Get<Rotation>();
 			if (shape == RING)
 			{
-				util::CircleAttack(arg, rolePos, pos->pos);
+				if (util::CircleAttack(arg, rolePos, pos->pos))
+				{
+					CalHurt(idx, skill, e);
+				}
 			}
 			else if (shape == SECTOR)
 			{
 				vector3 forward = util::Angle2Forward(roleRot);
-				util::SectorAttack(rolePos, pos->pos, forward, arg2, arg);
+				if (util::SectorAttack(rolePos, pos->pos, forward, arg2, arg))
+				{
+					CalHurt(idx, skill, e);
+				}
 			}
 			else if (shape == RECT)
 			{
 				vector3 forward = util::Angle2Forward(roleRot);
-				util::RectAttack(rolePos, pos->pos, forward, arg, arg2);
+				if (util::RectAttack(rolePos, pos->pos, forward, arg, arg2))
+				{
+					CalHurt(idx, skill, e);
+				}
 			}
 			else
 			{
@@ -135,9 +145,28 @@ namespace Entitas
 		}
 	}
 
-	void EntitySystem::CalHurt()
+	void EntitySystem::CalHurt(int idx, Skill* skill, EntityPtr e)
 	{
-
+		std::vector<const char*> types = skill->types[idx];
+		std::vector<float> effects = skill->effect[idx];
+		auto size = types.size();
+		if (e->Has<XActor>())
+		{
+			auto ator = e->Get<XActor>();
+			for (size_t i = 0; i < size; i++)
+			{
+				const char* type = types[i];
+				float effect = effects[i];
+				if (strcmp(type, "HP") == 0)
+				{
+					ator->hp -= effect;
+				}
+				else if (strcmp(type, "SP") == 0)
+				{
+					ator->sp -= effect;
+				}
+			}
+		}
 	}
 
 }

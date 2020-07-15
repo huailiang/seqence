@@ -26,7 +26,7 @@ namespace Entitas
 
 		void Caster(int idx, Skill* skill, vector3 rolePos, float roleRot);
 
-		void CalHurt();
+		void CalHurt(int idx, Skill* skill, EntityPtr ator);
 
 		static void OnEntityDestroy(Entity* entity);
 
