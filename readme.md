@@ -27,10 +27,11 @@ __剧情-技能编辑器__
 
 [v2.5:][i4]  全局缓冲池，资源复用
 
-[v3.0:][i1]  Entitas架构的Virtual Server集成
+[v3.0:][i5]  Entitas架构的Virtual Server集成
 
 
 [i1]: https://github.com/huailiang/seqence
 [i2]: https://github.com/huailiang/seqence/releases/tag/v2.0
 [i3]: https://github.com/huailiang/seqence/releases/tag/v1.1
 [i4]: https://github.com/huailiang/seqence/releases/tag/v2.5
+[i5]: https://github.com/huailiang/seqence/releases/tag/v3.0
