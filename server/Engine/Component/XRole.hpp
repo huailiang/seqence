@@ -11,7 +11,7 @@ namespace Entitas
 
 	public:
 
-		void Reset(unsigned int id, int confid, float hp, float sp, float attack, float hit, Path* path)
+		void Reset(unsigned int uid, int confid, float hp, float sp, float attack, float hit, Path* path)
 		{
 			XActor::Reset(uid, confid, hp, sp, attack, hit, path);
 		}

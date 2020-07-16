@@ -7,14 +7,45 @@
     <TrackData xsi:type="AnimationTrackData">
       <clips>
         <ClipData xsi:type="AnimClipData">
-          <start>0.0008861627</start>
+          <start>0</start>
           <duration>1.35000014</duration>
           <anim>Assets/test/Chomper/Animations/ChomperAttack.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>0</trim_end>
           <loop>false</loop>
         </ClipData>
+        <ClipData xsi:type="AnimClipData">
+          <start>1.37245476</start>
+          <duration>0.466666669</duration>
+          <anim>Assets/test/Chomper/Animations/ChomperHit2.anim</anim>
+          <trim_start>0</trim_start>
+          <trim_end>0</trim_end>
+          <loop>false</loop>
+        </ClipData>
       </clips>
+      <childs>
+        <TrackData>
+          <clips>
+            <ClipData xsi:type="LogicClipData">
+              <start>0</start>
+              <duration>1.83705127</duration>
+              <logicType>
+                <LogicType>HP</LogicType>
+                <LogicType>Attack</LogicType>
+              </logicType>
+              <attackShape>Rect</attackShape>
+              <effect>
+                <float>0.5</float>
+                <float>0.23</float>
+              </effect>
+              <attackArg>7</attackArg>
+              <attackArg2>1</attackArg2>
+              <showShape>true</showShape>
+            </ClipData>
+          </clips>
+          <type>LogicValue</type>
+        </TrackData>
+      </childs>
       <type>Animation</type>
       <prefab>Assets/test/Chomper.prefab</prefab>
       <roleid>1003</roleid>

@@ -31,7 +31,7 @@ namespace UnityEngine.Timeline
             {
                 pat = prefab;
                 GameObject obj = null;
-                if (timeline.IsHostTrack(this))
+                if (timeline.IsHostTrack(this) && timeline.hostAnimator != null)
                 {
                     obj = timeline.hostAnimator.gameObject;
                 }

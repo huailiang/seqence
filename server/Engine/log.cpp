@@ -1,4 +1,5 @@
 #include "log.hpp"
+#include "Util/util.hpp"
 
 namespace Entitas
 {

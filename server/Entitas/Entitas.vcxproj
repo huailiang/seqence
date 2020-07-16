@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Engine\Component\DemoComponent.hpp" />
     <ClInclude Include="..\Engine\Component\Move.hpp" />
     <ClInclude Include="..\Engine\Component\Path.hpp" />
     <ClInclude Include="..\Engine\Component\Position.hpp" />
@@ -49,7 +48,6 @@
     <ClInclude Include="..\Engine\log.hpp" />
     <ClInclude Include="..\Engine\Singleton.hpp" />
     <ClInclude Include="..\Engine\System\EntitySystem.hpp" />
-    <ClInclude Include="..\Engine\System\DemoSystem.hpp" />
     <ClInclude Include="..\Engine\system\MoveSystem.hpp" />
     <ClInclude Include="..\Engine\type.hpp" />
     <ClInclude Include="..\Engine\Util\tinyxml2.h" />
@@ -57,6 +55,8 @@
     <ClInclude Include="..\Engine\Util\vector3.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Engine\Component\Path.cpp" />
+    <ClCompile Include="..\Engine\Component\Skill.cpp" />
     <ClCompile Include="..\Engine\Entitas\ComponentTypeId.cpp" />
     <ClCompile Include="..\Engine\Entitas\Entity.cpp" />
     <ClCompile Include="..\Engine\Entitas\Group.cpp" />
@@ -69,6 +69,7 @@
     <ClCompile Include="..\Engine\interface.cpp" />
     <ClCompile Include="..\Engine\log.cpp" />
     <ClCompile Include="..\Engine\System\EntitySystem.cpp" />
+    <ClCompile Include="..\Engine\System\MoveSystem.cpp" />
     <ClCompile Include="..\Engine\Util\tinyxml2.cpp" />
     <ClCompile Include="..\Engine\Util\util.cpp" />
     <ClCompile Include="..\Engine\Util\vector3.cpp" />

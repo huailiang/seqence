@@ -227,7 +227,7 @@ namespace UnityEditor.Timeline
                 if (start2 >= 0 && start2 <= clip.end)
                 {
                     clip.duration -= (start2 - clip.start);
-                    clip.start = start2;
+                    clip.start = Mathf.Max(0, start2);
                     e.Use();
                 }
             }
@@ -252,6 +252,7 @@ namespace UnityEditor.Timeline
         {
             rect.x += e.delta.x;
             clip.start = TimelineWindow.inst.PiexlToTime(rect.x);
+            clip.start = Mathf.Max(0, clip.start);
             e.Use();
             TimelineWindow.inst.timeline.RecalcuteDuration();
         }

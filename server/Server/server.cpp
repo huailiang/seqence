@@ -10,7 +10,7 @@ using namespace std;
 bool flag_q;
 
 
-int main(int argc, char*  argv[])
+int main(int argc, char* argv[])
 {
 	const int fps = 30;
 	const char* assets = "../Engine/assets/";

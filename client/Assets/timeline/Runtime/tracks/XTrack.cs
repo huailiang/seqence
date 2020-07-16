@@ -392,6 +392,7 @@ namespace UnityEngine.Timeline
             childs = null;
             marks = null;
             parent = null;
+            clips = null;
             if (mixs != null)
             {
                 for (int i = 0; i < mixs.Count; i++)

@@ -77,8 +77,8 @@ namespace Entitas
 		return 0;
 	}
 
-	int util::LoadSkill(const char* skill, size_t& cnt, float* start, float* duration, int* shapes,
-		float* arg, float* arg2, std::vector<const char*>* types, std::vector<float>* effect)
+	int util::LoadSkill(const char* skill, size_t& cnt, float*& start, float*& duration, int*& shapes,
+		float*& arg, float*& arg2, std::vector<const char*>*& types, std::vector<float>*& effect)
 	{
 		tinyxml2::XMLDocument doc;
 		string path = GetAssetPath(skill);
@@ -150,7 +150,7 @@ namespace Entitas
 								while (effVal)
 								{
 									effect[i].push_back(effVal->FloatText(0));
-									effVal = xeffect->NextSiblingElement();
+									effVal = effVal->NextSiblingElement();
 								}
 								data = data->NextSiblingElement();
 								i++;

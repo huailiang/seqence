@@ -3,7 +3,6 @@
 #include "EngineInfo.hpp"
 #include "Entitas/Matcher.hpp"
 #include "System/MoveSystem.hpp"
-#include "System/DemoSystem.hpp"
 #include "System/EntitySystem.hpp"
 #include "Conf/PathSystem.hpp"
 #include "Conf/SkillSystem.hpp"
@@ -39,17 +38,9 @@ namespace Entitas
 		systems = new SystemContainer();
 		pool = new Pool();
 
-		systems->Add(pool->CreateSystem<DemoSystem>());
 		systems->Add(pool->CreateSystem<MoveSystem>());
+		systems->Add(pool->CreateSystem<EntitySystem>());
 		systems->Initialize();
-
-		float* time;
-		size_t cnt = 0;
-		vector3* pos;
-		float* rot;
-		util::LoadPath("man.xml", cnt, time, pos, rot);
-		LOG("cnt:") << cnt << " time:" << time[0] << " rot:" << rot[1];
-		pos[0].output();
 	}
 
 

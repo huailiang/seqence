@@ -40,6 +40,7 @@ namespace Entitas
 		Log(LogLevel level) : m_log_level(level) {};
 		~Log(void);
 	
+
 		template<typename T>
 		static std::string tostring(T val)
 		{

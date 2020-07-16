@@ -62,9 +62,6 @@
     <ClInclude Include="..\Engine\system\MoveSystem.hpp">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\System\DemoSystem.hpp">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="..\Engine\System\EntitySystem.hpp">
       <Filter>System</Filter>
     </ClInclude>
@@ -76,9 +73,6 @@
     </ClInclude>
     <ClInclude Include="..\Engine\Util\vector3.hpp">
       <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\Component\DemoComponent.hpp">
-      <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\Component\Move.hpp">
       <Filter>Component</Filter>
@@ -156,5 +150,14 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\log.cpp" />
+    <ClCompile Include="..\Engine\System\MoveSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Component\Skill.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\Component\Path.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

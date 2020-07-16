@@ -67,7 +67,6 @@ public class NativeInterface
     {
         Vector3 pos = new Vector3(x, y, z);
         Quaternion rot = Quaternion.Euler(0, w, 0);
-        Debug.Log("OnPosSync: " + pos + " " + rot);
         EntityMgr.Instance.SyncPos(id, pos, rot);
     }
 
@@ -81,7 +80,7 @@ public class NativeInterface
     [MonoPInvokeCallback(typeof(PlayDelegate))]
     static void OnPlaySync(uint id, string skill)
     {
-        Debug.Log(skill);
+        Debug.Log("cast skill: " + skill);
         EntityMgr.Instance.Play(id, skill);
     }
 

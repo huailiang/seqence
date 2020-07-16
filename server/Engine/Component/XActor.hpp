@@ -17,6 +17,7 @@ namespace Entitas
 			this->sp = sp;
 			this->attack = attack;
 			this->hit = hit;
+			this->path = path;
 		}
 
         unsigned int uid;

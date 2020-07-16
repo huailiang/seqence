@@ -19,8 +19,8 @@ namespace Entitas
 
 		static int LoadPath(const char* name, size_t& cnt, float*& time, vector3*& pos, float*& rot);
 
-		static int LoadSkill(const char* name, size_t& cnt, float* start, float* duration, int* shapes,
-			float* arg, float* arg2, std::vector<const char*>* types, std::vector<float>* effect);
+		static int LoadSkill(const char* name, size_t& cnt, float*& start, float*& duration, int*& shapes,
+			float*& arg, float*& arg2, std::vector<const char*>*& types, std::vector<float>*& effect);
 
 		static std::string GetAssetPath(const char* name);
 

@@ -82,6 +82,8 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Switch")
     )
     target_compile_options(Entitas PRIVATE -m64 -mcpu=cortex-a57+fp+simd+crypto+crc -fno-common -fno-short-enums -ffunction-sections -fdata-sections -fPIC -fms-extensions)
 else ( )
+    ADD_DEFINITIONS( /ZI )
+    SET (LINK_FLAGS "${LINK_FLAGS}  /DEBUG")
     add_library(Entitas SHARED
         ${CORE_ECS}
     )

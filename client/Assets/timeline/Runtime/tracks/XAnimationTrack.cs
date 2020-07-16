@@ -97,7 +97,7 @@ namespace UnityEngine.Timeline
                 var transforms = amtor.transform.GetComponentsInChildren<Transform>();
                 var numTransforms = transforms.Length - 1;
 
-                if (timeline.IsHostTrack(this))
+                if (timeline.IsHostTrack(this) && timeline.blendPlayableOutput.IsOutputValid())
                 {
                     playableOutput = timeline.blendPlayableOutput;
                     mixPlayable = timeline.blendMixPlayable;

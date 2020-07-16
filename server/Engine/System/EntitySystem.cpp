@@ -2,8 +2,10 @@
 #include <memory>
 #include "EntitySystem.hpp"
 #include "../type.hpp"
+#include "../log.hpp"
 #include "../EngineInfo.hpp"
 #include "../interface.hpp"
+#include "../Util/util.hpp"
 #include "../Component/Path.hpp"
 #include "../Conf/PathSystem.hpp"
 #include "../Component/XRole.hpp"
@@ -34,25 +36,28 @@ namespace Entitas
 		vector3 p;
 		p.x = 1;
 
-		auto path = PathSystem::Instance()->Get("man.xml");
+		Path* path;
+		PathSystem::Instance()->Get("man.xml", path);
 		player->Add<Rotation>(2);
 		player->Add<Position>(p);
-		unsigned int uid = 1001;
-		int confid = util::GetIncUID();
+		unsigned int uid = util::GetIncUID();
+		int confid = 1001;
 		player->Add<Role>(uid, confid, 2, 1, 2, 3, path);
 		player->OnEntityReleased += OnEntityDestroy;
-		roleDelegate(uid, confid);
+		player->Add<Skill>("sk1002.xml");
+		if (roleDelegate) roleDelegate(uid, confid);
 
 		auto monster = _pool->CreateEntity();
 		monster->Add<Rotation>(90);
 		p.z = 45;
 		monster->Add<Position>(p);
-		path = PathSystem::Instance()->Get("monster.xml");
+		PathSystem::Instance()->Get("monster.xml", path);
 		uid = util::GetIncUID();
 		confid = 1003;
 		monster->Add<Monster>(uid, confid, 2, 1, 2, 4, path);
 		monster->OnEntityReleased += OnEntityDestroy;
-		roleDelegate(uid, confid);
+		monster->Add<Skill>("sk1001.xml");
+		if (roleDelegate) roleDelegate(uid, confid);
 	}
 
 	void EntitySystem::Execute() {
@@ -67,14 +72,23 @@ namespace Entitas
 		for (auto &e : _group.lock()->GetEntities()) {
 			auto pos = e->Get<Position>();
 			auto rot = e->Get<Rotation>();
-			auto skill = e->Get<Skill>();
-			if (skill)
+			if (e->Has<Skill>())
 			{
+				auto skill = e->Get<Skill>();
 				size_t idx = skill->Find(time);
-				if (idx >= 0)
+				size_t invalid = -1;
+				if (idx != invalid)
 				{
 					Caster(idx, skill, pos->pos, rot->v);
 				}
+				else
+				{
+					ERR("skill index is invalid");
+				}
+			}
+			else
+			{
+				WARN("entity not has skill component");
 			}
 		}
 		return false;
@@ -114,7 +128,7 @@ namespace Entitas
 			}
 			else
 			{
-				printf("error unknown shape: %d", shape);
+				WARN("error unknown shape: " );
 			}
 		}
 	}
@@ -139,8 +153,12 @@ namespace Entitas
 				{
 					ator->sp -= effect;
 				}
+				else
+				{
+					std::string str = "not handle attribute " + std::string(type);
+					LOG(str);
+				}
 			}
 		}
 	}
-
 }
