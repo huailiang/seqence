@@ -9,7 +9,7 @@ static class XNatives
     public static IntPtr? ecs_dll = null;
 
     [DllImport("kernel32.dll")]
-    public static extern IntPtr LoadLibraryEx(string dllToLoad);
+    public static extern IntPtr LoadLibrary(string dllToLoad);
 
     [DllImport("kernel32.dll")]
     public static extern bool FreeLibrary(IntPtr hModule);
@@ -17,14 +17,14 @@ static class XNatives
 
 public class NativeDllTool
 {
-    const string entatis = "Assets/timeline/Plugins/x86_64/Entitas.dll";
+    const string entatis = "Assets/seqence/Plugins/x86_64/Entitas.dll";
 
     [MenuItem("Tools/FreeDll")]
     static void FreeLiabrary()
     {
 
 #if UNITY_EDITOR_WIN
-        XNatives.ecs_dll = XNatives.LoadLibraryEx(entatis);
+        XNatives.ecs_dll = XNatives.LoadLibrary(entatis);
         if (XNatives.ecs_dll == null)
         {
             Debug.LogError("Load native dll failed.");
@@ -41,7 +41,7 @@ public class NativeDllTool
     static void ReloadLiabrary()
     {
 #if UNITY_EDITOR_WIN
-        XNatives.LoadLibraryEx(entatis);
+        XNatives.LoadLibrary(entatis);
         if (XNatives.ecs_dll == null)
         {
             Debug.LogError("Load native dll failed.");

@@ -19,6 +19,7 @@ namespace Entitas
 
 	util::util()
 	{
+
 		inc_uid = 1 << 4;
 	}
 
