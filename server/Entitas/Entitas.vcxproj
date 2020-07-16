@@ -23,12 +23,12 @@
     <ClInclude Include="..\Engine\Component\Path.hpp" />
     <ClInclude Include="..\Engine\Component\Position.hpp" />
     <ClInclude Include="..\Engine\Component\Rotation.hpp" />
-    <ClInclude Include="..\Engine\Component\Skill.hpp" />
+    <ClInclude Include="..\Engine\Component\Attack.hpp" />
     <ClInclude Include="..\Engine\Component\XActor.hpp" />
     <ClInclude Include="..\Engine\Component\XMonster.hpp" />
     <ClInclude Include="..\Engine\Component\XRole.hpp" />
     <ClInclude Include="..\Engine\Conf\PathSystem.hpp" />
-    <ClInclude Include="..\Engine\Conf\SkillSystem.hpp" />
+    <ClInclude Include="..\Engine\Conf\AttackSystem.hpp" />
     <ClInclude Include="..\Engine\engine.hpp" />
     <ClInclude Include="..\Engine\Entitas\ComponentTypeId.hpp" />
     <ClInclude Include="..\Engine\Entitas\Delegate.hpp" />
@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\Component\Path.cpp" />
-    <ClCompile Include="..\Engine\Component\Skill.cpp" />
+    <ClCompile Include="..\Engine\Component\Attack.cpp" />
     <ClCompile Include="..\Engine\Entitas\ComponentTypeId.cpp" />
     <ClCompile Include="..\Engine\Entitas\Entity.cpp" />
     <ClCompile Include="..\Engine\Entitas\Group.cpp" />

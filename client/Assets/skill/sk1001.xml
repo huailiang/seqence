@@ -8,16 +8,8 @@
       <clips>
         <ClipData xsi:type="AnimClipData">
           <start>0</start>
-          <duration>2.83194923</duration>
-          <anim>Assets/test/Chomper/Animations/ChomperCutsceneTOIdle.anim</anim>
-          <trim_start>0</trim_start>
-          <trim_end>883</trim_end>
-          <loop>true</loop>
-        </ClipData>
-        <ClipData xsi:type="AnimClipData">
-          <start>2.70578623</start>
-          <duration>1.56666672</duration>
-          <anim>Assets/test/Chomper/Animations/ChomperHit3.anim</anim>
+          <duration>10.0333338</duration>
+          <anim>Assets/test/Clips/Idle.anim</anim>
           <trim_start>0</trim_start>
           <trim_end>0</trim_end>
           <loop>false</loop>
@@ -28,47 +20,35 @@
           <clips>
             <ClipData xsi:type="LogicClipData">
               <start>0</start>
-              <duration>2.01334238</duration>
+              <duration>9.879886</duration>
               <logicType>
                 <LogicType>HP</LogicType>
                 <LogicType>SP</LogicType>
-              </logicType>
-              <attackShape>Ring</attackShape>
-              <effect>
-                <float>0.5</float>
-                <float>0.2</float>
-              </effect>
-              <attackArg>2</attackArg>
-              <attackArg2>0</attackArg2>
-              <showShape>true</showShape>
-            </ClipData>
-            <ClipData xsi:type="LogicClipData">
-              <start>2.04290175</start>
-              <duration>2.23225641</duration>
-              <logicType>
-                <LogicType>BeHit</LogicType>
+                <LogicType>Attack</LogicType>
               </logicType>
               <attackShape>Sector</attackShape>
               <effect>
-                <float>0.3</float>
+                <float>0.5</float>
+                <float>0.5</float>
+                <float>0.12</float>
               </effect>
-              <attackArg>1</attackArg>
-              <attackArg2>45</attackArg2>
-              <showShape>true</showShape>
+              <attackArg>4</attackArg>
+              <attackArg2>60</attackArg2>
+              <showShape>false</showShape>
             </ClipData>
           </clips>
           <type>LogicValue</type>
         </TrackData>
       </childs>
       <type>Animation</type>
-      <prefab>Assets/test/Chomper.prefab</prefab>
-      <roleid>1003</roleid>
+      <prefab>Assets/test/DefaultMale.prefab</prefab>
+      <roleid>1001</roleid>
       <pos>
         <x>0</x>
         <y>0</y>
-        <z>-4</z>
+        <z>0</z>
       </pos>
-      <rotY>150</rotY>
+      <rotY>0</rotY>
     </TrackData>
   </tracks>
   <skillHostTrack>1</skillHostTrack>

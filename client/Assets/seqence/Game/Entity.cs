@@ -38,6 +38,11 @@ public class Entity : ISharedObject<Entity>
         ator = go.GetComponent<Animator>();
     }
 
+    public void Update(float delta)
+    {
+        timeline?.Update();
+    }
+
     public void Dispose()
     {
         timeline?.Dispose();

@@ -14,7 +14,7 @@ namespace UnityEditor.Timeline
 
         public static void ShowWindow()
         {
-            inst = GetWindow<SeqenceInspector>("timeline inspector");
+            inst = GetWindow<SeqenceInspector>("seqence inspector");
             inst.Show();
         }
 

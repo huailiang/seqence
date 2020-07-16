@@ -7,7 +7,6 @@
 
 using namespace std;
 
-bool flag_q;
 
 
 int main(int argc, char* argv[])
@@ -20,17 +19,11 @@ int main(int argc, char* argv[])
 	int ch;
 	while (true)
 	{
-		if (flag_q)
-		{
-			Entitas::EngineDestroy();
-			break;
-		}
-		
 		if (_kbhit()) {
 			ch = _getch();
 			cout << ch;
-			if (ch == 27) { //当按下ESC时循环，ESC键的键值时27.
-				flag_q = true;
+			if (ch == 27) { // key ESC presed, ESC value = 27
+				Entitas::EngineDestroy();
 				break;
 			}
 		}

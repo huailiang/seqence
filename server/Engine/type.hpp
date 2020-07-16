@@ -12,10 +12,10 @@ namespace Entitas
 
 
 //menu for LogicType in c#
-#define HP		0
-#define SP		1
-#define Behit	2
-#define Attack	3
+#define ATR_HP		0
+#define ATR_SP		1
+#define ATR_Behit	2
+#define ATR_Attack	3
 
 
 //unity debug log flag

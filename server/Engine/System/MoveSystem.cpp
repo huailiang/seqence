@@ -14,8 +14,8 @@ namespace Entitas
 
 	void MoveSystem::SetPool(Pool* pool) 
 	{
-		_group = pool->GetGroup(Matcher_AllOf(Role));
-		_group2 = pool->GetGroup(Matcher_AllOf(Monster));
+		_group = pool->GetGroup(Matcher_AllOf(XRole));
+		_group2 = pool->GetGroup(Matcher_AllOf(XMonster));
 		_pool = pool;
 	}
 
@@ -24,13 +24,13 @@ namespace Entitas
 	{
 		for (auto &e : _group.lock()->GetEntities())
 		{
-			auto role = e->Get<Role>();
+			auto role = e->Get<XRole>();
 			XActor* actor = static_cast<XActor*>(role);
 			SyncMove(e, actor);
 		}
 		for (auto &e : _group2.lock()->GetEntities())
 		{
-			auto monster = e->Get<Monster>();
+			auto monster = e->Get<XMonster>();
 			XActor* actor = static_cast<XActor*>(monster);
 			SyncMove(e, actor);
 		}

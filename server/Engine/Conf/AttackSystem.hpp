@@ -4,35 +4,35 @@
 #include <iostream>
 #include <unordered_map>
 #include "../Util/util.hpp"
-#include "../Component/Skill.hpp"
+#include "../Component/Attack.hpp"
 #include "../Entitas/ISystem.hpp"
 
 namespace Entitas
 {
 	using namespace std;
 
-	class SkillSystem : public Singleton<SkillSystem> {
+	class AttackSystem : public Singleton<AttackSystem> {
 
 	public:
 
-		Skill* GetSkill(const char* name)
+		Attack* Get(const char* name)
 		{
-			if (skills_dict.find(name) != skills_dict.end())
+			if (attack_dict.find(name) != attack_dict.end())
 			{
-				return skills_dict[name];
+				return attack_dict[name];
 			}
 			else
 			{
-				auto skill = new Skill();
+				auto skill = new Attack();
 				skill->Reset(name);
 				auto pair = make_pair(name, skill);
-				skills_dict.insert(pair);
+				attack_dict.insert(pair);
                 return skill;
 			}
 		}
 
 	private:
-		std::unordered_map<const char*, Skill*> skills_dict;
+		std::unordered_map<const char*, Attack*> attack_dict;
 	};
 
 }

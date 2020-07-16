@@ -1,8 +1,4 @@
-﻿#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-namespace UnityEngine.Timeline
+﻿namespace UnityEngine.Timeline
 {
     public class RuntimeSeqence : MonoBehaviour
     {

@@ -26,8 +26,8 @@ namespace Entitas
 	}
 
 	void EntitySystem::SetPool(Pool* pool) {
-		_group = pool->GetGroup(Matcher_AllOf(Role));
-		_group2 = pool->GetGroup(Matcher_AllOf(Monster));
+		_group = pool->GetGroup(Matcher_AllOf(XRole));
+		_group2 = pool->GetGroup(Matcher_AllOf(XMonster));
 		_pool = pool;
 	}
 
@@ -37,27 +37,31 @@ namespace Entitas
 		p.x = 1;
 
 		Path* path;
-		PathSystem::Instance()->Get("man.xml", path);
+		PathSystem::Instance()->Get("man", path);
 		player->Add<Rotation>(2);
 		player->Add<Position>(p);
 		unsigned int uid = util::GetIncUID();
 		int confid = 1001;
-		player->Add<Role>(uid, confid, 2, 1, 2, 3, path);
+		player->Add<XRole>(uid, confid, 2, 1, 2, 3, path);
 		player->OnEntityReleased += OnEntityDestroy;
-		player->Add<Skill>("sk1002.xml");
+		const char* skill = "sk1001";
+		player->Add<Attack>(skill);
 		if (roleDelegate) roleDelegate(uid, confid);
+		if (playDelegate) playDelegate(uid, skill);
 
 		auto monster = _pool->CreateEntity();
 		monster->Add<Rotation>(90);
 		p.z = 45;
 		monster->Add<Position>(p);
-		PathSystem::Instance()->Get("monster.xml", path);
+		PathSystem::Instance()->Get("monster", path);
 		uid = util::GetIncUID();
 		confid = 1003;
-		monster->Add<Monster>(uid, confid, 2, 1, 2, 4, path);
+		monster->Add<XMonster>(uid, confid, 2, 1, 2, 4, path);
 		monster->OnEntityReleased += OnEntityDestroy;
-		monster->Add<Skill>("sk1001.xml");
+		skill = "sk1003";
+		monster->Add<Attack>(skill);
 		if (roleDelegate) roleDelegate(uid, confid);
+		if (playDelegate) playDelegate(uid, skill);
 	}
 
 	void EntitySystem::Execute() {
@@ -72,9 +76,9 @@ namespace Entitas
 		for (auto &e : _group.lock()->GetEntities()) {
 			auto pos = e->Get<Position>();
 			auto rot = e->Get<Rotation>();
-			if (e->Has<Skill>())
+			if (e->Has<Attack>())
 			{
-				auto skill = e->Get<Skill>();
+				auto skill = e->Get<Attack>();
 				size_t idx = skill->Find(time);
 				size_t invalid = -1;
 				if (idx != invalid)
@@ -95,7 +99,7 @@ namespace Entitas
 	}
 
 
-	void  EntitySystem::Caster(size_t idx, Skill* skill, vector3 rolePos, float roleRot)
+	void  EntitySystem::Caster(size_t idx, Attack* skill, vector3 rolePos, float roleRot)
 	{
 		int shape = skill->shapes[idx];
 		float arg = skill->arg[idx];
@@ -133,7 +137,7 @@ namespace Entitas
 		}
 	}
 
-	void EntitySystem::CalHurt(size_t idx, Skill* skill, EntityPtr e)
+	void EntitySystem::CalHurt(size_t idx, Attack* skill, EntityPtr e)
 	{
 		std::vector<const char*> types = skill->types[idx];
 		std::vector<float> effects = skill->effect[idx];

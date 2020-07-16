@@ -1,4 +1,4 @@
-#include "Skill.hpp"
+#include "Attack.hpp"
 #include "../Util/vector3.hpp"
 #include "../Util/util.hpp"
 
@@ -6,13 +6,13 @@
 namespace Entitas
 {
 
-	void Skill::Reset(const char* name) {
+	void Attack::Reset(const char* name) {
 		util::LoadSkill(name, cnt, start, duration, shapes, arg, arg2,
 			types, effect);
 		time = EngineInfo::time;
 	}
 
-	size_t Skill::Find(float t)
+	size_t Attack::Find(float t)
 	{
 		float tick = t - time;
 		if (cnt > 0) // bounds
@@ -42,7 +42,7 @@ namespace Entitas
 	}
 
 
-	Skill::~Skill()
+	Attack::~Attack()
 	{
 		cnt = 0;
 		delete[] start;

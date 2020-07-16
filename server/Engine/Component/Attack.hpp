@@ -9,7 +9,7 @@
 namespace Entitas
 {
 
-	class Skill : public IComponent {
+	class Attack : public IComponent {
 
 	public:
 
@@ -17,7 +17,7 @@ namespace Entitas
 
 		size_t Find(float t);
 
-		~Skill();
+		~Attack();
 
 		size_t cnt;
 		float time;

@@ -7,7 +7,7 @@
 namespace Entitas
 {
 
-	class Role : public XActor {
+	class XRole : public XActor {
 
 	public:
 

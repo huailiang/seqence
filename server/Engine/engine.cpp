@@ -5,7 +5,7 @@
 #include "System/MoveSystem.hpp"
 #include "System/EntitySystem.hpp"
 #include "Conf/PathSystem.hpp"
-#include "Conf/SkillSystem.hpp"
+#include "Conf/AttackSystem.hpp"
 #include "Util/util.hpp"
 
 namespace Entitas
@@ -63,9 +63,15 @@ namespace Entitas
 
 	void EngineDestroy()
 	{
-		delete systems;
-		delete pool;
-		printf("engine quit");
+		try {
+			delete systems;
+			delete pool;
+			LOG("engine quit");
+		}
+		catch (exception& e)
+		{
+			ERR(e.what());
+		}
 	}
 
 }

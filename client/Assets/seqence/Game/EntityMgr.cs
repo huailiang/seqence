@@ -10,6 +10,7 @@ public class EntityMgr
     CharacterInfo config;
 
     Dictionary<uint, Entity> dict = new Dictionary<uint, Entity>();
+    
 
     public static EntityMgr Instance
     {
@@ -18,7 +19,7 @@ public class EntityMgr
             if (_inst == null)
             {
                 _inst = new EntityMgr();
-                var p = "Assets/seqence/Editor/StyleSheets/CharacterInfo.asset";
+                var p = SeqenceUtil.chpath;
                 _inst.config = XResources.LoadSharedAsset<CharacterInfo>(p);
             }
             return _inst;
@@ -39,6 +40,14 @@ public class EntityMgr
                 dict.Add(uid, e);
                 break;
             }
+        }
+    }
+
+    public void Update(float delta)
+    {
+        foreach(var it in dict)
+        {
+            it.Value.Update(delta);
         }
     }
 

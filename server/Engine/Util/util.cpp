@@ -27,7 +27,7 @@ namespace Entitas
 		const char* dir = Entitas::EngineInfo::assetPath;
 		string s1(dir);
 		string s2(name);
-		return s1 + s2;
+		return s1 + s2 + ".xml";
 	}
 
 	int util::LoadPath(const char* name, size_t& cnt, float*& time, vector3*& pos, float*& rot)

@@ -5,6 +5,8 @@ namespace UnityEngine.Timeline
     public class SeqenceUtil
     {
 
+        public static readonly string chpath = "Assets/seqence/Editor/StyleSheets/CharacterInfo.asset";
+
         public static void Add<T>(ref T[] arr, T item) where T : new()
         {
             if (arr != null)

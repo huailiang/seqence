@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Timeline;
 using UnityEngine.Timeline.Data;
 using CharacterInfo = UnityEngine.Timeline.Data.CharacterInfo;
 
@@ -24,7 +25,7 @@ namespace UnityEditor.Timeline
         {
             if (chInfo == null)
             {
-                var p = "Assets/seqence/Editor/StyleSheets/CharacterInfo.asset";
+                var p = SeqenceUtil.chpath;
                 chInfo = AssetDatabase.LoadAssetAtPath<CharacterInfo>(p);
             }
         }

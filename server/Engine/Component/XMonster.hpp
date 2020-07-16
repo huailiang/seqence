@@ -7,7 +7,7 @@
 namespace Entitas
 {
 
-	class Monster : public XActor
+	class XMonster : public XActor
 	{
 
 	public:

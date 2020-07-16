@@ -2,7 +2,7 @@
 #define __entitysystem__
 
 #include <iostream>
-#include "../Component/Skill.hpp"
+#include "../Component/Attack.hpp"
 #include "../Component/Rotation.hpp"
 #include "../Component/Position.hpp"
 #include "../Entitas/ISystem.hpp"
@@ -24,9 +24,9 @@ namespace Entitas
 
 		bool Hit();
 
-		void Caster(size_t idx, Skill* skill, vector3 rolePos, float roleRot);
+		void Caster(size_t idx, Attack* attack, vector3 rolePos, float roleRot);
 
-		void CalHurt(size_t idx, Skill* skill, EntityPtr ator);
+		void CalHurt(size_t idx, Attack* attack, EntityPtr ator);
 
 		static void OnEntityDestroy(Entity* entity);
 
