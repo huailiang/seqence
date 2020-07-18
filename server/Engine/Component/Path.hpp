@@ -1,6 +1,7 @@
 #ifndef  __path__
 #define __path__
 
+#include <stddef.h>
 #include "../Util/vector3.hpp"
 #include "../Entitas/IComponent.hpp"
 

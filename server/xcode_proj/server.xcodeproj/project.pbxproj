@@ -23,6 +23,9 @@
 		4C7B13FD24B9E75000C9B348 /* Group.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B13EE24B9E75000C9B348 /* Group.cpp */; };
 		4CAAB74624BB0CCE001CFC7E /* interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAB74424BB0CCE001CFC7E /* interface.cpp */; };
 		4CBF955724B9DE6800AD1CB0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CBF953124B9DE6800AD1CB0 /* main.cpp */; };
+		4CE0635424C35BC000B5C478 /* Attack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CE0635324C35BC000B5C478 /* Attack.cpp */; };
+		4CE0635624C35BF500B5C478 /* Path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CE0635524C35BF500B5C478 /* Path.cpp */; };
+		4CE0635824C35D3400B5C478 /* MoveSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CE0635724C35D3400B5C478 /* MoveSystem.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,7 +44,6 @@
 		4C2D0A6F24BF44C7000F1033 /* EntitySystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EntitySystem.cpp; sourceTree = "<group>"; };
 		4C2D0A7124BF456E000F1033 /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = log.cpp; path = ../../Engine/log.cpp; sourceTree = "<group>"; };
 		4C2D0A7224BF456E000F1033 /* log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = log.hpp; path = ../../Engine/log.hpp; sourceTree = "<group>"; };
-		4C7B13C924B9E75000C9B348 /* DemoSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DemoSystem.hpp; sourceTree = "<group>"; };
 		4C7B13CA24B9E75000C9B348 /* EntitySystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EntitySystem.hpp; sourceTree = "<group>"; };
 		4C7B13CB24B9E75000C9B348 /* MoveSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MoveSystem.hpp; sourceTree = "<group>"; };
 		4C7B13CC24B9E75000C9B348 /* engine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = engine.cpp; path = ../../Engine/engine.cpp; sourceTree = "<group>"; };
@@ -56,7 +58,6 @@
 		4C7B13D724B9E75000C9B348 /* Position.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Position.hpp; sourceTree = "<group>"; };
 		4C7B13D824B9E75000C9B348 /* Rotation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Rotation.hpp; sourceTree = "<group>"; };
 		4C7B13D924B9E75000C9B348 /* Move.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Move.hpp; sourceTree = "<group>"; };
-		4C7B13DB24B9E75000C9B348 /* DemoComponent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DemoComponent.hpp; sourceTree = "<group>"; };
 		4C7B13DD24B9E75000C9B348 /* SystemContainer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SystemContainer.hpp; sourceTree = "<group>"; };
 		4C7B13DE24B9E75000C9B348 /* Group.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Group.hpp; sourceTree = "<group>"; };
 		4C7B13DF24B9E75000C9B348 /* GroupEventType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GroupEventType.hpp; sourceTree = "<group>"; };
@@ -83,7 +84,6 @@
 		4CAAB74724BB408B001CFC7E /* Path.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Path.hpp; sourceTree = "<group>"; };
 		4CAAB74824BB5E91001CFC7E /* XMonster.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = XMonster.hpp; sourceTree = "<group>"; };
 		4CAAB74924BB5E9B001CFC7E /* XRole.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = XRole.hpp; sourceTree = "<group>"; };
-		4CB650AA24BDF2E4005FF6B6 /* Skill.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Skill.hpp; sourceTree = "<group>"; };
 		4CB650AB24BDF2E4005FF6B6 /* XMonster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XMonster.hpp; sourceTree = "<group>"; };
 		4CB650AC24BDF2E4005FF6B6 /* XActor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XActor.hpp; sourceTree = "<group>"; };
 		4CB650AF24BDF31B005FF6B6 /* timeline.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = timeline.xml; sourceTree = "<group>"; };
@@ -92,11 +92,15 @@
 		4CB650B224BDF322005FF6B6 /* man.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = man.xml; sourceTree = "<group>"; };
 		4CB650B324BDF322005FF6B6 /* monster.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = monster.xml; sourceTree = "<group>"; };
 		4CB650B824BDF643005FF6B6 /* PathSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PathSystem.hpp; sourceTree = "<group>"; };
-		4CB650B924BDF643005FF6B6 /* SkillSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SkillSystem.hpp; sourceTree = "<group>"; };
 		4CB650BA24BDF6ED005FF6B6 /* Singleton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Singleton.hpp; path = ../../Engine/Singleton.hpp; sourceTree = "<group>"; };
 		4CBF912024B9D6B700AD1CB0 /* server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBF915D24B9D93300AD1CB0 /* Engine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Engine.bundle; path = ../../build_osx/Debug/Engine.bundle; sourceTree = "<group>"; };
 		4CBF953124B9DE6800AD1CB0 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		4CE0635124C35BB000B5C478 /* AttackSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AttackSystem.hpp; sourceTree = "<group>"; };
+		4CE0635224C35BC000B5C478 /* Attack.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Attack.hpp; sourceTree = "<group>"; };
+		4CE0635324C35BC000B5C478 /* Attack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Attack.cpp; sourceTree = "<group>"; };
+		4CE0635524C35BF500B5C478 /* Path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Path.cpp; sourceTree = "<group>"; };
+		4CE0635724C35D3400B5C478 /* MoveSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MoveSystem.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,8 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				4C2D0A6F24BF44C7000F1033 /* EntitySystem.cpp */,
-				4C7B13C924B9E75000C9B348 /* DemoSystem.hpp */,
 				4C7B13CA24B9E75000C9B348 /* EntitySystem.hpp */,
+				4CE0635724C35D3400B5C478 /* MoveSystem.cpp */,
 				4C7B13CB24B9E75000C9B348 /* MoveSystem.hpp */,
 			);
 			name = System;
@@ -152,16 +156,17 @@
 		4C7B13D624B9E75000C9B348 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				4CE0635324C35BC000B5C478 /* Attack.cpp */,
+				4CE0635224C35BC000B5C478 /* Attack.hpp */,
+				4CE0635524C35BF500B5C478 /* Path.cpp */,
 				4CAAB74724BB408B001CFC7E /* Path.hpp */,
 				4C7B13D724B9E75000C9B348 /* Position.hpp */,
 				4C7B13D824B9E75000C9B348 /* Rotation.hpp */,
 				4CB650AC24BDF2E4005FF6B6 /* XActor.hpp */,
 				4CAAB74824BB5E91001CFC7E /* XMonster.hpp */,
-				4CB650AA24BDF2E4005FF6B6 /* Skill.hpp */,
 				4CB650AB24BDF2E4005FF6B6 /* XMonster.hpp */,
 				4C7B13D924B9E75000C9B348 /* Move.hpp */,
 				4CAAB74924BB5E9B001CFC7E /* XRole.hpp */,
-				4C7B13DB24B9E75000C9B348 /* DemoComponent.hpp */,
 			);
 			name = Component;
 			path = ../../Engine/Component;
@@ -199,8 +204,8 @@
 		4CB650B724BDF643005FF6B6 /* Conf */ = {
 			isa = PBXGroup;
 			children = (
+				4CE0635124C35BB000B5C478 /* AttackSystem.hpp */,
 				4CB650B824BDF643005FF6B6 /* PathSystem.hpp */,
-				4CB650B924BDF643005FF6B6 /* SkillSystem.hpp */,
 			);
 			name = Conf;
 			path = ../../Engine/Conf;
@@ -309,11 +314,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CE0635624C35BF500B5C478 /* Path.cpp in Sources */,
 				4C7B13F824B9E75000C9B348 /* Matcher.cpp in Sources */,
+				4CE0635824C35D3400B5C478 /* MoveSystem.cpp in Sources */,
 				4CAAB74624BB0CCE001CFC7E /* interface.cpp in Sources */,
 				4C7B13F524B9E75000C9B348 /* vector3.cpp in Sources */,
 				4C7B13F424B9E75000C9B348 /* tinyxml2.cpp in Sources */,
 				4C7B13FB24B9E75000C9B348 /* Pool.cpp in Sources */,
+				4CE0635424C35BC000B5C478 /* Attack.cpp in Sources */,
 				4C7B13FC24B9E75000C9B348 /* SystemContainer.cpp in Sources */,
 				4C7B13F724B9E75000C9B348 /* Entity.cpp in Sources */,
 				4C7B13F624B9E75000C9B348 /* ComponentTypeId.cpp in Sources */,

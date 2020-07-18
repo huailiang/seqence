@@ -181,7 +181,7 @@ namespace UnityEditor.Timeline
                     {
                         (track as XTransformTrack).RmItemAt(i);
                         SeqenceWindow.inst.Repaint();
-                        EditorGUIUtility.ExitGUI();
+                        GUIUtility.ExitGUI();
                     }
                     EditorGUILayout.EndHorizontal();
                     Vector3 pos = Data.pos[i];
