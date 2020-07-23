@@ -152,6 +152,8 @@ namespace UnityEngine.Timeline
                 }
                 mixJob.Dispose();
                 SharedPool<XAnimationTrack>.Return(this);
+                idx = 0;
+                tmp = 0;
             }
             base.OnDestroy();
         }

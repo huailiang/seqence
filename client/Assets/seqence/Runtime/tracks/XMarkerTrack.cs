@@ -23,10 +23,6 @@ namespace UnityEngine.Timeline
             throw new Exception("mark track is uncloneable");
         }
 
-        public XMarkerTrack() 
-        {
-        }
-
         public override IClip BuildClip(ClipData data)
         {
             throw new System.Exception("marker no clip");

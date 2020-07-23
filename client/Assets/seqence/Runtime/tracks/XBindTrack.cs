@@ -57,6 +57,7 @@ namespace UnityEngine.Timeline
             {
                 XResources.DestroyGameObject(pat, bindObj);
             }
+            
             base.OnDestroy();
         }
     }

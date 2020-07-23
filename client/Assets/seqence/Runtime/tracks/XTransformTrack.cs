@@ -170,6 +170,7 @@ namespace UnityEngine.Timeline
 
         public override void OnDestroy()
         {
+            _target = null;
             SharedPool<XTransformTrack>.Return(this);
             base.OnDestroy();
         }
