@@ -64,6 +64,12 @@ namespace UnityEditor.Timeline
             EditorApplication.playModeStateChanged -= OnPlayChanged;
             EditorApplication.playModeStateChanged += OnPlayChanged;
         }
+        
+        [UnityEditor.Callbacks.DidReloadScripts]
+        static void OnEditorReload()
+        {
+            CleanEnv();
+        }
 
         private void OnPlayChanged(PlayModeStateChange state)
         {
@@ -134,7 +140,7 @@ namespace UnityEditor.Timeline
 
         private void AddRuntime()
         {
-            var go = GameObject.Find("timeline");
+            var go = GameObject.Find("seqence");
             if (go)
             {
                 var runtime = go.GetComponent<RuntimeSeqence>();
@@ -227,7 +233,7 @@ namespace UnityEditor.Timeline
 
         public static void CleanEnv()
         {
-            var go = GameObject.Find("timeline");
+            var go = GameObject.Find("seqence");
             if (go)
             {
                 Object.DestroyImmediate(go);

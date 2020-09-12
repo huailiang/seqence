@@ -53,7 +53,7 @@ namespace UnityEditor.Timeline
         {
             if (state.seqence == null)
             {
-                throw new Exception("timeline is null");
+                throw new Exception("seqence is null");
             }
             winRect = state.window.winArea;
             x = WindowConstants.rightAreaMargn;
