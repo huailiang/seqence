@@ -47,8 +47,17 @@ namespace UnityEditor.Timeline
             rect.width = y - rect.x;
             rect.height = rect.height - 2;
             if (rect.width < 0) rect.width = 0;
-            EditorGUI.DrawRect(rect, Color.gray);
-            EditorGUI.DrawOutline(rect, 1, Color.white);
+            if (EditorGUIUtility.isProSkin)
+            {
+                EditorGUI.DrawRect(rect, Color.gray);
+                EditorGUI.DrawOutline(rect, 1, Color.white);
+            }
+            else
+            {
+                EditorGUI.DrawRect(rect, Color.white);
+                EditorGUI.DrawOutline(rect, 1, Color.gray);
+            }
+            
 
             Rect left = rect;
             left.x = rect.x - Mathf.Min(10, rect.width / 4);
