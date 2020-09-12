@@ -75,7 +75,18 @@ namespace UnityEditor.Timeline
 
         public readonly static Color colorDuration = new Color(0.66f, 0.66f, 0.66f, 0.4f);
 
-        public readonly static Color BackgroundColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
+        public readonly static Color BackgroundColor1 = new Color(0.2f, 0.2f, 0.2f, 1.0f);
+
+        public readonly static Color BackgroundColor2 = new Color(0.8f, 0.8f, 0.8f, 1.0f);
+
+        public static Color BackgroundColor
+        {
+            get
+            {
+                if (EditorGUIUtility.isProSkin) return BackgroundColor1;
+                return BackgroundColor2;
+            }
+        }
 
         public readonly static Color colorTooltipBackground = new Color(29.0f / 255.0f, 32.0f / 255.0f, 33.0f / 255.0f);
 
