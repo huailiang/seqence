@@ -67,6 +67,7 @@ namespace UnityEditor.Timeline
 
         protected override void ProcessTansfEvent()
         {
+            base.ProcessTansfEvent();
             var e = Event.current;
             if (recoding)
             {
@@ -179,7 +180,7 @@ namespace UnityEditor.Timeline
         private void AddItem(float t)
         {
             var tt = track as XTransformTrack;
-            tt.AddItem(t, go.transform.localPosition, go.transform.localEulerAngles);
+            tt.AddItem(t, target.transform.localPosition, target.transform.localEulerAngles);
             SeqenceWindow.inst.Repaint();
         }
 
@@ -187,24 +188,6 @@ namespace UnityEditor.Timeline
         {
             var tt = track as XTransformTrack;
             if (tt.RmItemAt(i)) SeqenceWindow.inst.Repaint();
-        }
-
-        protected override void StartRecd()
-        {
-            if (track.parent)
-            {
-                if (track.parent is XBindTrack bind && bind.bindObj != null)
-                {
-                    go = bind.bindObj;
-                    AnimationMode.StartAnimationMode();
-                    AnimationMode.BeginSampling();
-                    SeqenceWindow.inst.tree?.SetRecordTrack(this);
-                }
-            }
-            else
-            {
-                EditorUtility.DisplayDialog("warn", "parent track is null or not bind", "ok");
-            }
         }
         
     }
