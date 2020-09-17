@@ -52,6 +52,12 @@
           <loop>true</loop>
         </ClipData>
       </clips>
+      <childs>
+        <TrackData xsi:type="TransformTrackData">
+          <type>Transform</type>
+          <select>false</select>
+        </TrackData>
+      </childs>
       <type>Animation</type>
       <prefab>Assets/test/Chomper.prefab</prefab>
       <roleid>1003</roleid>
@@ -61,6 +67,16 @@
         <z>-5</z>
       </pos>
       <rotY>190</rotY>
+    </TrackData>
+    <TrackData>
+      <clips>
+        <ClipData xsi:type="PostprocessData">
+          <start>4.937486</start>
+          <duration>20</duration>
+          <mode>Bloom</mode>
+        </ClipData>
+      </clips>
+      <type>PostProcess</type>
     </TrackData>
   </tracks>
   <skillHostTrack>0</skillHostTrack>

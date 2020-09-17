@@ -34,10 +34,19 @@ namespace UnityEditor.Timeline
         protected override void OnInspectorTrack()
         {
             base.OnInspectorTrack();
-            if(track.clips==null)
+            if (track.clips == null)
             {
                 EditorGUILayout.HelpBox("There is no clip in track", MessageType.Warning);
             }
         }
+
+        protected override void OnInspectorClip(IClip clip)
+        {
+            base.OnInspectorClip(clip);
+            XPostprocessClip postClip = clip as XPostprocessClip;
+            postClip?.OnInspector();
+        }
+
     }
+
 }

@@ -30,6 +30,9 @@ namespace UnityEditor.Timeline
 
         public bool showMarkerHeader { get; set; }
 
+        const string cache_key = "seqence_key";
+        const string cache_mode = "seqence_mod";
+
         public int frameRate
         {
             get { return XSeqence.frameRate; }
@@ -64,11 +67,25 @@ namespace UnityEditor.Timeline
             EditorApplication.playModeStateChanged -= OnPlayChanged;
             EditorApplication.playModeStateChanged += OnPlayChanged;
         }
-        
+
         [UnityEditor.Callbacks.DidReloadScripts]
         static void OnEditorReload()
         {
             CleanEnv();
+        }
+
+        public void TryReload()
+        {
+            if (!Application.isPlaying)
+            {
+                var key = PlayerPrefs.GetString(cache_key, string.Empty);
+
+                if (!string.IsNullOrEmpty(key))
+                {
+                    var mode = (PlayMode)PlayerPrefs.GetInt(cache_mode);
+                    Open(key, mode);
+                }
+            }
         }
 
         private void OnPlayChanged(PlayModeStateChange state)
@@ -111,6 +128,7 @@ namespace UnityEditor.Timeline
             AddRuntime();
             seqence.Time = 1.0f;
             seqence.editMode = SeqencePlayMode.EditorRun;
+            OnCreated(path, mode);
         }
 
         public void Open(string path, PlayMode mode)
@@ -122,7 +140,16 @@ namespace UnityEditor.Timeline
             AddRuntime();
             float dur = seqence.RecalcuteDuration();
             window.SetTimeRange(0, dur * 1.5f);
+            OnCreated(path, mode);
         }
+
+        private void OnCreated(string path, PlayMode m)
+        {
+            PlayerPrefs.SetString(cache_key, path);
+            PlayerPrefs.SetInt(cache_mode, (int)m);
+        }
+
+
 
         public void Dispose()
         {

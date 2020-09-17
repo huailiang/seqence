@@ -23,12 +23,6 @@ namespace UnityEditor.Timeline
             get { return inst.state.seqence; }
         }
 
-        [Callbacks.DidReloadScripts]
-        static void OnEditorReload()
-        {
-            SeqenceState.CleanEnv();
-        }
-
         private void OnEnable()
         {
             state = new SeqenceState(this);
@@ -44,7 +38,11 @@ namespace UnityEditor.Timeline
 
         void OnGUI()
         {
-            if (inst == null) inst = this;
+            if (inst == null)
+            {
+                inst = this;
+                inst.state.TryReload();
+            }
             TransportToolbarGUI();
             state?.CheckExist();
             if (state.seqence)

@@ -199,12 +199,45 @@ namespace UnityEngine.Timeline.Data
         }
     }
 
+
+    [Flags]
+    public enum PostEnum
+    {
+        Bloom = 1,
+        Vignette = 1 << 1,
+        MotionBlur = 1 << 2,
+        ColorGrading = 1 << 3,
+        DepthOfField = 1 << 4
+    }
+
+
     [Serializable]
     public class PostprocessData : ClipData
     {
+        public readonly static int PostCnt = 5;
+
+        public PostEnum mode = 0;
+
         public override AssetType type
         {
             get { return AssetType.PostProcess; }
         }
+
+        public override string ToString()
+        {
+            string st = string.Empty;
+            if (mode > 0)
+            {
+                if ((mode & PostEnum.Bloom) > 0) st += "Bloom ";
+                if ((mode & PostEnum.Vignette) > 0) st += "Vignette ";
+                if ((mode & PostEnum.MotionBlur) > 0) st += "MotionBlur ";
+                if ((mode & PostEnum.ColorGrading) > 0) st += "ColorGrad ";
+                if ((mode & PostEnum.DepthOfField) > 0) st += "DepthField ";
+                return st;
+            }
+            return "post process";
+        }
+
+        public Rendering.PostProcessing.PostProcessEffectSettings[] settings;
     }
 }
