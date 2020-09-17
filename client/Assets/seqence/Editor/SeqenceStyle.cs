@@ -59,9 +59,6 @@ namespace UnityEditor.Timeline
         public static readonly GUIContent showMarkersOn = EditorGUIUtility.TrTextContentWithIcon(string.Empty,
             "Show / Hide Timeline Markers", "TimelineMarkerAreaButtonEnabled");
 
-        public static readonly GUIContent showMarkersOff = EditorGUIUtility.TrTextContentWithIcon(string.Empty,
-            "Show / Hide Timeline Markers", "TimelineMarkerAreaButtonDisabled");
-
         public static readonly GUIContent showMarkersOnTimeline = EditorGUIUtility.TrTextContent("Show markers");
 
         public static readonly GUIContent timelineMarkerTrackHeader =
@@ -75,17 +72,22 @@ namespace UnityEditor.Timeline
 
         public readonly static Color colorDuration = new Color(0.66f, 0.66f, 0.66f, 0.4f);
 
-        public readonly static Color BackgroundColor1 = new Color(0.2f, 0.2f, 0.2f, 1.0f);
+        private readonly static Color backgroundColor1 = new Color(0.2f, 0.2f, 0.2f, 1.0f);
 
-        public readonly static Color BackgroundColor2 = new Color(0.8f, 0.8f, 0.8f, 1.0f);
+        private readonly static Color backgroundColor2 = new Color(0.8f, 0.9f, 0.8f, 1.0f);
+
+        private readonly static Color markerColor = new Color(0.8f, 0.8f, 0.8f, 1);
+
+        private static bool pro { get { return EditorGUIUtility.isProSkin; } }
 
         public static Color BackgroundColor
         {
-            get
-            {
-                if (EditorGUIUtility.isProSkin) return BackgroundColor1;
-                return BackgroundColor2;
-            }
+            get { return pro ? backgroundColor1 : backgroundColor2; }
+        }
+
+        public static Color MarkBackground
+        {
+            get { return pro ? backgroundColor1 : markerColor; }
         }
 
         public readonly static Color colorTooltipBackground = new Color(29.0f / 255.0f, 32.0f / 255.0f, 33.0f / 255.0f);

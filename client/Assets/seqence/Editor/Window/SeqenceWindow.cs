@@ -14,7 +14,6 @@ namespace UnityEditor.Timeline
         public Rect winArea { get; set; }
 
         public Rect centerArea { get; set; }
-
         
         public PlayMode playMode;
 
@@ -116,8 +115,7 @@ namespace UnityEditor.Timeline
                 }
             }
         }
-
-
+        
         private void CalculWindowCenter()
         {
             float x = position.width / 2 - 100;

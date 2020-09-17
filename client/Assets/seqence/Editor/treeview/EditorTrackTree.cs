@@ -124,10 +124,7 @@ namespace UnityEditor.Timeline
             for (int i = 0; i < hierachy.Count; i++)
             {
                 var it = hierachy[i];
-                if (it.ID == track.ID)
-                {
-                    return i;
-                }
+                if (it.ID == track.ID) return i;
             }
             return 0;
         }
@@ -236,8 +233,7 @@ namespace UnityEditor.Timeline
             width = winRect.width;
             SyncTreeWidth();
 
-            float y = state.showMarkerHeader ? WindowConstants.trackRowYPosition
-                : WindowConstants.markerRowYPosition;
+            float y = WindowConstants.trackRowYPosition;
             Rect clip = new Rect(0, y, winRect.width, winRect.height - y);
 
             GUI.BeginClip(clip);

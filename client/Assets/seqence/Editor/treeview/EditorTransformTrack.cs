@@ -6,12 +6,8 @@ using UnityEngine.Timeline.Data;
 namespace UnityEditor.Timeline
 {
     [TimelineEditor(typeof(XTransformTrack))]
-    public class EditorTransformTrack : EditorTrack
+    public class EditorTransformTrack : RecordTrack
     {
-        static GUIContent s_RecordOn;
-        static GUIContent s_RecordOff;
-        static GUIContent s_KeyOn;
-        static GUIContent s_KeyOff;
         private TransformTrackData Data;
 
         protected override Color trackColor
@@ -34,69 +30,15 @@ namespace UnityEditor.Timeline
             throw new Exception("transform no clips");
         }
 
-        private void InitStyle()
+        protected override GameObject target
         {
-            if (s_RecordOn == null)
+            get
             {
-                s_RecordOn = new GUIContent(SeqenceStyle.autoKey.active.background);
-            }
-            if (s_RecordOff == null)
-            {
-                s_RecordOff = new GUIContent(SeqenceStyle.autoKey.normal.background);
-            }
-            if (s_KeyOn == null)
-            {
-                s_KeyOn = new GUIContent(SeqenceStyle.keyframe.active.background);
-            }
-            if (s_KeyOff == null)
-            {
-                s_KeyOff = new GUIContent(SeqenceStyle.keyframe.normal.background);
+                var p = track?.parent as XBindTrack;
+                if (p) return p.bindObj;
+                return null;
             }
         }
-
-        protected override void OnGUIHeader()
-        {
-            InitStyle();
-            bool recd = track.record;
-            var content = recd ? s_RecordOn : s_RecordOff;
-
-            if (recd)
-            {
-                float remainder = Time.realtimeSinceStartup % 1;
-                SeqenceWindow.inst.Repaint();
-                if (remainder < 0.3f)
-                {
-                    content = SeqenceStyle.empty;
-                    addtiveColor = Color.white;
-                }
-                else
-                {
-                    addtiveColor = Color.red;
-                }
-            }
-            else
-            {
-                addtiveColor = Color.white;
-            }
-
-            if (GUILayout.Button(content, SeqenceStyle.autoKey, GUILayout.MaxWidth(16)))
-            {
-                if (recd)
-                {
-                    StopRecd();
-                }
-                else
-                {
-                    StartRecd();
-                }
-                track.SetFlag(TrackMode.Record, !recd);
-            }
-            if (go && !track.locked)
-            {
-                ProcessTansfEvent();
-            }
-        }
-
 
         protected override void OnGUIContent()
         {
@@ -123,22 +65,11 @@ namespace UnityEditor.Timeline
         }
 
 
-        private void ProcessTansfEvent()
+        protected override void ProcessTansfEvent()
         {
             var e = Event.current;
             if (recoding)
             {
-                if (e.type == EventType.KeyDown)
-                {
-                    if (e.keyCode == KeyCode.F)
-                    {
-                        PrepareOperation(e.mousePosition);
-                    }
-                    if(e.keyCode == KeyCode.D || e.keyCode== KeyCode.Delete)
-                    {
-                        DeleteItem(e.mousePosition);
-                    }
-                }
                 if (e.type == EventType.MouseDown)
                 {
                     var t = SeqenceWindow.inst.PiexlToTime(e.mousePosition.x);
@@ -150,6 +81,7 @@ namespace UnityEditor.Timeline
                 }
             }
         }
+        
 
         protected override void OnSelect()
         {
@@ -166,7 +98,7 @@ namespace UnityEditor.Timeline
 
         protected override void OnInspectorTrack()
         {
-            EditorGUILayout.LabelField("recoding: " + recoding);
+            base.OnInspectorTrack();
             if (track.parent == null)
                 EditorGUILayout.HelpBox("no parent bind", MessageType.Warning);
             if (Data?.time != null)
@@ -199,10 +131,8 @@ namespace UnityEditor.Timeline
         }
 
         private GameObject go;
-        private bool recoding;
 
-
-        private void PrepareOperation(Vector2 pos)
+        protected override void KeyFrame(Vector2 pos)
         {
             float t = SeqenceWindow.inst.PiexlToTime(pos.x);
             if (ContainsT(t, out var i))
@@ -219,7 +149,7 @@ namespace UnityEditor.Timeline
             }
         }
 
-        private void DeleteItem(Vector2 pos)
+        protected override void DeleteFrame(Vector2 pos)
         {
             float t = SeqenceWindow.inst.PiexlToTime(pos.x);
             if (ContainsT(t, out var i, 0.4f))
@@ -228,7 +158,7 @@ namespace UnityEditor.Timeline
             }
         }
 
-        private bool ContainsT(float t,  out int i, float max=0.1f)
+        private bool ContainsT(float t, out int i, float max = 0.1f)
         {
             i = 0;
             var time = Data.time;
@@ -259,14 +189,15 @@ namespace UnityEditor.Timeline
             if (tt.RmItemAt(i)) SeqenceWindow.inst.Repaint();
         }
 
-        private void StartRecd()
+        protected override void StartRecd()
         {
             if (track.parent)
             {
                 if (track.parent is XBindTrack bind && bind.bindObj != null)
                 {
                     go = bind.bindObj;
-                    recoding = true;
+                    AnimationMode.StartAnimationMode();
+                    AnimationMode.BeginSampling();
                     SeqenceWindow.inst.tree?.SetRecordTrack(this);
                 }
             }
@@ -275,10 +206,6 @@ namespace UnityEditor.Timeline
                 EditorUtility.DisplayDialog("warn", "parent track is null or not bind", "ok");
             }
         }
-
-        private void StopRecd()
-        {
-            recoding = false;
-        }
+        
     }
 }

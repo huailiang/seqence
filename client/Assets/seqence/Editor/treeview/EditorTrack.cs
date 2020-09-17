@@ -79,14 +79,7 @@ namespace UnityEditor.Timeline
 
         private float Offset
         {
-            get
-            {
-                if (SeqenceWindow.inst.state.showMarkerHeader)
-                {
-                    return WindowConstants.trackRowYPosition;
-                }
-                return WindowConstants.markerRowYPosition;
-            }
+            get { return WindowConstants.trackRowYPosition; }
         }
 
         protected Rect RenderHead
@@ -129,8 +122,7 @@ namespace UnityEditor.Timeline
             this.head = h;
             this.rect = c;
         }
-
-
+        
         public override void OnInit(XSeqenceObject t)
         {
             @select = false;
@@ -652,9 +644,7 @@ namespace UnityEditor.Timeline
                 }
             }
         }
-
-       
-
+        
         protected virtual void OnInspectorClip(IClip clip)
         {
             clip.start = EditorGUILayout.FloatField("start", clip.start);

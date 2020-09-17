@@ -36,41 +36,16 @@ namespace UnityEngine.Timeline
 
 #if UNITY_EDITOR
 
-        private PostEnum add_p = 0;
 
         public void OnInspector()
         {
-            int cnt = PostprocessData.PostCnt;
             Data = data as PostprocessData;
-            EditorGUILayout.BeginVertical(EditorStyles.label);
-            for (int i = 0; i < cnt; i++)
+            if (Data != null)
             {
-                if (Data != null)
-                {
-                    if (((int)Data.mode & (1 << i)) > 0)
-                    {
-                        EditorGUILayout.BeginHorizontal();
-                        var em = (PostEnum)(1 << i);
-                        EditorGUILayout.EnumPopup("Effect", em);
-                        if (GUILayout.Button("X", GUILayout.MaxWidth(21)))
-                        {
-                            Data.mode &= ~em;
-                        }
-                        EditorGUILayout.EndHorizontal();
-                    }
-                }
-            }
-            EditorGUILayout.EndVertical();
-
-            EditorGUILayout.Space();
-            EditorGUI.BeginChangeCheck();
-            add_p = (PostEnum)EditorGUILayout.EnumPopup("Add-new", add_p);
-            if (EditorGUI.EndChangeCheck())
-            {
-                Data.mode |= add_p;
-                add_p = 0;
+                Data.mode = (PostEnum)EditorGUILayout.EnumPopup("Effect", Data.mode);
             }
         }
+
 #endif
     }
 

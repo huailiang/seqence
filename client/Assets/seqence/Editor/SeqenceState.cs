@@ -7,11 +7,7 @@ using PlayMode = UnityEngine.Timeline.PlayMode;
 
 namespace UnityEditor.Timeline
 {
-    public enum WrapMode
-    {
-        Loop,
-        Hold
-    }
+    public enum WrapMode { Loop, Hold }
 
     public class SeqenceState
     {
@@ -27,8 +23,6 @@ namespace UnityEditor.Timeline
         public SeqenceWindow window;
         public AssetConfig config;
         public string path;
-
-        public bool showMarkerHeader { get; set; }
 
         const string cache_key = "seqence_key";
         const string cache_mode = "seqence_mod";
@@ -59,7 +53,6 @@ namespace UnityEditor.Timeline
         public void Initial()
         {
             mode = WrapMode.Hold;
-            showMarkerHeader = true;
             if (config == null)
             {
                 config = AssetDatabase.LoadAssetAtPath<AssetConfig>(AssetConfigEditor.path);
@@ -148,9 +141,7 @@ namespace UnityEditor.Timeline
             PlayerPrefs.SetString(cache_key, path);
             PlayerPrefs.SetInt(cache_mode, (int)m);
         }
-
-
-
+        
         public void Dispose()
         {
             path = string.Empty;

@@ -5,7 +5,7 @@ using UnityEngine.Timeline.Data;
 namespace UnityEditor.Timeline
 {
     [TimelineEditor(typeof(XPostprocessTrack))]
-    public class EditorPostprocessTrack : EditorTrack
+    public class EditorPostprocessTrack : RecordTrack
     {
         protected override Color trackColor
         {
@@ -22,11 +22,21 @@ namespace UnityEditor.Timeline
             get { return track.clips == null; }
         }
 
+        protected override GameObject target
+        {
+            get
+            {
+                var camera = Camera.main;
+                if (camera) return camera.gameObject;
+                return null;
+            }
+        }
+
         protected override void OnAddClip(float t)
         {
             PostprocessData data = new PostprocessData();
             data.start = t;
-            data.duration = 20;
+            data.duration = 8;
             var clip = track.BuildClip(data);
             track.AddClip(clip, data);
         }
@@ -45,6 +55,23 @@ namespace UnityEditor.Timeline
             base.OnInspectorClip(clip);
             XPostprocessClip postClip = clip as XPostprocessClip;
             postClip?.OnInspector();
+        }
+
+        protected override void KeyFrame(Vector2 pos)
+        {
+            float t = SeqenceWindow.inst.PiexlToTime(pos.x);
+            foreach (var clip in track.clips)
+            {
+                if (clip.start < t && t < clip.end)
+                {
+
+                }
+            }
+        }
+
+        protected override void DeleteFrame(Vector2 mouse)
+        {
+            base.DeleteFrame(mouse);
         }
 
     }

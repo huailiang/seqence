@@ -2,6 +2,8 @@
 {
     public class RuntimeSeqence : MonoBehaviour
     {
+        public int a;
+        public Color c;
         public string path;
         public XSeqence seqence;
         private bool play;

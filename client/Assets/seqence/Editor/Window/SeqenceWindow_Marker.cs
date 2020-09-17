@@ -33,12 +33,9 @@ namespace UnityEditor.Timeline
 
         void DrawMarkerDrawer()
         {
-            if (state.showMarkerHeader)
-            {
-                DrawMarkerDrawerHeaderBackground();
-                DrawMarkerDrawerHeader();
-                ProcessEvent();
-            }
+            DrawMarkerDrawerHeaderBackground();
+            DrawMarkerDrawerHeader();
+            ProcessEvent();
         }
 
         private void ProcessEvent()
@@ -142,7 +139,7 @@ namespace UnityEditor.Timeline
 
         void DrawMarkerDrawerHeaderBackground()
         {
-            var backgroundColor = SeqenceStyle.BackgroundColor;
+            var backgroundColor = SeqenceStyle.MarkBackground;
             markderRect.x = WindowConstants.rightAreaMargn;
             markderRect.y = WindowConstants.markerRowYPosition;
             markderRect.width = winArea.width;

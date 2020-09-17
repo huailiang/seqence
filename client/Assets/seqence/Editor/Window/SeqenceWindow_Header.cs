@@ -13,10 +13,8 @@ namespace UnityEditor.Timeline
             AddButtonGUI();
             ShowMarkersButton();
             GUILayout.EndHorizontal();
-            if (state.showMarkerHeader)
-            {
-                GUILayout.Label(SeqenceStyle.timelineMarkerTrackHeader);
-            }
+            GUILayout.Label(SeqenceStyle.timelineMarkerTrackHeader);
+
             GUILayout.EndVertical();
         }
 
@@ -134,18 +132,8 @@ namespace UnityEditor.Timeline
 
         void ShowMarkersButton()
         {
-            var content = state.showMarkerHeader ? SeqenceStyle.showMarkersOn : SeqenceStyle.showMarkersOff;
-            bool b = state.showMarkerHeader;
-            SetShowMarkerHeader(GUILayout.Toggle(state.showMarkerHeader, content, GUI.skin.button));
-            if (b != state.showMarkerHeader)
-            {
-                tree.MarksOffset(state.showMarkerHeader);
-            }
+            GUILayout.Toggle(true, SeqenceStyle.showMarkersOn, GUI.skin.button);
         }
-
-        internal void SetShowMarkerHeader(bool newValue)
-        {
-            state.showMarkerHeader = newValue;
-        }
+        
     }
 }
