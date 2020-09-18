@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Timeline;
-using UnityEngine.Timeline.Data;
+using UnityEngine.Seqence;
+using UnityEngine.Seqence.Data;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     // 之所以XTrack写在这里，是因为算法效率不高，只给editor模式下使用
     public static class XTrackEx

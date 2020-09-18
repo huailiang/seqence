@@ -1,9 +1,9 @@
-﻿using UnityEngine.Timeline.Data;
+﻿using UnityEngine.Seqence.Data;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
     public class XPostprocessClip : XClip<XPostprocessTrack, XPostprocessClip>, ISharedObject<XPostprocessClip>
     {

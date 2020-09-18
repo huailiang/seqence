@@ -1,11 +1,11 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Timeline;
-using UnityEngine.Timeline.Data;
+using UnityEngine.Seqence;
+using UnityEngine.Seqence.Data;
 using Object = UnityEngine.Object;
-using PlayMode = UnityEngine.Timeline.PlayMode;
+using PlayMode = UnityEngine.Seqence.PlayMode;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     public enum WrapMode { Loop, Hold }
 

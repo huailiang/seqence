@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.Timeline;
+using UnityEngine.Seqence;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
 
     public abstract class RecordTrack : EditorTrack

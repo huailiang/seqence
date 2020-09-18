@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UnityEngine.Timeline;
-using UnityEngine.Timeline.Data;
+using UnityEngine.Seqence;
+using UnityEngine.Seqence.Data;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     public class TypeUtilities
     {

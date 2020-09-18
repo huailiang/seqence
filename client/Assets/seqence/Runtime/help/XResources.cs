@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
     public class XResources
     {

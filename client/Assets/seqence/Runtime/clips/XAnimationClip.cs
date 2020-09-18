@@ -1,8 +1,8 @@
 ﻿using UnityEngine.Playables;
 using UnityEngine.Animations;
-using UnityEngine.Timeline.Data;
+using UnityEngine.Seqence.Data;
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
     public class XAnimationClip : XClip<XAnimationTrack, XAnimationClip>, ISharedObject<XAnimationClip>
     {

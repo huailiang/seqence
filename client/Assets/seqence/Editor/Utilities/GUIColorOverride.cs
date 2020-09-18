@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     readonly struct GUIColorOverride : IDisposable
     {

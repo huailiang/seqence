@@ -1,6 +1,6 @@
 using System;
 
-namespace UnityEngine.Timeline.Data
+namespace UnityEngine.Seqence.Data
 {
     [Serializable]
     public class Character

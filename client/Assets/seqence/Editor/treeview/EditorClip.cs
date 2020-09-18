@@ -1,8 +1,8 @@
 using UnityEngine;
-using UnityEngine.Timeline;
+using UnityEngine.Seqence;
 using System;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     [Flags]
     public enum ClipMode

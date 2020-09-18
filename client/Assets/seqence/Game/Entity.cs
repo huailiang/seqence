@@ -4,8 +4,8 @@ using UnityEngine.Animations;
 #else
 using UnityEngine.Experimental.Animations;
 #endif
-using UnityEngine.Timeline;
-using UnityEngine.Timeline.Data;
+using UnityEngine.Seqence;
+using UnityEngine.Seqence.Data;
 using UnityEngine.Playables;
 
 public class Entity : ISharedObject<Entity>
@@ -79,7 +79,7 @@ public class Entity : ISharedObject<Entity>
         string path = "Assets/skill/" + skill + ".xml";
         if (timeline == null)
         {
-            timeline = new XSeqence(path, UnityEngine.Timeline.PlayMode.Skill, ator);
+            timeline = new XSeqence(path, UnityEngine.Seqence.PlayMode.Skill, ator);
             timeline.SetPlaying(true);
         }
         else

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
 
     // next 加在这里，主要是为了避免像LinkList一样, 每个节点都要new一个LinkedListNode

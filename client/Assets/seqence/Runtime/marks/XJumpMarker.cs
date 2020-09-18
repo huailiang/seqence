@@ -1,6 +1,6 @@
-﻿using UnityEngine.Timeline.Data;
+﻿using UnityEngine.Seqence.Data;
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
     [MarkUsage(AssetType.Marker)]
     public class XJumpMarker : XMarker, ISharedObject<XJumpMarker>

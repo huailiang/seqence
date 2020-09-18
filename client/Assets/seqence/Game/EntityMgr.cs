@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Timeline;
-using CharacterInfo = UnityEngine.Timeline.Data.CharacterInfo;
+using UnityEngine.Seqence;
+using CharacterInfo = UnityEngine.Seqence.Data.CharacterInfo;
 
 public class EntityMgr
 {

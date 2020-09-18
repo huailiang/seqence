@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Timeline;
-using UnityEngine.Timeline.Data;
-using PlayMode = UnityEngine.Timeline.PlayMode;
+using UnityEngine.Seqence;
+using UnityEngine.Seqence.Data;
+using PlayMode = UnityEngine.Seqence.PlayMode;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     [TimelineEditor(typeof(XAnimationTrack))]
     public class EditorAnimTrack : EditorTrack

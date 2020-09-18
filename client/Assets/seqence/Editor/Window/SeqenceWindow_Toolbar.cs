@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using PlayMode = UnityEngine.Timeline.PlayMode;
+using PlayMode = UnityEngine.Seqence.PlayMode;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     public partial class SeqenceWindow
     {

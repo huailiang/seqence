@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 using UnityEditor;
 #endif
 
-namespace UnityEngine.Timeline.Data
+namespace UnityEngine.Seqence.Data
 {
     [Serializable]
     [Flags]

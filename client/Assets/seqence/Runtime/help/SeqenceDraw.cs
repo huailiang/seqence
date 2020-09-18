@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
     public class SeqenceDraw
     {

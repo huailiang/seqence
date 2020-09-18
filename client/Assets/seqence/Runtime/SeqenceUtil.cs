@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
     public class SeqenceUtil
     {

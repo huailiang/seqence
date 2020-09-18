@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 
-namespace UnityEngine.Timeline.Data
+namespace UnityEngine.Seqence.Data
 {
 
     public enum LogicType

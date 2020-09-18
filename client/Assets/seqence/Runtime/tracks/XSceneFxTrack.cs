@@ -1,7 +1,7 @@
 ﻿using System;
-using UnityEngine.Timeline.Data;
+using UnityEngine.Seqence.Data;
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
     [TrackFlag(TrackFlag.RootOnly)]
     public class XSceneFxTrack : XTrack, ISharedObject<XSceneFxTrack>

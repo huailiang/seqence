@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine.Timeline.Data;
+using UnityEngine.Seqence.Data;
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
     [Flags]
     public enum TrackMode

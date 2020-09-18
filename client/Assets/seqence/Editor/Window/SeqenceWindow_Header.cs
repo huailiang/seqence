@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Timeline;
+using UnityEngine.Seqence;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     public partial class SeqenceWindow
     {

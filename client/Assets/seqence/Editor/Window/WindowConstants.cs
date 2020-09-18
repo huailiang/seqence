@@ -1,4 +1,4 @@
-﻿namespace UnityEditor.Timeline
+﻿namespace UnityEditor.Seqence
 {
     class WindowConstants
     {

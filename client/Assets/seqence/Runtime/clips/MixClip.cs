@@ -1,4 +1,4 @@
-﻿using UnityEngine.Timeline;
+﻿using UnityEngine.Seqence;
 
 
 public sealed class MixClip :  ISharedObject<MixClip>

@@ -1,4 +1,4 @@
-﻿namespace UnityEngine.Timeline
+﻿namespace UnityEngine.Seqence
 {
     public class RuntimeSkill : MonoBehaviour
     {

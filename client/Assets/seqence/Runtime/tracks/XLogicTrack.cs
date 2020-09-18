@@ -1,6 +1,6 @@
-using UnityEngine.Timeline.Data;
+using UnityEngine.Seqence.Data;
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
     [TrackFlag(TrackFlag.SubOnly)]
     [UseParent(typeof(XAnimationTrack))]

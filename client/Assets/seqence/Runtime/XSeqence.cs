@@ -1,14 +1,14 @@
 ﻿using System;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
-using UnityEngine.Timeline.Data;
+using UnityEngine.Seqence.Data;
 #if UNITY_2019_3_OR_NEWER
 using UnityEngine.Animations;
 #else
 using UnityEngine.Experimental.Animations;
 #endif
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
     public enum SeqencePlayMode
     {

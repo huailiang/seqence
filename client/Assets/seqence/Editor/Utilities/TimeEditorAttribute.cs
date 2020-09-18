@@ -1,6 +1,6 @@
 using System;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     
     [AttributeUsage(AttributeTargets.Class)]

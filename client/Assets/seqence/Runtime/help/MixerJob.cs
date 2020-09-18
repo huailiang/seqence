@@ -5,7 +5,7 @@ using UnityEngine.Animations;
 using UnityEngine.Experimental.Animations;
 #endif
 
-namespace UnityEngine.Timeline
+namespace UnityEngine.Seqence
 {
     public struct MixerJob : IAnimationJob
     {

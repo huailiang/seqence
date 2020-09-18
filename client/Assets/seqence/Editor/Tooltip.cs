@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     public class Tooltip
     {

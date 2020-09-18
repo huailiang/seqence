@@ -1,11 +1,11 @@
 using System;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.Timeline;
-using UnityEngine.Timeline.Data;
-using CharacterInfo = UnityEngine.Timeline.Data.CharacterInfo;
+using UnityEngine.Seqence;
+using UnityEngine.Seqence.Data;
+using CharacterInfo = UnityEngine.Seqence.Data.CharacterInfo;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     public class CharacterWindow : EditorWindow
     {

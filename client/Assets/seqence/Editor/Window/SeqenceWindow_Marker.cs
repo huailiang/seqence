@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Timeline;
-using UnityEngine.Timeline.Data;
+using UnityEngine.Seqence;
+using UnityEngine.Seqence.Data;
 
-namespace UnityEditor.Timeline
+namespace UnityEditor.Seqence
 {
     struct MarkAction
     {
