@@ -10,8 +10,7 @@ namespace UnityEngine.Seqence
         public AnimationClip aclip;
         private AnimClipData anData;
         public int port = 0;
-
-
+        
         public override string Display
         {
             get { return aclip != null ? aclip.name + " " + port : " anim" + port; }
@@ -53,8 +52,7 @@ namespace UnityEngine.Seqence
                     Debug.Log("playable is invalid");
             }
         }
-
-
+        
         public override void OnDestroy()
         {
             if (playable.IsValid())

@@ -55,11 +55,8 @@ namespace UnityEditor.Seqence
         {
             base.OnInspectorClip(clip);
             XPostprocessClip postClip = clip as XPostprocessClip;
-            postClip?.OnInspector();
+            postClip?.OnInspector(SeqenceWindow.inst.Repaint);
         }
-        
-
-        
 
         protected override void KeyFrame(Vector2 pos)
         {

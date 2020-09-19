@@ -35,10 +35,10 @@ namespace UnityEngine.Seqence
         public T track { get; set; }
 
         public D data { get; set; }
-        
+
         public ClipData Data
         {
-            get { return (ClipData) data; }
+            get { return data; }
         }
 
         public float duration
@@ -109,8 +109,7 @@ namespace UnityEngine.Seqence
             data = null;
             track = null;
         }
-
-
+        
         public static implicit operator bool(XClip<T, C, D> clip)
         {
             return clip != null;

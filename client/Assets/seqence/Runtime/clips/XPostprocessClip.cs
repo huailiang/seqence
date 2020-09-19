@@ -1,5 +1,6 @@
 ﻿using UnityEngine.Seqence.Data;
 #if UNITY_EDITOR
+using System;
 using UnityEditor;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -7,9 +8,9 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace UnityEngine.Seqence
 {
-    public class XPostprocessClip : XClip<XPostprocessTrack, XPostprocessClip, PostprocessData>, ISharedObject<XPostprocessClip>
+    public class XPostprocessClip : XClip<XPostprocessTrack, XPostprocessClip, PostprocessData>, 
+        ISharedObject<XPostprocessClip>
     {
-
         public override string Display
         {
             get
@@ -33,7 +34,7 @@ namespace UnityEngine.Seqence
 
         public PostProcessEffectSettings setting;
 
-        public void OnInspector()
+        public void OnInspector(Action cb)
         {
             EditorGUI.BeginChangeCheck();
             if (data != null)
@@ -42,7 +43,11 @@ namespace UnityEngine.Seqence
             }
             if (EditorGUI.EndChangeCheck())
             {
-                if (data.mode > 0) CreateInstance(data.mode);
+                if (data.mode > 0)
+                {
+                    CreateInstance(data.mode);
+                    cb();
+                }
             }
             switch (data.mode)
             {

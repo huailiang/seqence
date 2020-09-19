@@ -8,14 +8,12 @@ namespace UnityEngine.Seqence
         private string path;
         private ParticleSystem[] particleSystems;
         private bool restart;
-
-       
+        
         public override string Display
         {
             get { return prefabGameObject != null ? prefabGameObject.name : ""; }
         }
-
-
+        
         public void Load(string path)
         {
             Load(path, Vector3.zero, Vector3.zero, Vector3.one);
@@ -68,8 +66,7 @@ namespace UnityEngine.Seqence
                 prefabGameObject.SetActive(false);
             }
         }
-
-
+        
         public override void OnDestroy()
         {
             if (prefabGameObject)

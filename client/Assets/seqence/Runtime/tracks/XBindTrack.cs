@@ -50,7 +50,6 @@ namespace UnityEngine.Seqence
             }
         }
 
-
         public override void OnDestroy()
         {
             if (!seqence.IsHostTrack(this))

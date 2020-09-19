@@ -45,7 +45,6 @@ namespace UnityEngine.Seqence
             draw?.Clean();
         }
 
-
         public override void OnDestroy()
         {
             draw?.Destroy();

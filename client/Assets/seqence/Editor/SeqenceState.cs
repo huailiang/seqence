@@ -61,7 +61,7 @@ namespace UnityEditor.Seqence
             EditorApplication.playModeStateChanged += OnPlayChanged;
         }
 
-        [UnityEditor.Callbacks.DidReloadScripts]
+        [Callbacks.DidReloadScripts]
         static void OnEditorReload()
         {
             CleanEnv();

@@ -8,7 +8,6 @@ public sealed class MixClip :  ISharedObject<MixClip>
     public float duration { get; set; }
     public IClip blendA { get; set; }
     public IClip blendB { get; set; }
-
     public MixClip next { get; set; }
     
     public void Initial(float start, float duration, IClip clip1, IClip clip2)
