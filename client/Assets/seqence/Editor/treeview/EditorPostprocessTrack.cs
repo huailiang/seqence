@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Seqence;
 using UnityEngine.Seqence.Data;
 
@@ -56,6 +57,9 @@ namespace UnityEditor.Seqence
             XPostprocessClip postClip = clip as XPostprocessClip;
             postClip?.OnInspector();
         }
+        
+
+        
 
         protected override void KeyFrame(Vector2 pos)
         {
@@ -64,16 +68,8 @@ namespace UnityEditor.Seqence
             {
                 if (clip.start < t && t < clip.end)
                 {
-
                 }
             }
         }
-
-        protected override void DeleteFrame(Vector2 mouse)
-        {
-            base.DeleteFrame(mouse);
-        }
-
     }
-
 }

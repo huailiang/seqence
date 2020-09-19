@@ -4,7 +4,6 @@ using PlayMode = UnityEngine.Seqence.PlayMode;
 
 namespace UnityEditor.Seqence
 {
-
     public partial class SeqenceWindow : EditorWindow
     {
         public static SeqenceWindow inst;

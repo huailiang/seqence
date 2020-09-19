@@ -6,10 +6,8 @@ namespace UnityEngine.Seqence
     [TrackFlag(TrackFlag.NoClip)]
     public class XGroupTrack : XTrack, ISharedObject<XGroupTrack>
     {
-
         public XGroupTrack next { get; set; }
-
-
+        
         public override AssetType AssetType
         {
             get { return AssetType.Group; }

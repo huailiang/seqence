@@ -11,9 +11,19 @@ namespace UnityEditor.Seqence
         protected static GUIContent s_KeyOff;
         private static AnimationClip animationClip = new AnimationClip();
 
-        protected bool recoding;
+        protected bool recoding
+        {
+            get { return track.record; }
+        }
 
         protected abstract GameObject target { get; }
+
+
+        public override void OnInit(XSeqenceObject t)
+        {
+            base.OnInit(t);
+            Regist(EventT.Record, OnTrackRecd);
+        }
 
         protected void InitStyle()
         {
@@ -38,9 +48,8 @@ namespace UnityEditor.Seqence
         protected override void OnGUIHeader()
         {
             InitStyle();
-            bool recd = track.record;
-            var content = recd ? s_RecordOn : s_RecordOff;
-            if (recd)
+            var content = recoding ? s_RecordOn : s_RecordOff;
+            if (recoding)
             {
                 float remainder = Time.realtimeSinceStartup % 1;
                 SeqenceWindow.inst.Repaint();
@@ -61,7 +70,7 @@ namespace UnityEditor.Seqence
 
             if (GUILayout.Button(content, SeqenceStyle.autoKey, GUILayout.MaxWidth(16)))
             {
-                if (recd)
+                if (recoding)
                 {
                     StopRecd();
                 }
@@ -69,7 +78,6 @@ namespace UnityEditor.Seqence
                 {
                     StartRecd();
                 }
-                track.SetFlag(TrackMode.Record, !recd);
             }
 
             if (target && !track.locked)
@@ -115,7 +123,8 @@ namespace UnityEditor.Seqence
         {
             if (target)
             {
-                recoding = true;
+                EventMgr.Send(new EventRecordData());
+                track.SetFlag(TrackMode.Record, true);
                 AnimationMode.StartAnimationMode();
                 AnimationMode.BeginSampling();
                 AnimationMode.SampleAnimationClip(target, animationClip, 0);
@@ -124,9 +133,17 @@ namespace UnityEditor.Seqence
 
         protected virtual void StopRecd()
         {
-            recoding = false;
-            AnimationMode.EndSampling();
-            AnimationMode.StopAnimationMode();
+            track.SetFlag(TrackMode.Record, false);
+            if (AnimationMode.InAnimationMode())
+            {
+                AnimationMode.EndSampling();
+                AnimationMode.StopAnimationMode();
+            }
+        }
+
+        protected void OnTrackRecd(EventData d)
+        {
+            StopRecd();
         }
     }
 }

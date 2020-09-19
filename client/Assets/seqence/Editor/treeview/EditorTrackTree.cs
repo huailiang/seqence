@@ -9,13 +9,12 @@ namespace UnityEditor.Seqence
     public class EditorTrackTree
     {
         public List<EditorTrack> hierachy;
-        private int track_idx = 0;
+        private int track_idx;
         private float x, width, _y;
 
         private Vector2 scroll;
         private Rect posRect, viewRect, winRect;
         private EditorTrack recordTrack;
-
 
         public float TracksBtmY
         {
@@ -28,17 +27,6 @@ namespace UnityEditor.Seqence
                 }
                 return WindowConstants.markerRowYPosition;
             }
-        }
-
-        public XTrack GetSelectTrack()
-        {
-            if (hierachy != null && hierachy.Count > 0)
-            {
-                var list = hierachy.Where(x => x.select);
-                var editorTracks = list as EditorTrack[] ?? list.ToArray();
-                return editorTracks.Any() ? editorTracks.Select(x => x.track).Last() : null;
-            }
-            return null;
         }
 
         public void Dispose()
@@ -70,20 +58,6 @@ namespace UnityEditor.Seqence
                 }
             }
             BuildSkillHost();
-        }
-
-
-        public void MarksOffset(bool show)
-        {
-            float delta = WindowConstants.markerRowHeight;
-            if (!show) delta = -delta;
-            if (hierachy != null)
-            {
-                foreach (var it in hierachy)
-                {
-                    it.YOffset(delta);
-                }
-            }
         }
 
         private void Add(XTrack track, IList<EditorTrack> list)
@@ -253,7 +227,7 @@ namespace UnityEditor.Seqence
 
         public void ResetSelect(object arg)
         {
-            bool select = (bool)arg;
+            bool select = (bool) arg;
             if (hierachy != null)
                 foreach (var iTrack in hierachy)
                 {
@@ -351,7 +325,7 @@ namespace UnityEditor.Seqence
             int idx = Array.IndexOf(timeline.trackTrees, track);
             if (idx > 0)
             {
-                timeline.config.skillHostTrack = (ushort)idx;
+                timeline.config.skillHostTrack = (ushort) idx;
                 timeline.SkillHostTrack = track.track;
             }
         }

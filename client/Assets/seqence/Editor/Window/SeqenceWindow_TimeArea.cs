@@ -115,11 +115,6 @@ namespace UnityEditor.Seqence
             Repaint();
         }
 
-        public float GetSnappedTimeAtMousePosition(Vector2 pos)
-        {
-            return m_TimeArea.PixelToTime(pos.x, timeAreaRect);
-        }
-
         public float TimeToPixel(float time)
         {
             return m_TimeArea.TimeToPixel(time, timeAreaRect);

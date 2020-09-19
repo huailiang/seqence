@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Seqence;
+using UnityEngine.Seqence.Data;
 
 namespace UnityEditor.Seqence
 {
@@ -122,15 +123,30 @@ namespace UnityEditor.Seqence
             this.head = h;
             this.rect = c;
         }
-        
+
+        private Dictionary<EventT, Action<EventData>> dic = new Dictionary<EventT, Action<EventData>>();
+
+        public virtual void Regist(EventT t, Action<EventData> d)
+        {
+            dic.Add(t, d);
+        }
+
+        public void RecvEvent(EventData d)
+        {
+            if (dic.ContainsKey(d.e))
+            {
+                dic[d.e].Invoke(d);
+            }
+        }
+
         public override void OnInit(XSeqenceObject t)
         {
             @select = false;
             showChild = true;
             isSkillHost = false;
             addtiveColor = Color.white;
-            track = (XTrack)t;
-            var flag = (TrackFlagAttribute)Attribute.GetCustomAttribute(t.GetType(), typeof(TrackFlagAttribute));
+            track = (XTrack) t;
+            var flag = (TrackFlagAttribute) Attribute.GetCustomAttribute(t.GetType(), typeof(TrackFlagAttribute));
             allowClip = flag.allowClip;
             if (_addclip == null)
             {
@@ -193,8 +209,10 @@ namespace UnityEditor.Seqence
                     case EventType.KeyUp:
                         if (e.keyCode == KeyCode.Delete)
                         {
-                            if (HitClip(e)) DeleteClip(e.mousePosition);
-                            else DeleteTrack(this);
+                            if (HitClip(e))
+                                DeleteClip(e.mousePosition);
+                            else
+                                DeleteTrack(this);
                             e.Use();
                         }
                         break;
@@ -203,8 +221,7 @@ namespace UnityEditor.Seqence
                         break;
                     case EventType.DragPerform:
                     case EventType.DragUpdated:
-                        if (DragAndDrop.objectReferences.Count() > 0 &&
-                            RenderRect.Contains(e.mousePosition))
+                        if (DragAndDrop.objectReferences.Count() > 0 && RenderRect.Contains(e.mousePosition))
                             OnDragDrop(DragAndDrop.objectReferences);
                         break;
                 }
@@ -212,17 +229,29 @@ namespace UnityEditor.Seqence
         }
 
 
-        protected virtual void OnSelect() { }
+        protected virtual void OnSelect()
+        {
+        }
 
-        protected virtual void OnGUIHeader() { }
+        protected virtual void OnGUIHeader()
+        {
+        }
 
-        protected virtual void OnGUIContent() { }
+        protected virtual void OnGUIContent()
+        {
+        }
 
-        protected virtual void OnAddClip(float time) { }
+        protected virtual void OnAddClip(float time)
+        {
+        }
 
-        protected virtual void OnInspectorTrack() { }
+        protected virtual void OnInspectorTrack()
+        {
+        }
 
-        protected virtual void OnDragDrop(UnityEngine.Object[] objs) { }
+        protected virtual void OnDragDrop(UnityEngine.Object[] objs)
+        {
+        }
 
 
         private bool HitClip(Event e)
@@ -271,19 +300,23 @@ namespace UnityEditor.Seqence
             pm.AddItem(EditorGUIUtility.TrTextContent("Delete Track\t #t"), false, DeleteTrack);
             if (track.mute)
             {
-                pm.AddItem(EditorGUIUtility.TrTextContent("UnMute Track \t "), false, () => SetTrackFlag(TrackMode.Mute, false));
+                pm.AddItem(EditorGUIUtility.TrTextContent("UnMute Track \t "), false,
+                    () => SetTrackFlag(TrackMode.Mute, false));
             }
             else
             {
-                pm.AddItem(EditorGUIUtility.TrTextContent("Mute Track \t"), false, () => SetTrackFlag(TrackMode.Mute, true));
+                pm.AddItem(EditorGUIUtility.TrTextContent("Mute Track \t"), false,
+                    () => SetTrackFlag(TrackMode.Mute, true));
             }
             if (locked)
             {
-                pm.AddItem(EditorGUIUtility.TrTextContent("UnLock Track \t #l"), false, () => SetTrackFlag(TrackMode.Lock, false));
+                pm.AddItem(EditorGUIUtility.TrTextContent("UnLock Track \t #l"), false,
+                    () => SetTrackFlag(TrackMode.Lock, false));
             }
             else
             {
-                pm.AddItem(EditorGUIUtility.TrTextContent("Lock Track \t #l"), false, () => SetTrackFlag(TrackMode.Lock, true));
+                pm.AddItem(EditorGUIUtility.TrTextContent("Lock Track \t #l"), false,
+                    () => SetTrackFlag(TrackMode.Lock, true));
             }
             if (@select)
             {
@@ -297,7 +330,7 @@ namespace UnityEditor.Seqence
                 pm.AddItem(copy, false, CopyTrack);
             else
                 pm.AddDisabledItem(copy, false);
-            if(clipboardTrack!=null)
+            if (clipboardTrack != null)
             {
                 pm.AddItem(paste, false, PasteTrack);
             }
@@ -323,7 +356,7 @@ namespace UnityEditor.Seqence
                 int idx = str.LastIndexOf('.');
                 str = str.Substring(idx + 1);
                 var ct = EditorGUIUtility.TrTextContent("Add " + str);
-                MarkAction action = new MarkAction() { type = mark, posX = e.mousePosition.x };
+                MarkAction action = new MarkAction() {type = mark, posX = e.mousePosition.x};
                 if (!locked) pm.AddItem(ct, false, AddMark, action);
             }
             pm.ShowAsContext();
@@ -332,7 +365,7 @@ namespace UnityEditor.Seqence
 
         private void SelectTrack(object arg)
         {
-            bool sele = (bool)arg;
+            bool sele = (bool) arg;
             this.@select = sele;
             OnSelect();
             SeqenceWindow.inst.tree?.SetSelect(this);
@@ -393,7 +426,7 @@ namespace UnityEditor.Seqence
             }
             clipboardTrack = null;
         }
-        
+
 
         public void YOffset(float y)
         {
@@ -485,16 +518,16 @@ namespace UnityEditor.Seqence
             OnGUIContent();
         }
 
-        
+
         public void UnSelectAll(object arg)
         {
-            bool selet = (bool)arg;
+            bool selet = (bool) arg;
             SeqenceWindow.inst.tree?.ResetSelect(selet);
         }
 
         private void AddMark(object m)
         {
-            MarkAction t = (MarkAction)m;
+            MarkAction t = (MarkAction) m;
             float time = SeqenceWindow.inst.PiexlToTime(t.posX);
             EditorFactory.MakeMarker(t.type, time, track);
             SeqenceWindow.inst.timeline.RecalcuteDuration();
@@ -503,17 +536,17 @@ namespace UnityEditor.Seqence
 
         private void AddClip(object mpos)
         {
-            Vector2 v2 = (Vector2)mpos;
+            Vector2 v2 = (Vector2) mpos;
             float start = SeqenceWindow.inst.PiexlToTime(v2.x);
             OnAddClip(start);
             SeqenceWindow.inst.timeline.RecalcuteDuration();
             SeqenceWindow.inst.Repaint();
         }
-        
+
 
         private void DeleteClip(object mpos)
         {
-            Vector2 pos = (Vector2)mpos;
+            Vector2 pos = (Vector2) mpos;
             float time = SeqenceWindow.inst.PiexlToTime(pos.x);
             bool find = false;
             if (track.clips != null)
@@ -582,8 +615,7 @@ namespace UnityEditor.Seqence
             var tracks = tree.AllSelectTracks();
             if (tracks.Count > 1)
             {
-                foreach (var track in tracks)
-                    track.track.SetFlag(mode, v);
+                foreach (var track in tracks) track.track.SetFlag(mode, v);
             }
             else
                 track.SetFlag(mode, v);
@@ -602,7 +634,7 @@ namespace UnityEditor.Seqence
                 emarks = new EditorMark[len];
                 for (int j = 0; j < len; j++)
                 {
-                    emarks[j] = (EditorMark)TypeUtilities.InitEObject(track.marks[j]);
+                    emarks[j] = (EditorMark) TypeUtilities.InitEObject(track.marks[j]);
                 }
             }
         }
@@ -644,7 +676,7 @@ namespace UnityEditor.Seqence
                 }
             }
         }
-        
+
         protected virtual void OnInspectorClip(IClip clip)
         {
             clip.start = EditorGUILayout.FloatField("start", clip.start);
