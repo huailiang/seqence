@@ -36,7 +36,7 @@ namespace UnityEngine.Seqence
         public override IClip BuildClip(ClipData data)
         {
             var clip = SharedPool<XAnimationClip>.Get();
-            clip.data = data;
+            clip.data = (AnimClipData)data;
             clip.track = this;
             clip.Initial(data, idx);
             if (tmp > 0 && clip.start < tmp)

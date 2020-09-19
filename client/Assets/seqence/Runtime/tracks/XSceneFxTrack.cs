@@ -27,7 +27,7 @@ namespace UnityEngine.Seqence
         public override IClip BuildClip(ClipData data)
         {
             var clip = SharedPool<XSceneFxClip>.Get();
-            clip.data = data;
+            clip.data = (SceneFxClipData)data;
             clip.track = this;
             SceneFxClipData fxdata = (SceneFxClipData)data;
             clip.Load(fxdata.prefab, fxdata.pos, fxdata.rot, fxdata.scale);

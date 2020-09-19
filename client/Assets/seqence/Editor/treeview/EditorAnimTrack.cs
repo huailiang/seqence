@@ -203,7 +203,7 @@ namespace UnityEditor.Seqence
         {
             base.OnInspectorClip(c);
             XAnimationClip xc = c as XAnimationClip;
-            var data = c.data as AnimClipData;
+            var data = c.Data as AnimClipData;
             data.loop = EditorGUILayout.Toggle("loop", data.loop);
             data.trim_start = EditorGUILayout.FloatField("start trim", data.trim_start);
             xc.aclip = (AnimationClip) EditorGUILayout.ObjectField("clip", xc.aclip, typeof(AnimationClip), false);
@@ -211,7 +211,7 @@ namespace UnityEditor.Seqence
 
         public override bool AllowClipDrag(DragMode dm, float delta, IClip c)
         {
-            var d = c.data as AnimClipData;
+            var d = c.Data as AnimClipData;
             if (dm == DragMode.Left)
             {
                 d.trim_start += delta;
@@ -229,7 +229,7 @@ namespace UnityEditor.Seqence
 
         public override ClipMode CalcuteClipMode(IClip c, out float loopLen)
         {
-            var d = c.data as AnimClipData;
+            var d = c.Data as AnimClipData;
             ClipMode mode = ClipMode.None;
             if (d.trim_start > 1e-2) mode |= ClipMode.Left;
             if (d.trim_end < -1e-2)

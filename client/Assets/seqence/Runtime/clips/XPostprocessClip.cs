@@ -7,9 +7,8 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace UnityEngine.Seqence
 {
-    public class XPostprocessClip : XClip<XPostprocessTrack, XPostprocessClip>, ISharedObject<XPostprocessClip>
+    public class XPostprocessClip : XClip<XPostprocessTrack, XPostprocessClip, PostprocessData>, ISharedObject<XPostprocessClip>
     {
-        private PostprocessData Data;
 
         public override string Display
         {
@@ -17,8 +16,7 @@ namespace UnityEngine.Seqence
             {
                 if (data != null)
                 {
-                    Data = data as PostprocessData;
-                    return Data.ToString();
+                    return data.ToString();
                 }
                 return "post process";
             }
@@ -30,11 +28,6 @@ namespace UnityEngine.Seqence
             base.OnDestroy();
         }
 
-        protected override void OnEnter()
-        {
-            base.OnEnter();
-            Data = data as PostprocessData;
-        }
 
 #if UNITY_EDITOR
 
@@ -42,17 +35,16 @@ namespace UnityEngine.Seqence
 
         public void OnInspector()
         {
-            Data = data as PostprocessData;
             EditorGUI.BeginChangeCheck();
-            if (Data != null)
+            if (data != null)
             {
-                Data.mode = (PostEnum) EditorGUILayout.EnumPopup("Effect", Data.mode);
+                data.mode = (PostEnum) EditorGUILayout.EnumPopup("Effect", data.mode);
             }
             if (EditorGUI.EndChangeCheck())
             {
-                if (Data.mode > 0) CreateInstance(Data.mode);
+                if (data.mode > 0) CreateInstance(data.mode);
             }
-            switch (Data.mode)
+            switch (data.mode)
             {
                 case PostEnum.Bloom:
                     InspectorBloom();

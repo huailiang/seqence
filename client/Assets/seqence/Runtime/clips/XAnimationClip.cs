@@ -4,7 +4,7 @@ using UnityEngine.Seqence.Data;
 
 namespace UnityEngine.Seqence
 {
-    public class XAnimationClip : XClip<XAnimationTrack, XAnimationClip>, ISharedObject<XAnimationClip>
+    public class XAnimationClip : XClip<XAnimationTrack, XAnimationClip, AnimClipData>, ISharedObject<XAnimationClip>
     {
         public AnimationClipPlayable playable;
         public AnimationClip aclip;
@@ -36,11 +36,11 @@ namespace UnityEngine.Seqence
         {
             if (playable.IsValid())
             {
-                float offset = anData.trim_start;
+                float offset = data.trim_start;
                 tick = tick + offset;
                 if (tick >= aclip.length)
                 {
-                    if (!anData.loop)
+                    if (!data.loop)
                         tick = aclip.length - 0.01f;
                     else
                     {
@@ -65,11 +65,9 @@ namespace UnityEngine.Seqence
                     track.mixPlayable.SetInputCount(0);
                 }
             }
-            AnimClipData anData = data as AnimClipData;
-            XResources.DestroySharedAsset(anData.anim);
+            XResources.DestroySharedAsset(data.anim);
             SharedPool<XAnimationClip>.Return(this);
             base.OnDestroy();
         }
-
     }
 }

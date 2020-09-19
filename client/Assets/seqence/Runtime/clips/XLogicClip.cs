@@ -2,22 +2,18 @@ using UnityEngine.Seqence.Data;
 
 namespace UnityEngine.Seqence
 {
-    public class XLogicClip : XClip<XLogicTrack, XLogicClip>, ISharedObject<XLogicClip>
+    public class XLogicClip : XClip<XLogicTrack, XLogicClip, LogicClipData>, ISharedObject<XLogicClip>
     {
         private GameObject bindObj;
-
-        private LogicClipData Data;
-
 
         public override string Display
         {
             get
             {
-                LogicClipData dta = data as LogicClipData;
                 string d = "打击点 ";
-                if (dta.logicType?.Length > 0)
+                if (data.logicType?.Length > 0)
                 {
-                    foreach (var it in dta.logicType)
+                    foreach (var it in data.logicType)
                     {
                         d += it + ",";
                     }
@@ -35,11 +31,10 @@ namespace UnityEngine.Seqence
         {
             base.OnEnter();
             var bindTrack = track.root as XBindTrack;
-            Data = data as LogicClipData;
-            if (Data.showShape && bindTrack?.bindObj)
+            if (data.showShape && bindTrack?.bindObj)
             {
                 bindObj = bindTrack.bindObj;
-                if (Data.showShape)
+                if (data.showShape)
                 {
                     DrawAttackArea();
                 }
@@ -49,7 +44,7 @@ namespace UnityEngine.Seqence
         protected override void OnExit()
         {
             base.OnExit();
-            if (Data.showShape)
+            if (data.showShape)
             {
                 track?.Clean();
             }
@@ -64,18 +59,17 @@ namespace UnityEngine.Seqence
 
         private void DrawAttackArea()
         {
-            var dta = Data;
-            if (dta.attackShape == AttackShape.Rect)
+            if (data.attackShape == AttackShape.Rect)
             {
-                DrawRect(dta.attackArg, dta.attackArg2);
+                DrawRect(data.attackArg, data.attackArg2);
             }
-            else if (dta.attackShape == AttackShape.Ring)
+            else if (data.attackShape == AttackShape.Ring)
             {
-                DrawRing(dta.attackArg);
+                DrawRing(data.attackArg);
             }
-            else if (dta.attackShape == AttackShape.Sector)
+            else if (data.attackShape == AttackShape.Sector)
             {
-                DrawSector(dta.attackArg, dta.attackArg2);
+                DrawSector(data.attackArg, data.attackArg2);
             }
         }
 

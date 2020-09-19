@@ -41,7 +41,7 @@ namespace UnityEngine.Seqence
         public override IClip BuildClip(ClipData data)
         {
             var clip = SharedPool<XBoneFxClip>.Get();
-            clip.data = data;
+            clip.data = (BoneFxClipData)data;
             clip.track = this;
             return clip;
         }

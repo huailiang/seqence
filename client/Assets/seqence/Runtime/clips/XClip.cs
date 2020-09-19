@@ -8,7 +8,7 @@ namespace UnityEngine.Seqence
 
         float duration { get; set; }
 
-        ClipData data { get; set; }
+        ClipData Data { get; }
 
         float end { get; }
 
@@ -21,8 +21,7 @@ namespace UnityEngine.Seqence
         void OnBind();
     }
 
-    public class XClip<T, C> : XSeqenceObject, IClip where T : XTrack
-        where C : XClip<T, C>
+    public class XClip<T, C, D> : XSeqenceObject, IClip where T : XTrack where C : XClip<T, C, D> where D : ClipData
     {
         private bool enterd = false;
 
@@ -35,8 +34,12 @@ namespace UnityEngine.Seqence
 
         public T track { get; set; }
 
-        public ClipData data { get; set; }
-
+        public D data { get; set; }
+        
+        public ClipData Data
+        {
+            get { return (ClipData) data; }
+        }
 
         public float duration
         {
@@ -70,7 +73,7 @@ namespace UnityEngine.Seqence
             }
             if (tick >= 0 && time < end)
             {
-                if (!enterd) OnEnter();// editor mode can jump when drag time area
+                if (!enterd) OnEnter(); // editor mode can jump when drag time area
                 OnUpdate(tick, mix);
                 rst = true;
             }
@@ -108,7 +111,7 @@ namespace UnityEngine.Seqence
         }
 
 
-        public static implicit operator bool(XClip<T,C> clip)
+        public static implicit operator bool(XClip<T, C, D> clip)
         {
             return clip != null;
         }

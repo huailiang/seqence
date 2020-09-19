@@ -26,7 +26,7 @@ namespace UnityEngine.Seqence
         public override IClip BuildClip(ClipData data)
         {
             var clip = SharedPool<XPostprocessClip>.Get();
-            clip.data = data;
+            clip.data = (PostprocessData)data;
             clip.track = this;
             return clip;
         }

@@ -24,7 +24,7 @@ namespace UnityEngine.Seqence
         public override IClip BuildClip(ClipData data)
         {
             var clip = SharedPool<XLogicClip>.Get();
-            clip.data = data;
+            clip.data = (LogicClipData)data;
             clip.track = this;
             return clip;
         }

@@ -2,7 +2,7 @@
 
 namespace UnityEngine.Seqence
 {
-    public class XSceneFxClip : XClip<XSceneFxTrack,XSceneFxClip>, ISharedObject<XSceneFxClip>
+    public class XSceneFxClip : XClip<XSceneFxTrack,XSceneFxClip,SceneFxClipData>, ISharedObject<XSceneFxClip>
     {
         public GameObject prefabGameObject;
         private string path;

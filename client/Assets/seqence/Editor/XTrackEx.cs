@@ -60,9 +60,9 @@ namespace UnityEditor.Seqence
             {
                 var list = track.clips.ToList();
                 var datas = track.data.clips.ToList();
-                if (datas.Contains(clip.data))
+                if (datas.Contains(clip.Data))
                 {
-                    datas.Remove(clip.data);
+                    datas.Remove(clip.Data);
                     track.data.clips = datas.ToArray();
                 }
                 if (list.Contains(clip))

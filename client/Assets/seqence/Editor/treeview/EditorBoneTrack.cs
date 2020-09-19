@@ -90,7 +90,7 @@ namespace UnityEditor.Seqence
         {
             base.OnInspectorClip(c);
             XBoneFxClip xc = c as XBoneFxClip;
-            var data = c.data as BoneFxClipData;
+            var data = c.Data as BoneFxClipData;
             prefab = EditorGUILayout.ObjectField("prefab", xc.fx, typeof(GameObject), false);
             if (prefab)
             {

@@ -2,7 +2,7 @@
 
 namespace UnityEngine.Seqence
 {
-    public class XBoneFxClip : XClip<XBoneFxTrack, XBoneFxClip>, ISharedObject<XBoneFxClip>
+    public class XBoneFxClip : XClip<XBoneFxTrack, XBoneFxClip,BoneFxClipData>, ISharedObject<XBoneFxClip>
     {
         public GameObject fx;
         private string path;
@@ -100,7 +100,6 @@ namespace UnityEngine.Seqence
             base.OnDestroy();
         }
         
-
     }
 
 }
