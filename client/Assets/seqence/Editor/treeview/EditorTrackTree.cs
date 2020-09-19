@@ -14,7 +14,6 @@ namespace UnityEditor.Seqence
 
         private Vector2 scroll;
         private Rect posRect, viewRect, winRect;
-        private EditorTrack recordTrack;
 
         public float TracksBtmY
         {
@@ -33,7 +32,6 @@ namespace UnityEditor.Seqence
         {
             hierachy?.Clear();
             track_idx = 0;
-            recordTrack = null;
             hierachy = null;
         }
 
@@ -147,7 +145,7 @@ namespace UnityEditor.Seqence
             List<EditorTrack> list = new List<EditorTrack>();
             for (int i = 0; i < hierachy.Count; i++)
             {
-                if (hierachy[i].track.parent == track)
+                if (hierachy[i].track.parent.Equals(track))
                 {
                     list.Add(hierachy[i]);
                 }
@@ -228,11 +226,9 @@ namespace UnityEditor.Seqence
         public void ResetSelect(object arg)
         {
             bool select = (bool) arg;
-            if (hierachy != null)
-                foreach (var iTrack in hierachy)
-                {
-                    iTrack.@select = select;
-                }
+            var d = new EventSelectData();
+            d.@select = select;
+            EventMgr.Send(d);
             SeqenceWindow.inst.Repaint();
         }
 
@@ -240,13 +236,7 @@ namespace UnityEditor.Seqence
         {
             if (hierachy != null)
             {
-                foreach (var it in hierachy)
-                {
-                    if (it.@select)
-                    {
-                        return true;
-                    }
-                }
+                return hierachy.Any(x => x.@select);
             }
             return false;
         }
@@ -293,35 +283,15 @@ namespace UnityEditor.Seqence
             }
         }
 
-        public void SetRecordTrack(EditorTrack tck)
-        {
-            if (recordTrack)
-            {
-                recordTrack.track.SetFlag(TrackMode.Record, false);
-            }
-            recordTrack = tck;
-        }
-
         public void SetSelect(EditorTrack track)
         {
-            if (hierachy != null)
-            {
-                foreach (var it in hierachy)
-                {
-                    bool s = it.Equals(track);
-                    it.trackF = s;
-                }
-            }
+            hierachy?.ForEach(x => x.trackF = x.Equals(track));
         }
-
 
         public void SetSkillhost(EditorAnimTrack track)
         {
             var timeline = SeqenceWindow.inst.timeline;
-            foreach (var it in hierachy)
-            {
-                it.isSkillHost = it == track;
-            }
+            hierachy.ForEach(x => x.isSkillHost = x == track);
             int idx = Array.IndexOf(timeline.trackTrees, track);
             if (idx > 0)
             {
@@ -329,8 +299,7 @@ namespace UnityEditor.Seqence
                 timeline.SkillHostTrack = track.track;
             }
         }
-
-
+        
         private void BuildSkillHost()
         {
             var timeline = SeqenceWindow.inst.timeline;
@@ -338,10 +307,7 @@ namespace UnityEditor.Seqence
             if (idx > 0 && idx < timeline.trackTrees.Length)
             {
                 var track = timeline.trackTrees[idx];
-                foreach (var it in hierachy)
-                {
-                    it.isSkillHost = it == track;
-                }
+                hierachy.ForEach(x => x.isSkillHost = x == track);
             }
         }
     }

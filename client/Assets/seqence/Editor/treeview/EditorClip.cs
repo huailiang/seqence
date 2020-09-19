@@ -58,7 +58,6 @@ namespace UnityEditor.Seqence
                 EditorGUI.DrawOutline(rect, 1, Color.gray);
             }
             
-
             Rect left = rect;
             left.x = rect.x - Mathf.Min(10, rect.width / 4);
             left.x = Mathf.Max(left.x, timeRect.x);
@@ -102,8 +101,7 @@ namespace UnityEditor.Seqence
                 GUI.Label(tmp, GUIContent.none, SeqenceStyle.displayBackground);
             }
         }
-
-
+        
         private void ProcessEvent(Rect left, Rect right)
         {
             Vector2 p = e.mousePosition;

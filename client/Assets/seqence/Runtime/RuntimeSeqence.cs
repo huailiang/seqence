@@ -19,7 +19,6 @@
             play = true;
         }
 
-
         public void Update()
         {
             if (play)
@@ -27,7 +26,6 @@
                 seqence?.Update();
             }
         }
-
 
         private void OnDestroy()
         {

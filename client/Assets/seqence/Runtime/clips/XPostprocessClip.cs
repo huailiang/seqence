@@ -8,7 +8,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace UnityEngine.Seqence
 {
-    public class XPostprocessClip : XClip<XPostprocessTrack, XPostprocessClip, PostprocessData>, 
+    public class XPostprocessClip : XClip<XPostprocessTrack, XPostprocessClip, PostprocessData>,
         ISharedObject<XPostprocessClip>
     {
         public override string Display

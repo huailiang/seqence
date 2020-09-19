@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace UnityEditor.Seqence
+﻿namespace UnityEditor.Seqence
 {
     public enum EventT
     {
@@ -28,5 +26,7 @@ namespace UnityEditor.Seqence
         {
             get { return EventT.Select; }
         }
+
+        public bool select;
     }
 }

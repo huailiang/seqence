@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Seqence;
-using UnityEngine.Seqence.Data;
 
 namespace UnityEditor.Seqence
 {
@@ -126,7 +125,7 @@ namespace UnityEditor.Seqence
 
         private Dictionary<EventT, Action<EventData>> dic = new Dictionary<EventT, Action<EventData>>();
 
-        public virtual void Regist(EventT t, Action<EventData> d)
+        protected virtual void Regist(EventT t, Action<EventData> d)
         {
             dic.Add(t, d);
         }
@@ -157,6 +156,13 @@ namespace UnityEditor.Seqence
                 copy = EditorGUIUtility.TrTextContent("Copy Track\t #c");
                 paste = EditorGUIUtility.TrTextContent("Paste Track\t #p");
             }
+            Regist(EventT.Select, OnSelect);
+        }
+
+        private void OnSelect(EventData data)
+        {
+            EventSelectData d = data as EventSelectData;
+            @select = d.@select;
         }
 
         public void OnGUI(Vector2 scroll)
@@ -260,10 +266,7 @@ namespace UnityEditor.Seqence
             {
                 foreach (var c in eClips)
                 {
-                    if (c.rect.Contains(e.mousePosition))
-                    {
-                        return true;
-                    }
+                    if (c.rect.Contains(e.mousePosition)) return true;
                 }
             }
             return false;
@@ -384,7 +387,6 @@ namespace UnityEditor.Seqence
             bool match = false;
             if (clipboardTrack.parent != null)
             {
-                // type match
                 if (clipboardTrack.parent.AssetType == track.AssetType)
                 {
                     copyed.parent = track;
@@ -411,10 +413,7 @@ namespace UnityEditor.Seqence
                     var t = track.childs.Last();
                     if (clipboardTrack.parent != null)
                     {
-                        if (track.childs.Length >= 2)
-                            t = track.childs[track.childs.Length - 2];
-                        else
-                            t = track;
+                        t = track.childs.Length >= 2 ? track.childs[track.childs.Length - 2] : track;
                     }
                     idx = tree.IndexOfTrack(t) + 1;
                 }
@@ -533,7 +532,6 @@ namespace UnityEditor.Seqence
             SeqenceWindow.inst.timeline.RecalcuteDuration();
         }
 
-
         private void AddClip(object mpos)
         {
             Vector2 v2 = (Vector2) mpos;
@@ -542,7 +540,6 @@ namespace UnityEditor.Seqence
             SeqenceWindow.inst.timeline.RecalcuteDuration();
             SeqenceWindow.inst.Repaint();
         }
-
 
         private void DeleteClip(object mpos)
         {
@@ -577,10 +574,7 @@ namespace UnityEditor.Seqence
             {
                 if (EditorUtility.DisplayDialog("tip", "The selected track would be deleted!", "ok", "cancel"))
                 {
-                    foreach (var track in tracks)
-                    {
-                        DeleteTrack(track);
-                    }
+                    tracks.ForEach(DeleteTrack);
                 }
             }
             else if (track.hasChilds)
@@ -589,10 +583,7 @@ namespace UnityEditor.Seqence
                     "cancel"))
                 {
                     var childs = tree.GetAllChilds(track);
-                    foreach (var child in childs)
-                    {
-                        DeleteTrack(child);
-                    }
+                    childs.ForEach(DeleteTrack);
                     DeleteTrack(this);
                 }
             }
@@ -614,9 +605,7 @@ namespace UnityEditor.Seqence
             var tree = SeqenceWindow.inst.tree;
             var tracks = tree.AllSelectTracks();
             if (tracks.Count > 1)
-            {
-                foreach (var track in tracks) track.track.SetFlag(mode, v);
-            }
+                tracks.ForEach(x => x.track.SetFlag(mode, v));
             else
                 track.SetFlag(mode, v);
             SeqenceWindow.inst.Repaint();

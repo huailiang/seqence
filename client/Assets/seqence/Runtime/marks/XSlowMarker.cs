@@ -14,8 +14,7 @@ namespace UnityEngine.Seqence
             get { return _data.slowRate; }
             set { _data.slowRate = value; }
         }
-
-
+        
         protected override void OnPostBuild()
         {
             base.OnPostBuild();

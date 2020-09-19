@@ -25,8 +25,7 @@ namespace UnityEngine.Seqence
                 return d;
             }
         }
-
-
+        
         protected override void OnEnter()
         {
             base.OnEnter();
@@ -56,7 +55,6 @@ namespace UnityEngine.Seqence
             base.OnDestroy();
         }
         
-
         private void DrawAttackArea()
         {
             if (data.attackShape == AttackShape.Rect)

@@ -69,8 +69,7 @@ namespace UnityEditor.Seqence
                 }
             }
         }
-
-
+        
         private void AddClip(Object obj, float t)
         {
             BoneFxClipData data = new BoneFxClipData();

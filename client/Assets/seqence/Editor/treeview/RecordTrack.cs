@@ -5,10 +5,10 @@ namespace UnityEditor.Seqence
 {
     public abstract class RecordTrack : EditorTrack
     {
-        protected static GUIContent s_RecordOn;
-        protected static GUIContent s_RecordOff;
-        protected static GUIContent s_KeyOn;
-        protected static GUIContent s_KeyOff;
+        protected readonly static GUIContent s_RecordOn = new GUIContent(SeqenceStyle.autoKey.active.background);
+        protected readonly static GUIContent s_RecordOff = new GUIContent(SeqenceStyle.autoKey.normal.background);
+        protected readonly static GUIContent s_KeyOn = new GUIContent(SeqenceStyle.keyframe.active.background);
+        protected readonly static GUIContent s_KeyOff = new GUIContent(SeqenceStyle.keyframe.normal.background);
         private static AnimationClip animationClip = new AnimationClip();
 
         protected bool recoding
@@ -25,29 +25,8 @@ namespace UnityEditor.Seqence
             Regist(EventT.Record, OnTrackRecd);
         }
 
-        protected void InitStyle()
-        {
-            if (s_RecordOn == null)
-            {
-                s_RecordOn = new GUIContent(SeqenceStyle.autoKey.active.background);
-            }
-            if (s_RecordOff == null)
-            {
-                s_RecordOff = new GUIContent(SeqenceStyle.autoKey.normal.background);
-            }
-            if (s_KeyOn == null)
-            {
-                s_KeyOn = new GUIContent(SeqenceStyle.keyframe.active.background);
-            }
-            if (s_KeyOff == null)
-            {
-                s_KeyOff = new GUIContent(SeqenceStyle.keyframe.normal.background);
-            }
-        }
-
         protected override void OnGUIHeader()
         {
-            InitStyle();
             var content = recoding ? s_RecordOn : s_RecordOff;
             if (recoding)
             {

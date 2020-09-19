@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Seqence;
 using UnityEngine.Seqence.Data;
 

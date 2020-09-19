@@ -18,7 +18,6 @@ namespace UnityEditor.Seqence
             GUILayout.EndVertical();
         }
 
-
         void AddButtonGUI()
         {
             if (EditorGUILayout.DropdownButton(SeqenceStyle.addContent, FocusType.Passive, "Dropdown"))

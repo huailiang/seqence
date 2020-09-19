@@ -53,8 +53,7 @@ namespace UnityEditor.Seqence
                 }
             }
         }
-
-
+        
         private void AddClip(Object obj, float t)
         {
             SceneFxClipData data = new SceneFxClipData();

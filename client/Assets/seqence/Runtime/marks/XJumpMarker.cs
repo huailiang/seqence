@@ -20,8 +20,7 @@ namespace UnityEngine.Seqence
             base.OnPostBuild();
             _data = (JumpMarkData)Data;
         }
-
-
+        
         public override void OnTriger()
         {
             base.OnTriger();
