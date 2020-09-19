@@ -104,7 +104,6 @@ namespace UnityEditor.Seqence
                 EditorGUILayout.HelpBox("no parent bind", MessageType.Warning);
             if (Data?.time != null)
             {
-                if (go) EditorGUILayout.LabelField("target: " + go.name);
                 for (int i = 0; i < Data.time.Length; i++)
                 {
                     GUILayout.BeginHorizontal();
@@ -130,8 +129,6 @@ namespace UnityEditor.Seqence
                 EditorGUILayout.HelpBox("not config time frame", MessageType.Warning);
             }
         }
-
-        private GameObject go;
 
         protected override void KeyFrame(Vector2 pos)
         {

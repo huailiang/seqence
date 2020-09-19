@@ -72,7 +72,9 @@ namespace UnityEditor.Seqence
                         int idx = str.LastIndexOf('.');
                         if (idx >= 0)
                         {
-                            str = "Add " + str.Substring(idx + 1);
+                            int st = idx + 1;
+                            if (str[idx + 1] == 'X') st++;
+                            str = "Add " + str.Substring(st);
                         }
                         pm.AddItem(EditorGUIUtility.TrTextContent(str), false, OnAddTrackItem, types[i]);
                     }

@@ -81,6 +81,7 @@ namespace UnityEditor.Seqence
                 string str = mark.ToString();
                 int idx = str.LastIndexOf('.');
                 str = str.Substring(idx + 1);
+                if (str[0] == 'X') str = str.Substring(1);
                 var ct = EditorGUIUtility.TrTextContent("Add " + str);
                 gm.AddItem(ct, false, AddRectMark, new MarkAction(mark, e.mousePosition.x));
             }

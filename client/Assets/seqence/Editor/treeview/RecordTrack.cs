@@ -3,7 +3,6 @@ using UnityEngine.Seqence;
 
 namespace UnityEditor.Seqence
 {
-
     public abstract class RecordTrack : EditorTrack
     {
         protected static GUIContent s_RecordOn;
@@ -82,6 +81,7 @@ namespace UnityEditor.Seqence
         protected override void OnInspectorTrack()
         {
             EditorGUILayout.LabelField("recoding: " + recoding);
+            if (target) EditorGUILayout.LabelField("target: " + target.name);
         }
 
         protected virtual void ProcessTansfEvent()
@@ -109,7 +109,6 @@ namespace UnityEditor.Seqence
 
         protected virtual void DeleteFrame(Vector2 mouse)
         {
-
         }
 
         protected virtual void StartRecd()
@@ -129,7 +128,5 @@ namespace UnityEditor.Seqence
             AnimationMode.EndSampling();
             AnimationMode.StopAnimationMode();
         }
-
     }
-
 }

@@ -8,7 +8,7 @@
 
         public const float playmodeWidth = 80f;
         public const float sliderWidth = 200.0f;
-        public const float rightAreaMargn = 202.0f;
+        public const float rightAreaMargn = 208.0f;
 
         public const float markerRowHeight = 18.0f;
         public const float markerRowYPosition = timeAreaYPosition + timeAreaHeight + rowGap;

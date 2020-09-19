@@ -63,7 +63,7 @@ namespace UnityEditor.Seqence
                 pm.AddDisabledItem(paste, false);
             }
             pm.AddSeparator("");
-            pm.AddItem(EditorGUIUtility.TrTextContent("Add XGroupTrack"), false, OnAddTrackItem, typeof(XGroupTrack));
+            pm.AddItem(EditorGUIUtility.TrTextContent("Add GroupTrack"), false, OnAddTrackItem, typeof(XGroupTrack));
 
             var types = TypeUtilities.AllRootTrackExcMarkers();
             for (int i = 0; i < types.Count; i++)
@@ -72,7 +72,9 @@ namespace UnityEditor.Seqence
                 int idx = str.LastIndexOf('.');
                 if (idx >= 0)
                 {
-                    str = "Add " + str.Substring(idx + 1);
+                    int offset = idx + 1;
+                    if (str[offset] == 'X') offset++;
+                    str = "Add " + str.Substring(offset);
                 }
                 pm.AddItem(EditorGUIUtility.TrTextContent(str), false, OnAddTrackItem, types[i]);
             }
@@ -134,6 +136,5 @@ namespace UnityEditor.Seqence
         {
             GUILayout.Toggle(true, SeqenceStyle.showMarkersOn, GUI.skin.button);
         }
-        
     }
 }
