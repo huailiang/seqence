@@ -140,7 +140,7 @@ namespace UnityEditor.Seqence
 
         public override void OnInit(XSeqenceObject t)
         {
-            @select = false;
+            select = false;
             showChild = true;
             isSkillHost = false;
             addtiveColor = Color.white;
@@ -162,7 +162,7 @@ namespace UnityEditor.Seqence
         private void OnSelect(EventData data)
         {
             EventSelectData d = data as EventSelectData;
-            @select = d.@select;
+            select = d.select;
         }
 
         public void OnGUI(Vector2 scroll)

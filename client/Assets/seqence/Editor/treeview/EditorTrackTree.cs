@@ -249,7 +249,7 @@ namespace UnityEditor.Seqence
                 for (int i = hierachy.Count - 1; i >= 0; i--)
                 {
                     var it = hierachy[i];
-                    if (it.@select) ret.Add(it);
+                    if (it.select) ret.Add(it);
                 }
             }
             return ret;
@@ -260,7 +260,7 @@ namespace UnityEditor.Seqence
             int ix2 = -1;
             for (int i = 0; i < hierachy.Count; i++)
             {
-                if (hierachy[i].@select)
+                if (hierachy[i].select)
                 {
                     ix2 = i;
                     break;
@@ -269,7 +269,7 @@ namespace UnityEditor.Seqence
             ResetSelect(false);
             if (ix2 < 0)
             {
-                track.@select = true;
+                track.select = true;
             }
             else
             {
@@ -278,7 +278,7 @@ namespace UnityEditor.Seqence
                 int len = Mathf.Abs(ix1 - ix2) + 1;
                 for (int i = 0; i < len; i++)
                 {
-                    hierachy[min + i].@select = true;
+                    hierachy[min + i].select = true;
                 }
             }
         }

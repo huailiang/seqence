@@ -3,6 +3,7 @@ using UnityEngine.Seqence.Data;
 
 namespace UnityEngine.Seqence
 {
+    [Flags]
     public enum TrackFlag
     {
         SubOnly = 1,
