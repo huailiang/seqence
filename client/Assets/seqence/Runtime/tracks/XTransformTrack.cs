@@ -51,7 +51,7 @@ namespace UnityEngine.Seqence
 
         public bool Sample(float time, out Vector3 pos, out Vector3 rot)
         {
-            if (_data?.time?.Length < 1)
+            if (_data.time == null || _data.time.Length < 1)
             {
                 pos = Vector3.zero;
                 rot = Vector3.zero;

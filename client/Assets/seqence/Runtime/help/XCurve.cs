@@ -2,14 +2,22 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+#if UNITY_EDITOR
+using UnityEditor;
 
+#endif
 namespace UnityEngine.Seqence
 {
     public class CurveBind<T> where T : struct
     {
-        public string key = string.Empty;
+        public string key;
 
         public T v;
+
+        public CurveBind(string key)
+        {
+            this.key = key;
+        }
     }
 
     public struct XFrame<T> where T : struct
@@ -202,14 +210,42 @@ namespace UnityEngine.Seqence
         }
     }
 
-    public abstract class BindAnimation
+    public abstract class CurveBindObject
     {
         protected XAnimation animation = new XAnimation();
 
         public abstract void Evaluate(float t);
+
+        public abstract void Inspector();
+
+        protected static void Draw<T>(CurveBind<T> b) where T : struct
+        {
+#if UNITY_EDITOR
+            if (typeof(T) == typeof(float))
+            {
+                b.v = EditorGUILayout.FloatField(b.key, (dynamic) b.v);
+            }
+            else if (typeof(T) == typeof(Color))
+            {
+                b.v = EditorGUILayout.ColorField(b.key, (dynamic) b.v);
+            }
+            else if (typeof(T) == typeof(Vector2))
+            {
+                b.v = EditorGUILayout.Vector2Field(b.key, (dynamic) b.v);
+            }
+            else if (typeof(T) == typeof(Vector3))
+            {
+                b.v = EditorGUILayout.Vector3Field(b.key, (dynamic) b.v);
+            }
+            else if (typeof(T) == typeof(Vector4))
+            {
+                b.v = EditorGUILayout.Vector4Field(b.key, (dynamic) b.v);
+            }
+#endif
+        }
     }
 
-    public class BindAnimation<T> : BindAnimation where T : struct
+    public class CurveBindObject<T> : CurveBindObject where T : struct
     {
         public List<CurveBind<T>> binds = new List<CurveBind<T>>();
 
@@ -223,6 +259,14 @@ namespace UnityEngine.Seqence
             for (int i = 0; i < binds.Count; i++)
             {
                 animation.Sample(binds[i], t);
+            }
+        }
+
+        public override void Inspector()
+        {
+            for (int i = 0; i < binds.Count; i++)
+            {
+                Draw(binds[i]);
             }
         }
 
@@ -241,12 +285,12 @@ namespace UnityEngine.Seqence
             using (MemoryStream ms = new MemoryStream(Bytes))
             {
                 IFormatter formatter = new BinaryFormatter();
-                binds = (List<CurveBind<T>>)formatter.Deserialize(ms);
+                binds = (List<CurveBind<T>>) formatter.Deserialize(ms);
             }
         }
     }
 
-    public class CurveBindObject<T1, T2> : BindAnimation where T1 : struct where T2 : struct
+    public class CurveBindObject<T1, T2> : CurveBindObject where T1 : struct where T2 : struct
     {
         public List<CurveBind<T1>> bind1 = new List<CurveBind<T1>>();
         public List<CurveBind<T2>> bind2 = new List<CurveBind<T2>>();
@@ -272,9 +316,21 @@ namespace UnityEngine.Seqence
                 animation.Sample(bind2[i], t);
             }
         }
+
+        public override void Inspector()
+        {
+            for (int i = 0; i < bind1.Count; i++)
+            {
+                Draw(bind1[i]);
+            }
+            for (int i = 0; i < bind2.Count; i++)
+            {
+                Draw(bind2[i]);
+            }
+        }
     }
 
-    public class CurveBindObject<T1, T2, T3> : BindAnimation where T1 : struct where T2 : struct where T3 : struct
+    public class CurveBindObject<T1, T2, T3> : CurveBindObject where T1 : struct where T2 : struct where T3 : struct
     {
         private List<CurveBind<T1>> bind1 = new List<CurveBind<T1>>();
         private List<CurveBind<T2>> bind2 = new List<CurveBind<T2>>();
@@ -308,6 +364,22 @@ namespace UnityEngine.Seqence
             for (int i = 0; i < bind3.Count; i++)
             {
                 animation.Sample(bind3[i], t);
+            }
+        }
+
+        public override void Inspector()
+        {
+            for (int i = 0; i < bind1.Count; i++)
+            {
+                Draw(bind1[i]);
+            }
+            for (int i = 0; i < bind2.Count; i++)
+            {
+                Draw(bind2[i]);
+            }
+            for (int i = 0; i < bind3.Count; i++)
+            {
+                Draw(bind3[i]);
             }
         }
     }
