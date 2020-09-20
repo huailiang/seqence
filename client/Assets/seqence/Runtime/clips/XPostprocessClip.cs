@@ -3,7 +3,6 @@
 using System;
 using UnityEditor;
 using UnityEngine.Rendering.PostProcessing;
-
 #endif
 
 namespace UnityEngine.Seqence
@@ -13,14 +12,7 @@ namespace UnityEngine.Seqence
     {
         public override string Display
         {
-            get
-            {
-                if (data != null)
-                {
-                    return data.ToString();
-                }
-                return "post process";
-            }
+            get { return data?.ToString() ?? "post process"; }
         }
 
         public override void OnDestroy()
@@ -29,6 +21,10 @@ namespace UnityEngine.Seqence
             base.OnDestroy();
         }
 
+        public void OnBuild()
+        {
+            CreateInstance(data.mode);
+        }
 
 #if UNITY_EDITOR
 
@@ -72,8 +68,7 @@ namespace UnityEngine.Seqence
         private void InspectorBloom()
         {
             Bloom bloom = setting as Bloom;
-            EditorGUILayout.BeginVertical(EditorStyles.label);
-
+            EditorGUILayout.BeginVertical(EditorStyles.textField);
             bloom.intensity.value = EditorGUILayout.FloatField("intensity", bloom.intensity.value);
             bloom.threshold.value = EditorGUILayout.FloatField("threshold", bloom.threshold.value);
             bloom.softKnee.value = EditorGUILayout.FloatField("softknee", bloom.softKnee.value);
@@ -85,7 +80,7 @@ namespace UnityEngine.Seqence
         private void InspectorVignette()
         {
             Vignette vignette = setting as Vignette;
-            EditorGUILayout.BeginVertical(EditorStyles.label);
+            EditorGUILayout.BeginVertical(EditorStyles.textField);
             vignette.color.value = EditorGUILayout.ColorField("color", vignette.color.value);
             vignette.center.value = EditorGUILayout.Vector2Field("center", vignette.center.value);
             vignette.intensity.value = EditorGUILayout.FloatField("intensity", vignette.intensity.value);

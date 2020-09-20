@@ -136,8 +136,7 @@ namespace UnityEngine.Seqence
                 mixPlayable.SetJobData(mixJob);
             }
         }
-
-
+        
         public override void OnDestroy()
         {
             if (!seqence.IsHostTrack(this))

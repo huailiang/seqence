@@ -27,6 +27,7 @@ namespace UnityEngine.Seqence
         {
             var clip = SharedPool<XPostprocessClip>.Get();
             clip.data = (PostprocessData)data;
+            clip.OnBuild();
             clip.track = this;
             return clip;
         }

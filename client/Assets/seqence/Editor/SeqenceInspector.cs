@@ -30,7 +30,7 @@ namespace UnityEditor.Seqence
                     EditorGUILayout.LabelField(state.Name);
                     EditorGUILayout.LabelField("frame rate:", state.frameRate.ToString());
                     EditorGUILayout.LabelField("play status:", state.playing.ToString());
-                    state.mode = (WrapMode)EditorGUILayout.EnumPopup("wrapmode:", state.mode);
+                    state.mode = (WrapMode) EditorGUILayout.EnumPopup("wrapmode:", state.mode);
                     scroll = EditorGUILayout.BeginVerticalScrollView(scroll);
                     GUIMark();
                     GUITracks();
@@ -63,7 +63,7 @@ namespace UnityEditor.Seqence
             }
             if (emarks != null)
             {
-                using (GUIColorOverride color = new GUIColorOverride(Color.green))
+                using (new GUIColorOverride(Color.green))
                 {
                     markF = EditorGUILayout.Foldout(markF, "marks");
                 }

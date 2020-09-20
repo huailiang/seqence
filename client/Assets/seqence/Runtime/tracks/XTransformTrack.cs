@@ -43,16 +43,15 @@ namespace UnityEngine.Seqence
             return XSeqenceFactory.GetTrack(data, seqence, parent);
         }
 
-
         protected override void OnPostBuild()
         {
             base.OnPostBuild();
-            _data = (TransformTrackData)data;
+            _data = (TransformTrackData) data;
         }
 
         public bool Sample(float time, out Vector3 pos, out Vector3 rot)
         {
-            if (_data?.time == null || _data.time?.Length < 1)
+            if (_data?.time?.Length < 1)
             {
                 pos = Vector3.zero;
                 rot = Vector3.zero;
@@ -68,7 +67,7 @@ namespace UnityEngine.Seqence
             }
             else if (time > _data.time[len - 1])
             {
-                Vector4 v = _data.pos[len-1];
+                Vector4 v = _data.pos[len - 1];
                 pos = v;
                 rot = new Vector3(0, v.w, 0);
                 return true;
@@ -116,10 +115,10 @@ namespace UnityEngine.Seqence
             }
             else
             {
-                _data.time = new[] { t };
+                _data.time = new[] {t};
                 Vector4 p = pos;
                 p.w = rot.y;
-                _data.pos = new[] { p };
+                _data.pos = new[] {p};
             }
         }
 

@@ -57,7 +57,7 @@ namespace UnityEditor.Seqence
                     {
                         r.width = 20;
                         r.y = RenderRect.y + RenderRect.height / 3;
-                        GUIContent gct = Data.@select ? s_KeyOn : s_KeyOff;
+                        GUIContent gct = Data.select ? s_KeyOn : s_KeyOff;
                         GUI.Box(r, gct, SeqenceStyle.keyframe);
                     }
                 }
