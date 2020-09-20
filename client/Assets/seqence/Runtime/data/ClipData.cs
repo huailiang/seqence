@@ -4,14 +4,13 @@ using System.Xml.Serialization;
 
 namespace UnityEngine.Seqence.Data
 {
-
     public enum LogicType
     {
         HP,
         SP,
         BeHit,
         Attack,
-        MAX  //put MAX at last
+        MAX //put MAX at last
     }
 
     public enum AttackShape
@@ -135,7 +134,7 @@ namespace UnityEngine.Seqence.Data
         public override void Read(BinaryReader reader)
         {
             base.Read(reader);
-            attackShape = (AttackShape)reader.ReadInt32();
+            attackShape = (AttackShape) reader.ReadInt32();
             attackArg = reader.ReadSingle();
             attackArg2 = reader.ReadSingle();
             showShape = reader.ReadBoolean();
@@ -144,7 +143,7 @@ namespace UnityEngine.Seqence.Data
             effect = new float[len];
             for (int i = 0; i < len; i++)
             {
-                logicType[i] = (LogicType)reader.ReadInt32();
+                logicType[i] = (LogicType) reader.ReadInt32();
                 effect[i] = reader.ReadSingle();
             }
         }
@@ -153,14 +152,14 @@ namespace UnityEngine.Seqence.Data
         {
             base.Write(writer);
             int len = effect?.Length ?? 0;
-            writer.Write((int)attackShape);
+            writer.Write((int) attackShape);
             writer.Write(attackArg);
             writer.Write(attackArg2);
             writer.Write(showShape);
             writer.Write(len);
             for (int i = 0; i < len; i++)
             {
-                writer.Write((int)logicType[i]);
+                writer.Write((int) logicType[i]);
                 writer.Write(effect[i]);
             }
         }
@@ -205,8 +204,8 @@ namespace UnityEngine.Seqence.Data
     {
         Bloom = 1,
         Vignette = 1 << 1,
-        MotionBlur = 1 << 2,
-        ColorGrading = 1 << 3,
+        ColorGrading = 1 << 2,
+        MotionBlur = 1 << 3,
         DepthOfField = 1 << 4
     }
 

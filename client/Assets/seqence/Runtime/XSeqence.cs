@@ -1,11 +1,14 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Seqence.Data;
 #if UNITY_2019_3_OR_NEWER
 using UnityEngine.Animations;
 #else
 using UnityEngine.Experimental.Animations;
+
 #endif
 
 namespace UnityEngine.Seqence
@@ -19,7 +22,9 @@ namespace UnityEngine.Seqence
 
     public enum PlayMode { Plot, Skill }
 
-    public class XSeqenceObject { }
+    public class XSeqenceObject
+    {
+    }
 
     public class XSeqence
     {
@@ -31,6 +36,7 @@ namespace UnityEngine.Seqence
         private float _time = 0;
         private float _duration = 0;
         public System.Action Finish;
+
 
         private float prev;
         [Range(0, 1)] public float slow = 1;
@@ -45,6 +51,28 @@ namespace UnityEngine.Seqence
         public XTrack SkillHostTrack;
 
         private static uint id = 0;
+
+        private PostProcessProfile _profile;
+
+        public PostProcessProfile postProfile
+        {
+            get
+            {
+                if (_profile == null)
+                {
+                    var cm = Camera.main;
+                    var vol = cm.GetComponent<PostProcessVolume>();
+                    if (vol == null)
+                    {
+                        vol = cm.gameObject.AddComponent<PostProcessVolume>();
+                        var path = "Assets/test/graph_Profiles/Main Camera Profile.asset";
+                        vol.profile = AssetDatabase.LoadAssetAtPath<PostProcessProfile>(path);
+                    }
+                    _profile = vol.profile;
+                }
+                return _profile;
+            }
+        }
 
         public static PlayableGraph graph { get; set; }
 
@@ -193,7 +221,7 @@ namespace UnityEngine.Seqence
                 if (clip != null)
                 {
                     var p = clip.playable;
-                    data = (AnimClipData)clip.data;
+                    data = (AnimClipData) clip.data;
                     data.trim_start = tick;
                     data.duration = Mathf.Min(tick + 0.1f, data.duration);
                     data.start = 0.01f;
@@ -231,8 +259,7 @@ namespace UnityEngine.Seqence
             {
                 int idx = config.skillHostTrack;
                 var tracks = config.tracks;
-                return tracks.Length > idx &&
-                    tracks[idx] == track.data;
+                return tracks.Length > idx && tracks[idx] == track.data;
             }
             return false;
         }
@@ -278,7 +305,7 @@ namespace UnityEngine.Seqence
                 }
             }
         }
-        
+
         public void ProcessTo(float time)
         {
             if (trackTrees != null)

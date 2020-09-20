@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -14,9 +15,12 @@ namespace UnityEngine.Seqence
 
         public T v;
 
-        public CurveBind(string key)
+        public Action<T> cb;
+
+        public CurveBind(string key, Action<T> cb = null)
         {
             this.key = key;
+            this.cb = cb;
         }
     }
 
@@ -196,7 +200,11 @@ namespace UnityEngine.Seqence
 
         public void Sample<T>(CurveBind<T> bind, float t) where T : struct
         {
-            if (HasKey(bind.key)) bind.v = Sample<T>(bind.key, t);
+            if (HasKey(bind.key))
+            {
+                bind.v = Sample<T>(bind.key, t);
+                bind.cb(bind.v);
+            }
         }
 
         public bool HasKey(string key)
