@@ -130,32 +130,35 @@ namespace UnityEditor.Seqence
                 pos = EditorGUILayout.Vector3Field("pos", pos);
                 rot = EditorGUILayout.FloatField("rotY", rot);
             }
-            
+
 
             folder = EditorGUILayout.Foldout(folder, "frames");
-            if (Data?.time != null && folder)
+            if (Data?.time != null)
             {
-                EditorGUILayout.Space();
-                for (int i = 0; i < Data.time.Length; i++)
+                if (folder)
                 {
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Space(16);
-                    GUILayout.Label((i + 1) + ". time: " + Data.time[i].ToString("f2"), SeqenceStyle.titleStyle);
-                    GUILayout.FlexibleSpace();
-                    if (GUILayout.Button("x", GUI.skin.label, GUILayout.MaxWidth(20)))
-                    {
-                        (track as XTransformTrack).RmItemAt(i);
-                        SeqenceWindow.inst.Repaint();
-                        GUIUtility.ExitGUI();
-                    }
-                    GUILayout.EndHorizontal();
-
-                    pos = Data.pos[i];
-                    pos = EditorGUILayout.Vector3Field("pos", pos);
-                    rot = Data.pos[i].w;
-                    rot = EditorGUILayout.FloatField("rotY", rot);
-                    Data.pos[i] = new Vector4(pos.x, pos.y, pos.z, rot);
                     EditorGUILayout.Space();
+                    for (int i = 0; i < Data.time.Length; i++)
+                    {
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Space(16);
+                        GUILayout.Label((i + 1) + ". time: " + Data.time[i].ToString("f2"), SeqenceStyle.titleStyle);
+                        GUILayout.FlexibleSpace();
+                        if (GUILayout.Button("x", GUI.skin.label, GUILayout.MaxWidth(20)))
+                        {
+                            (track as XTransformTrack).RmItemAt(i);
+                            SeqenceWindow.inst.Repaint();
+                            GUIUtility.ExitGUI();
+                        }
+                        GUILayout.EndHorizontal();
+
+                        pos = Data.pos[i];
+                        pos = EditorGUILayout.Vector3Field("pos", pos);
+                        rot = Data.pos[i].w;
+                        rot = EditorGUILayout.FloatField("rotY", rot);
+                        Data.pos[i] = new Vector4(pos.x, pos.y, pos.z, rot);
+                        EditorGUILayout.Space();
+                    }
                 }
             }
             else
