@@ -104,10 +104,12 @@ namespace UnityEditor.Seqence
                 EditorGUILayout.HelpBox("no parent bind", MessageType.Warning);
             if (Data?.time != null)
             {
+                EditorGUILayout.Space();
                 for (int i = 0; i < Data.time.Length; i++)
                 {
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label("time: " + Data.time[i]);
+                    GUILayout.Space(16);
+                    GUILayout.Label((i + 1) + ". time: " + Data.time[i].ToString("f2"), SeqenceStyle.titleStyle);
                     GUILayout.FlexibleSpace();
                     if (GUILayout.Button("x", GUI.skin.label, GUILayout.MaxWidth(20)))
                     {
@@ -115,7 +117,8 @@ namespace UnityEditor.Seqence
                         SeqenceWindow.inst.Repaint();
                         GUIUtility.ExitGUI();
                     }
-                    EditorGUILayout.EndHorizontal();
+                    GUILayout.EndHorizontal();
+
                     Vector3 pos = Data.pos[i];
                     pos = EditorGUILayout.Vector3Field("pos", pos);
                     float rot = Data.pos[i].w;

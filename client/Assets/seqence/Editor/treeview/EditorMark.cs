@@ -26,14 +26,15 @@ namespace UnityEditor.Seqence
         {
             GUILayout.BeginHorizontal();
             GUIContent cont = SeqenceWindow.inst.state.config.GetIcon(baseMarker.type);
-            EditorGUILayout.LabelField(baseMarker.type.ToString(), SeqenceStyle.titleStyle);
+            EditorGUI.indentLevel++;
+            EditorGUILayout.LabelField("- " + baseMarker.type, SeqenceStyle.titleStyle);
             GUILayout.Space(4);
             GUILayout.Box(cont, GUIStyle.none, GUILayout.MaxWidth(10), GUILayout.MaxHeight(12));
             GUILayout.EndHorizontal();
-
             baseMarker.time = EditorGUILayout.FloatField(" time", baseMarker.time);
             baseMarker.reverse = EditorGUILayout.Toggle(" reverse", baseMarker.reverse);
             OnInspector();
+            EditorGUI.indentLevel--;
         }
 
         protected virtual void OnInspector()

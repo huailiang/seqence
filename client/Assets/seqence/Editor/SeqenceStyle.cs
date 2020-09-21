@@ -168,7 +168,7 @@ namespace UnityEditor.Seqence
         public static readonly GUIContent saveContent = new GUIContent(save_ico, "save.");
         public static readonly GUIContent refreshContent = new GUIContent(refresh_ico, "refresh.");
 
-        private static GUIStyle _titleStyle, _labelStyle;
+        private static GUIStyle _titleStyle, _labelStyle, _boldFoldStyle;
 
         public static GUIStyle titleStyle
         {
@@ -180,6 +180,19 @@ namespace UnityEditor.Seqence
                     _titleStyle.fontStyle = FontStyle.Bold;
                 }
                 return _titleStyle;
+            }
+        }
+
+        public static GUIStyle boldFoldStyle
+        {
+            get
+            {
+                if (_boldFoldStyle == null)
+                {
+                    _boldFoldStyle = new GUIStyle(EditorStyles.foldout);
+                    _boldFoldStyle.fontStyle = FontStyle.Bold;
+                }
+                return _boldFoldStyle;
             }
         }
 

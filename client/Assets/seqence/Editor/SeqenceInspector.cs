@@ -65,7 +65,7 @@ namespace UnityEditor.Seqence
             {
                 using (new GUIColorOverride(Color.green))
                 {
-                    markF = EditorGUILayout.Foldout(markF, "marks");
+                    markF = EditorGUILayout.Foldout(markF, "marks", SeqenceStyle.boldFoldStyle);
                 }
                 if (markF)
                 {

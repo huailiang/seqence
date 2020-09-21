@@ -635,7 +635,7 @@ namespace UnityEditor.Seqence
             GUILayout.BeginHorizontal();
             using (new GUIColorOverride(c))
             {
-                trackF = EditorGUILayout.Foldout(trackF, trackHeader);
+                trackF = EditorGUILayout.Foldout(trackF, trackHeader, SeqenceStyle.boldFoldStyle);
             }
             if (warn)
             {
@@ -645,6 +645,7 @@ namespace UnityEditor.Seqence
             GUILayout.EndHorizontal();
             if (trackF)
             {
+                EditorGUI.indentLevel++;
                 OnInspectorTrack();
                 int i = 0;
                 if (track.clips != null)
@@ -663,6 +664,7 @@ namespace UnityEditor.Seqence
                         mark.Inspector();
                     }
                 }
+                EditorGUI.indentLevel--;
             }
         }
 
