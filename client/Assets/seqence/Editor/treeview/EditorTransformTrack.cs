@@ -9,6 +9,7 @@ namespace UnityEditor.Seqence
     public class EditorTransformTrack : RecordTrack
     {
         private TransformTrackData Data;
+        private bool folder;
 
         protected override Color trackColor
         {
@@ -102,7 +103,37 @@ namespace UnityEditor.Seqence
             base.OnInspectorTrack();
             if (track.parent == null)
                 EditorGUILayout.HelpBox("no parent bind", MessageType.Warning);
-            if (Data?.time != null)
+
+            GUILayout.Label("time: " + SeqenceWindow.inst.timeline.Time);
+            bool recd = track.record;
+            Vector3 pos = target.transform.localPosition;
+            float rot = target.transform.localEulerAngles.y;
+            if (recd)
+            {
+                EditorGUI.BeginChangeCheck();
+                using (new GUIColorOverride(Color.red))
+                {
+                    pos = EditorGUILayout.Vector3Field("pos", pos);
+                    rot = EditorGUILayout.FloatField("rotY", rot);
+                }
+                if (EditorGUI.EndChangeCheck())
+                {
+                    target.transform.localPosition = pos;
+                    var v3 = target.transform.localEulerAngles;
+                    v3.y = rot;
+                    target.transform.localEulerAngles = v3;
+                    // add or update new frame
+                }
+            }
+            else
+            {
+                pos = EditorGUILayout.Vector3Field("pos", pos);
+                rot = EditorGUILayout.FloatField("rotY", rot);
+            }
+            
+
+            folder = EditorGUILayout.Foldout(folder, "frames");
+            if (Data?.time != null && folder)
             {
                 EditorGUILayout.Space();
                 for (int i = 0; i < Data.time.Length; i++)
@@ -119,9 +150,9 @@ namespace UnityEditor.Seqence
                     }
                     GUILayout.EndHorizontal();
 
-                    Vector3 pos = Data.pos[i];
+                    pos = Data.pos[i];
                     pos = EditorGUILayout.Vector3Field("pos", pos);
-                    float rot = Data.pos[i].w;
+                    rot = Data.pos[i].w;
                     rot = EditorGUILayout.FloatField("rotY", rot);
                     Data.pos[i] = new Vector4(pos.x, pos.y, pos.z, rot);
                     EditorGUILayout.Space();

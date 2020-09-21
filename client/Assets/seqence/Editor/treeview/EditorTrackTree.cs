@@ -228,7 +228,7 @@ namespace UnityEditor.Seqence
             bool select = (bool) arg;
             var d = new EventSelectData();
             d.@select = select;
-            EventMgr.Send(d);
+            EventMgr.Emit(d);
             SeqenceWindow.inst.Repaint();
         }
 

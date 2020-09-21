@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using UnityEngine.Seqence;
 
 namespace UnityEditor.Seqence
@@ -10,6 +11,8 @@ namespace UnityEditor.Seqence
         protected readonly static GUIContent s_KeyOn = new GUIContent(SeqenceStyle.keyframe.active.background);
         protected readonly static GUIContent s_KeyOff = new GUIContent(SeqenceStyle.keyframe.normal.background);
         private static AnimationClip animationClip = new AnimationClip();
+
+        public static Action<EditorTrack, bool> OnRecord;
 
         protected bool recoding
         {
@@ -50,13 +53,9 @@ namespace UnityEditor.Seqence
             if (GUILayout.Button(content, SeqenceStyle.autoKey, GUILayout.MaxWidth(16)))
             {
                 if (recoding)
-                {
                     StopRecd();
-                }
                 else
-                {
                     StartRecd();
-                }
             }
 
             if (target && !track.locked)
@@ -102,11 +101,12 @@ namespace UnityEditor.Seqence
         {
             if (target)
             {
-                EventMgr.Send(new EventRecordData());
+                EventMgr.Emit(new EventRecordData());
                 track.SetFlag(TrackMode.Record, true);
                 AnimationMode.StartAnimationMode();
                 AnimationMode.BeginSampling();
                 AnimationMode.SampleAnimationClip(target, animationClip, 0);
+                OnRecord?.Invoke(this, true);
             }
         }
 
@@ -115,6 +115,7 @@ namespace UnityEditor.Seqence
             track.SetFlag(TrackMode.Record, false);
             if (AnimationMode.InAnimationMode())
             {
+                OnRecord?.Invoke(this, false);
                 AnimationMode.EndSampling();
                 AnimationMode.StopAnimationMode();
             }

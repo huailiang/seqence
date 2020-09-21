@@ -330,6 +330,16 @@
       </pos>
       <rotY>120</rotY>
     </TrackData>
+    <TrackData>
+      <clips>
+        <ClipData xsi:type="PostprocessData">
+          <start>2.65857553</start>
+          <duration>8</duration>
+          <mode>Bloom</mode>
+        </ClipData>
+      </clips>
+      <type>PostProcess</type>
+    </TrackData>
   </tracks>
   <skillHostTrack>0</skillHostTrack>
 </TimelineConfig>

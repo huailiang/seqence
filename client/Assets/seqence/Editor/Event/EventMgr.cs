@@ -15,7 +15,7 @@ namespace UnityEditor.Seqence
             get { return tree?.hierachy; }
         }
 
-        public static void Send(EventData d)
+        public static void Emit(EventData d)
         {
             int len = tracks?.Count ?? 0;
             for (int i = 0; i < len; i++)

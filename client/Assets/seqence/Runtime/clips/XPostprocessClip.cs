@@ -3,7 +3,6 @@
 using System;
 using UnityEditor;
 using UnityEngine.Rendering.PostProcessing;
-
 #endif
 
 namespace UnityEngine.Seqence
@@ -51,58 +50,64 @@ namespace UnityEngine.Seqence
                 if (data.mode > 0)
                 {
                     CreateInstance(data.mode);
-                    settings = seqence.postProfile.settings[(int) data.mode];
-                    cb();
+                    int idx = (int)data.mode;
+                    var profile = seqence.postProfile.settings;
+                    if (idx < profile.Count)
+                    {
+                        settings = profile[idx];
+                        cb();
+                    }
                 }
             }
+            bool recdMode = track.record;
             switch (data.mode)
             {
                 case PostEnum.Bloom:
-                    InspectorBloom();
+                    InspectorBloom(recdMode);
                     break;
                 case PostEnum.Vignette:
-                    InspectorVignette();
+                    InspectorVignette(recdMode);
                     break;
                 case PostEnum.MotionBlur:
-                    InspectorMotionBlur();
+                    InspectorMotionBlur(recdMode);
                     break;
                 case PostEnum.DepthOfField:
-                    InspectorDepthField();
+                    InspectorDepthField(recdMode);
                     break;
                 case PostEnum.ColorGrading:
-                    InspectorColorGrad();
+                    InspectorColorGrad(recdMode);
                     break;
             }
         }
 
-        private void InspectorBloom()
+        private void InspectorBloom(bool recdMode)
         {
             CurveBindObject<float, Color> bloomBinding = curveBindObject as CurveBindObject<float, Color>;
-            bloomBinding?.Inspector();
+            bloomBinding?.Inspector(recdMode);
         }
 
-        private void InspectorVignette()
+        private void InspectorVignette(bool recdMode)
         {
             CurveBindObject<float, Vector2, Color> bind = curveBindObject as CurveBindObject<float, Vector2, Color>;
-            bind?.Inspector();
+            bind?.Inspector(recdMode);
         }
 
-        private void InspectorMotionBlur()
+        private void InspectorMotionBlur(bool recdMode)
         {
             CurveBindObject<float> bind = curveBindObject as CurveBindObject<float>;
-            bind?.Inspector();
+            bind?.Inspector(recdMode);
         }
 
-        private void InspectorDepthField()
+        private void InspectorDepthField(bool recdMode)
         {
             CurveBindObject<float> bind = curveBindObject as CurveBindObject<float>;
-            bind?.Inspector();
+            bind?.Inspector(recdMode);
         }
 
-        private void InspectorColorGrad()
+        private void InspectorColorGrad(bool recdMode)
         {
             CurveBindObject<float, Vector4, Color> bind = curveBindObject as CurveBindObject<float, Vector4, Color>;
-            bind?.Inspector();
+            bind?.Inspector(recdMode);
         }
 
         private void CreateInstance(PostEnum? mode)
