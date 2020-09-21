@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace UnityEngine.Seqence
@@ -73,8 +74,8 @@ namespace UnityEngine.Seqence
                     float p = (time - frames[i - 1].t) / (frames[i].t - frames[i - 1].t);
                     T t1 = frames[i - 1].v;
                     T t2 = frames[i].v;
-                    T diff = (dynamic)t2 - t1;
-                    return t1 + (dynamic)diff * p; //lerp
+                    T diff = (dynamic) t2 - t1;
+                    return t1 + (dynamic) diff * p; //lerp
                 }
             }
             return default(T);
@@ -224,40 +225,48 @@ namespace UnityEngine.Seqence
 
         public abstract void Evaluate(float t);
 
-        public abstract void Inspector(bool recdMode);
+        public abstract void Inspector(bool recdMode, float time);
 
         private static Color old;
 
-        protected static void Draw<T>(CurveBind<T> b, bool recdMode) where T : struct
+        protected void Draw<T>(CurveBind<T> b, bool recdMode, float time) where T : struct
         {
 #if UNITY_EDITOR
             if (recdMode)
             {
                 old = GUI.color;
                 GUI.color = Color.red;
+                UnityEditor.EditorGUI.BeginChangeCheck();
             }
-
             if (typeof(T) == typeof(float))
             {
-                b.v = EditorGUILayout.FloatField(b.key, (dynamic)b.v);
+                b.v = EditorGUILayout.FloatField(b.key, (dynamic) b.v);
             }
             else if (typeof(T) == typeof(Color))
             {
-                b.v = EditorGUILayout.ColorField(b.key, (dynamic)b.v);
+                b.v = EditorGUILayout.ColorField(b.key, (dynamic) b.v);
             }
             else if (typeof(T) == typeof(Vector2))
             {
-                b.v = EditorGUILayout.Vector2Field(b.key, (dynamic)b.v);
+                b.v = EditorGUILayout.Vector2Field(b.key, (dynamic) b.v);
             }
             else if (typeof(T) == typeof(Vector3))
             {
-                b.v = EditorGUILayout.Vector3Field(b.key, (dynamic)b.v);
+                b.v = EditorGUILayout.Vector3Field(b.key, (dynamic) b.v);
             }
             else if (typeof(T) == typeof(Vector4))
             {
-                b.v = EditorGUILayout.Vector4Field(b.key, (dynamic)b.v);
+                b.v = EditorGUILayout.Vector4Field(b.key, (dynamic) b.v);
             }
-            if (recdMode) GUI.color = old;
+
+            if (recdMode)
+            {
+                if (UnityEditor.EditorGUI.EndChangeCheck())
+                {
+                    if (time >= 0) this.animation.AddKey(time, b);
+                }
+                GUI.color = old;
+            }
 #endif
         }
     }
@@ -279,11 +288,12 @@ namespace UnityEngine.Seqence
             }
         }
 
-        public override void Inspector(bool recdMode)
+
+        public override void Inspector(bool recdMode, float time)
         {
             for (int i = 0; i < binds.Count; i++)
             {
-                Draw(binds[i], recdMode);
+                Draw(binds[i], recdMode, time);
             }
         }
 
@@ -302,7 +312,7 @@ namespace UnityEngine.Seqence
             using (MemoryStream ms = new MemoryStream(Bytes))
             {
                 IFormatter formatter = new BinaryFormatter();
-                binds = (List<CurveBind<T>>)formatter.Deserialize(ms);
+                binds = (List<CurveBind<T>>) formatter.Deserialize(ms);
             }
         }
     }
@@ -334,15 +344,15 @@ namespace UnityEngine.Seqence
             }
         }
 
-        public override void Inspector(bool recd)
+        public override void Inspector(bool recd, float time)
         {
             for (int i = 0; i < bind1.Count; i++)
             {
-                Draw(bind1[i], recd);
+                Draw(bind1[i], recd, time);
             }
             for (int i = 0; i < bind2.Count; i++)
             {
-                Draw(bind2[i], recd);
+                Draw(bind2[i], recd, time);
             }
         }
     }
@@ -384,19 +394,19 @@ namespace UnityEngine.Seqence
             }
         }
 
-        public override void Inspector(bool recdMode)
+        public override void Inspector(bool recdMode, float time)
         {
             for (int i = 0; i < bind1.Count; i++)
             {
-                Draw(bind1[i], recdMode);
+                Draw(bind1[i], recdMode, time);
             }
             for (int i = 0; i < bind2.Count; i++)
             {
-                Draw(bind2[i], recdMode);
+                Draw(bind2[i], recdMode, time);
             }
             for (int i = 0; i < bind3.Count; i++)
             {
-                Draw(bind3[i], recdMode);
+                Draw(bind3[i], recdMode, time);
             }
         }
     }

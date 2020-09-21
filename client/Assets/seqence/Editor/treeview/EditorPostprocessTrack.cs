@@ -56,16 +56,6 @@ namespace UnityEditor.Seqence
             XPostprocessClip postClip = clip as XPostprocessClip;
             postClip?.OnInspector(SeqenceWindow.inst.Repaint);
         }
-
-        protected override void KeyFrame(Vector2 pos)
-        {
-            float t = SeqenceWindow.inst.PiexlToTime(pos.x);
-            foreach (var clip in track.clips)
-            {
-                if (clip.start < t && t < clip.end)
-                {
-                }
-            }
-        }
+        
     }
 }

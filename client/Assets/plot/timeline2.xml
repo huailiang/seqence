@@ -55,6 +55,31 @@
       <childs>
         <TrackData xsi:type="TransformTrackData">
           <type>Transform</type>
+          <time>
+            <float>4.99021626</float>
+            <float>16.6574821</float>
+            <float>27.2704773</float>
+          </time>
+          <pos>
+            <Vector4>
+              <x>1</x>
+              <y>0</y>
+              <z>0</z>
+              <w>0</w>
+            </Vector4>
+            <Vector4>
+              <x>1</x>
+              <y>1</y>
+              <z>2</z>
+              <w>32</w>
+            </Vector4>
+            <Vector4>
+              <x>2</x>
+              <y>1</y>
+              <z>3</z>
+              <w>32</w>
+            </Vector4>
+          </pos>
           <select>false</select>
         </TrackData>
       </childs>

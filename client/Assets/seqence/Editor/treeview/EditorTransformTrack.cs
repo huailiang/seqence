@@ -83,7 +83,7 @@ namespace UnityEditor.Seqence
                 }
             }
         }
-        
+
 
         protected override void OnSelect()
         {
@@ -101,10 +101,9 @@ namespace UnityEditor.Seqence
         protected override void OnInspectorTrack()
         {
             base.OnInspectorTrack();
-            if (track.parent == null)
-                EditorGUILayout.HelpBox("no parent bind", MessageType.Warning);
+            if (track.parent == null) EditorGUILayout.HelpBox("no parent bind", MessageType.Warning);
 
-            GUILayout.Label("time: " + SeqenceWindow.inst.timeline.Time);
+            GUILayout.Label("time: " + SeqenceWindow.inst.timeline.Time.ToString("f2"));
             bool recd = track.record;
             Vector3 pos = target.transform.localPosition;
             float rot = target.transform.localEulerAngles.y;
@@ -122,7 +121,7 @@ namespace UnityEditor.Seqence
                     var v3 = target.transform.localEulerAngles;
                     v3.y = rot;
                     target.transform.localEulerAngles = v3;
-                    // add or update new frame
+                    AddItem(SeqenceWindow.inst.timeline.Time);
                 }
             }
             else
@@ -130,7 +129,6 @@ namespace UnityEditor.Seqence
                 pos = EditorGUILayout.Vector3Field("pos", pos);
                 rot = EditorGUILayout.FloatField("rotY", rot);
             }
-
 
             folder = EditorGUILayout.Foldout(folder, "frames");
             if (Data?.time != null)
@@ -223,6 +221,5 @@ namespace UnityEditor.Seqence
             var tt = track as XTransformTrack;
             if (tt.RmItemAt(i)) SeqenceWindow.inst.Repaint();
         }
-        
     }
 }
