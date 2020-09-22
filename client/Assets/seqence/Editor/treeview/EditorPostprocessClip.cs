@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine.Seqence;
 
@@ -26,8 +25,7 @@ namespace UnityEditor.Seqence
             {
                 foreach (var key in keys)
                 {
-                    float t = key + c.start;
-                    DrawF(t, rect, false);
+                    DrawF(key, rect, false);
                 }
             }
             base.PostGUI();

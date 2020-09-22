@@ -393,6 +393,7 @@ namespace UnityEngine.Seqence
             marks = null;
             parent = null;
             clips = null;
+            mode = 0;
             if (mixs != null)
             {
                 for (int i = 0; i < mixs.Count; i++)

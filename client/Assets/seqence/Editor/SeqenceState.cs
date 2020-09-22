@@ -75,7 +75,7 @@ namespace UnityEditor.Seqence
 
                 if (!string.IsNullOrEmpty(key))
                 {
-                    var mode = (PlayMode)PlayerPrefs.GetInt(cache_mode);
+                    var mode = (PlayMode) PlayerPrefs.GetInt(cache_mode);
                     Open(key, mode);
                 }
             }
@@ -139,9 +139,9 @@ namespace UnityEditor.Seqence
         private void OnCreated(string path, PlayMode m)
         {
             PlayerPrefs.SetString(cache_key, path);
-            PlayerPrefs.SetInt(cache_mode, (int)m);
+            PlayerPrefs.SetInt(cache_mode, (int) m);
         }
-        
+
         public void Dispose()
         {
             path = string.Empty;

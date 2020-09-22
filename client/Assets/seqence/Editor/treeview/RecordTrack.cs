@@ -12,8 +12,6 @@ namespace UnityEditor.Seqence
         protected readonly static GUIContent s_KeyOff = new GUIContent(SeqenceStyle.keyframe.normal.background);
         private static AnimationClip animationClip = new AnimationClip();
 
-        public static Action<EditorTrack, bool> OnRecord;
-
         protected bool recoding
         {
             get { return track.record; }
@@ -106,7 +104,6 @@ namespace UnityEditor.Seqence
                 AnimationMode.StartAnimationMode();
                 AnimationMode.BeginSampling();
                 AnimationMode.SampleAnimationClip(target, animationClip, 0);
-                OnRecord?.Invoke(this, true);
             }
         }
 
@@ -115,7 +112,6 @@ namespace UnityEditor.Seqence
             track.SetFlag(TrackMode.Record, false);
             if (AnimationMode.InAnimationMode())
             {
-                OnRecord?.Invoke(this, false);
                 AnimationMode.EndSampling();
                 AnimationMode.StopAnimationMode();
             }
