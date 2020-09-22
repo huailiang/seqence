@@ -202,11 +202,11 @@ namespace UnityEngine.Seqence.Data
     [Flags]
     public enum PostEnum
     {
-        Bloom = 1,
-        Vignette = 1 << 1,
-        ColorGrading = 1 << 2,
-        MotionBlur = 1 << 3,
-        DepthOfField = 1 << 4
+        Bloom = 0,
+        Vignette = 1 ,
+        ColorGrading = 1 << 1,
+        MotionBlur = 1 << 2,
+        DepthOfField = 1 << 3
     }
 
 

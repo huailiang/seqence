@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace UnityEngine.Seqence
@@ -26,7 +27,7 @@ namespace UnityEngine.Seqence
 
     public struct XFrame<T> where T : struct
     {
-        public float t;
+        public float t { get; set; }
         public T v;
 
         public XFrame(float time, T value)
@@ -36,11 +37,30 @@ namespace UnityEngine.Seqence
         }
     }
 
-    public class XCurve<T> where T : struct
+    public interface ICurve
+    {
+        HashSet<float> keyTimes { get; }
+    }
+
+    public class XCurve<T> : ICurve where T : struct
     {
         public string bind;
-        public XFrame<T>[] frames;
+        public XFrame<T>[] frames { get; set; }
         public int length;
+
+        public HashSet<float> keyTimes
+        {
+            get
+            {
+                HashSet<float> rt = new HashSet<float>();
+                int len = frames?.Length ?? 0;
+                for (int i = 0; i < len; i++)
+                {
+                    rt.Add(frames[i].t);
+                }
+                return rt;
+            }
+        }
 
         public XCurve(int len, string bind)
         {
@@ -150,7 +170,20 @@ namespace UnityEngine.Seqence
 
     public class XAnimation
     {
-        public Dictionary<string, object> curves = new Dictionary<string, object>();
+        private Dictionary<string, ICurve> curves = new Dictionary<string, ICurve>();
+
+        public HashSet<float> GetAllKeyTimes()
+        {
+            HashSet<float> list = new HashSet<float>();
+            foreach (var curve in curves)
+            {
+                foreach (var t in curve.Value.keyTimes)
+                {
+                    list.Add(t);
+                }
+            }
+            return list;
+        }
 
         public void AddKey<T>(float t, CurveBind<T> bind) where T : struct
         {
@@ -161,6 +194,7 @@ namespace UnityEngine.Seqence
             else
             {
                 XCurve<T> cv = new XCurve<T>(1, bind);
+                cv.bind = bind.key;
                 cv.frames[0] = new XFrame<T>(t, bind.v);
                 curves.Add(bind.key, cv);
             }
@@ -220,15 +254,13 @@ namespace UnityEngine.Seqence
 
     public abstract class CurveBindObject
     {
+        private static Color old;
+
         protected XAnimation animation = new XAnimation();
 
         public abstract void Evaluate(float t);
 
         public abstract void Inspector(bool recdMode, float time);
-
-        public virtual void OnGUI() { }
-        
-        private static Color old;
 
         protected void Draw<T>(CurveBind<T> b, bool recdMode, float time) where T : struct
         {
@@ -270,6 +302,11 @@ namespace UnityEngine.Seqence
             }
 #endif
         }
+
+        public HashSet<float> GetAllKeyTimes()
+        {
+            return animation.GetAllKeyTimes();
+        }
     }
 
     public class CurveBindObject<T> : CurveBindObject where T : struct
@@ -295,15 +332,6 @@ namespace UnityEngine.Seqence
             for (int i = 0; i < binds.Count; i++)
             {
                 Draw(binds[i], recdMode, time);
-            }
-        }
-
-        public override void OnGUI()
-        {
-            base.OnGUI();
-            for (int i = 0; i < binds.Count; i++)
-            {
-
             }
         }
     }
@@ -344,15 +372,6 @@ namespace UnityEngine.Seqence
             for (int i = 0; i < bind2.Count; i++)
             {
                 Draw(bind2[i], recd, time);
-            }
-        }
-
-        public override void OnGUI()
-        {
-            base.OnGUI();
-            for (int i = 0; i < bind1.Count; i++)
-            {
-
             }
         }
     }
@@ -407,15 +426,6 @@ namespace UnityEngine.Seqence
             for (int i = 0; i < bind3.Count; i++)
             {
                 Draw(bind3[i], recdMode, time);
-            }
-        }
-
-        public override void OnGUI()
-        {
-            base.OnGUI();
-            for (int i = 0; i < bind1.Count; i++)
-            {
-
             }
         }
     }

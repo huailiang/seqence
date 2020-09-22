@@ -119,12 +119,33 @@ namespace UnityEditor.Seqence
             return null;
         }
 
-        public static EditorObject InitEObject<T>(T @object) where T : XSeqenceObject
+        public static EditorObject InitEObject<T>(T obj) where T : XSeqenceObject
         {
-            var t = TypeUtilities.GetEditorAsset(@object.GetType());
+            var t = GetEditorAsset(obj.GetType());
             var e_obj = (EditorObject) Activator.CreateInstance(t);
-            if (e_obj) e_obj.OnInit(@object);
+            if (e_obj) e_obj.OnInit(obj);
             return e_obj;
+        }
+
+        private static Type GetClipAsset(Type at)
+        {
+            var a = Assembly.GetExecutingAssembly();
+            var types = a.GetTypes();
+            foreach (var type in types)
+            {
+                var usage = (TimelineClipEditorAttribute) Attribute.GetCustomAttribute(type,
+                    typeof(TimelineClipEditorAttribute));
+                if (usage != null && usage.type == at) return type;
+            }
+            return null;
+        }
+
+        public static EditorClip InitClipObject(EditorTrack tr, IClip c)
+        {
+            var t = GetClipAsset(c.GetType());
+            var c_obj = t != null ? (EditorClip) Activator.CreateInstance(t) : new EditorClip();
+            c_obj?.Init(tr, c);
+            return c_obj;
         }
     }
 }

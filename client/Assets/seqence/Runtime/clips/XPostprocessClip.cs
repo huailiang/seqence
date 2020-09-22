@@ -10,7 +10,7 @@ namespace UnityEngine.Seqence
     public class XPostprocessClip : XClip<XPostprocessTrack, XPostprocessClip, PostprocessData>,
         ISharedObject<XPostprocessClip>
     {
-        private PostProcessEffectSettings settings;
+        public PostProcessEffectSettings settings;
 
         public override string Display
         {
@@ -28,7 +28,7 @@ namespace UnityEngine.Seqence
             CreateInstance(data.mode);
         }
 
-        private CurveBindObject curveBindObject;
+        public CurveBindObject curveBindObject;
 
         protected override void OnUpdate(float tick, bool mix)
         {
@@ -37,14 +37,6 @@ namespace UnityEngine.Seqence
         }
 
 #if UNITY_EDITOR
-
-        public override void EditorOnGUI()
-        {
-            base.EditorOnGUI();
-            curveBindObject?.OnGUI();
-        }
-
-
         public void OnInspector(Action cb)
         {
             EditorGUI.BeginChangeCheck();

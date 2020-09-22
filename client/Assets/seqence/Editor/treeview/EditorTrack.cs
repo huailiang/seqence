@@ -495,7 +495,7 @@ namespace UnityEditor.Seqence
                     eClips = new EditorClip[len];
                     for (int i = 0; i < len; i++)
                     {
-                        eClips[i] = new EditorClip(this, clips[i]);
+                        eClips[i] = TypeUtilities.InitClipObject(this, clips[i]);
                     }
                 }
                 for (int i = 0; i < clips.Length; i++)
@@ -504,7 +504,6 @@ namespace UnityEditor.Seqence
                 }
                 for (int i = 0; i < clips.Length; i++)
                 {
-                    eClips[i].clip.EditorOnGUI();
                     eClips[i].PostGUI();
                 }
             }

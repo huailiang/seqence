@@ -15,17 +15,20 @@ namespace UnityEditor.Seqence
 
     public enum DragMode { None, Drag, Left, Right }
 
-    public struct EditorClip
+    public class EditorClip
     {
-        public EditorTrack track;
-        public IClip clip;
+        protected readonly static GUIContent s_KeyOn = new GUIContent(SeqenceStyle.keyframe.active.background);
+        protected readonly static GUIContent s_KeyOff = new GUIContent(SeqenceStyle.keyframe.normal.background);
+        
+        protected EditorTrack track;
+        protected IClip clip;
         public Rect rect;
         public DragMode dragMode;
         Event e;
 
         private ClipMode clipMode;
-
-        public EditorClip(EditorTrack tr, IClip c)
+        
+        public void Init(EditorTrack tr, IClip c)
         {
             this.track = tr;
             this.clip = c;
@@ -89,7 +92,7 @@ namespace UnityEditor.Seqence
             MixProcessor();
         }
 
-        public void PostGUI()
+        public virtual void PostGUI()
         {
             EditorGUI.LabelField(rect, clip.Display, SeqenceStyle.fontClip);
         }
@@ -266,6 +269,18 @@ namespace UnityEditor.Seqence
             clip.start = Mathf.Max(0, clip.start);
             e.Use();
             SeqenceWindow.inst.timeline.RecalcuteDuration();
+        }
+
+        protected void DrawF(float t, Rect r, bool select =false)
+        {
+            r.x = SeqenceWindow.inst.TimeToPixel(t);
+            if (SeqenceWindow.inst.IsPiexlRange(r.x))
+            {
+                r.width = 20;
+                r.y = r.y + r.height / 3;
+                GUIContent gct = select ? s_KeyOn : s_KeyOff;
+                GUI.Box(r, gct, SeqenceStyle.keyframe);
+            }
         }
     }
 }
