@@ -87,6 +87,10 @@ namespace UnityEditor.Seqence
                 GUI.Label(right, GUIContent.none, SeqenceStyle.clipOut);
             }
             MixProcessor();
+        }
+
+        public void PostGUI()
+        {
             EditorGUI.LabelField(rect, clip.Display, SeqenceStyle.fontClip);
         }
 

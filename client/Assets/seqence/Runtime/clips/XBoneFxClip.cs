@@ -2,13 +2,13 @@
 
 namespace UnityEngine.Seqence
 {
-    public class XBoneFxClip : XClip<XBoneFxTrack, XBoneFxClip,BoneFxClipData>, ISharedObject<XBoneFxClip>
+    public class XBoneFxClip : XClip<XBoneFxTrack, XBoneFxClip, BoneFxClipData>, ISharedObject<XBoneFxClip>
     {
         public GameObject fx;
         private string path;
         ParticleSystem[] ps;
         private bool restart;
-        
+
         public override string Display
         {
             get { return fx ? fx.name : "fx"; }
@@ -99,7 +99,7 @@ namespace UnityEngine.Seqence
             SharedPool<XBoneFxClip>.Return(this);
             base.OnDestroy();
         }
-        
+
     }
 
 }

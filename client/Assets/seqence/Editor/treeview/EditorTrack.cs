@@ -502,6 +502,11 @@ namespace UnityEditor.Seqence
                 {
                     eClips[i].OnGUI();
                 }
+                for (int i = 0; i < clips.Length; i++)
+                {
+                    eClips[i].clip.EditorOnGUI();
+                    eClips[i].PostGUI();
+                }
             }
             if (marks != null)
             {

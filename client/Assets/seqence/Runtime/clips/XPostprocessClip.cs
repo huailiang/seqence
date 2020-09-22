@@ -3,7 +3,6 @@
 using System;
 using UnityEditor;
 using UnityEngine.Rendering.PostProcessing;
-
 #endif
 
 namespace UnityEngine.Seqence
@@ -39,19 +38,26 @@ namespace UnityEngine.Seqence
 
 #if UNITY_EDITOR
 
+        public override void EditorOnGUI()
+        {
+            base.EditorOnGUI();
+            curveBindObject?.OnGUI();
+        }
+
+
         public void OnInspector(Action cb)
         {
             EditorGUI.BeginChangeCheck();
             if (data != null)
             {
-                data.mode = (PostEnum) EditorGUILayout.EnumPopup("Effect", data.mode);
+                data.mode = (PostEnum)EditorGUILayout.EnumPopup("Effect", data.mode);
             }
             if (EditorGUI.EndChangeCheck())
             {
                 if (data.mode > 0)
                 {
                     CreateInstance(data.mode);
-                    int idx = (int) data.mode;
+                    int idx = (int)data.mode;
                     var profile = seqence.postProfile.settings;
                     if (idx < profile.Count)
                     {
@@ -60,7 +66,9 @@ namespace UnityEngine.Seqence
                     }
                 }
             }
-            bool recdMode = track.record;
+
+            float t = seqence.Time;
+            bool recdMode = track.record & t >= start && t <= end;
             switch (data.mode)
             {
                 case PostEnum.Bloom:

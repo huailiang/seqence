@@ -19,6 +19,8 @@ namespace UnityEngine.Seqence
         void OnDestroy();
 
         void OnBind();
+
+        void EditorOnGUI();
     }
 
     public class XClip<T, C, D> : XSeqenceObject, IClip where T : XTrack where C : XClip<T, C, D> where D : ClipData
@@ -109,6 +111,8 @@ namespace UnityEngine.Seqence
             data = null;
             track = null;
         }
+
+        public virtual void EditorOnGUI() { }
         
         public static implicit operator bool(XClip<T, C, D> clip)
         {

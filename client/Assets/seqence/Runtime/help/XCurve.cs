@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace UnityEngine.Seqence
@@ -227,6 +226,8 @@ namespace UnityEngine.Seqence
 
         public abstract void Inspector(bool recdMode, float time);
 
+        public virtual void OnGUI() { }
+        
         private static Color old;
 
         protected void Draw<T>(CurveBind<T> b, bool recdMode, float time) where T : struct
@@ -297,22 +298,12 @@ namespace UnityEngine.Seqence
             }
         }
 
-        public byte[] ToBytes()
+        public override void OnGUI()
         {
-            using (MemoryStream ms = new MemoryStream())
+            base.OnGUI();
+            for (int i = 0; i < binds.Count; i++)
             {
-                IFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(ms, binds);
-                return ms.GetBuffer();
-            }
-        }
 
-        public void ToObject(byte[] Bytes)
-        {
-            using (MemoryStream ms = new MemoryStream(Bytes))
-            {
-                IFormatter formatter = new BinaryFormatter();
-                binds = (List<CurveBind<T>>) formatter.Deserialize(ms);
             }
         }
     }
@@ -353,6 +344,15 @@ namespace UnityEngine.Seqence
             for (int i = 0; i < bind2.Count; i++)
             {
                 Draw(bind2[i], recd, time);
+            }
+        }
+
+        public override void OnGUI()
+        {
+            base.OnGUI();
+            for (int i = 0; i < bind1.Count; i++)
+            {
+
             }
         }
     }
@@ -407,6 +407,15 @@ namespace UnityEngine.Seqence
             for (int i = 0; i < bind3.Count; i++)
             {
                 Draw(bind3[i], recdMode, time);
+            }
+        }
+
+        public override void OnGUI()
+        {
+            base.OnGUI();
+            for (int i = 0; i < bind1.Count; i++)
+            {
+
             }
         }
     }
