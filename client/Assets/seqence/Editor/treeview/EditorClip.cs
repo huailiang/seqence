@@ -17,9 +17,6 @@ namespace UnityEditor.Seqence
 
     public class EditorClip
     {
-        protected readonly static GUIContent s_KeyOn = new GUIContent(SeqenceStyle.keyframe.active.background);
-        protected readonly static GUIContent s_KeyOff = new GUIContent(SeqenceStyle.keyframe.normal.background);
-        
         protected EditorTrack track;
         protected IClip clip;
         public Rect rect;
@@ -27,7 +24,7 @@ namespace UnityEditor.Seqence
         Event e;
 
         private ClipMode clipMode;
-        
+
         public void Init(EditorTrack tr, IClip c)
         {
             this.track = tr;
@@ -60,7 +57,7 @@ namespace UnityEditor.Seqence
                 EditorGUI.DrawRect(rect, Color.white);
                 EditorGUI.DrawOutline(rect, 1, Color.gray);
             }
-            
+
             Rect left = rect;
             left.x = rect.x - Mathf.Min(10, rect.width / 4);
             left.x = Mathf.Max(left.x, timeRect.x);
@@ -96,8 +93,7 @@ namespace UnityEditor.Seqence
         {
             EditorGUI.LabelField(rect, clip.Display, SeqenceStyle.fontClip);
         }
-
-
+        
         private void DrawLoops(float piexlDuration)
         {
             using (new GUIColorOverride(new Color(0, 0, 0, 0.2f)))
@@ -108,7 +104,7 @@ namespace UnityEditor.Seqence
                 GUI.Label(tmp, GUIContent.none, SeqenceStyle.displayBackground);
             }
         }
-        
+
         private void ProcessEvent(Rect left, Rect right)
         {
             Vector2 p = e.mousePosition;
@@ -271,16 +267,9 @@ namespace UnityEditor.Seqence
             SeqenceWindow.inst.timeline.RecalcuteDuration();
         }
 
-        protected void DrawF(float t, Rect r, bool select =false)
+        protected void DrawKey(float t, Rect r, bool select = false)
         {
-            r.x = SeqenceWindow.inst.TimeToPixel(t);
-            if (SeqenceWindow.inst.IsPiexlRange(r.x))
-            {
-                r.width = 20;
-                r.y = r.y + r.height / 3;
-                GUIContent gct = select ? s_KeyOn : s_KeyOff;
-                GUI.Box(r, gct, SeqenceStyle.keyframe);
-            }
+            track?.DrawKey(t, r, select);
         }
     }
 }

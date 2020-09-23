@@ -16,6 +16,9 @@ namespace UnityEditor.Seqence
 
     public class EditorTrack : EditorObject, ITimelineInspector
     {
+        protected readonly static GUIContent s_KeyOn = new GUIContent(SeqenceStyle.keyframe.active.background);
+        protected readonly static GUIContent s_KeyOff = new GUIContent(SeqenceStyle.keyframe.normal.background);
+
         public static XTrack clipboardTrack;
         public static GUIContent _addclip, _unselect, _select;
         public static GUIContent copy, paste, delete;
@@ -688,6 +691,19 @@ namespace UnityEditor.Seqence
         {
             loopLen = 0;
             return ClipMode.None;
+        }
+
+        public void DrawKey(float t, Rect r, bool select = false)
+        {
+            r.x = SeqenceWindow.inst.TimeToPixel(t);
+            if (SeqenceWindow.inst.IsPiexlRange(r.x))
+            {
+                r.width = 8;
+                r.y = r.y + r.height / 3;
+                r.x = r.x - 4;
+                GUIContent gct = select ? s_KeyOn : s_KeyOff;
+                GUI.Box(r, gct, SeqenceStyle.keyframe);
+            }
         }
     }
 }

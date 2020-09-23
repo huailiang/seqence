@@ -52,15 +52,9 @@ namespace UnityEditor.Seqence
             {
                 for (int i = 0; i < Data.time.Length; i++)
                 {
+                    float t = Data.time[i];
                     Rect r = RenderRect;
-                    r.x = SeqenceWindow.inst.TimeToPixel(Data.time[i]);
-                    if (SeqenceWindow.inst.IsPiexlRange(r.x))
-                    {
-                        r.width = 20;
-                        r.y = RenderRect.y + RenderRect.height / 3;
-                        GUIContent gct = Data.select ? s_KeyOn : s_KeyOff;
-                        GUI.Box(r, gct, SeqenceStyle.keyframe);
-                    }
+                    DrawKey(t, r, Data.select);
                 }
             }
         }
@@ -162,23 +156,6 @@ namespace UnityEditor.Seqence
             else
             {
                 EditorGUILayout.HelpBox("not config time frame", MessageType.Warning);
-            }
-        }
-
-        protected override void KeyFrame(Vector2 pos)
-        {
-            float t = SeqenceWindow.inst.PiexlToTime(pos.x);
-            if (ContainsT(t, out var i))
-            {
-                if (EditorUtility.DisplayDialog("tip", "Do you want delete item", "ok", "no"))
-                {
-                    RmItem(i);
-                }
-                GUIUtility.ExitGUI();
-            }
-            else
-            {
-                AddItem(t);
             }
         }
 

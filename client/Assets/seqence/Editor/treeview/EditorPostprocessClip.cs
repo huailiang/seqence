@@ -25,7 +25,7 @@ namespace UnityEditor.Seqence
             {
                 foreach (var key in keys)
                 {
-                    DrawF(key, rect, false);
+                    DrawKey(key, rect, false);
                 }
             }
             base.PostGUI();

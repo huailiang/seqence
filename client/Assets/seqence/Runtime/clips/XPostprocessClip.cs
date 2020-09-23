@@ -116,50 +116,45 @@ namespace UnityEngine.Seqence
             switch (mode)
             {
                 case PostEnum.Bloom:
-                    var bloom = settings as Bloom;
                     var b1 = new CurveBindObject<float, Color>();
-                    b1.Add(new CurveBind<float>("intensity", x => bloom.intensity.value = x));
-                    b1.Add(new CurveBind<float>("threshold", x => bloom.threshold.value = x));
-                    b1.Add(new CurveBind<float>("softknee", x => bloom.softKnee.value = x));
-                    b1.Add(new CurveBind<float>("clamp", x => bloom.clamp.value = x));
-                    b1.Add(new CurveBind<Color>("color", x => bloom.color.value = x));
+                    b1.Add(new CurveBind<float>("intensity", x => (settings as Bloom).intensity.value = x));
+                    b1.Add(new CurveBind<float>("threshold", x => (settings as Bloom).threshold.value = x));
+                    b1.Add(new CurveBind<float>("softknee", x => (settings as Bloom).softKnee.value = x));
+                    b1.Add(new CurveBind<float>("clamp", x => (settings as Bloom).clamp.value = x));
+                    b1.Add(new CurveBind<Color>("color", x => (settings as Bloom).color.value = x));
                     curveBindObject = b1;
                     break;
                 case PostEnum.Vignette:
-                    var vignette = settings as Vignette;
                     var b2 = new CurveBindObject<float, Vector2, Color>();
-                    b2.Add(new CurveBind<Color>("color", x => vignette.color.value = x));
-                    b2.Add(new CurveBind<Vector2>("center", x => vignette.center.value = x));
-                    b2.Add(new CurveBind<float>("intensity", x => vignette.intensity.value = x));
-                    b2.Add(new CurveBind<float>("roundness", x => vignette.rounded.value = x > 0));
+                    b2.Add(new CurveBind<Color>("color", x => (settings as Vignette).color.value = x));
+                    b2.Add(new CurveBind<Vector2>("center", x => (settings as Vignette).center.value = x));
+                    b2.Add(new CurveBind<float>("intensity", x => (settings as Vignette).intensity.value = x));
+                    b2.Add(new CurveBind<float>("roundness", x => (settings as Vignette).rounded.value = x > 0));
                     curveBindObject = b2;
                     break;
                 case PostEnum.ColorGrading:
-                    var grad = settings as ColorGrading;
                     var b3 = new CurveBindObject<float, Vector4, Color>();
-                    b3.Add(new CurveBind<Color>("colorFilter", x => grad.colorFilter.value = x));
-                    b3.Add(new CurveBind<float>("brightness", x => grad.brightness.value = x));
-                    b3.Add(new CurveBind<float>("saturation", x => grad.saturation.value = x));
-                    b3.Add(new CurveBind<float>("hueShift", x => grad.hueShift.value = x));
-                    b3.Add(new CurveBind<float>("tint", x => grad.tint.value = x));
-                    b3.Add(new CurveBind<float>("contrast", x => grad.contrast.value = x));
-                    b3.Add(new CurveBind<float>("temperature", x => grad.temperature.value = x));
-                    b3.Add(new CurveBind<Vector4>("gain", x => grad.gain.value = x));
+                    b3.Add(new CurveBind<Color>("colorFilter", x => (settings as ColorGrading).colorFilter.value = x));
+                    b3.Add(new CurveBind<float>("brightness", x => (settings as ColorGrading).brightness.value = x));
+                    b3.Add(new CurveBind<float>("saturation", x => (settings as ColorGrading).saturation.value = x));
+                    b3.Add(new CurveBind<float>("hueShift", x => (settings as ColorGrading).hueShift.value = x));
+                    b3.Add(new CurveBind<float>("tint", x => (settings as ColorGrading).tint.value = x));
+                    b3.Add(new CurveBind<float>("contrast", x => (settings as ColorGrading).contrast.value = x));
+                    b3.Add(new CurveBind<float>("temperature", x => (settings as ColorGrading).temperature.value = x));
+                    b3.Add(new CurveBind<Vector4>("gain", x => (settings as ColorGrading).gain.value = x));
                     curveBindObject = b3;
                     break;
                 case PostEnum.DepthOfField:
-                    var depth = settings as DepthOfField;
                     var b4 = new CurveBindObject<float>();
-                    b4.Add(new CurveBind<float>("aperture", x => depth.aperture.value = x));
-                    b4.Add(new CurveBind<float>("focalLength", x => depth.focalLength.value = x));
-                    b4.Add(new CurveBind<float>("focusDistance", x => depth.focusDistance.value = x));
+                    b4.Add(new CurveBind<float>("aperture", x => (settings as DepthOfField).aperture.value = x));
+                    b4.Add(new CurveBind<float>("focalLength", x => (settings as DepthOfField).focalLength.value = x));
+                    b4.Add(new CurveBind<float>("focusDistance", x => (settings as DepthOfField).focusDistance.value = x));
                     curveBindObject = b4;
                     break;
                 case PostEnum.MotionBlur:
-                    var blur = settings as MotionBlur;
                     var b5 = new CurveBindObject<float>();
-                    b5.Add(new CurveBind<float>("sampleCount", x => blur.sampleCount.value = (int) x));
-                    b5.Add(new CurveBind<float>("shutterAngle", x => blur.shutterAngle.value = x));
+                    b5.Add(new CurveBind<float>("sampleCount", x => (settings as MotionBlur).sampleCount.value = (int)x));
+                    b5.Add(new CurveBind<float>("shutterAngle", x => (settings as MotionBlur).shutterAngle.value = x));
                     curveBindObject = b5;
                     break;
             }

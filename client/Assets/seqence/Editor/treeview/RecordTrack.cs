@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using UnityEngine.Seqence;
 
 namespace UnityEditor.Seqence
@@ -8,8 +7,6 @@ namespace UnityEditor.Seqence
     {
         protected readonly static GUIContent s_RecordOn = new GUIContent(SeqenceStyle.autoKey.active.background);
         protected readonly static GUIContent s_RecordOff = new GUIContent(SeqenceStyle.autoKey.normal.background);
-        protected readonly static GUIContent s_KeyOn = new GUIContent(SeqenceStyle.keyframe.active.background);
-        protected readonly static GUIContent s_KeyOff = new GUIContent(SeqenceStyle.keyframe.normal.background);
         private static AnimationClip animationClip = new AnimationClip();
 
         protected bool recoding
@@ -75,10 +72,6 @@ namespace UnityEditor.Seqence
             {
                 if (e.type == EventType.KeyDown)
                 {
-                    if (e.keyCode == KeyCode.F)
-                    {
-                        KeyFrame(e.mousePosition);
-                    }
                     if (e.keyCode == KeyCode.D || e.keyCode == KeyCode.Delete)
                     {
                         DeleteFrame(e.mousePosition);
@@ -86,10 +79,7 @@ namespace UnityEditor.Seqence
                 }
             }
         }
-
-        protected virtual void KeyFrame(Vector2 mouse)
-        {
-        }
+        
 
         protected virtual void DeleteFrame(Vector2 mouse)
         {
