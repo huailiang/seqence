@@ -238,29 +238,17 @@ namespace UnityEditor.Seqence
         }
 
 
-        protected virtual void OnSelect()
-        {
-        }
+        protected virtual void OnSelect() { }
 
-        protected virtual void OnGUIHeader()
-        {
-        }
+        protected virtual void OnGUIHeader() { }
 
-        protected virtual void OnGUIContent()
-        {
-        }
+        protected virtual void OnGUIContent() { }
 
-        protected virtual void OnAddClip(float time)
-        {
-        }
+        protected virtual void OnAddClip(float time) { }
 
-        protected virtual void OnInspectorTrack()
-        {
-        }
+        protected virtual void OnInspectorTrack() { }
 
-        protected virtual void OnDragDrop(UnityEngine.Object[] objs)
-        {
-        }
+        protected virtual void OnDragDrop(UnityEngine.Object[] objs) { }
 
 
         private bool HitClip(Event e)
@@ -324,7 +312,7 @@ namespace UnityEditor.Seqence
                 pm.AddItem(EditorGUIUtility.TrTextContent("Lock Track \t #l"), false,
                     () => SetTrackFlag(TrackMode.Lock, true));
             }
-            if (@select)
+            if (select)
             {
                 pm.AddItem(EditorGUIUtility.TrTextContent("UnSelect Track \t #s"), false, SelectTrack, false);
             }
@@ -372,7 +360,7 @@ namespace UnityEditor.Seqence
         private void SelectTrack(object arg)
         {
             bool sele = (bool) arg;
-            this.@select = sele;
+            this.select = sele;
             OnSelect();
             SeqenceWindow.inst.tree?.SetSelect(this);
             SeqenceWindow.inst.Repaint();
@@ -693,7 +681,7 @@ namespace UnityEditor.Seqence
             return ClipMode.None;
         }
 
-        public void DrawKey(float t, Rect r, bool select = false)
+        public void DrawKey(float t, Rect r, bool select)
         {
             r.x = SeqenceWindow.inst.TimeToPixel(t);
             if (SeqenceWindow.inst.IsPiexlRange(r.x))

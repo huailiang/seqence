@@ -33,7 +33,7 @@ namespace UnityEngine.Seqence
         protected override void OnUpdate(float tick, bool mix)
         {
             base.OnUpdate(tick, mix);
-            curveBindObject?.Evaluate(tick);
+            curveBindObject?.Evaluate(start + tick);
         }
 
 #if UNITY_EDITOR

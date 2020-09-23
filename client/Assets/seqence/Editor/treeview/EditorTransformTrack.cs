@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Seqence;
 using UnityEngine.Seqence.Data;
@@ -10,6 +11,8 @@ namespace UnityEditor.Seqence
     {
         private TransformTrackData Data;
         private bool folder;
+
+        List<EditorKey> keys = new List<EditorKey>();
 
         protected override Color trackColor
         {
@@ -50,12 +53,7 @@ namespace UnityEditor.Seqence
             }
             if (Data?.time != null)
             {
-                for (int i = 0; i < Data.time.Length; i++)
-                {
-                    float t = Data.time[i];
-                    Rect r = RenderRect;
-                    DrawKey(t, r, Data.select);
-                }
+                EditorKey.BuildAndDraw(RenderRect, Data.time, keys);
             }
         }
 
@@ -71,7 +69,7 @@ namespace UnityEditor.Seqence
                     var t = SeqenceWindow.inst.PiexlToTime(e.mousePosition.x);
                     if (ContainsT(t, out var i))
                     {
-                        Data.@select = !Data.@select;
+                        Data.select = !Data.select;
                         e.Use();
                     }
                 }

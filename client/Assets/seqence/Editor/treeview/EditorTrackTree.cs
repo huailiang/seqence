@@ -236,7 +236,7 @@ namespace UnityEditor.Seqence
         {
             if (hierachy != null)
             {
-                return hierachy.Any(x => x.@select);
+                return hierachy.Any(x => x.select);
             }
             return false;
         }

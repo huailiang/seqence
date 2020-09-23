@@ -1,7 +1,7 @@
-using UnityEngine;
-using UnityEngine.Seqence;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Seqence;
 
 namespace UnityEditor.Seqence
 {
@@ -22,13 +22,17 @@ namespace UnityEditor.Seqence
         protected IClip clip;
         public Rect rect;
         public DragMode dragMode;
+        public bool select;
         Event e;
 
         private ClipMode clipMode;
 
         private Dictionary<EventT, Action<EventData>> dic = new Dictionary<EventT, Action<EventData>>();
 
-        protected void Regist(EventT t, Action<EventData> cb) { }
+        protected void Regist(EventT t, Action<EventData> cb)
+        {
+            dic.Add(t, cb);
+        }
 
         public void Init(EditorTrack tr, IClip c)
         {
@@ -38,6 +42,14 @@ namespace UnityEditor.Seqence
             dragMode = DragMode.None;
             e = Event.current;
             clipMode = ClipMode.None;
+            select = false;
+            Regist(EventT.Select, OnSelect);
+        }
+
+        private void OnSelect(EventData data)
+        {
+            EventSelectData d = data as EventSelectData;
+            select = d.select;
         }
 
         public void RecvEvent(EventData d)
@@ -62,7 +74,7 @@ namespace UnityEditor.Seqence
             if (rect.width < 0) rect.width = 0;
 
             var color = EditorGUIUtility.isProSkin ? Color.gray : Color.white;
-            if (track.select) color = SeqenceStyle.addtiveClip + color;
+            if (select) color = color - SeqenceStyle.addtiveClip;
             if (EditorGUIUtility.isProSkin)
             {
                 EditorGUI.DrawRect(rect, color);
@@ -109,7 +121,12 @@ namespace UnityEditor.Seqence
         {
             EditorGUI.LabelField(rect, clip.Display, SeqenceStyle.fontClip);
         }
-        
+
+        protected virtual bool CheckChildSelect(Vector2 pos)
+        {
+            return true;
+        }
+
         private void DrawLoops(float piexlDuration)
         {
             using (new GUIColorOverride(new Color(0, 0, 0, 0.2f)))
@@ -136,9 +153,14 @@ namespace UnityEditor.Seqence
                         {
                             dragMode = DragMode.Right;
                         }
-                        else if (rect.Contains(e.mousePosition))
+                        else if (rect.Contains(p))
                         {
                             dragMode = DragMode.Drag;
+                            EventMgr.EmitAll(new EventSelectData() { select = false });
+                            if (!select)
+                            {
+                                CheckChildSelect(p);
+                            }
                         }
                         else
                         {
@@ -274,18 +296,13 @@ namespace UnityEditor.Seqence
             }
         }
 
-        private void OnDrag(Event e)
+        protected virtual void OnDrag(Event e)
         {
             rect.x += e.delta.x;
             clip.start = SeqenceWindow.inst.PiexlToTime(rect.x);
             clip.start = Mathf.Max(0, clip.start);
             e.Use();
             SeqenceWindow.inst.seqence.RecalcuteDuration();
-        }
-
-        protected void DrawKey(float t, Rect r, bool select = false)
-        {
-            track?.DrawKey(t, r, select);
         }
     }
 }

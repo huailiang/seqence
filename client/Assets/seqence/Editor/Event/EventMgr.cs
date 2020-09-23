@@ -32,10 +32,11 @@ namespace UnityEditor.Seqence
             {
                 var track = tracks[i];
                 track.RecvEvent(d);
-                foreach (var c in track.eClips)
-                {
-                    c.RecvEvent(d);
-                }
+                if (track.eClips != null)
+                    foreach (var c in track.eClips)
+                    {
+                        c.RecvEvent(d);
+                    }
             }
         }
 

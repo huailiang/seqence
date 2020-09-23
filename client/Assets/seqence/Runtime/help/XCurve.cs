@@ -36,6 +36,8 @@ namespace UnityEngine.Seqence
     public interface ICurve
     {
         HashSet<float> keyTimes { get; }
+
+        void MoveTime(float t);
     }
 
     public class XCurve<T> : ICurve where T : struct
@@ -55,6 +57,15 @@ namespace UnityEngine.Seqence
                     rt.Add(frames[i].t);
                 }
                 return rt;
+            }
+        }
+
+        public void MoveTime(float t)
+        {
+            int len = frames?.Length ?? 0;
+            for (int i = 0; i < len; i++)
+            {
+                frames[i].t += t;
             }
         }
 
@@ -181,6 +192,14 @@ namespace UnityEngine.Seqence
             return list;
         }
 
+        public void Move(float delta)
+        {
+            foreach (var curve in curves)
+            {
+                curve.Value.MoveTime(delta);
+            }
+        }
+
         public void AddKey<T>(float t, CurveBind<T> bind) where T : struct
         {
             if (curves.ContainsKey(bind.key))
@@ -302,6 +321,11 @@ namespace UnityEngine.Seqence
         public HashSet<float> GetAllKeyTimes()
         {
             return animation.GetAllKeyTimes();
+        }
+
+        public void Move(float delta)
+        {
+            animation?.Move(delta);
         }
     }
 
