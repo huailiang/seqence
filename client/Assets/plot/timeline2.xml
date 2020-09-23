@@ -98,7 +98,7 @@
         <ClipData xsi:type="PostprocessData">
           <start>4.937486</start>
           <duration>20</duration>
-          <mode>Bloom</mode>
+          <mode>Vignette</mode>
         </ClipData>
       </clips>
       <type>PostProcess</type>

@@ -4,7 +4,6 @@ namespace UnityEngine.Seqence
 {
     public class SeqenceUtil
     {
-
         public static readonly string chpath = "Assets/seqence/Editor/StyleSheets/CharacterInfo.asset";
 
         public static void Add<T>(ref T[] arr, T item) where T : new()
@@ -51,6 +50,19 @@ namespace UnityEngine.Seqence
 
     public static class BinaryWriterEx
     {
+        public static void Write(this BinaryWriter writer, Color c)
+        {
+            writer.Write(c.r);
+            writer.Write(c.g);
+            writer.Write(c.b);
+        }
+
+        public static void Write(this BinaryWriter writer, Vector2 v2)
+        {
+            writer.Write(v2.x);
+            writer.Write(v2.y);
+        }
+
         public static void Write(this BinaryWriter writer, Vector3 v3)
         {
             writer.Write(v3.x);
@@ -69,6 +81,23 @@ namespace UnityEngine.Seqence
 
     public static class BinaryReaderEx
     {
+        public static Color ReadColor(this BinaryReader reader)
+        {
+            Color c = Color.black;
+            c.r = reader.ReadSingle();
+            c.g = reader.ReadSingle();
+            c.b = reader.ReadSingle();
+            return c;
+        }
+
+        public static Vector2 ReadV2(this BinaryReader reader)
+        {
+            Vector2 v2;
+            v2.x = reader.ReadSingle();
+            v2.y = reader.ReadSingle();
+            return v2;
+        }
+
         public static Vector3 ReadV3(this BinaryReader reader)
         {
             Vector3 v3;

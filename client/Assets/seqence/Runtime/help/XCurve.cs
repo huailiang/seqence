@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace UnityEngine.Seqence
@@ -177,7 +179,7 @@ namespace UnityEngine.Seqence
 
     public class XAnimation
     {
-        private Dictionary<string, ICurve> curves = new Dictionary<string, ICurve>();
+        public Dictionary<string, ICurve> curves = new Dictionary<string, ICurve>();
 
         public HashSet<float> GetAllKeyTimes()
         {
@@ -202,16 +204,20 @@ namespace UnityEngine.Seqence
 
         public void AddKey<T>(float t, CurveBind<T> bind) where T : struct
         {
-            if (curves.ContainsKey(bind.key))
+            AddKey(t, bind.key, bind.v);
+        }
+
+        public void AddKey<T>(float t, string key, T v) where T : struct
+        {
+            if (curves.ContainsKey(key))
             {
-                (curves[bind.key] as XCurve<T>).AddOrUpdateKey(t, bind.v);
+                (curves[key] as XCurve<T>).AddOrUpdateKey(t, v);
             }
             else
             {
-                XCurve<T> cv = new XCurve<T>(1, bind);
-                cv.bind = bind.key;
-                cv.frames[0] = new XFrame<T>(t, bind.v);
-                curves.Add(bind.key, cv);
+                XCurve<T> cv = new XCurve<T>(1, key);
+                cv.frames[0] = new XFrame<T>(t, v);
+                curves.Add(key, cv);
             }
         }
 
@@ -311,11 +317,26 @@ namespace UnityEngine.Seqence
             {
                 if (UnityEditor.EditorGUI.EndChangeCheck())
                 {
-                    if (time >= 0) this.animation.AddKey(time, b);
+                    AddKey(time, b);
                 }
                 GUI.color = old;
             }
 #endif
+        }
+
+        public Dictionary<string, ICurve> GetAnimInfo()
+        {
+            return animation.curves;
+        }
+        
+        public void AddKey<T>(float time, CurveBind<T> b) where T : struct
+        {
+            if (time >= 0) this.animation.AddKey(time, b);
+        }
+
+        public void AddKey<T>(float time, string k, T v) where T : struct
+        {
+            if (time >= 0) this.animation.AddKey(time, k, v);
         }
 
         public HashSet<float> GetAllKeyTimes()
