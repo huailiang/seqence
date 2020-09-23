@@ -45,9 +45,9 @@ namespace UnityEditor.Seqence
         {
             var pmde = playMode;
             playMode = (PlayMode) EditorGUILayout.EnumPopup(playMode, EditorStyles.toolbarPopup);
-            if (timeline)
+            if (seqence)
             {
-                if (!string.IsNullOrEmpty(state.path) && playMode != pmde && playMode != timeline.playMode)
+                if (!string.IsNullOrEmpty(state.path) && playMode != pmde && playMode != seqence.playMode)
                 {
                     string tip = "current is editing" + state.path.Substring(7) + ", Are you sure change playmode?";
                     if (EditorUtility.DisplayDialog("warn", tip, "ok", "cancel"))
@@ -62,7 +62,7 @@ namespace UnityEditor.Seqence
                 }
                 else
                 {
-                    timeline.playMode = playMode;
+                    seqence.playMode = playMode;
                 }
             }
         }
@@ -83,7 +83,7 @@ namespace UnityEditor.Seqence
             if (GUILayout.Button(SeqenceStyle.gotoEndContent, EditorStyles.toolbarButton))
             {
                 state.FrameEnd();
-                float end = timeline.RecalcuteDuration();
+                float end = seqence.RecalcuteDuration();
                 float len = rangeX2 - rangeX1;
                 rangeX2 = end;
                 rangeX1 = rangeX2 - len;
@@ -219,7 +219,7 @@ namespace UnityEditor.Seqence
         {
             if (GUILayout.Button(SeqenceStyle.refreshContent, EditorStyles.toolbarButton, GUILayout.MaxWidth(24)))
             {
-                float d = timeline.RecalcuteDuration();
+                float d = seqence.RecalcuteDuration();
                 SetTimeRange(0, d * 1.5f);
             }
             if (GUILayout.Button(SeqenceStyle.inspectBtn, EditorStyles.toolbarButton))

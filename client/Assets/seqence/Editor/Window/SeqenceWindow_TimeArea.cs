@@ -72,7 +72,7 @@ namespace UnityEditor.Seqence
                     else if (timeAreaRect.Contains(e.mousePosition))
                     {
                         float t = PiexlToTime(e.mousePosition.x);
-                        timeline.Time = t;
+                        seqence.Time = t;
                         state.SetPlaying(false);
                         time_draging = true;
                         Repaint();
@@ -138,7 +138,7 @@ namespace UnityEditor.Seqence
 
         void OnTrackHeadDrag(float newTime)
         {
-            timeline.SetPlaying(false);
+            seqence.SetPlaying(false);
             state.seqence.Time = Mathf.Max(0.0f, newTime);
             SeqenceWindow.inst.Repaint();
         }

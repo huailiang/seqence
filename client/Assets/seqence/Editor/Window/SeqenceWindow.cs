@@ -16,7 +16,7 @@ namespace UnityEditor.Seqence
         
         public PlayMode playMode;
 
-        public XSeqence timeline
+        public XSeqence seqence
         {
             get { return inst.state.seqence; }
         }
@@ -85,7 +85,7 @@ namespace UnityEditor.Seqence
             }
             else if (e.type == EventType.MouseUp)
             {
-                timeline.RecalcuteDuration();
+                seqence.RecalcuteDuration();
                 Repaint();
             }
         }
@@ -101,12 +101,12 @@ namespace UnityEditor.Seqence
 
         private void DrawEndLine()
         {
-            if (timeline)
+            if (seqence)
             {
                 Color c = SeqenceStyle.colorEndLine;
 
-                float x = TimeToPixel(timeline.Duration);
-                if (timeline.Duration > 1e-1 && x > WindowConstants.sliderWidth)
+                float x = TimeToPixel(seqence.Duration);
+                if (seqence.Duration > 1e-1 && x > WindowConstants.sliderWidth)
                 {
                     Rect rec = new Rect(x, WindowConstants.timeAreaYPosition, 1,
                         tree.TracksBtmY - WindowConstants.timeAreaYPosition - 2);

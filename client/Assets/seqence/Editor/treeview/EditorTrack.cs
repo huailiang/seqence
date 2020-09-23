@@ -406,7 +406,7 @@ namespace UnityEditor.Seqence
             else
             {
                 match = true;
-                SeqenceWindow.inst.timeline.AddRootTrack(copyed);
+                SeqenceWindow.inst.seqence.AddRootTrack(copyed);
             }
             if (match)
             {
@@ -536,7 +536,7 @@ namespace UnityEditor.Seqence
             MarkAction t = (MarkAction) m;
             float time = SeqenceWindow.inst.PiexlToTime(t.posX);
             EditorFactory.MakeMarker(t.type, time, track);
-            SeqenceWindow.inst.timeline.RecalcuteDuration();
+            SeqenceWindow.inst.seqence.RecalcuteDuration();
         }
 
         private void AddClip(object mpos)
@@ -544,7 +544,7 @@ namespace UnityEditor.Seqence
             Vector2 v2 = (Vector2) mpos;
             float start = SeqenceWindow.inst.PiexlToTime(v2.x);
             OnAddClip(start);
-            SeqenceWindow.inst.timeline.RecalcuteDuration();
+            SeqenceWindow.inst.seqence.RecalcuteDuration();
             SeqenceWindow.inst.Repaint();
         }
 
@@ -603,8 +603,8 @@ namespace UnityEditor.Seqence
         private void DeleteTrack(EditorTrack etrack)
         {
             SeqenceWindow.inst.tree.RmTrack(etrack);
-            etrack.track.Remove(SeqenceWindow.inst.timeline);
-            SeqenceWindow.inst.timeline.RecalcuteDuration();
+            etrack.track.Remove(SeqenceWindow.inst.seqence);
+            SeqenceWindow.inst.seqence.RecalcuteDuration();
         }
 
         private void SetTrackFlag(TrackMode mode, bool v)

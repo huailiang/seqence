@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Seqence;
 using System;
+using System.Collections.Generic;
 
 namespace UnityEditor.Seqence
 {
@@ -25,6 +26,10 @@ namespace UnityEditor.Seqence
 
         private ClipMode clipMode;
 
+        private Dictionary<EventT, Action<EventData>> dic = new Dictionary<EventT, Action<EventData>>();
+
+        protected void Regist(EventT t, Action<EventData> cb) { }
+
         public void Init(EditorTrack tr, IClip c)
         {
             this.track = tr;
@@ -33,6 +38,14 @@ namespace UnityEditor.Seqence
             dragMode = DragMode.None;
             e = Event.current;
             clipMode = ClipMode.None;
+        }
+
+        public void RecvEvent(EventData d)
+        {
+            if (dic.ContainsKey(d.e))
+            {
+                dic[d.e].Invoke(d);
+            }
         }
 
 
@@ -47,14 +60,17 @@ namespace UnityEditor.Seqence
             rect.width = y - rect.x;
             rect.height = rect.height - 2;
             if (rect.width < 0) rect.width = 0;
+
+            var color = EditorGUIUtility.isProSkin ? Color.gray : Color.white;
+            if (track.select) color = SeqenceStyle.addtiveClip + color;
             if (EditorGUIUtility.isProSkin)
             {
-                EditorGUI.DrawRect(rect, Color.gray);
+                EditorGUI.DrawRect(rect, color);
                 EditorGUI.DrawOutline(rect, 1, Color.white);
             }
             else
             {
-                EditorGUI.DrawRect(rect, Color.white);
+                EditorGUI.DrawRect(rect, color);
                 EditorGUI.DrawOutline(rect, 1, Color.gray);
             }
 
@@ -264,7 +280,7 @@ namespace UnityEditor.Seqence
             clip.start = SeqenceWindow.inst.PiexlToTime(rect.x);
             clip.start = Mathf.Max(0, clip.start);
             e.Use();
-            SeqenceWindow.inst.timeline.RecalcuteDuration();
+            SeqenceWindow.inst.seqence.RecalcuteDuration();
         }
 
         protected void DrawKey(float t, Rect r, bool select = false)

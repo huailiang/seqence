@@ -97,7 +97,7 @@ namespace UnityEditor.Seqence
             base.OnInspectorTrack();
             if (track.parent == null) EditorGUILayout.HelpBox("no parent bind", MessageType.Warning);
 
-            GUILayout.Label("time: " + SeqenceWindow.inst.timeline.Time.ToString("f2"));
+            GUILayout.Label("time: " + SeqenceWindow.inst.seqence.Time.ToString("f2"));
             bool recd = track.record;
             Vector3 pos = target.transform.localPosition;
             float rot = target.transform.localEulerAngles.y;
@@ -115,7 +115,7 @@ namespace UnityEditor.Seqence
                     var v3 = target.transform.localEulerAngles;
                     v3.y = rot;
                     target.transform.localEulerAngles = v3;
-                    AddItem(SeqenceWindow.inst.timeline.Time);
+                    AddItem(SeqenceWindow.inst.seqence.Time);
                 }
             }
             else

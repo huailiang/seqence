@@ -93,7 +93,7 @@ namespace UnityEditor.Seqence
             }
             else
             {
-                SeqenceWindow.inst.timeline.AddRootTrack(copyed);
+                SeqenceWindow.inst.seqence.AddRootTrack(copyed);
                 int idx = tree.hierachy.Count;
                 tree.AddTrack(copyed, idx, null, true);
                 clipboard = null;

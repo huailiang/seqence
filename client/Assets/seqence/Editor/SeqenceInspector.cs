@@ -50,7 +50,7 @@ namespace UnityEditor.Seqence
 
         private void GUIMark()
         {
-            var timeline = SeqenceWindow.inst.timeline;
+            var timeline = SeqenceWindow.inst.seqence;
             var marks = timeline?.trackTrees?[0].marks;
             if (marks != null && (emarks == null || emarks.Length != marks.Length))
             {

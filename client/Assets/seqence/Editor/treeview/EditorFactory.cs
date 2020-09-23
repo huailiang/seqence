@@ -14,7 +14,7 @@ namespace UnityEditor.Seqence
 
         public static XMarker MakeMarker(Type t, float time)
         {
-            var track = SeqenceWindow.inst.timeline.trackTrees[0];
+            var track = SeqenceWindow.inst.seqence.trackTrees[0];
             return MakeMarker(t, time, track);
         }
 

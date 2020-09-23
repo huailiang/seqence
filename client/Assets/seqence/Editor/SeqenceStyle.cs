@@ -70,6 +70,8 @@ namespace UnityEditor.Seqence
         public static readonly GUIContent empty = new GUIContent();
 
 
+        public readonly static Color addtiveClip = new Color(0.1f, 0.1f, 0.1f, 0);
+
         public readonly static Color colorDuration = new Color(0.66f, 0.66f, 0.66f, 0.4f);
 
         private readonly static Color backgroundColor1 = new Color(0.2f, 0.2f, 0.2f, 1.0f);

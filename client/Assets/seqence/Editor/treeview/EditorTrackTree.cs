@@ -290,7 +290,7 @@ namespace UnityEditor.Seqence
 
         public void SetSkillhost(EditorAnimTrack track)
         {
-            var timeline = SeqenceWindow.inst.timeline;
+            var timeline = SeqenceWindow.inst.seqence;
             hierachy.ForEach(x => x.isSkillHost = x == track);
             int idx = Array.IndexOf(timeline.trackTrees, track);
             if (idx > 0)
@@ -302,7 +302,7 @@ namespace UnityEditor.Seqence
         
         private void BuildSkillHost()
         {
-            var timeline = SeqenceWindow.inst.timeline;
+            var timeline = SeqenceWindow.inst.seqence;
             int idx = timeline.config.skillHostTrack;
             if (idx > 0 && idx < timeline.trackTrees.Length)
             {

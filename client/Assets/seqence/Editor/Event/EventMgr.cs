@@ -24,5 +24,20 @@ namespace UnityEditor.Seqence
                 track.RecvEvent(d);
             }
         }
+
+        public static void EmitAll(EventData d)
+        {
+            int len = tracks?.Count ?? 0;
+            for (int i = 0; i < len; i++)
+            {
+                var track = tracks[i];
+                track.RecvEvent(d);
+                foreach (var c in track.eClips)
+                {
+                    c.RecvEvent(d);
+                }
+            }
+        }
+
     }
 }
