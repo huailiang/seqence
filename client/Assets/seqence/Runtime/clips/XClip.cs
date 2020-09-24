@@ -19,6 +19,8 @@ namespace UnityEngine.Seqence
         void OnDestroy();
 
         void OnBind();
+
+        void OnSave();
     }
 
     public class XClip<T, C, D> : XSeqenceObject, IClip where T : XTrack where C : XClip<T, C, D> where D : ClipData
@@ -84,18 +86,14 @@ namespace UnityEngine.Seqence
             return rst;
         }
 
-        public virtual void OnBind()
-        {
-        }
+        public virtual void OnBind() { }
 
         protected virtual void OnEnter()
         {
             enterd = true;
         }
 
-        protected virtual void OnUpdate(float tick, bool mix)
-        {
-        }
+        protected virtual void OnUpdate(float tick, bool mix) { }
 
 
         protected virtual void OnExit()
@@ -109,6 +107,8 @@ namespace UnityEngine.Seqence
             data = null;
             track = null;
         }
+
+        public virtual void OnSave() { }
 
         public static implicit operator bool(XClip<T, C, D> clip)
         {

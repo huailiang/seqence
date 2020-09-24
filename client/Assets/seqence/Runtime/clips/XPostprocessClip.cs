@@ -5,7 +5,6 @@ using UnityEngine.Seqence.Data;
 using System;
 using UnityEditor;
 using UnityEngine.Rendering.PostProcessing;
-
 #endif
 
 namespace UnityEngine.Seqence
@@ -40,6 +39,7 @@ namespace UnityEngine.Seqence
         }
 
 #if UNITY_EDITOR
+
         public void OnInspector(Action cb)
         {
             EditorGUI.BeginChangeCheck();
@@ -171,6 +171,24 @@ namespace UnityEngine.Seqence
             }
         }
 
+
+        public override void OnSave()
+        {
+            base.OnSave();
+            Write2Buffer();
+        }
+
+        public void Write2Buffer()
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryWriter writer = new BinaryWriter(stream);
+                WriteCurves(writer);
+                writer.Dispose();
+                data.buffer = stream.GetBuffer();
+            }
+        }
+
         public void WriteCurves(BinaryWriter writer)
         {
             var info = curveBindObject.GetAnimInfo();
@@ -202,56 +220,66 @@ namespace UnityEngine.Seqence
                 case "depth.focusDistance":
                 case "blur.sampleCount":
                 case "blur.shutterAngle":
-                {
-                    var curve = pair.Value as XCurve<float>;
-                    int len = curve.frames?.Length ?? 0;
-                    writer.Write(len);
-                    for (int i = 0; i < len; i++)
                     {
-                        writer.Write(curve.frames[i].t);
-                        writer.Write(curve.frames[i].v);
+                        var curve = pair.Value as XCurve<float>;
+                        int len = curve.frames?.Length ?? 0;
+                        writer.Write(len);
+                        for (int i = 0; i < len; i++)
+                        {
+                            writer.Write(curve.frames[i].t);
+                            writer.Write(curve.frames[i].v);
+                        }
                     }
-                }
                     break;
                 case "bloom.color":
                 case "vign.color":
                 case "grad.colorFilter":
-                {
-                    var curve = pair.Value as XCurve<Color>;
-                    int len = curve.frames?.Length ?? 0;
-                    for (int i = 0; i < len; i++)
                     {
-                        writer.Write(curve.frames[i].t);
-                        writer.Write(curve.frames[i].v);
+                        var curve = pair.Value as XCurve<Color>;
+                        int len = curve.frames?.Length ?? 0;
+                        for (int i = 0; i < len; i++)
+                        {
+                            writer.Write(curve.frames[i].t);
+                            writer.Write(curve.frames[i].v);
+                        }
                     }
-                }
                     break;
                 case "vign.center":
-                {
-                    var curve = pair.Value as XCurve<Vector2>;
-                    int len = curve.frames?.Length ?? 0;
-                    for (int i = 0; i < len; i++)
                     {
-                        writer.Write(curve.frames[i].t);
-                        writer.Write(curve.frames[i].v);
+                        var curve = pair.Value as XCurve<Vector2>;
+                        int len = curve.frames?.Length ?? 0;
+                        for (int i = 0; i < len; i++)
+                        {
+                            writer.Write(curve.frames[i].t);
+                            writer.Write(curve.frames[i].v);
+                        }
                     }
-                }
                     break;
                 case "grad.gain":
-                {
-                    var curve = pair.Value as XCurve<Vector4>;
-                    int len = curve.frames?.Length ?? 0;
-                    for (int i = 0; i < len; i++)
                     {
-                        writer.Write(curve.frames[i].t);
-                        writer.Write(curve.frames[i].v);
+                        var curve = pair.Value as XCurve<Vector4>;
+                        int len = curve.frames?.Length ?? 0;
+                        for (int i = 0; i < len; i++)
+                        {
+                            writer.Write(curve.frames[i].t);
+                            writer.Write(curve.frames[i].v);
+                        }
                     }
-                }
                     break;
             }
         }
 
 #endif
+
+        public void ReadFromBuffer()
+        {
+            using (MemoryStream stream = new MemoryStream(data.buffer))
+            {
+                BinaryReader reader = new BinaryReader(stream);
+                ReadCurves(reader);
+                reader.Dispose();
+            }
+        }
 
 
         public void ReadCurves(BinaryReader reader)
@@ -263,7 +291,7 @@ namespace UnityEngine.Seqence
             }
         }
 
-        public void ReadCurve(BinaryReader reader)
+        private void ReadCurve(BinaryReader reader)
         {
             string k = reader.ReadString();
             int len = reader.ReadInt32();

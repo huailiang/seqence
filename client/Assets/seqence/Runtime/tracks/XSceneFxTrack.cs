@@ -22,8 +22,7 @@ namespace UnityEngine.Seqence
         {
             throw new Exception("scenefx track is uncloneable");
         }
-
-
+        
         public override IClip BuildClip(ClipData data)
         {
             var clip = SharedPool<XSceneFxClip>.Get();

@@ -217,6 +217,8 @@ namespace UnityEngine.Seqence.Data
 
         public PostEnum mode = 0;
 
+        public byte[] buffer;
+
         public override AssetType type
         {
             get { return AssetType.PostProcess; }

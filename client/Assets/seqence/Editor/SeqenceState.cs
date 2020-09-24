@@ -173,6 +173,7 @@ namespace UnityEditor.Seqence
         {
             if (!string.IsNullOrEmpty(path))
             {
+                seqence.OnSave();
                 seqence.BuildConf();
                 seqence.config.Write(path);
                 var p = path.Replace(".bytes", ".xml");
