@@ -21,9 +21,7 @@ namespace UnityEngine.Seqence
 
     public enum PlayMode { Plot, Skill }
 
-    public class XSeqenceObject
-    {
-    }
+    public class XSeqenceObject { }
 
     public class XSeqence
     {
@@ -89,7 +87,7 @@ namespace UnityEngine.Seqence
             get { return prev; }
             set
             {
-                if (Mathf.Abs(value - prev) > 1e-4)
+                if (!Mathf.Approximately(value, prev))
                 {
                     ProcessTo(value);
                 }
@@ -223,7 +221,7 @@ namespace UnityEngine.Seqence
                     data = (AnimClipData) clip.data;
                     data.trim_start = tick;
                     data.duration = Mathf.Min(tick + 0.1f, data.duration);
-                    data.start = 0.01f;
+                    data.start = 0;
                 }
             }
             blending = true;
@@ -298,7 +296,7 @@ namespace UnityEngine.Seqence
                 _time = Time;
                 _last = UnityEngine.Time.realtimeSinceStartup;
                 slow = 1.0f;
-                if (Mathf.Abs(_time - _duration) < 1e-1)
+                if (Mathf.Approximately(_time, _duration))
                 {
                     _time = 0;
                 }
@@ -374,17 +372,11 @@ namespace UnityEngine.Seqence
                     var track = trackTrees[i];
                     track.ForeachHierachyTrack((trac) => trac.ForeachClip((clip) =>
                     {
-                        if (clip.end > dur)
-                        {
-                            dur = clip.end;
-                        }
+                        if (clip.end > dur) dur = clip.end;
                     }));
                     track.ForeachMark(mark =>
                     {
-                        if (mark.time > dur)
-                        {
-                            dur = mark.time;
-                        }
+                        if (mark.time > dur) dur = mark.time;
                     });
                 }
             }

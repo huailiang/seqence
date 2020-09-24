@@ -14,6 +14,11 @@ namespace UnityEditor.Seqence
 
         public EditorKey(float time, Rect r)
         {
+            Update(time, r);
+        }
+
+        public void Update(float time, Rect r)
+        {
             this.time = time;
             piexl = SeqenceWindow.inst.TimeToPixel(time);
             select = false;
@@ -22,13 +27,6 @@ namespace UnityEditor.Seqence
             r.y = r.y + r.height / 3;
             r.x = r.x - 4;
             rect = r;
-        }
-
-        public void SetTime(float time)
-        {
-            this.time = time;
-            piexl = SeqenceWindow.inst.TimeToPixel(time);
-            rect.x = piexl - 4;
         }
 
         public void Draw()
@@ -60,7 +58,7 @@ namespace UnityEditor.Seqence
                 int i = 0;
                 foreach (var it in set)
                 {
-                    keys[i++].SetTime(it);
+                    keys[i++].Update(it, rect);
                 }
             }
         }
@@ -88,7 +86,7 @@ namespace UnityEditor.Seqence
                 int i = 0;
                 foreach (var it in set)
                 {
-                    keys[i++].SetTime(it);
+                    keys[i++].Update(it, rect);
                 }
             }
         }

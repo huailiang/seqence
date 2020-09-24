@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace UnityEngine.Seqence
@@ -40,6 +38,8 @@ namespace UnityEngine.Seqence
         HashSet<float> keyTimes { get; }
 
         void MoveTime(float t);
+
+        void UpdateTime(float start, float scale);
     }
 
     public class XCurve<T> : ICurve where T : struct
@@ -68,6 +68,16 @@ namespace UnityEngine.Seqence
             for (int i = 0; i < len; i++)
             {
                 frames[i].t += t;
+            }
+        }
+
+        public void UpdateTime(float start, float scale)
+        {
+            int len = frames?.Length ?? 0;
+            for (int i = 0; i < len; i++)
+            {
+                float t = frames[i].t;
+                frames[i].t = start + (t - start) * scale;
             }
         }
 
@@ -192,6 +202,14 @@ namespace UnityEngine.Seqence
                 }
             }
             return list;
+        }
+
+        public void UpdateAllKeyTimes(float start, float scale)
+        {
+            foreach (var cv in curves)
+            {
+                cv.Value.UpdateTime(start, scale);
+            }
         }
 
         public void Move(float delta)
@@ -342,6 +360,11 @@ namespace UnityEngine.Seqence
         public HashSet<float> GetAllKeyTimes()
         {
             return animation.GetAllKeyTimes();
+        }
+
+        public void UpdateAllKeyTimes(float start, float scale)
+        {
+            animation.UpdateAllKeyTimes(start, scale);
         }
 
         public void Move(float delta)

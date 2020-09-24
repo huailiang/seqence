@@ -51,7 +51,7 @@ namespace UnityEditor.Seqence
                 int i = 0;
                 foreach (var it in set)
                 {
-                    keys[i++].SetTime(it);
+                    keys[i++].Update(it, rect);
                 }
             }
         }
@@ -76,10 +76,21 @@ namespace UnityEditor.Seqence
         protected override void OnDrag(Event e)
         {
             float t = clip.start;
+            float len = clip.duration;
             base.OnDrag(e);
-            float delta = clip.start - t;
-            curveBindObject.Move(delta);
+            if (Mathf.Approximately(clip.duration, len))
+            {
+                float delta = clip.start - t;
+                curveBindObject.Move(delta);
+            }
+            else
+            {
+                if (keys != null)
+                {
+                    float scale = clip.duration / len;
+                    curveBindObject.UpdateAllKeyTimes(clip.start, scale);
+                }
+            }
         }
-
     }
 }
