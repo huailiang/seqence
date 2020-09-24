@@ -30,7 +30,7 @@ namespace UnityEditor.Seqence
             {
                 track.clips = new IClip[1];
                 track.clips[0] = clip;
-                track.data.clips = new[] {data};
+                track.data.clips = new[] { data };
                 return true;
             }
             else
@@ -97,7 +97,7 @@ namespace UnityEditor.Seqence
             {
                 track.marks = new XMarker[1];
                 track.marks[0] = marker;
-                track.data.marks = new[] {data};
+                track.data.marks = new[] { data };
             }
             return false;
         }
@@ -231,7 +231,7 @@ namespace UnityEditor.Seqence
         {
             if (track.data.childs == null)
             {
-                track.data.childs = new[] {data};
+                track.data.childs = new[] { data };
             }
             else
             {
@@ -262,9 +262,12 @@ namespace UnityEditor.Seqence
             {
                 foreach (var track in tree)
                 {
-                    foreach (var clip in track.clips)
+                    if (track.clips != null)
                     {
-                        clip.OnSave();
+                        foreach (var clip in track.clips)
+                        {
+                            clip.OnSave();
+                        }
                     }
                 }
             }

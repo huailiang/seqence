@@ -8,7 +8,6 @@ using UnityEngine.Seqence.Data;
 using UnityEngine.Animations;
 #else
 using UnityEngine.Experimental.Animations;
-
 #endif
 
 namespace UnityEngine.Seqence

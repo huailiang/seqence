@@ -28,6 +28,7 @@ namespace UnityEngine.Seqence
         public void OnBuild()
         {
             CreateInstance(data.mode);
+            ReadFromBuffer();
         }
 
         public CurveBindObject curveBindObject;
@@ -47,12 +48,12 @@ namespace UnityEngine.Seqence
             {
                 data.mode = (PostEnum) EditorGUILayout.EnumPopup("Effect", data.mode);
             }
-            if (EditorGUI.EndChangeCheck())
+            if (EditorGUI.EndChangeCheck() || setting == null)
             {
                 if (data.mode > 0)
                 {
                     CreateInstance(data.mode);
-                    int idx = (int) data.mode;
+                    int idx = (int)data.mode;
                     var profile = seqence.postProfile.settings;
                     if (idx < profile.Count)
                     {
@@ -237,6 +238,7 @@ namespace UnityEngine.Seqence
                     {
                         var curve = pair.Value as XCurve<Color>;
                         int len = curve.frames?.Length ?? 0;
+                        writer.Write(len);
                         for (int i = 0; i < len; i++)
                         {
                             writer.Write(curve.frames[i].t);
@@ -248,6 +250,7 @@ namespace UnityEngine.Seqence
                     {
                         var curve = pair.Value as XCurve<Vector2>;
                         int len = curve.frames?.Length ?? 0;
+                        writer.Write(len);
                         for (int i = 0; i < len; i++)
                         {
                             writer.Write(curve.frames[i].t);
@@ -259,6 +262,7 @@ namespace UnityEngine.Seqence
                     {
                         var curve = pair.Value as XCurve<Vector4>;
                         int len = curve.frames?.Length ?? 0;
+                        writer.Write(len);
                         for (int i = 0; i < len; i++)
                         {
                             writer.Write(curve.frames[i].t);
@@ -273,11 +277,14 @@ namespace UnityEngine.Seqence
 
         public void ReadFromBuffer()
         {
-            using (MemoryStream stream = new MemoryStream(data.buffer))
+            if (data.buffer != null)
             {
-                BinaryReader reader = new BinaryReader(stream);
-                ReadCurves(reader);
-                reader.Dispose();
+                using (MemoryStream stream = new MemoryStream(data.buffer))
+                {
+                    BinaryReader reader = new BinaryReader(stream);
+                    ReadCurves(reader);
+                    reader.Dispose();
+                }
             }
         }
 
