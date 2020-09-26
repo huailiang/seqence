@@ -14,7 +14,7 @@ public class Entity : ISharedObject<Entity>
     private Animator ator;
     private uint uid;
     private Character ch;
-    private XSeqence timeline;
+    private XSeqence seqence;
 
 
     public Entity next { get; set; }
@@ -40,12 +40,12 @@ public class Entity : ISharedObject<Entity>
 
     public void Update(float delta)
     {
-        timeline?.Update();
+        seqence?.Update();
     }
 
     public void Dispose()
     {
-        timeline?.Dispose();
+        seqence?.Dispose();
         XResources.DestroyGameObject(ch.prefab, go);
     }
 
@@ -77,14 +77,14 @@ public class Entity : ISharedObject<Entity>
     public void PlaySkill(string skill)
     {
         string path = "Assets/skill/" + skill + ".xml";
-        if (timeline == null)
+        if (seqence == null)
         {
-            timeline = new XSeqence(path, UnityEngine.Seqence.PlayMode.Skill, ator);
-            timeline.SetPlaying(true);
+            seqence = new XSeqence(path, UnityEngine.Seqence.PlayMode.Skill, ator);
+            seqence.SetPlaying(true);
         }
         else
         {
-            timeline.BlendTo(path);
+            seqence.BlendTo(path);
         }
     }
 

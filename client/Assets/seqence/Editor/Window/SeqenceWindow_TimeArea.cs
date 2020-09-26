@@ -36,7 +36,7 @@ namespace UnityEditor.Seqence
             rangeX2 = 60;
         }
 
-        public void TimelineTimeAreaGUI()
+        public void SeqenceTimeAreaGUI()
         {
             timeAreaRect.width = winArea.width;
             timeAreaRect.x = WindowConstants.rightAreaMargn;

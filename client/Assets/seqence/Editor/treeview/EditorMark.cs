@@ -89,7 +89,7 @@ namespace UnityEditor.Seqence
     }
 
 
-    [TimelineEditor(typeof(XJumpMarker))]
+    [SeqenceEditor(typeof(XJumpMarker))]
     public class EditorJumpMark : EditorMark
     {
         private XJumpMarker marker;
@@ -105,7 +105,7 @@ namespace UnityEditor.Seqence
         }
     }
 
-    [TimelineEditor(typeof(XActiveMark))]
+    [SeqenceEditor(typeof(XActiveMark))]
     public class EditorActiveMark : EditorMark
     {
         private XActiveMark marker;
@@ -121,7 +121,7 @@ namespace UnityEditor.Seqence
         }
     }
 
-    [TimelineEditor(typeof(XSlowMarker))]
+    [SeqenceEditor(typeof(XSlowMarker))]
     public class EditorSlowMark : EditorMark
     {
         private XSlowMarker marker;

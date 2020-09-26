@@ -6,7 +6,7 @@ using UnityEngine.Seqence.Data;
 
 namespace UnityEditor.Seqence
 {
-    [TimelineEditor(typeof(XGroupTrack))]
+    [SeqenceEditor(typeof(XGroupTrack))]
     public class EditorGroupTrack : EditorTrack
     {
         private Rect area;

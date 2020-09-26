@@ -70,14 +70,16 @@ namespace UnityEditor.Seqence
             set { m_Bounds = value; }
         }
 
-        public Tooltip(GUIStyle theStyle, GUIStyle font)
+        public Tooltip(GUIStyle theStyle, GUIStyle font, string text)
         {
             style = theStyle;
             m_Font = font;
+            this.text = text;
         }
 
-        public Tooltip()
+        public Tooltip(string text)
         {
+            this.text = text;
             style = null;
             m_Font = null;
         }

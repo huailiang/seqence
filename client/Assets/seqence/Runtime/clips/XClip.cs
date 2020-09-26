@@ -94,8 +94,7 @@ namespace UnityEngine.Seqence
         }
 
         protected virtual void OnUpdate(float tick, bool mix) { }
-
-
+        
         protected virtual void OnExit()
         {
             enterd = false;

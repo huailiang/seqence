@@ -5,7 +5,7 @@ using UnityEngine.Seqence.Data;
 
 namespace UnityEditor.Seqence
 {
-    [TimelineEditor(typeof(XSceneFxTrack))]
+    [SeqenceEditor(typeof(XSceneFxTrack))]
     public class EditorSceneFxTrack : EditorTrack
     {
         protected override Color trackColor

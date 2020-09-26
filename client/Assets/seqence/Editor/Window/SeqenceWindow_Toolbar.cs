@@ -155,13 +155,13 @@ namespace UnityEditor.Seqence
                 if (!string.IsNullOrEmpty(path))
                 {
                     path = path.Substring(path.IndexOf("Assets/", StringComparison.Ordinal));
-                    CreateTimeline(path);
+                    CreateSeqence(path);
                 }
                 GUIUtility.ExitGUI();
             }
         }
 
-        void CreateTimeline(string path)
+        void CreateSeqence(string path)
         {
             if (path.Contains(WindowConstants.plotPath))
             {
@@ -171,7 +171,7 @@ namespace UnityEditor.Seqence
             {
                 playMode = PlayMode.Skill;
             }
-            state.CreateTimeline(path, playMode);
+            state.CreateSeqence(path, playMode);
             AssetDatabase.ImportAsset(path);
             AssetDatabase.Refresh();
         }

@@ -4,7 +4,7 @@ using UnityEngine.Seqence.Data;
 
 namespace UnityEditor.Seqence
 {
-    [TimelineEditor(typeof(XLogicTrack))]
+    [SeqenceEditor(typeof(XLogicTrack))]
     public class EditorLogicTrack : EditorTrack
     {
         private int len;

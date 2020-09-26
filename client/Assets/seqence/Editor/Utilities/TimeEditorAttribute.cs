@@ -4,22 +4,22 @@ namespace UnityEditor.Seqence
 {
     
     [AttributeUsage(AttributeTargets.Class)]
-    public class TimelineEditorAttribute: Attribute
+    public class SeqenceEditorAttribute: Attribute
     {
         public Type type;
 
-        public TimelineEditorAttribute(Type t)
+        public SeqenceEditorAttribute(Type t)
         {
             type = t;
         }
     }
 
     [AttributeUsage(AttributeTargets.Class)]
-    public class TimelineClipEditorAttribute : Attribute
+    public class SeqenceClipEditorAttribute : Attribute
     {
         public Type type;
 
-        public TimelineClipEditorAttribute(Type t)
+        public SeqenceClipEditorAttribute(Type t)
         {
             type = t;
         }

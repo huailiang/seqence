@@ -6,17 +6,11 @@ using UnityEngine.Seqence;
 namespace UnityEditor.Seqence
 {
     [Flags]
-    public enum ClipMode
-    {
-        None = 0,
-        Left = 1,
-        Right = 2,
-        Loop = 4,
-    }
+    public enum ClipMode { None = 0, Left = 1, Right = 2, Loop = 4 }
 
     public enum DragMode { None, Drag, Left, Right }
 
-    public class EditorClip
+    public partial class EditorClip
     {
         protected EditorTrack track;
         protected IClip clip;
@@ -59,7 +53,6 @@ namespace UnityEditor.Seqence
                 dic[d.e].Invoke(d);
             }
         }
-
 
         public void OnGUI()
         {
@@ -129,7 +122,7 @@ namespace UnityEditor.Seqence
 
         private void DrawLoops(float piexlDuration)
         {
-            using (new GUIColorOverride(new Color(0, 0, 0, 0.2f)))
+            using (new GUIColorOverride(new Color(0, 0, 0, 0.08f)))
             {
                 Rect tmp = rect;
                 tmp.x = tmp.xMax - piexlDuration;
@@ -156,7 +149,7 @@ namespace UnityEditor.Seqence
                         else if (rect.Contains(p))
                         {
                             dragMode = DragMode.Drag;
-                            EventMgr.EmitAll(new EventSelectData() { select = false });
+                            EventMgr.EmitAll(new EventSelectData() {select = false});
                             if (!select)
                             {
                                 CheckChildSelect(p);
@@ -198,30 +191,7 @@ namespace UnityEditor.Seqence
             }
         }
 
-        private void MixProcessor()
-        {
-            var clips = track.eClips;
-            foreach (var c in clips)
-            {
-                if (c.clip != this.clip)
-                {
-                    if (IsInRange(c.clip, clip.start))
-                    {
-                        var r = rect;
-                        r.width = c.rect.x + c.rect.width - rect.x;
-                        ProcesMixIn(r);
-                    }
-                    if (IsInRange(c.clip, clip.end))
-                    {
-                        var r = rect;
-                        r.x = c.rect.x;
-                        r.width = rect.x + rect.width - r.x;
-                        ProcesMixOut(r);
-                    }
-                }
-            }
-        }
-
+       
         private bool IsInRange(IClip clip, float t)
         {
             if (clip != null)
@@ -237,34 +207,7 @@ namespace UnityEditor.Seqence
             return r.x >= timeRect.x && r.xMax <= timeRect.xMax;
         }
 
-        private void ProcesMixIn(Rect mixInRect)
-        {
-            if (ValidRange(mixInRect) && mixInRect.width > 0)
-            {
-                var clipStyle = SeqenceStyle.timelineClip;
-                var texture = clipStyle.normal.background;
-                ClipRenderer.RenderTexture(mixInRect, texture, SeqenceStyle.blendMixIn.normal.background,
-                    Color.black);
-
-                Graphics.DrawLineAA(2.5f, new Vector3(mixInRect.xMin, mixInRect.yMax - 1f, 0),
-                    new Vector3(mixInRect.xMax, mixInRect.yMin + 1f, 0), Color.white);
-            }
-        }
-
-        private void ProcesMixOut(Rect mixOutRect)
-        {
-            if (ValidRange(mixOutRect) && mixOutRect.width > 0)
-            {
-                var clipStyle = SeqenceStyle.timelineClip;
-                var texture = clipStyle.normal.background;
-                ClipRenderer.RenderTexture(mixOutRect, texture, SeqenceStyle.blendMixOut.normal.background,
-                    Color.black);
-
-                Graphics.DrawLineAA(2.5f, new Vector3(mixOutRect.xMin, mixOutRect.yMax - 1f, 0),
-                    new Vector3(mixOutRect.xMax, mixOutRect.yMin + 1f, 0), Color.white);
-            }
-        }
-
+   
         private void DragStart(Event e)
         {
             rect.x = SeqenceWindow.inst.TimeToPixel(clip.start);

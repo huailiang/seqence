@@ -106,11 +106,11 @@ namespace UnityEditor.Seqence
             }
         }
 
-        public void CreateTimeline(string path, PlayMode mode)
+        public void CreateSeqence(string path, PlayMode mode)
         {
             Dispose();
             this.path = path;
-            TimelineConfig xconf = new TimelineConfig();
+            SeqenceConfig xconf = new SeqenceConfig();
             xconf.tracks = new TrackData[1];
             TrackData data = new TrackData();
             data.type = AssetType.Marker;

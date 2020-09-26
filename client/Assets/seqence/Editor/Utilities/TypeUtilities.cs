@@ -109,8 +109,8 @@ namespace UnityEditor.Seqence
             var types = a.GetTypes();
             foreach (var type in types)
             {
-                var usage = (TimelineEditorAttribute) Attribute.GetCustomAttribute(type,
-                    typeof(TimelineEditorAttribute));
+                var usage = (SeqenceEditorAttribute) Attribute.GetCustomAttribute(type,
+                    typeof(SeqenceEditorAttribute));
                 if (usage != null && usage.type == at)
                 {
                     return type;
@@ -133,8 +133,8 @@ namespace UnityEditor.Seqence
             var types = a.GetTypes();
             foreach (var type in types)
             {
-                var usage = (TimelineClipEditorAttribute) Attribute.GetCustomAttribute(type,
-                    typeof(TimelineClipEditorAttribute));
+                var usage = (SeqenceClipEditorAttribute) Attribute.GetCustomAttribute(type,
+                    typeof(SeqenceClipEditorAttribute));
                 if (usage != null && usage.type == at) return type;
             }
             return null;

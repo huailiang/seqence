@@ -25,7 +25,7 @@ namespace UnityEngine.Seqence
 
     public class XSeqence
     {
-        public TimelineConfig config;
+        public SeqenceConfig config;
         public XTrack[] trackTrees;
         public SeqencePlayMode editMode;
         public PlayMode playMode;
@@ -115,7 +115,7 @@ namespace UnityEngine.Seqence
             get { return _duration; }
         }
 
-        public XSeqence(TimelineConfig conf, PlayMode mode)
+        public XSeqence(SeqenceConfig conf, PlayMode mode)
         {
             blending = false;
             Initial(conf, mode);
@@ -139,16 +139,16 @@ namespace UnityEngine.Seqence
         {
             if (path.EndsWith(".xml"))
             {
-                config = TimelineConfig.ReadXml(path);
+                config = SeqenceConfig.ReadXml(path);
             }
             else if (string.IsNullOrEmpty(path))
             {
-                config = new TimelineConfig();
+                config = new SeqenceConfig();
                 config.Read(path);
             }
         }
 
-        private void Initial(TimelineConfig conf, PlayMode mode)
+        private void Initial(SeqenceConfig conf, PlayMode mode)
         {
             _time = 0;
             playMode = mode;

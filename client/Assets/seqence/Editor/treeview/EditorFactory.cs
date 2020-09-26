@@ -49,7 +49,7 @@ namespace UnityEditor.Seqence
         }
 
 
-        public static void GetTrackByDataType(Type type, XSeqence timeline, XTrack parent,
+        public static void GetTrackByDataType(Type type, XSeqence seqence, XTrack parent,
             Action<XTrack, TrackData, object> cb)
         {
             TrackData data = CreateTrackData(type);
@@ -64,7 +64,7 @@ namespace UnityEditor.Seqence
                             var bd = data as AnimationTrackData;
                             bd.prefab = ch.prefab;
                             bd.roleid = ch.id;
-                            cb(XSeqenceFactory.GetTrack(data, timeline, parent), data, ch);
+                            cb(XSeqenceFactory.GetTrack(data, seqence, parent), data, ch);
                         }
                         else
                         {
@@ -74,7 +74,7 @@ namespace UnityEditor.Seqence
                 }
                 else
                 {
-                    cb(XSeqenceFactory.GetTrack(data, timeline, parent), data, null);
+                    cb(XSeqenceFactory.GetTrack(data, seqence, parent), data, null);
                 }
             }
             else

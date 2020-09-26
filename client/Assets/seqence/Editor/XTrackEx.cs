@@ -150,11 +150,11 @@ namespace UnityEditor.Seqence
             }
         }
 
-        public static void AddRootTrack(this XSeqence timeline, XTrack track)
+        public static void AddRootTrack(this XSeqence seqence, XTrack track)
         {
-            var tracks = timeline.trackTrees.ToList();
+            var tracks = seqence.trackTrees.ToList();
             tracks.Add(track);
-            timeline.trackTrees = tracks.ToArray();
+            seqence.trackTrees = tracks.ToArray();
         }
 
         public static void AddSub(this XTrack track, XTrack sub)
@@ -189,7 +189,7 @@ namespace UnityEditor.Seqence
             }
         }
 
-        public static void Remove(this XTrack track, XSeqence timeline)
+        public static void Remove(this XTrack track, XSeqence seqence)
         {
             if (track.parent)
             {
@@ -210,11 +210,11 @@ namespace UnityEditor.Seqence
             }
             else
             {
-                var list = timeline.trackTrees.ToList();
+                var list = seqence.trackTrees.ToList();
                 if (list.Contains(track))
                 {
                     list.Remove(track);
-                    timeline.trackTrees = list.ToArray();
+                    seqence.trackTrees = list.ToArray();
                 }
             }
             track.OnDestroy();

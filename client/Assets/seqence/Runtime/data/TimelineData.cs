@@ -203,7 +203,7 @@ namespace UnityEngine.Seqence.Data
     }
 
     [Serializable]
-    public class TimelineConfig
+    public class SeqenceConfig
     {
         public TrackData[] tracks;
         public ushort skillHostTrack;
@@ -267,12 +267,12 @@ namespace UnityEngine.Seqence.Data
             }
         }
 
-        public static TimelineConfig ReadXml(string path)
+        public static SeqenceConfig ReadXml(string path)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(TimelineConfig));
+            XmlSerializer serializer = new XmlSerializer(typeof(SeqenceConfig));
             using (StreamReader reader = new StreamReader(path))
             {
-                return (TimelineConfig) serializer.Deserialize(reader);
+                return (SeqenceConfig) serializer.Deserialize(reader);
             }
         }
     }

@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Seqence;
 using UnityEngine.Seqence.Data;
 
 namespace UnityEditor.Seqence
 {
-    [TimelineEditor(typeof(XPostprocessTrack))]
+    [SeqenceEditor(typeof(XPostprocessTrack))]
     public class EditorPostprocessTrack : RecordTrack
     {
         protected override Color trackColor
@@ -19,7 +20,7 @@ namespace UnityEditor.Seqence
 
         protected override bool warn
         {
-            get { return track.clips == null; }
+            get { return track.clips == null || Camera.main == null; }
         }
 
         protected override GameObject target
@@ -44,9 +45,20 @@ namespace UnityEditor.Seqence
         protected override void OnInspectorTrack()
         {
             base.OnInspectorTrack();
-            if (track.clips == null)
+            var c = Camera.main;
+            if (c == null)
             {
-                EditorGUILayout.HelpBox("There is no clip in track", MessageType.Warning);
+                EditorGUILayout.HelpBox("Not found main camera", MessageType.Warning);
+            }
+            else
+            {
+                var layer = c.gameObject.GetComponent<PostProcessLayer>();
+                if (layer == null)
+                    EditorGUILayout.HelpBox("post process layer in main camera", MessageType.Warning);
+                else if (track.clips == null)
+                {
+                    EditorGUILayout.HelpBox("There is no clip in track", MessageType.Warning);
+                }
             }
         }
 
@@ -56,6 +68,5 @@ namespace UnityEditor.Seqence
             XPostprocessClip postClip = clip as XPostprocessClip;
             postClip?.OnInspector(SeqenceWindow.inst.Repaint);
         }
-        
     }
 }

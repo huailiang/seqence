@@ -14,7 +14,7 @@ namespace UnityEditor.Seqence
         public object arg;
     }
 
-    public class EditorTrack : EditorObject, ITimelineInspector
+    public class EditorTrack : EditorObject, ISeqenceInspector
     {
         protected readonly static GUIContent s_KeyOn = new GUIContent(SeqenceStyle.keyframe.active.background);
         protected readonly static GUIContent s_KeyOff = new GUIContent(SeqenceStyle.keyframe.normal.background);

@@ -45,8 +45,8 @@ namespace UnityEditor.Seqence
             state?.CheckExist();
             if (state.seqence)
             {
-                TimelineTimeAreaGUI();
-                TimelineHeaderGUI();
+                SeqenceTimeAreaGUI();
+                SeqenceHeaderGUI();
                 DrawMarkerDrawer();
                 tree.OnGUI(state);
                 DrawTimeOnSlider();
@@ -57,7 +57,7 @@ namespace UnityEditor.Seqence
             else
             {
                 CalculWindowCenter();
-                EditorGUI.LabelField(centerArea, SeqenceStyle.createNewTimelineText);
+                EditorGUI.LabelField(centerArea, SeqenceStyle.createNewSeqenceText);
             }
             winArea = position;
         }

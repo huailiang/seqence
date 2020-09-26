@@ -290,23 +290,23 @@ namespace UnityEditor.Seqence
 
         public void SetSkillhost(EditorAnimTrack track)
         {
-            var timeline = SeqenceWindow.inst.seqence;
+            var seqence = SeqenceWindow.inst.seqence;
             hierachy.ForEach(x => x.isSkillHost = x == track);
-            int idx = Array.IndexOf(timeline.trackTrees, track);
+            int idx = Array.IndexOf(seqence.trackTrees, track);
             if (idx > 0)
             {
-                timeline.config.skillHostTrack = (ushort) idx;
-                timeline.SkillHostTrack = track.track;
+                seqence.config.skillHostTrack = (ushort) idx;
+                seqence.SkillHostTrack = track.track;
             }
         }
         
         private void BuildSkillHost()
         {
-            var timeline = SeqenceWindow.inst.seqence;
-            int idx = timeline.config.skillHostTrack;
-            if (idx > 0 && idx < timeline.trackTrees.Length)
+            var seqence = SeqenceWindow.inst.seqence;
+            int idx = seqence.config.skillHostTrack;
+            if (idx > 0 && idx < seqence.trackTrees.Length)
             {
-                var track = timeline.trackTrees[idx];
+                var track = seqence.trackTrees[idx];
                 hierachy.ForEach(x => x.isSkillHost = x == track);
             }
         }

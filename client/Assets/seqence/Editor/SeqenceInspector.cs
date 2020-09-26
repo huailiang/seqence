@@ -2,7 +2,7 @@
 
 namespace UnityEditor.Seqence
 {
-    interface ITimelineInspector
+    interface ISeqenceInspector
     {
         void OnInspector();
     }
@@ -50,8 +50,8 @@ namespace UnityEditor.Seqence
 
         private void GUIMark()
         {
-            var timeline = SeqenceWindow.inst.seqence;
-            var marks = timeline?.trackTrees?[0].marks;
+            var seqence = SeqenceWindow.inst.seqence;
+            var marks = seqence?.trackTrees?[0].marks;
             if (marks != null && (emarks == null || emarks.Length != marks.Length))
             {
                 int len = marks.Length;
@@ -91,7 +91,7 @@ namespace UnityEditor.Seqence
             {
                 foreach (var track in trees.hierachy)
                 {
-                    ITimelineInspector gui = (ITimelineInspector) track;
+                    ISeqenceInspector gui = (ISeqenceInspector) track;
                     gui.OnInspector();
                     GUILayout.Space(4);
                 }

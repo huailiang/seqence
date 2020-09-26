@@ -6,7 +6,7 @@ namespace UnityEditor.Seqence
 {
     public partial class SeqenceWindow
     {
-        void TimelineHeaderGUI()
+        void SeqenceHeaderGUI()
         {
             GUILayout.BeginVertical();
             GUILayout.BeginHorizontal(GUILayout.Width(WindowConstants.sliderWidth));

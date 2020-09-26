@@ -36,36 +36,19 @@ namespace UnityEditor.Seqence
         public static readonly GUIContent previousFrameContent =
             EditorGUIUtility.TrIconContent("Animation.PrevKey", "Go to the previous frame");
 
-        public static readonly GUIContent noTimelineAssetSelected =
-            EditorGUIUtility.TrTextContent("To start creating a timeline, select a GameObject");
-
-        public static readonly GUIContent createTimelineOnSelection =
-            EditorGUIUtility.TrTextContent("To begin a new timeline with {0}, create {1}");
-
-        public static readonly GUIContent noTimelinesInScene =
-            EditorGUIUtility.TrTextContent("No timeline found in the scene");
-
-        public static readonly GUIContent createNewTimelineText =
-            EditorGUIUtility.TrTextContent("Create a new Timeline to start");
+        public static readonly GUIContent createNewSeqenceText =
+            EditorGUIUtility.TrTextContent("Create a new Seqence to start");
 
         public static readonly GUIContent addContent = EditorGUIUtility.TrTextContent("Add", "Add new tracks.");
 
-        public static readonly GUIContent previewContent =
-            EditorGUIUtility.TrTextContent("Preview", "Enable/disable scene preview mode");
-
         public static readonly GUIContent inspectBtn =
-            EditorGUIUtility.IconContent("TimelineEditModeMixON", "| timeline inspector");
+            EditorGUIUtility.IconContent("SeqenceEditModeMixON", "| seqence inspector");
 
         public static readonly GUIContent showMarkersOn = EditorGUIUtility.TrTextContentWithIcon(string.Empty,
             "Show / Hide Timeline Markers", "TimelineMarkerAreaButtonEnabled");
 
-        public static readonly GUIContent showMarkersOnTimeline = EditorGUIUtility.TrTextContent("Show markers");
-
         public static readonly GUIContent timelineMarkerTrackHeader =
             EditorGUIUtility.TrTextContentWithIcon("Markers", string.Empty, "TimelineHeaderMarkerIcon");
-
-        public static readonly GUIContent markerCollapseButton =
-            EditorGUIUtility.TrTextContent(string.Empty, "Expand / Collapse Track Markers");
 
         public static readonly GUIContent empty = new GUIContent();
 

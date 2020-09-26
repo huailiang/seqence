@@ -6,7 +6,7 @@ using UnityEngine.Seqence.Data;
 
 namespace UnityEditor.Seqence
 {
-    [TimelineEditor(typeof(XTransformTrack))]
+    [SeqenceEditor(typeof(XTransformTrack))]
     public class EditorTransformTrack : RecordTrack
     {
         private TransformTrackData Data;

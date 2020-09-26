@@ -8,7 +8,7 @@ using PlayMode = UnityEngine.Seqence.PlayMode;
 
 namespace UnityEditor.Seqence
 {
-    [TimelineEditor(typeof(XAnimationTrack))]
+    [SeqenceEditor(typeof(XAnimationTrack))]
     public class EditorAnimTrack : EditorTrack
     {
         protected override Color trackColor

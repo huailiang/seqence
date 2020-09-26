@@ -5,7 +5,7 @@ using UnityEngine.Seqence;
 
 namespace UnityEditor.Seqence
 {
-    [TimelineClipEditor(typeof(XPostprocessClip))]
+    [SeqenceClipEditor(typeof(XPostprocessClip))]
     public class EditorPostprocessClip : EditorClip
     {
         XPostprocessClip c
