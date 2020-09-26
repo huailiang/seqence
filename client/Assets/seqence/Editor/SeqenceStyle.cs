@@ -42,7 +42,7 @@ namespace UnityEditor.Seqence
         public static readonly GUIContent addContent = EditorGUIUtility.TrTextContent("Add", "Add new tracks.");
 
         public static readonly GUIContent inspectBtn =
-            EditorGUIUtility.IconContent("SeqenceEditModeMixON", "| seqence inspector");
+            EditorGUIUtility.IconContent("TimelineEditModeMixON", "| seqence inspector");
 
         public static readonly GUIContent showMarkersOn = EditorGUIUtility.TrTextContentWithIcon(string.Empty,
             "Show / Hide Timeline Markers", "TimelineMarkerAreaButtonEnabled");

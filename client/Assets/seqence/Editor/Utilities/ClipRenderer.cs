@@ -6,9 +6,17 @@ namespace UnityEditor.Seqence
     {
         static Mesh s_Quad;
         static Material s_BlendMaterial;
-        static Material s_ClipMaterial;
         static readonly Vector3[] s_Vertices = new Vector3[4];
-        static readonly Vector2[] s_UVs = { new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(1f, 0f), new Vector2(0f, 0f) };
+
+        static readonly Vector2[] s_UVs =
+        {
+            new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(1f, 0f), new Vector2(0f, 0f)
+        };
+
+        private static readonly int s_ManualTex2Srgb = Shader.PropertyToID("_ManualTex2SRGB");
+        private static readonly int s_Color = Shader.PropertyToID("_Color");
+        private static readonly int s_MainTex = Shader.PropertyToID("_MainTex");
+        private static readonly int s_MaskTex = Shader.PropertyToID("_MaskTex");
 
         static void Initialize()
         {
@@ -18,9 +26,9 @@ namespace UnityEditor.Seqence
                 s_Quad.hideFlags |= HideFlags.DontSave;
                 s_Quad.name = "TimelineQuadMesh";
 
-                var vertices = new Vector3[4] { new Vector3(0, 0, 0), new Vector3(1, 0, 0), new Vector3(1, 1, 0), new Vector3(0, 1, 0) };
-                var triangles = new int[6] { 0, 1, 2, 0, 2, 3 };
-                var colors = new Color32[4] {Color.white, Color.white, Color.white, Color.white };
+                var vertices = new Vector3[4] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero};
+                var triangles = new int[6] {0, 1, 2, 0, 2, 3};
+                var colors = new Color32[4] {Color.white, Color.white, Color.white, Color.white};
 
                 s_Quad.vertices = vertices;
                 s_Quad.uv = s_UVs;
@@ -30,14 +38,8 @@ namespace UnityEditor.Seqence
 
             if (s_BlendMaterial == null)
             {
-                var shader = (Shader)EditorGUIUtility.LoadRequired("Editors/TimelineWindow/DrawBlendShader.shader");
+                var shader = (Shader) EditorGUIUtility.LoadRequired("Editors/TimelineWindow/DrawBlendShader.shader");
                 s_BlendMaterial = new Material(shader);
-            }
-
-            if (s_ClipMaterial == null)
-            {
-                var shader = (Shader)EditorGUIUtility.LoadRequired("Editors/TimelineWindow/ClipShader.shader");
-                s_ClipMaterial = new Material(shader);
             }
         }
 
@@ -51,15 +53,17 @@ namespace UnityEditor.Seqence
             s_Vertices[3] = new Vector3(r.xMin, r.yMax, 0);
             s_Quad.vertices = s_Vertices;
 
-            s_BlendMaterial.SetTexture("_MainTex", mainTex);
-            s_BlendMaterial.SetTexture("_MaskTex", mask);
-
-            // the shader adds the color, so it needs to match the rendering space.
-            // the colors were authored in gamma.
-            s_BlendMaterial.SetFloat("_ManualTex2SRGB", QualitySettings.activeColorSpace == ColorSpace.Linear ? 1.0f : 0.0f);
-            s_BlendMaterial.SetColor("_Color", (QualitySettings.activeColorSpace == ColorSpace.Linear) ? color.gamma : color);
-            s_BlendMaterial.SetPass(0);
-            UnityEngine.Graphics.DrawMeshNow(s_Quad, Handles.matrix);
+            s_BlendMaterial.SetTexture(s_MainTex, mainTex);
+            s_BlendMaterial.SetTexture(s_MaskTex, mask);
+            
+            s_BlendMaterial.SetFloat(s_ManualTex2Srgb,
+                QualitySettings.activeColorSpace == ColorSpace.Linear ? 1.0f : 0.0f);
+            s_BlendMaterial.SetColor(s_Color,
+                (QualitySettings.activeColorSpace == ColorSpace.Linear) ? color.gamma : color);
+            if (s_BlendMaterial.SetPass(0))
+            {
+                UnityEngine.Graphics.DrawMeshNow(s_Quad, Handles.matrix);
+            }
         }
     }
 }

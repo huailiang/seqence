@@ -2,6 +2,7 @@
 
 namespace UnityEditor.Seqence
 {
+    
     public partial class EditorClip
     {
         private void MixProcessor()
