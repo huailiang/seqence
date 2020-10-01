@@ -38,9 +38,12 @@ __剧情-技能编辑器__
 
 [v3.0:][i5]  Entitas架构的Virtual Server集成
 
+[v3.1:][i6]  全新的K帧流程，[参考视频, 对后处理的K帧]
+
 
 [i1]: https://github.com/huailiang/seqence
 [i2]: https://github.com/huailiang/seqence/releases/tag/v2.0
 [i3]: https://github.com/huailiang/seqence/releases/tag/v1.1
 [i4]: https://github.com/huailiang/seqence/releases/tag/v2.5
 [i5]: https://github.com/huailiang/seqence/releases/tag/v3.0
+[i6]: https://www.bilibili.com/video/BV1dD4y1R71E
