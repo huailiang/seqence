@@ -32,6 +32,7 @@ namespace UnityEditor.Seqence
                     _fontStyle.richText = false;
                     _fontStyle.stretchWidth = false;
                     _fontStyle.clipping = TextClipping.Clip;
+                    _fontStyle.fontSize = 12;
                 }
                 _fontStyle.normal.textColor = pro ? Color.white : Color.black;
                 return _fontStyle;
@@ -42,21 +43,20 @@ namespace UnityEditor.Seqence
         {
             get
             {
-                if(_timeCursor==null)
+                if (_timeCursor == null)
                 {
                     _timeCursor = new GUIStyle();
-                    _timeCursor.alignment = TextAnchor.MiddleLeft;
-                    _timeCursor.fixedHeight = 20;
-                    _timeCursor.fixedWidth = 11;
-                    _timeCursor.fontSize = 72;
-                    _timeCursor.margin.left = 4;
-                    _timeCursor.margin.right = 4;
-                    _timeCursor.margin.top = 4;
-                    _timeCursor.margin.bottom = 4;
+                    _timeCursor.alignment = TextAnchor.MiddleCenter;
+                    _timeCursor.fixedHeight = 28;
+                    _timeCursor.fixedWidth = 24;
+                    _timeCursor.margin.left = 1;
+                    _timeCursor.margin.right = 1;
+                    _timeCursor.margin.top = 1;
+                    _timeCursor.margin.bottom = 1;
                     _timeCursor.name = "Icon.TimeCursor";
-                    _timeCursor.padding.left = 4;
-                    _timeCursor.padding.right = 4;
-                    _timeCursor.padding.top = 4;
+                    _timeCursor.padding.left = -14;
+                    _timeCursor.padding.right = 0;
+                    _timeCursor.padding.top = -2;
                     _timeCursor.padding.bottom = 4;
                     _timeCursor.richText = false;
                     _timeCursor.stretchWidth = false;
@@ -87,7 +87,7 @@ namespace UnityEditor.Seqence
             EditorGUIUtility.TrTextContent("Create a new Seqence to start");
 
         public static readonly GUIContent addContent = EditorGUIUtility.TrTextContent("Add", "Add new tracks.");
-        
+
 
         public static readonly GUIContent empty = new GUIContent();
 
@@ -124,7 +124,8 @@ namespace UnityEditor.Seqence
 
         private static readonly string _edit_img = @"Assets/seqence/Editor/StyleSheets/Images/";
 
-        private static Texture2D _new_ico, _save_ico, _open_ico, _warn_ico, _refresh_ico;
+        private static Texture2D _new_ico, _save_ico, _open_ico, _warn_ico;
+        private static Texture2D _mark_ico, _inspect_ico, _refresh_ico;
 
         public static Texture2D new_ico
         {
@@ -186,12 +187,36 @@ namespace UnityEditor.Seqence
             }
         }
 
+        public static Texture2D mark_ico
+        {
+            get
+            {
+                if (_mark_ico == null)
+                {
+                    _mark_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_edit_img + "mark.png");
+                }
+                return _mark_ico;
+            }
+        }
+
+        private static Texture2D inspect_ico
+        {
+            get
+            {
+                if (_inspect_ico == null)
+                {
+                    _inspect_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_edit_img + "inspect.png");
+                }
+                return _inspect_ico;
+            }
+        }
+
 
         public static readonly GUIContent newContent = new GUIContent(new_ico, "new.");
         public static readonly GUIContent openContent = new GUIContent(open_ico, "open.");
         public static readonly GUIContent saveContent = new GUIContent(save_ico, "save.");
         public static readonly GUIContent refreshContent = new GUIContent(refresh_ico, "refresh.");
-        public static readonly GUIContent inpectContent = new GUIContent(warn_ico, "inspect");
+        public static readonly GUIContent inpectContent = new GUIContent(inspect_ico, "inspect");
 
         private static GUIStyle _titleStyle, _labelStyle, _boldFoldStyle;
 

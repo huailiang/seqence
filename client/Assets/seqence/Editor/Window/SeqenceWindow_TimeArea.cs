@@ -59,7 +59,7 @@ namespace UnityEditor.Seqence
                 rec.height = timeAreaRect.height;
                 rec.x -= 4;
                 rec.width = 20;
-                GUI.Box(rec, SeqenceStyle.empty, SeqenceStyle.timeCursor);
+                GUI.Box(rec, SeqenceStyle.mark_ico, SeqenceStyle.timeCursor);
             }
             if (e == null) e = Event.current;
             switch (e.type)
