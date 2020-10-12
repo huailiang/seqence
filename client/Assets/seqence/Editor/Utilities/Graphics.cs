@@ -73,6 +73,14 @@ namespace UnityEditor.Seqence
             Handles.color = prevColor;
         }
 
+        public static void DrawPolygonAA(Color color, Vector3[] vertices)
+        {
+            var prevColor = Handles.color;
+            Handles.color = color;
+            Handles.DrawAAConvexPolygon(vertices);
+            Handles.color = prevColor;
+        }
+
         public static void DrawDottedLine(Vector3 p1, Vector3 p2, float segmentsLength, Color col)
         {
             HandleUtility.ApplyWireMaterial();

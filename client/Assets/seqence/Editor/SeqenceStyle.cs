@@ -6,12 +6,10 @@ namespace UnityEditor.Seqence
     {
         public readonly static GUIStyle bottomShadow = "Icon.Shadow";
         public readonly static GUIStyle lockedBG = "Icon.LockedBG";
-        public readonly static GUIStyle fontClip = "Font.Clip";
         public readonly static GUIStyle mute = "Icon.Mute";
         public readonly static GUIStyle locked = "Icon.Locked";
         public readonly static GUIStyle autoKey = "Icon.AutoKey";
         public readonly static GUIStyle keyframe = "Icon.Keyframe";
-        public static readonly GUIStyle timeCursor = "Icon.TimeCursor";
         public static readonly GUIStyle blendMixIn = "Icon.BlendMixIn";
         public static readonly GUIStyle blendMixOut = "Icon.BlendMixOut";
         public static readonly GUIStyle timelineClip = "Icon.Clip";
@@ -19,7 +17,56 @@ namespace UnityEditor.Seqence
         public static readonly GUIStyle clipOut = "Icon.ClipOut";
         public static readonly GUIStyle displayBackground = "sequenceClip";
 
-        public static readonly GUIContent sequenceSelectorIcon = EditorGUIUtility.IconContent("TimelineSelector");
+        private static GUIStyle _fontStyle;
+        public static GUIStyle _timeCursor;
+
+        public static GUIStyle fontClip
+        {
+            get
+            {
+                if (_fontStyle == null)
+                {
+                    _fontStyle = new GUIStyle();
+                    _fontStyle.alignment = TextAnchor.MiddleCenter;
+                    _fontStyle.imagePosition = ImagePosition.TextOnly;
+                    _fontStyle.richText = false;
+                    _fontStyle.stretchWidth = false;
+                    _fontStyle.clipping = TextClipping.Clip;
+                }
+                _fontStyle.normal.textColor = pro ? Color.white : Color.black;
+                return _fontStyle;
+            }
+        }
+
+        public static GUIStyle timeCursor
+        {
+            get
+            {
+                if(_timeCursor==null)
+                {
+                    _timeCursor = new GUIStyle();
+                    _timeCursor.alignment = TextAnchor.MiddleLeft;
+                    _timeCursor.fixedHeight = 20;
+                    _timeCursor.fixedWidth = 11;
+                    _timeCursor.fontSize = 72;
+                    _timeCursor.margin.left = 4;
+                    _timeCursor.margin.right = 4;
+                    _timeCursor.margin.top = 4;
+                    _timeCursor.margin.bottom = 4;
+                    _timeCursor.name = "Icon.TimeCursor";
+                    _timeCursor.padding.left = 4;
+                    _timeCursor.padding.right = 4;
+                    _timeCursor.padding.top = 4;
+                    _timeCursor.padding.bottom = 4;
+                    _timeCursor.richText = false;
+                    _timeCursor.stretchWidth = false;
+                    _timeCursor.normal.textColor = Color.white;
+                }
+                return _timeCursor;
+            }
+        }
+
+        public static readonly GUIContent sequenceSelectorIcon = EditorGUIUtility.IconContent("CreateAddNew");
 
         public static readonly GUIContent playContent =
             EditorGUIUtility.TrIconContent("Animation.Play", "Play the timeline (Space)");
@@ -40,15 +87,7 @@ namespace UnityEditor.Seqence
             EditorGUIUtility.TrTextContent("Create a new Seqence to start");
 
         public static readonly GUIContent addContent = EditorGUIUtility.TrTextContent("Add", "Add new tracks.");
-
-        public static readonly GUIContent inspectBtn =
-            EditorGUIUtility.IconContent("TimelineEditModeMixON", "| seqence inspector");
-
-        public static readonly GUIContent showMarkersOn = EditorGUIUtility.TrTextContentWithIcon(string.Empty,
-            "Show / Hide Timeline Markers", "TimelineMarkerAreaButtonEnabled");
-
-        public static readonly GUIContent timelineMarkerTrackHeader =
-            EditorGUIUtility.TrTextContentWithIcon("Markers", string.Empty, "TimelineHeaderMarkerIcon");
+        
 
         public static readonly GUIContent empty = new GUIContent();
 
@@ -152,6 +191,7 @@ namespace UnityEditor.Seqence
         public static readonly GUIContent openContent = new GUIContent(open_ico, "open.");
         public static readonly GUIContent saveContent = new GUIContent(save_ico, "save.");
         public static readonly GUIContent refreshContent = new GUIContent(refresh_ico, "refresh.");
+        public static readonly GUIContent inpectContent = new GUIContent(warn_ico, "inspect");
 
         private static GUIStyle _titleStyle, _labelStyle, _boldFoldStyle;
 

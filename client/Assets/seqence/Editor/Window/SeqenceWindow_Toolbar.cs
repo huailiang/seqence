@@ -222,7 +222,7 @@ namespace UnityEditor.Seqence
                 float d = seqence.RecalcuteDuration();
                 SetTimeRange(0, d * 1.5f);
             }
-            if (GUILayout.Button(SeqenceStyle.inspectBtn, EditorStyles.toolbarButton))
+            if (GUILayout.Button(SeqenceStyle.inpectContent, EditorStyles.toolbarButton))
             {
                 SeqenceInspector.ShowWindow();
             }

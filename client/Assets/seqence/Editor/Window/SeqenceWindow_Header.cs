@@ -11,9 +11,7 @@ namespace UnityEditor.Seqence
             GUILayout.BeginVertical();
             GUILayout.BeginHorizontal(GUILayout.Width(WindowConstants.sliderWidth));
             AddButtonGUI();
-            ShowMarkersButton();
             GUILayout.EndHorizontal();
-            GUILayout.Label(SeqenceStyle.timelineMarkerTrackHeader);
 
             GUILayout.EndVertical();
         }
@@ -130,10 +128,6 @@ namespace UnityEditor.Seqence
                 }
             });
         }
-
-        void ShowMarkersButton()
-        {
-            GUILayout.Toggle(true, SeqenceStyle.showMarkersOn, GUI.skin.button);
-        }
+        
     }
 }

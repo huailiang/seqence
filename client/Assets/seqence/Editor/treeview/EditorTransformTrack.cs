@@ -21,7 +21,7 @@ namespace UnityEditor.Seqence
 
         protected override bool warn
         {
-            get { return track.parent == null || Data.time == null; }
+            get { return track?.parent == null || Data?.time == null; }
         }
 
         protected override string trackHeader

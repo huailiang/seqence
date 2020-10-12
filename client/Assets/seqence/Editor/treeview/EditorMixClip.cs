@@ -5,6 +5,9 @@ namespace UnityEditor.Seqence
     
     public partial class EditorClip
     {
+        Vector3[] s_BlendVertices = new Vector3[3];
+        readonly Color inColor = new Color(0.8f, 0.8f, 0.8f, 1.0f);
+
         private void MixProcessor()
         {
             var clips = track.eClips;
@@ -28,17 +31,19 @@ namespace UnityEditor.Seqence
                 }
             }
         }
-
+        
         private void ProcesMixIn(Rect mixInRect)
         {
             if (ValidRange(mixInRect) && mixInRect.width > 0)
             {
-                var clipStyle = SeqenceStyle.timelineClip;
-                var texture = clipStyle.normal.background;
-                ClipRenderer.RenderTexture(mixInRect, texture, SeqenceStyle.blendMixIn.normal.background, Color.black);
+                Color backgroundColor = new Color(0.4f, 0.4f, 0.4f, 1.0f);
+                
 
-                // Graphics.DrawLineAA(2.5f, new Vector3(mixInRect.xMin, mixInRect.yMax - 1f, 0),
-                //     new Vector3(mixInRect.xMax, mixInRect.yMin + 1f, 0), Color.white);
+                EditorGUI.DrawRect(mixInRect, backgroundColor);
+                s_BlendVertices[0] = new Vector3(mixInRect.xMin, mixInRect.yMax);
+                s_BlendVertices[1] = new Vector3(mixInRect.xMax, mixInRect.yMax);
+                s_BlendVertices[2] = new Vector3(mixInRect.xMax, mixInRect.yMin);
+                Graphics.DrawPolygonAA(inColor, s_BlendVertices);
             }
         }
 
@@ -46,14 +51,12 @@ namespace UnityEditor.Seqence
         {
             if (ValidRange(mixOutRect) && mixOutRect.width > 0)
             {
-                var clipStyle = SeqenceStyle.timelineClip;
-                var texture = clipStyle.normal.background;
-                ClipRenderer.RenderTexture(mixOutRect, texture, SeqenceStyle.blendMixOut.normal.background,
-                    Color.black);
-
-                // Graphics.DrawLineAA(2.5f, new Vector3(mixOutRect.xMin, mixOutRect.yMax - 1f, 0),
-                //     new Vector3(mixOutRect.xMax, mixOutRect.yMin + 1f, 0), Color.white);
+                s_BlendVertices[0] = new Vector3(mixOutRect.xMin, mixOutRect.yMin);
+                s_BlendVertices[1] = new Vector3(mixOutRect.xMax, mixOutRect.yMax);
+                s_BlendVertices[2] = new Vector3(mixOutRect.xMax, mixOutRect.yMin);
+                Graphics.DrawPolygonAA(inColor, s_BlendVertices);
             }
         }
+
     }
 }

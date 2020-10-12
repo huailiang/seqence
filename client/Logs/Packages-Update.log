@@ -45,3 +45,13 @@ The following packages were added:
   com.unity.modules.vr@1.0.0
   com.unity.modules.wind@1.0.0
   com.unity.modules.xr@1.0.0
+
+=== Sat Oct 10 12:06:22 2020
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ide.rider from version 1.0.8 to 1.1.4
+The following packages were removed:
+  com.unity.package-manager-ui@2.2.0

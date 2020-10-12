@@ -5,7 +5,6 @@ using UnityEngine.Seqence.Data;
 using System;
 using UnityEditor;
 using UnityEngine.Rendering.PostProcessing;
-
 #endif
 
 namespace UnityEngine.Seqence
