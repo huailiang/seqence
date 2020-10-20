@@ -53,7 +53,22 @@ namespace UnityEditor.Seqence
             area.x = RenderHead.x;
             area.width = SeqenceWindow.inst.winArea.width;
             EditorGUI.DrawRect(area, trackColor);
+            GuiChilds();
             GroupMenu();
+        }
+
+
+        private void GuiChilds()
+        {
+            var range = track.HirTrackClipRange();
+            var c = trackColor + Color.white.RGBMultiplied(0.1f);
+            foreach (var it in range)
+            {
+                area = RenderRect;
+                area.x = SeqenceWindow.inst.TimeToPixel(it.start);
+                area.xMax = SeqenceWindow.inst.TimeToPixel(it.end);
+                EditorGUI.DrawRect(area, c);
+            }
         }
 
 

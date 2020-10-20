@@ -241,36 +241,44 @@ namespace UnityEditor.Seqence
             }
         }
 
-        public static void BuildConf(this XSeqence seqence)
-        {
-            var tree = seqence.trackTrees;
-            if (tree != null)
-            {
-                int len = tree.Length;
-                seqence.config.tracks = new TrackData[len];
-                for (int i = 0; i < len; i++)
-                {
-                    seqence.config.tracks[i] = tree[i].data;
-                }
-            }
-        }
 
-        public static void OnSave(this XSeqence seqence)
+        public static List<ClipRange> TrackClipRange(this XTrack track)
         {
-            var tree = seqence.trackTrees;
-            if (tree != null)
+            List<ClipRange> ranges = new List<ClipRange>();
+            if (track.clips != null)
             {
-                foreach (var track in tree)
+                var clips = track.clips.ToList();
+                clips.Sort((x, y) => x.start.CompareTo(y.start));
+                float last = -1;
+                foreach (var it in clips)
                 {
-                    if (track.clips != null)
+                    ClipRange range = new ClipRange();
+                    if (it.start > last)
                     {
-                        foreach (var clip in track.clips)
-                        {
-                            clip.OnSave();
-                        }
+                        range.start = it.start;
+                        range.end = it.end;
+                        ranges.Add(range);
+                        last = it.end;
                     }
                 }
             }
+            return ranges;
         }
+
+        public static List<ClipRange> HirTrackClipRange(this XTrack track)
+        {
+            var ranges = track.TrackClipRange();
+            if (track.childs != null)
+            {
+                foreach (var it in track.childs)
+                {
+                    var r2 = it.TrackClipRange();
+                    ClipRange.MergeClipRange(ranges, r2);
+                }
+            }
+            return ranges;
+        }
+
     }
+
 }

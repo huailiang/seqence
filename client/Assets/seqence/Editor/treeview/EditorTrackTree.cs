@@ -145,7 +145,8 @@ namespace UnityEditor.Seqence
             List<EditorTrack> list = new List<EditorTrack>();
             for (int i = 0; i < hierachy.Count; i++)
             {
-                if (hierachy[i].track.parent.Equals(track))
+                var p = hierachy[i].track.parent;
+                if (p != null && p.Equals(track))
                 {
                     list.Add(hierachy[i]);
                 }
