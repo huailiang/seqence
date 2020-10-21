@@ -47,6 +47,8 @@
             <float>0.124227732</float>
             <float>1.86048925</float>
             <float>4.556264</float>
+            <float>4.137783</float>
+            <float>12.0455456</float>
           </time>
           <pos>
             <Vector4>
@@ -66,6 +68,18 @@
               <y>0</y>
               <z>-1.113</z>
               <w>180</w>
+            </Vector4>
+            <Vector4>
+              <x>-0.974729</x>
+              <y>3.43</y>
+              <z>-0.940222561</z>
+              <w>166.804962</w>
+            </Vector4>
+            <Vector4>
+              <x>-1.24</x>
+              <y>3.43</y>
+              <z>-0.940222561</z>
+              <w>166.804962</w>
             </Vector4>
           </pos>
           <select>false</select>
@@ -336,6 +350,7 @@
           <start>2.65857553</start>
           <duration>8</duration>
           <mode>Bloom</mode>
+          <buffer>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</buffer>
         </ClipData>
       </clips>
       <type>PostProcess</type>

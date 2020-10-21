@@ -6,19 +6,13 @@ namespace UnityEditor.Seqence
     {
         public readonly static GUIStyle bottomShadow = "Icon.Shadow";
         public readonly static GUIStyle lockedBG = "Icon.LockedBG";
-        public readonly static GUIStyle mute = "Icon.Mute";
-        public readonly static GUIStyle locked = "Icon.Locked";
-        public readonly static GUIStyle autoKey = "Icon.AutoKey";
         public readonly static GUIStyle keyframe = "Icon.Keyframe";
-        public static readonly GUIStyle blendMixIn = "Icon.BlendMixIn";
-        public static readonly GUIStyle blendMixOut = "Icon.BlendMixOut";
-        public static readonly GUIStyle timelineClip = "Icon.Clip";
-        public static readonly GUIStyle clipIn = "Icon.ClipIn";
-        public static readonly GUIStyle clipOut = "Icon.ClipOut";
         public static readonly GUIStyle displayBackground = "sequenceClip";
 
         private static GUIStyle _fontStyle;
-        public static GUIStyle _timeCursor;
+        private static GUIStyle _timeCursor;
+        private static GUIStyle _icoStyle;
+        private static GUIStyle _keyStyle;
 
         public static GUIStyle fontClip
         {
@@ -32,7 +26,7 @@ namespace UnityEditor.Seqence
                     _fontStyle.richText = false;
                     _fontStyle.stretchWidth = false;
                     _fontStyle.clipping = TextClipping.Clip;
-                    _fontStyle.fontSize = 12;
+                    _fontStyle.fontSize = 10;
                 }
                 _fontStyle.normal.textColor = pro ? Color.white : Color.black;
                 return _fontStyle;
@@ -63,6 +57,38 @@ namespace UnityEditor.Seqence
                     _timeCursor.normal.textColor = Color.white;
                 }
                 return _timeCursor;
+            }
+        }
+
+        public static GUIStyle icoStyle
+        {
+            get
+            {
+                if(_icoStyle==null)
+                {
+                    _icoStyle = new GUIStyle();
+                    _icoStyle.alignment = TextAnchor.MiddleCenter;
+                    _icoStyle.fixedHeight = 20;
+                    _icoStyle.fixedWidth = 20;
+                    _icoStyle.stretchWidth = false;
+                }
+                return _icoStyle;
+            }
+        }
+
+        public static GUIStyle keyStyle
+        {
+            get
+            {
+                if (_keyStyle == null)
+                {
+                    _keyStyle = new GUIStyle();
+                    _keyStyle.alignment = TextAnchor.UpperCenter;
+                    _keyStyle.fixedHeight = 20;
+                    _keyStyle.fixedWidth = 8;
+                    _keyStyle.stretchWidth = false;
+                }
+                return _keyStyle;
             }
         }
 
@@ -124,8 +150,15 @@ namespace UnityEditor.Seqence
 
         private static readonly string _edit_img = @"Assets/seqence/Editor/StyleSheets/Images/";
 
+        private static string _time_img
+        {
+            get { return _edit_img + (pro ? "DarkSkin/" : "LightSkin/"); }
+        }
+
         private static Texture2D _new_ico, _save_ico, _open_ico, _warn_ico;
-        private static Texture2D _mark_ico, _inspect_ico, _refresh_ico;
+        private static Texture2D _mark_ico, _inspect_ico, _refresh_ico,_eye_ico;
+        private static Texture2D _autokey_ico, _autokey_ico2, _lock_ico, _lockBg_ico;
+        private static Texture2D _key_ico, _clipin_ico, _clipOut_ico;
 
         public static Texture2D new_ico
         {
@@ -160,6 +193,18 @@ namespace UnityEditor.Seqence
                     _save_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_edit_img + "btn_editor_save.png");
                 }
                 return _save_ico;
+            }
+        }
+
+        public static Texture2D eye_ico
+        {
+            get
+            {
+                if(_eye_ico==null)
+                {
+                    _eye_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_time_img + "TimelineEye.png");
+                }
+                return _eye_ico;
             }
         }
 
@@ -211,12 +256,103 @@ namespace UnityEditor.Seqence
             }
         }
 
+        private static Texture2D autokey_ico
+        {
+            get
+            {
+                if (_autokey_ico == null)
+                {
+                    _autokey_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_time_img + "TimelineAutokey.png");
+                }
+                return _autokey_ico;
+            }
+        }
+
+        private static Texture2D autokey_ico2
+        {
+            get
+            {
+                if (_autokey_ico2 == null)
+                {
+                    _autokey_ico2 = AssetDatabase.LoadAssetAtPath<Texture2D>(_time_img + "TimelineAutokey_active.png");
+                }
+                return _autokey_ico2;
+            }
+        }
+
+        private static Texture2D lock_ico
+        {
+            get
+            {
+                if(_lock_ico==null)
+                {
+                    _lock_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_time_img + "TimelineLockButton.png");
+                }
+                return _lock_ico;
+            }
+        }
+
+        private static Texture2D lockBg_ico
+        {
+            get
+            {
+                if (_lockBg_ico == null)
+                {
+                    _lockBg_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_edit_img + "Icons/TimelineClipBG.png");
+                }
+                return _lockBg_ico;
+            }
+        }
+
+        private static Texture2D key_ico
+        {
+            get
+            {
+                if(_key_ico==null)
+                {
+                    _key_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_time_img + "TimelineKeyframe.png");
+                }
+                return _key_ico;
+            }
+        }
+
+        private static Texture2D clipIn_ico
+        {
+            get
+            {
+                if(_clipin_ico==null)
+                {
+                    _clipin_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_time_img + "TimelineIconClipIn.png");
+                }
+                return _clipin_ico;
+            }
+        }
+
+        private static Texture2D clipOut_ico
+        {
+            get
+            {
+                if (_clipOut_ico == null)
+                {
+                    _clipOut_ico = AssetDatabase.LoadAssetAtPath<Texture2D>(_time_img + "TimelineIconClipIn.png");
+                }
+                return _clipOut_ico;
+            }
+        }
+
 
         public static readonly GUIContent newContent = new GUIContent(new_ico, "new.");
         public static readonly GUIContent openContent = new GUIContent(open_ico, "open.");
         public static readonly GUIContent saveContent = new GUIContent(save_ico, "save.");
         public static readonly GUIContent refreshContent = new GUIContent(refresh_ico, "refresh.");
         public static readonly GUIContent inpectContent = new GUIContent(inspect_ico, "inspect");
+        public static readonly GUIContent autokeyContentOff = new GUIContent(autokey_ico, "autokeyOff");
+        public static readonly GUIContent autokeyContentOn = new GUIContent(autokey_ico2, "autokeyOn");
+        public static readonly GUIContent lockContent = new GUIContent(lock_ico, "locked");
+        public static readonly GUIContent keyFrameContent = new GUIContent(key_ico, "keyframe");
+        public static readonly GUIContent muteContent = new GUIContent(eye_ico, "mute");
+        public static readonly GUIContent clipInContent = new GUIContent(clipIn_ico, "");
+        public static readonly GUIContent clipOutContent = new GUIContent(clipOut_ico, "");
 
         private static GUIStyle _titleStyle, _labelStyle, _boldFoldStyle;
 

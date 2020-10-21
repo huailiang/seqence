@@ -97,7 +97,7 @@ namespace UnityEditor.Seqence
                 left.width = 10;
                 left.y = rect.y + rect.height / 3;
                 left.height = rect.height / 2;
-                GUI.Label(left, GUIContent.none, SeqenceStyle.clipIn);
+                GUI.Label(left, SeqenceStyle.clipInContent, SeqenceStyle.keyframe);
             }
             if ((clipMode & ClipMode.Right) > 0)
             {
@@ -105,7 +105,7 @@ namespace UnityEditor.Seqence
                 right.width = 8;
                 right.y = rect.y + rect.height / 3;
                 right.height = rect.height / 2;
-                GUI.Label(right, GUIContent.none, SeqenceStyle.clipOut);
+                GUI.Label(right, SeqenceStyle.clipOutContent, SeqenceStyle.keyframe);
             }
             MixProcessor();
         }

@@ -32,7 +32,7 @@ namespace UnityEditor.Seqence
         public void Draw()
         {
             GUIContent gct = select ? s_KeyOn : s_KeyOff;
-            GUI.Box(rect, gct, SeqenceStyle.keyframe);
+            GUI.Box(rect, SeqenceStyle.keyFrameContent, SeqenceStyle.keyStyle);
         }
 
 

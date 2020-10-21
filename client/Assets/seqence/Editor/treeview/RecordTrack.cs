@@ -5,9 +5,7 @@ namespace UnityEditor.Seqence
 {
     public abstract class RecordTrack : EditorTrack
     {
-        protected readonly static GUIContent s_RecordOn = new GUIContent(SeqenceStyle.autoKey.active.background);
-        protected readonly static GUIContent s_RecordOff = new GUIContent(SeqenceStyle.autoKey.normal.background);
-        private static AnimationClip animationClip = new AnimationClip();
+         private static AnimationClip animationClip = new AnimationClip();
 
         protected bool recoding
         {
@@ -25,7 +23,7 @@ namespace UnityEditor.Seqence
 
         protected override void OnGUIHeader()
         {
-            var content = recoding ? s_RecordOn : s_RecordOff;
+            var content = recoding ? SeqenceStyle.autokeyContentOn : SeqenceStyle.autokeyContentOff;
             if (recoding)
             {
                 float remainder = Time.realtimeSinceStartup % 1;
@@ -45,7 +43,7 @@ namespace UnityEditor.Seqence
                 addtiveColor = Color.white;
             }
 
-            if (GUILayout.Button(content, SeqenceStyle.autoKey, GUILayout.MaxWidth(16)))
+            if (GUILayout.Button(content, EditorStyles.label, GUILayout.MaxWidth(16)))
             {
                 if (recoding)
                     StopRecd();

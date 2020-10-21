@@ -435,17 +435,14 @@ namespace UnityEditor.Seqence
             OnGUIHeader();
             if (track.mute)
             {
-                GUILayout.Space(2);
-                if (GUILayout.Button(SeqenceStyle.empty, SeqenceStyle.mute)) track.SetFlag(TrackMode.Mute, false);
+                if (GUILayout.Button(SeqenceStyle.muteContent, SeqenceStyle.icoStyle)) track.SetFlag(TrackMode.Mute, false);
             }
             if (track.locked)
             {
-                GUILayout.Space(2);
-                if (GUILayout.Button(SeqenceStyle.empty, SeqenceStyle.locked)) track.SetFlag(TrackMode.Lock, false);
+                if (GUILayout.Button(SeqenceStyle.lockContent, SeqenceStyle.icoStyle)) track.SetFlag(TrackMode.Lock, false);
             }
             if (warn)
             {
-                GUILayout.Space(2);
                 GUILayout.Label(SeqenceStyle.warn_ico, GUILayout.MaxWidth(20));
             }
             var tree = SeqenceWindow.inst.tree;
